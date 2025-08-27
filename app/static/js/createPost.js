@@ -33,7 +33,7 @@ window.addEventListener('DOMContentLoaded', () => {
             const provider = new ethers.providers.Web3Provider(window.ethereum);
             const signer = provider.getSigner();
             const contract = new ethers.Contract(postContractAddress, postContractAbi, signer);
-            const tx = await contract.createPost(contentHash);
+            const tx = await contract.createPost(contentHash, magnet);
             await tx.wait();
             window.location.href = '/';
         } catch (err) {
