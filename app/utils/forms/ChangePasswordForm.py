@@ -17,7 +17,6 @@ class ChangePasswordForm(Form):
     oldPassword = PasswordField(
         "oldPassword",
         [
-            validators.Length(min=8),
             validators.InputRequired(),
         ],
     )
