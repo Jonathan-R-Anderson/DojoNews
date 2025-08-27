@@ -42,7 +42,15 @@ def build_comment_tree(comments: List[Tuple]) -> Dict[str, List[Dict[str, object
         nltk.download("vader_lexicon", quiet=True)
     sia = SentimentIntensityAnalyzer()
 
-    sentiments = [sia.polarity_scores(t)["compound"] for t in texts]
+    scores = [sia.polarity_scores(t) for t in texts]
+    sentiment_map = {}
+    label_lookup = {"pos": "positive", "neu": "neutral", "neg": "negative"}
+    for cid, s in zip(ids, scores):
+        label_key = max(("pos", "neu", "neg"), key=lambda k: s[k])
+        sentiment_map[cid] = {
+            "compound": s["compound"],
+            "label": label_lookup[label_key],
+        }
 
     vectoriser = TfidfVectorizer(stop_words="english")
     tfidf = vectoriser.fit_transform(texts)
@@ -72,10 +80,14 @@ def build_comment_tree(comments: List[Tuple]) -> Dict[str, List[Dict[str, object
 
     tree = nx.minimum_spanning_tree(graph)
 
-    sentiment_map = dict(zip(ids, sentiments))
     text_map = dict(zip(ids, texts))
     nodes = [
-        {"id": n, "text": text_map[n], "sentiment": sentiment_map[n]}
+        {
+            "id": n,
+            "text": text_map[n],
+            "sentiment": sentiment_map[n]["compound"],
+            "sentiment_label": sentiment_map[n]["label"],
+        }
         for n in tree.nodes()
     ]
     links = [

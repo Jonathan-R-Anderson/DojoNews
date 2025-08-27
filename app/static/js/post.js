@@ -44,6 +44,12 @@ function renderCommentTree(data) {
   const nodeMap = new Map(data.nodes.map((n) => [n.id, n]));
   const rootId = data.nodes[0].id;
 
+  const sentimentColors = {
+    positive: "#22c55e",
+    neutral: "#9ca3af",
+    negative: "#ef4444",
+  };
+
   const adjacency = {};
   data.links.forEach((l) => {
     (adjacency[l.source] ??= []).push({ id: l.target, keywords: l.keywords });
@@ -55,6 +61,7 @@ function renderCommentTree(data) {
       id,
       text: nodeMap.get(id).text,
       sentiment: nodeMap.get(id).sentiment,
+      sentiment_label: nodeMap.get(id).sentiment_label,
       keywords,
       children: (adjacency[id] || [])
         .filter((n) => n.id !== parent)
@@ -122,7 +129,9 @@ function renderCommentTree(data) {
       (d) => `rotate(${(d.x * 180) / Math.PI - 90}) translate(${d.y},0)`
     )
     .attr("r", 5)
-    .attr("class", "node");
+    .attr("class", "node")
+    .attr("fill", (d) => sentimentColors[d.data.sentiment_label])
+    .attr("stroke", (d) => sentimentColors[d.data.sentiment_label]);
 
   container
     .on("mouseleave", () => {
@@ -147,10 +156,12 @@ function renderCommentTree(data) {
     animateComments(ids);
     const keywords = d.data.keywords || [];
     const sentiments = d.descendants().map((n) => n.data.sentiment || 0);
+    const labels = d.descendants().map((n) => n.data.sentiment_label);
     const avgSent =
       sentiments.reduce((a, b) => a + b, 0) / sentiments.length;
-    const sentimentLabel =
-      avgSent > 0.05 ? "positive" : avgSent < -0.05 ? "negative" : "neutral";
+    const labelCounts = {};
+    labels.forEach((l) => (labelCounts[l] = (labelCounts[l] || 0) + 1));
+    const sentimentLabel = Object.entries(labelCounts).sort((a, b) => b[1] - a[1])[0][0];
     const parts = [`Sentiment: ${sentimentLabel} (${avgSent.toFixed(2)})`];
     if (keywords.length) parts.push(`Keywords: ${keywords.join(", ")}`);
     legend.textContent = parts.join(" | ");
