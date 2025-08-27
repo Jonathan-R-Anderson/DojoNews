@@ -73,6 +73,7 @@ function renderCommentTree(data) {
 
   const container = d3.select("#comment-tree");
   const legend = container.select("#branch-legend").node();
+  let selectedBranch = null;
   container.select("svg").remove();
   const svg = container
     .append("svg")
@@ -99,8 +100,17 @@ function renderCommentTree(data) {
     .append("path")
     .attr("class", "link-hover")
     .attr("d", linkGen)
-    .on("mouseenter", (_, d) => showBranch(d.target))
-    .on("mouseleave", showAll);
+    .on("mouseenter", (_, d) => {
+      if (!selectedBranch) showBranch(d.target);
+    })
+    .on("mouseleave", () => {
+      if (!selectedBranch) showAll();
+    })
+    .on("click", (event, d) => {
+      selectedBranch = d.target;
+      showBranch(d.target);
+      event.stopPropagation();
+    });
 
   svg
     .append("g")
@@ -114,7 +124,16 @@ function renderCommentTree(data) {
     .attr("r", 5)
     .attr("class", "node");
 
-  container.on("mouseleave", showAll);
+  container
+    .on("mouseleave", () => {
+      if (!selectedBranch) showAll();
+    })
+    .on("click", () => {
+      if (selectedBranch) {
+        selectedBranch = null;
+        showAll();
+      }
+    });
 
   function animateComments(ids) {
     document.querySelectorAll("[data-comment-id]").forEach((el) => {
@@ -139,7 +158,7 @@ function renderCommentTree(data) {
 
   function showAll() {
     animateComments(treeCommentIds);
-    legend.textContent = "Hover near a branch to see details";
+    legend.textContent = "Hover or click a branch to see details";
   }
 
   showAll();
