@@ -61,6 +61,7 @@ def adminPanelUsers():
                 users=users,
                 page=page,
                 total_pages=total_pages,
+                admin_check=True,
             )
         else:
             Log.error(
