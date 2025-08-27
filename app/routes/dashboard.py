@@ -70,7 +70,7 @@ def dashboard(userName):
                 translations = load(file)
 
             for post in posts:
-                post[9] = translations["categories"][post[9].lower()]
+                post[9] = translations["categories"].get(post[9].lower(), post[9])
 
             return render_template(
                 "/dashboard.html",

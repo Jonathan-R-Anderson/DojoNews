@@ -13,6 +13,7 @@ from flask import Blueprint, abort, redirect, render_template, session
 from settings import Settings
 from utils.log import Log
 from utils.paginate import paginate_query
+from utils.categories import get_categories, DEFAULT_CATEGORIES
 
 categoryBlueprint = Blueprint("category", __name__)
 
@@ -29,29 +30,7 @@ def category(category, by="timeStamp", sort="desc"):
     :return: A rendered template with the posts and the category as context
     """
 
-    categories = [
-        "games",
-        "history",
-        "science",
-        "code",
-        "technology",
-        "education",
-        "sports",
-        "foods",
-        "health",
-        "apps",
-        "movies",
-        "series",
-        "travel",
-        "books",
-        "music",
-        "nature",
-        "art",
-        "finance",
-        "business",
-        "web",
-        "other",
-    ]
+    categories = [c.lower() for c in get_categories()]
 
     byOptions = ["timeStamp", "title", "views", "category", "lastEditTimeStamp"]
     sortOptions = ["asc", "desc"]
@@ -89,9 +68,10 @@ def category(category, by="timeStamp", sort="desc"):
     return render_template(
         "category.html",
         posts=posts,
-        category=translations["categories"][category.lower()],
+        category=translations["categories"].get(category.lower(), category),
         sortName=sortName,
         source=f"/category/{category}",
         page=page,
         total_pages=total_pages,
+        categories=get_categories(),
     )

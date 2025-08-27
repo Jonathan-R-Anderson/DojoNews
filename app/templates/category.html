@@ -10,7 +10,7 @@
     class="flex justify-between mx-auto w-11/12 md:w-10/12 lg:w-9/12 2xl:w-8/12 mt-8"
 >
     {% from "components/categoryContainer.html" import categoryContainer %} {{
-    categoryContainer(translations, category) }} {% from
+    categoryContainer(translations, categories, category) }} {% from
     "components/sortMenu.html" import sortMenu %} {{
     sortMenu(sortName,source,translations) }}
 </div>
