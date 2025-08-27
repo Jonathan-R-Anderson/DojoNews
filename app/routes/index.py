@@ -64,11 +64,18 @@ def index(by="views", sort="desc"):
     else:
         select_query = f"select * from posts order by {by} {sort}"
 
-    posts, page, total_pages = paginate_query(
-        Settings.DB_POSTS_ROOT,
-        "select count(*) from posts",
-        select_query,
-    )
+    try:
+        posts, page, total_pages = paginate_query(
+            Settings.DB_POSTS_ROOT,
+            "select count(*) from posts",
+            select_query,
+        )
+        Log.info(f"Retrieved {len(posts)} posts for page {page}")
+        if not posts:
+            Log.warning("No posts retrieved for index page")
+    except Exception as exc:
+        Log.error(f"Failed to retrieve posts for index page: {exc}")
+        posts, page, total_pages = [], 1, 1
 
     original_by = by
     if by == "timeStamp":
@@ -130,11 +137,18 @@ def load_posts():
         select_query = f"select * from posts order by {by} {sort}"
 
     limit = request.args.get("limit", type=int)
-    posts, _, _ = paginate_query(
-        Settings.DB_POSTS_ROOT,
-        "select count(*) from posts",
-        select_query,
-        per_page=limit or 9,
-    )
+    try:
+        posts, _, _ = paginate_query(
+            Settings.DB_POSTS_ROOT,
+            "select count(*) from posts",
+            select_query,
+            per_page=limit or 9,
+        )
+        Log.info(f"Loaded {len(posts)} posts via load_posts endpoint")
+        if not posts:
+            Log.warning("No posts returned from load_posts endpoint")
+    except Exception as exc:
+        Log.error(f"Failed to load posts for load_posts endpoint: {exc}")
+        return "", 500
 
     return render_template("components/postCards.html", posts=posts)
