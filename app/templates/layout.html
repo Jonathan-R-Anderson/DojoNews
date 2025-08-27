@@ -38,6 +38,11 @@
             href="{{ url_for('static', filename='css/markdown.css') }}"
         />
 
+        <link
+            rel="stylesheet"
+            href="{{ url_for('static', filename='css/overlay.css') }}"
+        />
+
         <meta property="og:type" content="website" />
         <meta property="og:title" content="flaskBlog" />
         <meta
@@ -70,6 +75,13 @@
         'components/navbar.html'%} {% from "components/flash.html" import flash
         %} {{ flash() }} {% block body %} {% endblock body %}
 
+        <div id="post-overlay" class="hidden">
+            <div class="overlay-content">
+                <button class="overlay-close" aria-label="Close">&times;</button>
+                <iframe id="post-iframe" src=""></iframe>
+            </div>
+        </div>
+
         <script
             src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
             integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
@@ -91,6 +103,7 @@
         </script>
         <script src="{{ url_for('static', filename='js/magnet.js') }}"></script>
         <script src="{{ url_for('static', filename='js/torrentSeeder.js') }}"></script>
+        <script src="{{ url_for('static', filename='js/postOverlay.js') }}"></script>
         {% block scripts %}{% endblock scripts %}
         <link
             rel="stylesheet"
