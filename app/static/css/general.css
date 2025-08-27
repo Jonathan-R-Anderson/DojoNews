@@ -1,3 +1,32 @@
 html {
     font-size: 125%;
 }
+
+#progress-bar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 4px;
+    width: 0;
+    background: #e11d48;
+    z-index: 9999;
+}
+
+sup[data-footnote] {
+    position: relative;
+    cursor: pointer;
+}
+
+sup[data-footnote]:hover::after {
+    content: attr(data-footnote);
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background: #333;
+    color: #fff;
+    padding: 0.25rem 0.5rem;
+    border-radius: 0.25rem;
+    white-space: pre-wrap;
+    z-index: 1000;
+    max-width: 200px;
+}

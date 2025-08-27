@@ -55,6 +55,37 @@
         <p class="text-sm font-medium">
             {{ readingTime|string + " " + translations.post.minRead }}
         </p>
+        <button
+            id="listen-btn"
+            data-audio="{{ url_for('post.post_audio', urlID=urlID) }}"
+            class="btn btn-xs"
+            title="Listen"
+        >
+            <i class="ti ti-volume"></i>
+        </button>
+        <button
+            id="theme-toggle"
+            class="btn btn-xs"
+            title="Toggle theme"
+        >
+            <i class="ti ti-moon"></i>
+        </button>
+        <div class="join">
+            <button
+                id="font-dec"
+                class="btn btn-xs join-item"
+                title="Decrease font"
+            >
+                A-
+            </button>
+            <button
+                id="font-inc"
+                class="btn btn-xs join-item"
+                title="Increase font"
+            >
+                A+
+            </button>
+        </div>
         {% if author == session["userName"] or "admin" == session["userName"] %}
         <a
             href="/analytics/posts/{{ urlID }}"
