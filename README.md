@@ -45,12 +45,7 @@ Visit `http://localhost:1283` in your browser.
 
 ### Blockchain
 
-User accounts, tipping and premium features can be managed on-chain via the
-`FlaskBlogPortal` contract located in [`contracts/FlaskBlog.sol`](contracts/FlaskBlog.sol).
-The sysop can set a commission on tips which is automatically routed to the
-sysop address. The provided Python helpers in [`app/blockchain`](app/blockchain)
-illustrate how to interact with a deployment on an Ethereum compatible network
-such as zkSync.
+User accounts, posts, comments, tipping, sponsor slots and media magnets are now handled by dedicated contracts under [`contracts/`](contracts/). Each contract is owned by the sysop who deployed it, while public methods let authors create posts or comments and fans send tips. Python helpers in [`app/blockchain`](app/blockchain) show how to interact with these deployments on any Ethereum-compatible network (e.g. zkSync).
 
 ### Static Files via BitTorrent
 
