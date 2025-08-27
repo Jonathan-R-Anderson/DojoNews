@@ -159,17 +159,18 @@ def createPost():
                         )
 
                 try:
-                    contract = Settings.BLOCKCHAIN_CONTRACTS["PostStorage"]
-                    cfg = BlockchainConfig(
-                        rpc_url=Settings.BLOCKCHAIN_RPC_URL,
-                        contract_address=contract["address"],
-                        abi=contract["abi"],
-                    )
-                    payload = (
-                        f"{postTitle}|{postTags}|{postAbstract}|{postContent}|{postCategory}|{bannerMagnet}"
-                    )
-                    content_hash = hashlib.sha256(payload.encode()).hexdigest()
-                    create_post(cfg, content_hash)
+                    if not request.form.get("onchainTx"):
+                        contract = Settings.BLOCKCHAIN_CONTRACTS["PostStorage"]
+                        cfg = BlockchainConfig(
+                            rpc_url=Settings.BLOCKCHAIN_RPC_URL,
+                            contract_address=contract["address"],
+                            abi=contract["abi"],
+                        )
+                        payload = (
+                            f"{postTitle}|{postTags}|{postAbstract}|{postContent}|{postCategory}|{bannerMagnet}"
+                        )
+                        content_hash = hashlib.sha256(payload.encode()).hexdigest()
+                        create_post(cfg, content_hash)
                 except Exception as e:
                     Log.error(f"Failed to store post on-chain: {e}")
 
@@ -186,6 +187,8 @@ def createPost():
             "createPost.html",
             form=form,
             categories=categories,
+            post_contract_address=Settings.BLOCKCHAIN_CONTRACTS["PostStorage"]["address"],
+            post_contract_abi=Settings.BLOCKCHAIN_CONTRACTS["PostStorage"]["abi"],
         )
     else:
         Log.error(f"{request.remote_addr} tried to create a new post without login")

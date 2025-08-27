@@ -40,6 +40,6 @@
         e.preventDefault();
         const file = bannerInput.files[0];
         magnetField.value = await seedFile(file);
-        form.submit();
+        form.requestSubmit();
     });
 })();
