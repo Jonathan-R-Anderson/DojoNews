@@ -36,7 +36,11 @@ async function loadMagnets() {
                 client.add(magnet, (torrent) => {
                     torrent.files[0].getBlob((err, blob) => {
                         if (!err) {
-                            img.src = URL.createObjectURL(blob);
+                            const newUrl = URL.createObjectURL(blob);
+                            if (img.src && img.src.startsWith("blob:")) {
+                                URL.revokeObjectURL(img.src);
+                            }
+                            img.src = newUrl;
                         }
                     });
                 });
