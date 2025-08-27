@@ -68,18 +68,10 @@
                 imgWrap.className = 'overflow-hidden flex-shrink-0';
                 const img = document.createElement('img');
                 img.className = 'h-48 w-full group-hover:scale-110 transition duration-150 object-cover rounded-t-md select-none';
+                img.dataset.magnetId = `${i}.png`;
+                img.src = 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==';
                 imgWrap.appendChild(img);
                 card.appendChild(imgWrap);
-
-                if (meta.magnet) {
-                    try {
-                        const imgRes = await fetch(meta.magnet);
-                        const blob = await imgRes.blob();
-                        img.src = URL.createObjectURL(blob);
-                    } catch (err) {
-                        console.error(err);
-                    }
-                }
 
                 const body = document.createElement('div');
                 body.className = 'flex flex-col gap-4 p-6 flex-grow';
@@ -134,6 +126,9 @@
                 card.appendChild(body);
 
                 container.appendChild(card);
+            }
+            if (typeof window.loadMagnets === 'function') {
+                window.loadMagnets();
             }
         } catch (e) {
             console.error(e);
