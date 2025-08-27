@@ -1,17 +1,13 @@
 import sqlite3
+import math
 
-from flask import (
-    Blueprint,
-    redirect,
-    render_template,
-    request,
-    session,
-)
+from flask import Blueprint, redirect, render_template, request, session, flash
 from settings import Settings
 from utils.flashMessage import flashMessage
 from utils.forms.CreatePostForm import CreatePostForm
 from utils.log import Log
 from utils.time import currentTimeStamp
+from utils.categories import get_categories, DEFAULT_CATEGORIES
 
 editPostBlueprint = Blueprint("editPost", __name__)
 
@@ -56,7 +52,9 @@ def editPost(urlID):
             Log.success(f'POST: "{urlID}" FOUND')
 
             if post[5] == session["userName"] or session["userRole"] == "admin":
+                categories = get_categories()
                 form = CreatePostForm(request.form)
+                form.postCategory.choices = [(c, c) for c in categories]
                 form.postTitle.data = post[1]
                 form.postTags.data = post[2]
                 form.postAbstract.data = post[11]
@@ -68,8 +66,53 @@ def editPost(urlID):
                     postTags = request.form["postTags"]
                     postContent = request.form["postContent"]
                     postAbstract = request.form["postAbstract"]
-                    postCategory = request.form["postCategory"]
+                    selectedCategory = request.form.get("postCategory", "").strip()
+                    newCategory = request.form.get("newCategory", "").strip()
                     postBanner = request.files["postBanner"].read()
+
+                    connection = sqlite3.connect(Settings.DB_POSTS_ROOT)
+                    cursor = connection.cursor()
+                    cursor.execute("SELECT author, COUNT(*) FROM posts GROUP BY author")
+                    rows = cursor.fetchall()
+                    connection.close()
+
+                    user_count = 0
+                    other_counts = []
+                    for author, count in rows:
+                        if author == session["userName"]:
+                            user_count = count
+                        else:
+                            other_counts.append(count)
+                    if other_counts:
+                        mean = sum(other_counts) / len(other_counts)
+                        variance = sum((c - mean) ** 2 for c in other_counts) / len(other_counts)
+                        stddev = math.sqrt(variance)
+                    else:
+                        mean = 0
+                        stddev = 0
+
+                    is_high = user_count > mean + stddev
+                    is_low = user_count <= mean - stddev
+
+                    category_candidate = newCategory if newCategory else selectedCategory
+
+                    if not category_candidate:
+                        flash("Category is required.", "error")
+                        return redirect(f"/editpost/{urlID}")
+
+                    categories_lower = [c.lower() for c in categories]
+                    default_lower = [c.lower() for c in DEFAULT_CATEGORIES]
+
+                    if category_candidate.lower() not in categories_lower:
+                        if not is_high:
+                            flash("You are not allowed to create a new category.", "error")
+                            return redirect(f"/editpost/{urlID}")
+                    elif category_candidate.lower() not in default_lower:
+                        if not (is_low or is_high):
+                            flash("You are not allowed to use this category.", "error")
+                            return redirect(f"/editpost/{urlID}")
+
+                    postCategory = category_candidate
 
                     if postContent == "" or postAbstract == "":
                         flashMessage(
@@ -132,6 +175,7 @@ def editPost(urlID):
                     tags=post[2],
                     content=post[3],
                     form=form,
+                    categories=categories,
                 )
             else:
                 flashMessage(

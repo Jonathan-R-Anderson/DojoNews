@@ -22,6 +22,7 @@ from flask import Blueprint, redirect, render_template, session, request
 from settings import Settings
 from utils.log import Log
 from utils.paginate import paginate_query
+from utils.categories import get_categories
 
 indexBlueprint = Blueprint("index", __name__)
 
@@ -97,6 +98,7 @@ def index(by="views", sort="desc"):
         total_pages=total_pages,
         by=original_by,
         sort=sort,
+        categories=get_categories(),
     )
 
 

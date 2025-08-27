@@ -41,28 +41,8 @@ class CreatePostForm(Form):
 
     postCategory = SelectField(
         "Post Category",
-        [validators.InputRequired()],
-        choices=[
-            ("Apps", "Apps"),
-            ("Art", "Art"),
-            ("Books", "Books"),
-            ("Business", "Business"),
-            ("Code", "Code"),
-            ("Education", "Education"),
-            ("Finance", "Finance"),
-            ("Foods", "Foods"),
-            ("Games", "Games"),
-            ("Health", "Health"),
-            ("History", "History"),
-            ("Movies", "Movies"),
-            ("Music", "Music"),
-            ("Nature", "Nature"),
-            ("Science", "Science"),
-            ("Series", "Series"),
-            ("Sports", "Sports"),
-            ("Technology", "Technology"),
-            ("Travel", "Travel"),
-            ("Web", "Web"),
-            ("Other", "Other"),
-        ],
+        [validators.Optional()],
+        choices=[],
     )
+
+    newCategory = StringField("New Category", [validators.Optional(), validators.Length(max=50)])

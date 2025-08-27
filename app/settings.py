@@ -122,6 +122,7 @@ class Settings:
     DB_POSTS_ROOT = DB_FOLDER_ROOT + "posts.db"
     DB_COMMENTS_ROOT = DB_FOLDER_ROOT + "comments.db"
     DB_ANALYTICS_ROOT = DB_FOLDER_ROOT + "analytics.db"
+    DB_CATEGORIES_ROOT = DB_FOLDER_ROOT + "categories.json"
 
     # SMTP Mail Configuration
     SMTP_SERVER = "smtp.gmail.com"
