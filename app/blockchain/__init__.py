@@ -112,11 +112,29 @@ def get_image_magnet(cfg: BlockchainConfig, image_id: str) -> str:
 # Post storage helpers
 # ---------------------------------------------------------------------------
 
-def create_post(cfg: BlockchainConfig, content_hash: str) -> str:
-    """Create a post on-chain storing a hash of its content."""
+def get_next_post_id(cfg: BlockchainConfig) -> int:
+    """Return the next post id that will be assigned on-chain."""
+    contract = _connect(cfg)
+    return contract.functions.nextPostId().call()
+
+
+def get_post(cfg: BlockchainConfig, post_id: int) -> dict:
+    """Fetch a post from the chain."""
+    contract = _connect(cfg)
+    data = contract.functions.getPost(post_id).call()
+    return {
+        "author": data[0],
+        "content": data[1],
+        "exists": data[2],
+        "blacklisted": data[3],
+    }
+
+
+def create_post(cfg: BlockchainConfig, content: str) -> str:
+    """Create a post on-chain storing its full content."""
     contract = _connect(cfg)
     sysop = contract.functions.sysop().call()
-    tx = contract.functions.createPost(content_hash).build_transaction(
+    tx = contract.functions.createPost(content).build_transaction(
         {"from": sysop, "nonce": 0}
     )
     return tx.hex()
