@@ -8,6 +8,8 @@ import networkx as nx
 import numpy as np
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
+import nltk
+from nltk.sentiment import SentimentIntensityAnalyzer
 
 
 def build_comment_tree(comments: List[Tuple]) -> Dict[str, List[Dict[str, object]]]:
@@ -25,7 +27,7 @@ def build_comment_tree(comments: List[Tuple]) -> Dict[str, List[Dict[str, object
 
     Returns:
         A dictionary with ``nodes`` and ``links`` ready for JSON
-        serialisation.
+        serialisation. Each node contains a ``sentiment`` score.
     """
 
     if not comments:
@@ -33,6 +35,14 @@ def build_comment_tree(comments: List[Tuple]) -> Dict[str, List[Dict[str, object
 
     texts = [c[2] for c in comments]
     ids = [c[0] for c in comments]
+
+    try:
+        nltk.data.find("sentiment/vader_lexicon.zip")
+    except LookupError:
+        nltk.download("vader_lexicon", quiet=True)
+    sia = SentimentIntensityAnalyzer()
+
+    sentiments = [sia.polarity_scores(t)["compound"] for t in texts]
 
     vectoriser = TfidfVectorizer(stop_words="english")
     tfidf = vectoriser.fit_transform(texts)
@@ -62,8 +72,10 @@ def build_comment_tree(comments: List[Tuple]) -> Dict[str, List[Dict[str, object
 
     tree = nx.minimum_spanning_tree(graph)
 
+    sentiment_map = dict(zip(ids, sentiments))
+    text_map = dict(zip(ids, texts))
     nodes = [
-        {"id": n, "text": next(c[2] for c in comments if c[0] == n)}
+        {"id": n, "text": text_map[n], "sentiment": sentiment_map[n]}
         for n in tree.nodes()
     ]
     links = [

@@ -53,6 +53,7 @@ function renderCommentTree(data) {
     return {
       id,
       text: nodeMap.get(id).text,
+      sentiment: nodeMap.get(id).sentiment,
       keywords,
       children: (adjacency[id] || [])
         .filter((n) => n.id !== parent)
@@ -85,7 +86,9 @@ function renderCommentTree(data) {
     .data(root.links())
     .join("path")
     .attr("class", "link")
-    .attr("d", linkGen);
+    .attr("d", linkGen)
+    .on("mouseover", (_, d) => showBranch(d.target))
+    .on("mouseout", showAll);
 
   svg
     .append("g")
@@ -97,9 +100,7 @@ function renderCommentTree(data) {
       (d) => `rotate(${(d.x * 180) / Math.PI - 90}) translate(${d.y},0)`
     )
     .attr("r", 5)
-    .attr("class", "node")
-    .on("mouseover", (_, d) => showBranch(d))
-    .on("mouseout", showAll);
+    .attr("class", "node");
 
   container.on("mouseleave", showAll);
 
@@ -109,15 +110,22 @@ function renderCommentTree(data) {
       el.style.display = ids.includes(parseInt(el.dataset.commentId)) ? "" : "none";
     });
     const keywords = d.data.keywords || [];
-    const kwDiv = document.getElementById("branch-keywords");
-    kwDiv.textContent = keywords.length ? `Keywords: ${keywords.join(", ")}` : "";
+    const sentiments = d.descendants().map((n) => n.data.sentiment || 0);
+    const avgSent =
+      sentiments.reduce((a, b) => a + b, 0) / sentiments.length;
+    const sentimentLabel =
+      avgSent > 0.05 ? "positive" : avgSent < -0.05 ? "negative" : "neutral";
+    const legend = document.getElementById("branch-legend");
+    const parts = [`Sentiment: ${sentimentLabel} (${avgSent.toFixed(2)})`];
+    if (keywords.length) parts.push(`Keywords: ${keywords.join(", ")}`);
+    legend.textContent = parts.join(" | ");
   }
 
   function showAll() {
     document.querySelectorAll("[data-comment-id]").forEach((el) => {
       el.style.display = "";
     });
-    document.getElementById("branch-keywords").textContent = "";
+    document.getElementById("branch-legend").textContent = "";
   }
 
   showAll();
