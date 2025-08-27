@@ -85,9 +85,9 @@
         <script src="{{ url_for('static', filename='js/readerControls.js') }}"></script>
         <script src="{{ url_for('static', filename='js/progress.js') }}"></script>
         <script>
-            const rpcUrl = "{{ rpc_url }}";
-            const postContractAddress = "{{ post_contract_address }}";
-            const postContractAbi = {{ post_contract_abi | tojson }};
+            window.rpcUrl = "{{ rpc_url }}";
+            window.postContractAddress = "{{ post_contract_address }}";
+            window.postContractAbi = {{ post_contract_abi | tojson }};
         </script>
         <script src="{{ url_for('static', filename='js/magnet.js') }}"></script>
         <script src="{{ url_for('static', filename='js/torrentSeeder.js') }}"></script>

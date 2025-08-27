@@ -35,9 +35,12 @@
 
 <script src="https://cdn.jsdelivr.net/npm/ethers@5.7.2/dist/ethers.umd.min.js"></script>
 <script>
-    const rpcUrl = "{{ rpc_url }}";
-    const postContractAddress = "{{ post_contract_address }}";
-    const postContractAbi = {{ post_contract_abi | tojson }};
+    window.rpcUrl = "{{ rpc_url }}";
+    window.postContractAddress = "{{ post_contract_address }}";
+    window.postContractAbi = {{ post_contract_abi | tojson }};
+    const rpcUrl = window.rpcUrl;
+    const postContractAddress = window.postContractAddress;
+    const postContractAbi = window.postContractAbi;
     const targetCategory = "{{ raw_category|lower }}";
 
     async function renderCategoryPosts() {
