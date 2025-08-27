@@ -83,7 +83,7 @@ def passwordReset(codeSent):
                             category="success",
                             language=session["language"],
                         )
-                        return redirect("/login/redirect=&")
+                        return redirect("/login?redirect=/")
                 else:
                     flashMessage(
                         page="passwordReset",

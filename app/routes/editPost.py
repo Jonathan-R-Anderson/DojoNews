@@ -214,4 +214,4 @@ def editPost(urlID):
             category="error",
             language=session["language"],
         )
-        return redirect(f"/login/redirect=&editpost&{urlID}")
+        return redirect(f"/login?redirect=/editpost/{urlID}")

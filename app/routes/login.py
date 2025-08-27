@@ -9,10 +9,10 @@ loginBlueprint = Blueprint("login", __name__)
 LOGIN_MESSAGE = "Log in to FlaskBlog"
 
 
-@loginBlueprint.route("/login/redirect=<direct>", methods=["GET", "POST"])
-def login(direct):
+@loginBlueprint.route("/login", methods=["GET", "POST"])
+def login():
     """Handle MetaMask based login."""
-    direct = direct.replace("&", "/")
+    direct = request.args.get("redirect", "/")
     if not Settings.LOG_IN:
         return redirect(direct), 301
     if "walletAddress" in session:
