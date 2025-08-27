@@ -1,5 +1,5 @@
 import os
-import sqlite3
+from math import ceil
 from re import sub
 
 from flask import (
@@ -15,33 +15,50 @@ from gtts import gTTS
 from settings import Settings
 from utils.generateUrlIdFromPost import getSlugFromPostTitle
 from utils.log import Log
+from web3 import Web3
 
 postBlueprint = Blueprint("post", __name__)
+
+
+def _get_onchain_post(urlID: int):
+    """Retrieve post data from the blockchain."""
+
+    contract_info = Settings.BLOCKCHAIN_CONTRACTS["PostStorage"]
+    w3 = Web3(Web3.HTTPProvider(Settings.BLOCKCHAIN_RPC_URL))
+    contract = w3.eth.contract(
+        address=contract_info["address"], abi=contract_info["abi"]
+    )
+    try:
+        return contract.functions.getPost(urlID).call()
+    except Exception as exc:  # pragma: no cover - network errors
+        Log.error(f"Post: '{urlID}' not found on chain: {exc}")
+        return None
 
 
 @postBlueprint.route("/post/<int:urlID>", methods=["GET"])
 @postBlueprint.route("/post/<slug>-<int:urlID>", methods=["GET"])
 def post(urlID: int, slug: str | None = None):
-    Log.database(f"Connecting to '{Settings.DB_POSTS_ROOT}' database")
-    connection = sqlite3.connect(Settings.DB_POSTS_ROOT)
-    connection.set_trace_callback(Log.database)
-    cursor = connection.cursor()
-    cursor.execute(
-        "SELECT title, tags, author, abstract FROM posts WHERE urlID = ?",
-        (urlID,),
-    )
-    post = cursor.fetchone()
-    connection.close()
-
-    if not post:
-        Log.error(f'Post: "{urlID}" not found')
+    onchain = _get_onchain_post(urlID)
+    if not onchain:
         return render_template("notFound.html")
 
-    title, tags, author, abstract = post
+    # onchain tuple: (author, contentHash, magnetURI, exists, blacklisted)
+    content_hash = onchain[1]
+    parts = content_hash.split("|", 5)
+    title = parts[0] if len(parts) > 0 else ""
+    tags = parts[1] if len(parts) > 1 else ""
+    author = parts[2] if len(parts) > 2 else onchain[0]
+    content = parts[3] if len(parts) > 3 else ""
+    category = parts[4] if len(parts) > 4 else ""
 
-    postSlug = getSlugFromPostTitle(title)
-    if slug != postSlug:
+    postSlug = getSlugFromPostTitle(title) if title else slug
+    if title and slug != postSlug:
         return redirect(url_for("post.post", urlID=urlID, slug=postSlug))
+
+    # simple abstract and reading time calculations
+    clean_text = sub(r"<[^>]+>", "", content)
+    abstract = clean_text[:150]
+    reading_time = max(1, ceil(len(clean_text.split()) / 200))
 
     return render_template(
         "post.html",
@@ -60,22 +77,22 @@ def post(urlID: int, slug: str | None = None):
         blogPostUrl=request.root_url,
         idForRandomVisitor=None,
         sort="new",
-        banner_magnet="",
+        banner_magnet=onchain[2],
+        rpc_url=Settings.BLOCKCHAIN_RPC_URL,
+        post_contract_address=Settings.BLOCKCHAIN_CONTRACTS["PostStorage"]["address"],
+        post_contract_abi=Settings.BLOCKCHAIN_CONTRACTS["PostStorage"]["abi"],
+        content=content,
+        reading_time=reading_time,
     )
 
 
 @postBlueprint.route("/post/<int:urlID>/audio")
 def post_audio(urlID: int):
-    connection = sqlite3.connect(Settings.DB_POSTS_ROOT)
-    connection.set_trace_callback(Log.database)
-    cursor = connection.cursor()
-    cursor.execute("SELECT content FROM posts WHERE urlID = ?", (urlID,))
-    row = cursor.fetchone()
-    connection.close()
-    if not row:
+    onchain = _get_onchain_post(urlID)
+    if not onchain:
         abort(404)
 
-    parts = row[0].split("|", 5)
+    parts = onchain[1].split("|", 5)
     text = sub(r"<[^>]+>", "", parts[3] if len(parts) > 3 else "")
     audio_dir = os.path.join(Settings.APP_ROOT_PATH, "static", "audio")
     os.makedirs(audio_dir, exist_ok=True)
@@ -84,3 +101,4 @@ def post_audio(urlID: int):
         tts = gTTS(text)
         tts.save(file_path)
     return send_file(file_path, mimetype="audio/mpeg")
+
