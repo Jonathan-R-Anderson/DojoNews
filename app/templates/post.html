@@ -24,6 +24,11 @@
 />
 <meta property="og:site_name" content="{{ appName }}" />
 
+<link
+    rel="stylesheet"
+    href="{{ url_for('static', filename='css/commentTree.css') }}"
+/>
+
 {% endblock head %} {% block body %}
 <script>
     let visitorID = parseInt("{{ idForRandomVisitor | safe }}");
@@ -91,6 +96,27 @@
                 </div>
             </h5>
             <h5 class="time">{{ timeStamp }}</h5>
+        </div>
+
+        <div class="flex w-full justify-end my-1">
+            <form
+                method="post"
+                action="{{ url_for('post.vote_post', urlID=urlID) }}"
+                class="mx-2"
+            >
+                <input
+                    type="hidden"
+                    name="csrf_token"
+                    value="{{ csrf_token() }}"
+                />
+                <button
+                    type="submit"
+                    class="hover:text-rose-500 duration-150 flex items-center"
+                >
+                    <i class="ti ti-arrow-big-down mr-1 text-2xl"></i>
+                    {{ downvotes }}
+                </button>
+            </form>
         </div>
 
         <div class="flex w-full justify-between my-1">

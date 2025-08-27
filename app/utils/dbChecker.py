@@ -142,8 +142,6 @@ def postsTable():
         cursor.execute("""select id from posts; """).fetchall()
 
         Log.info(f'Table: "posts" found in "{Settings.DB_POSTS_ROOT}"')
-
-        connection.close()
     except Exception:
         Log.error(f'Table: "posts" not found in "{Settings.DB_POSTS_ROOT}"')
 
@@ -168,9 +166,34 @@ def postsTable():
 
         connection.commit()
 
-        connection.close()
-
         Log.success(f'Table: "posts" created in "{Settings.DB_POSTS_ROOT}"')
+
+    # Ensure downvotes column exists
+    try:
+        cursor.execute("""select downvotes from posts limit 1""")
+    except Exception:
+        cursor.execute("alter table posts add column downvotes integer default 0")
+        connection.commit()
+        Log.success('Column: "downvotes" added to "posts" table')
+
+    # Ensure postDownvotes table exists
+    try:
+        cursor.execute("""select id from postDownvotes;""")
+    except Exception:
+        postDownvotesTable = """
+        create table if not exists postDownvotes(
+            "id" integer not null,
+            "postID" integer not null,
+            "user" text not null,
+            primary key("id" autoincrement),
+            unique(postID, user)
+        );"""
+
+        cursor.execute(postDownvotesTable)
+        connection.commit()
+        Log.success(f'Table: "postDownvotes" created in "{Settings.DB_POSTS_ROOT}"')
+
+    connection.close()
 
 
 def commentsTable():
