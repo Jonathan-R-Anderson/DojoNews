@@ -42,19 +42,18 @@ async function fetchMagnet(img) {
     try {
         const magnet = await contract.getImageMagnet(id);
         if (magnet) {
-            client.add(magnet, (torrent) => {
-                torrent.files[0].getBlob((err, blob) => {
-                    if (err) {
-                        console.error("Failed to load magnet", id, err);
-                        return;
-                    }
+            client.add(magnet, async (torrent) => {
+                try {
+                    const blob = await torrent.files[0].blob();
                     const newUrl = URL.createObjectURL(blob);
                     if (img.src && img.src.startsWith("blob:")) {
                         URL.revokeObjectURL(img.src);
                     }
                     img.src = newUrl;
                     img.dataset.magnetLoaded = "true";
-                });
+                } catch (err) {
+                    console.error("Failed to load magnet", id, err);
+                }
             });
         } else {
             console.warn("No magnet URI returned for", id);
