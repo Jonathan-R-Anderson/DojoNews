@@ -19,6 +19,10 @@ Sponsored by [CreateMyBanner](https://createmybanner.com)
 - **Analytics** – Tracks post views, visitor countries, and operating systems
 - **Security** - Google reCAPTCHA v3, secure authentication
 - **Advanced Logging** - Powered by [Tamga](https://github.com/dogukanurker/tamga) logger
+- **Member Tiers** – Metered paywall with on-chain accounting
+- **Sponsor Blocks** – First‑party ad slots with frequency capping
+- **Tip Jar** – Per‑author and per‑post tipping using Ethereum with a configurable sysop commission
+- **Torrent-backed Media** – Images are also distributed via BitTorrent for load balancing
 
 ## 🚀 Quick Start
 
@@ -38,6 +42,26 @@ uv run app.py
 ```
 
 Visit `http://localhost:1283` in your browser.
+
+### Blockchain
+
+User accounts, tipping and premium features can be managed on-chain via the
+`FlaskBlogPortal` contract located in [`contracts/FlaskBlog.sol`](contracts/FlaskBlog.sol).
+The sysop can set a commission on tips which is automatically routed to the
+sysop address. The provided Python helpers in [`app/blockchain`](app/blockchain)
+illustrate how to interact with a deployment on an Ethereum compatible network
+such as zkSync.
+
+### Static Files via BitTorrent
+
+All images in [`images/`](images/) are served normally by the Flask server but
+are also seeded over BitTorrent for additional distribution. A helper script
+[`scripts/seed_images.py`](scripts/seed_images.py) generates torrents for the
+images and seeds them using `libtorrent`. These torrent files can also be
+loaded into a uTorrent client so the server and peers share the load.
+Magnet URLs for the images are stored on-chain and fetched through the
+`/magnet/<id>` route, then rendered in the browser using WebTorrent and Blob
+URLs for load-balanced delivery.
 
 ### Default Admin Account
 - Username: `admin`

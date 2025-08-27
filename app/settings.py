@@ -143,3 +143,8 @@ class Settings:
     RECAPTCHA_SITE_KEY = ""
     RECAPTCHA_SECRET_KEY = ""
     RECAPTCHA_VERIFY_URL = "https://www.google.com/recaptcha/api/siteverify"
+
+    # Blockchain Configuration
+    BLOCKCHAIN_RPC_URL = "http://localhost:8545"
+    BLOCKCHAIN_CONTRACT_ADDRESS = "0x0000000000000000000000000000000000000000"
+    BLOCKCHAIN_ABI = []
