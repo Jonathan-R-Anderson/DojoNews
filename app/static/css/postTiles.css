@@ -1,16 +1,51 @@
 .post-tile {
     position: relative;
-    width: 20rem;
+    width: 100%;
     height: 20rem;
-    background-size: cover;
-    background-position: center;
+    overflow: hidden;
     border-radius: 0.5rem;
+    cursor: pointer;
     transition: transform 0.6s;
     transform-style: preserve-3d;
-    cursor: pointer;
     display: block;
 }
 
 .post-tile:hover {
     transform: rotateY(180deg);
+}
+
+.post-tile img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    backface-visibility: hidden;
+}
+
+.post-tile .tile-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 1rem;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.7), transparent);
+    color: #fff;
+    backface-visibility: hidden;
+}
+
+.post-tile .tile-category {
+    font-size: 0.875rem;
+    margin-bottom: 0.25rem;
+}
+
+.post-tile .tile-title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    line-height: 1.2;
 }
