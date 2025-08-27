@@ -6,8 +6,10 @@ pragma solidity ^0.8.20;
 contract ImageStorage {
     address public sysop;
     mapping(string => string) public imageMagnets;
+    mapping(string => bool) public blacklisted;
 
     event ImageMagnetSet(string indexed imageId, string magnetURI);
+    event ImageBlacklistUpdated(string indexed imageId, bool isBlacklisted);
 
     modifier onlySysop() {
         require(msg.sender == sysop, "only sysop");
@@ -23,8 +25,17 @@ contract ImageStorage {
         emit ImageMagnetSet(imageId, magnetURI);
     }
 
+    function setBlacklist(string calldata imageId, bool isBlacklisted) external onlySysop {
+        blacklisted[imageId] = isBlacklisted;
+        emit ImageBlacklistUpdated(imageId, isBlacklisted);
+    }
+
     function getImageMagnet(string calldata imageId) external view returns (string memory) {
         return imageMagnets[imageId];
+    }
+
+    function getImage(string calldata imageId) external view returns (string memory magnetURI, bool isBlacklisted) {
+        return (imageMagnets[imageId], blacklisted[imageId]);
     }
 }
 

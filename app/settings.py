@@ -356,24 +356,9 @@ class Settings:
     {
       "anonymous": false,
       "inputs": [
-        {
-          "indexed": true,
-          "internalType": "uint256",
-          "name": "postId",
-          "type": "uint256"
-        },
-        {
-          "indexed": true,
-          "internalType": "address",
-          "name": "author",
-          "type": "address"
-        },
-        {
-          "indexed": false,
-          "internalType": "string",
-          "name": "contentHash",
-          "type": "string"
-        }
+        {"indexed": true, "internalType": "uint256", "name": "postId", "type": "uint256"},
+        {"indexed": true, "internalType": "address", "name": "author", "type": "address"},
+        {"indexed": false, "internalType": "string", "name": "contentHash", "type": "string"}
       ],
       "name": "PostCreated",
       "type": "event"
@@ -381,42 +366,34 @@ class Settings:
     {
       "anonymous": false,
       "inputs": [
-        {
-          "indexed": true,
-          "internalType": "uint256",
-          "name": "postId",
-          "type": "uint256"
-        }
+        {"indexed": true, "internalType": "uint256", "name": "postId", "type": "uint256"}
       ],
       "name": "PostDeleted",
       "type": "event"
     },
     {
+      "anonymous": false,
       "inputs": [
-        {
-          "internalType": "string",
-          "name": "contentHash",
-          "type": "string"
-        }
+        {"indexed": true, "internalType": "uint256", "name": "postId", "type": "uint256"},
+        {"indexed": false, "internalType": "bool", "name": "isBlacklisted", "type": "bool"}
+      ],
+      "name": "PostBlacklistUpdated",
+      "type": "event"
+    },
+    {
+      "inputs": [
+        {"internalType": "string", "name": "contentHash", "type": "string"}
       ],
       "name": "createPost",
       "outputs": [
-        {
-          "internalType": "uint256",
-          "name": "postId",
-          "type": "uint256"
-        }
+        {"internalType": "uint256", "name": "postId", "type": "uint256"}
       ],
       "stateMutability": "nonpayable",
       "type": "function"
     },
     {
       "inputs": [
-        {
-          "internalType": "uint256",
-          "name": "postId",
-          "type": "uint256"
-        }
+        {"internalType": "uint256", "name": "postId", "type": "uint256"}
       ],
       "name": "deletePost",
       "outputs": [],
@@ -424,43 +401,55 @@ class Settings:
       "type": "function"
     },
     {
-      "inputs": [],
-      "name": "nextPostId",
+      "inputs": [
+        {"internalType": "uint256", "name": "postId", "type": "uint256"},
+        {"internalType": "bool", "name": "isBlacklisted", "type": "bool"}
+      ],
+      "name": "setBlacklist",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {"internalType": "uint256", "name": "postId", "type": "uint256"}
+      ],
+      "name": "getPost",
       "outputs": [
         {
-          "internalType": "uint256",
+          "components": [
+            {"internalType": "address", "name": "author", "type": "address"},
+            {"internalType": "string", "name": "contentHash", "type": "string"},
+            {"internalType": "bool", "name": "exists", "type": "bool"},
+            {"internalType": "bool", "name": "blacklisted", "type": "bool"}
+          ],
+          "internalType": "struct PostStorage.Post",
           "name": "",
-          "type": "uint256"
+          "type": "tuple"
         }
       ],
       "stateMutability": "view",
       "type": "function"
     },
     {
+      "inputs": [],
+      "name": "nextPostId",
+      "outputs": [
+        {"internalType": "uint256", "name": "", "type": "uint256"}
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
       "inputs": [
-        {
-          "internalType": "uint256",
-          "name": "",
-          "type": "uint256"
-        }
+        {"internalType": "uint256", "name": "", "type": "uint256"}
       ],
       "name": "posts",
       "outputs": [
-        {
-          "internalType": "address",
-          "name": "author",
-          "type": "address"
-        },
-        {
-          "internalType": "string",
-          "name": "contentHash",
-          "type": "string"
-        },
-        {
-          "internalType": "bool",
-          "name": "exists",
-          "type": "bool"
-        }
+        {"internalType": "address", "name": "author", "type": "address"},
+        {"internalType": "string", "name": "contentHash", "type": "string"},
+        {"internalType": "bool", "name": "exists", "type": "bool"},
+        {"internalType": "bool", "name": "blacklisted", "type": "bool"}
       ],
       "stateMutability": "view",
       "type": "function"
@@ -469,11 +458,7 @@ class Settings:
       "inputs": [],
       "name": "sysop",
       "outputs": [
-        {
-          "internalType": "address",
-          "name": "",
-          "type": "address"
-        }
+        {"internalType": "address", "name": "", "type": "address"}
       ],
       "stateMutability": "view",
       "type": "function"
@@ -493,30 +478,10 @@ class Settings:
     {
       "anonymous": false,
       "inputs": [
-        {
-          "indexed": true,
-          "internalType": "uint256",
-          "name": "commentId",
-          "type": "uint256"
-        },
-        {
-          "indexed": true,
-          "internalType": "uint256",
-          "name": "postId",
-          "type": "uint256"
-        },
-        {
-          "indexed": true,
-          "internalType": "address",
-          "name": "author",
-          "type": "address"
-        },
-        {
-          "indexed": false,
-          "internalType": "string",
-          "name": "content",
-          "type": "string"
-        }
+        {"indexed": true, "internalType": "uint256", "name": "commentId", "type": "uint256"},
+        {"indexed": true, "internalType": "uint256", "name": "postId", "type": "uint256"},
+        {"indexed": true, "internalType": "address", "name": "author", "type": "address"},
+        {"indexed": false, "internalType": "string", "name": "content", "type": "string"}
       ],
       "name": "CommentAdded",
       "type": "event"
@@ -524,76 +489,35 @@ class Settings:
     {
       "anonymous": false,
       "inputs": [
-        {
-          "indexed": true,
-          "internalType": "uint256",
-          "name": "commentId",
-          "type": "uint256"
-        }
+        {"indexed": true, "internalType": "uint256", "name": "commentId", "type": "uint256"}
       ],
       "name": "CommentDeleted",
       "type": "event"
     },
     {
+      "anonymous": false,
       "inputs": [
-        {
-          "internalType": "uint256",
-          "name": "postId",
-          "type": "uint256"
-        },
-        {
-          "internalType": "string",
-          "name": "content",
-          "type": "string"
-        }
+        {"indexed": true, "internalType": "uint256", "name": "commentId", "type": "uint256"},
+        {"indexed": false, "internalType": "bool", "name": "isBlacklisted", "type": "bool"}
+      ],
+      "name": "CommentBlacklistUpdated",
+      "type": "event"
+    },
+    {
+      "inputs": [
+        {"internalType": "uint256", "name": "postId", "type": "uint256"},
+        {"internalType": "string", "name": "content", "type": "string"}
       ],
       "name": "addComment",
       "outputs": [
-        {
-          "internalType": "uint256",
-          "name": "commentId",
-          "type": "uint256"
-        }
+        {"internalType": "uint256", "name": "commentId", "type": "uint256"}
       ],
       "stateMutability": "nonpayable",
       "type": "function"
     },
     {
       "inputs": [
-        {
-          "internalType": "uint256",
-          "name": "",
-          "type": "uint256"
-        }
-      ],
-      "name": "comments",
-      "outputs": [
-        {
-          "internalType": "address",
-          "name": "author",
-          "type": "address"
-        },
-        {
-          "internalType": "uint256",
-          "name": "postId",
-          "type": "uint256"
-        },
-        {
-          "internalType": "string",
-          "name": "content",
-          "type": "string"
-        }
-      ],
-      "stateMutability": "view",
-      "type": "function"
-    },
-    {
-      "inputs": [
-        {
-          "internalType": "uint256",
-          "name": "commentId",
-          "type": "uint256"
-        }
+        {"internalType": "uint256", "name": "commentId", "type": "uint256"}
       ],
       "name": "deleteComment",
       "outputs": [],
@@ -601,14 +525,57 @@ class Settings:
       "type": "function"
     },
     {
+      "inputs": [
+        {"internalType": "uint256", "name": "commentId", "type": "uint256"},
+        {"internalType": "bool", "name": "isBlacklisted", "type": "bool"}
+      ],
+      "name": "setBlacklist",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {"internalType": "uint256", "name": "commentId", "type": "uint256"}
+      ],
+      "name": "getComment",
+      "outputs": [
+        {
+          "components": [
+            {"internalType": "address", "name": "author", "type": "address"},
+            {"internalType": "uint256", "name": "postId", "type": "uint256"},
+            {"internalType": "string", "name": "content", "type": "string"},
+            {"internalType": "bool", "name": "exists", "type": "bool"},
+            {"internalType": "bool", "name": "blacklisted", "type": "bool"}
+          ],
+          "internalType": "struct CommentStorage.Comment",
+          "name": "",
+          "type": "tuple"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
       "inputs": [],
       "name": "nextCommentId",
       "outputs": [
-        {
-          "internalType": "uint256",
-          "name": "",
-          "type": "uint256"
-        }
+        {"internalType": "uint256", "name": "", "type": "uint256"}
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {"internalType": "uint256", "name": "", "type": "uint256"}
+      ],
+      "name": "comments",
+      "outputs": [
+        {"internalType": "address", "name": "author", "type": "address"},
+        {"internalType": "uint256", "name": "postId", "type": "uint256"},
+        {"internalType": "string", "name": "content", "type": "string"},
+        {"internalType": "bool", "name": "exists", "type": "bool"},
+        {"internalType": "bool", "name": "blacklisted", "type": "bool"}
       ],
       "stateMutability": "view",
       "type": "function"
@@ -617,11 +584,7 @@ class Settings:
       "inputs": [],
       "name": "sysop",
       "outputs": [
-        {
-          "internalType": "address",
-          "name": "",
-          "type": "address"
-        }
+        {"internalType": "address", "name": "", "type": "address"}
       ],
       "stateMutability": "view",
       "type": "function"
@@ -766,72 +729,25 @@ class Settings:
     {
       "anonymous": false,
       "inputs": [
-        {
-          "indexed": true,
-          "internalType": "string",
-          "name": "imageId",
-          "type": "string"
-        },
-        {
-          "indexed": false,
-          "internalType": "string",
-          "name": "magnetURI",
-          "type": "string"
-        }
+        {"indexed": true, "internalType": "string", "name": "imageId", "type": "string"},
+        {"indexed": false, "internalType": "string", "name": "magnetURI", "type": "string"}
       ],
       "name": "ImageMagnetSet",
       "type": "event"
     },
     {
+      "anonymous": false,
       "inputs": [
-        {
-          "internalType": "string",
-          "name": "imageId",
-          "type": "string"
-        }
+        {"indexed": true, "internalType": "string", "name": "imageId", "type": "string"},
+        {"indexed": false, "internalType": "bool", "name": "isBlacklisted", "type": "bool"}
       ],
-      "name": "getImageMagnet",
-      "outputs": [
-        {
-          "internalType": "string",
-          "name": "",
-          "type": "string"
-        }
-      ],
-      "stateMutability": "view",
-      "type": "function"
+      "name": "ImageBlacklistUpdated",
+      "type": "event"
     },
     {
       "inputs": [
-        {
-          "internalType": "string",
-          "name": "",
-          "type": "string"
-        }
-      ],
-      "name": "imageMagnets",
-      "outputs": [
-        {
-          "internalType": "string",
-          "name": "",
-          "type": "string"
-        }
-      ],
-      "stateMutability": "view",
-      "type": "function"
-    },
-    {
-      "inputs": [
-        {
-          "internalType": "string",
-          "name": "imageId",
-          "type": "string"
-        },
-        {
-          "internalType": "string",
-          "name": "magnetURI",
-          "type": "string"
-        }
+        {"internalType": "string", "name": "imageId", "type": "string"},
+        {"internalType": "string", "name": "magnetURI", "type": "string"}
       ],
       "name": "setImageMagnet",
       "outputs": [],
@@ -839,14 +755,65 @@ class Settings:
       "type": "function"
     },
     {
+      "inputs": [
+        {"internalType": "string", "name": "imageId", "type": "string"},
+        {"internalType": "bool", "name": "isBlacklisted", "type": "bool"}
+      ],
+      "name": "setBlacklist",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {"internalType": "string", "name": "imageId", "type": "string"}
+      ],
+      "name": "getImageMagnet",
+      "outputs": [
+        {"internalType": "string", "name": "", "type": "string"}
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {"internalType": "string", "name": "imageId", "type": "string"}
+      ],
+      "name": "getImage",
+      "outputs": [
+        {"internalType": "string", "name": "magnetURI", "type": "string"},
+        {"internalType": "bool", "name": "isBlacklisted", "type": "bool"}
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {"internalType": "string", "name": "", "type": "string"}
+      ],
+      "name": "imageMagnets",
+      "outputs": [
+        {"internalType": "string", "name": "", "type": "string"}
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {"internalType": "string", "name": "", "type": "string"}
+      ],
+      "name": "blacklisted",
+      "outputs": [
+        {"internalType": "bool", "name": "", "type": "bool"}
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
       "inputs": [],
       "name": "sysop",
       "outputs": [
-        {
-          "internalType": "address",
-          "name": "",
-          "type": "address"
-        }
+        {"internalType": "address", "name": "", "type": "address"}
       ],
       "stateMutability": "view",
       "type": "function"

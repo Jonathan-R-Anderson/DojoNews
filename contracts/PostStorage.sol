@@ -10,6 +10,7 @@ contract PostStorage {
         address author;
         string contentHash;
         bool exists;
+        bool blacklisted;
     }
 
     uint256 public nextPostId;
@@ -17,6 +18,7 @@ contract PostStorage {
 
     event PostCreated(uint256 indexed postId, address indexed author, string contentHash);
     event PostDeleted(uint256 indexed postId);
+    event PostBlacklistUpdated(uint256 indexed postId, bool isBlacklisted);
 
     modifier onlySysop() {
         require(msg.sender == sysop, "only sysop");
@@ -29,7 +31,7 @@ contract PostStorage {
 
     function createPost(string calldata contentHash) external returns (uint256 postId) {
         postId = nextPostId++;
-        posts[postId] = Post(msg.sender, contentHash, true);
+        posts[postId] = Post(msg.sender, contentHash, true, false);
         emit PostCreated(postId, msg.sender, contentHash);
     }
 
@@ -39,6 +41,19 @@ contract PostStorage {
         require(msg.sender == p.author || msg.sender == sysop, "not authorized");
         delete posts[postId];
         emit PostDeleted(postId);
+    }
+
+    function setBlacklist(uint256 postId, bool isBlacklisted) external onlySysop {
+        Post storage p = posts[postId];
+        require(p.exists, "no post");
+        p.blacklisted = isBlacklisted;
+        emit PostBlacklistUpdated(postId, isBlacklisted);
+    }
+
+    function getPost(uint256 postId) external view returns (Post memory) {
+        Post memory p = posts[postId];
+        require(p.exists, "no post");
+        return p;
     }
 }
 
