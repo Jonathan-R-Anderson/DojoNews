@@ -11,10 +11,11 @@ magnetBlueprint = Blueprint("magnet", __name__)
 @magnetBlueprint.route("/magnet/<string:image_id>")
 def fetch_magnet(image_id: str):
     """Fetch the magnet URL for ``image_id`` from the smart contract."""
+    contract = Settings.BLOCKCHAIN_CONTRACTS["ImageStorage"]
     cfg = BlockchainConfig(
         rpc_url=Settings.BLOCKCHAIN_RPC_URL,
-        contract_address=Settings.BLOCKCHAIN_CONTRACT_ADDRESS,
-        abi=Settings.BLOCKCHAIN_ABI,
+        contract_address=contract["address"],
+        abi=contract["abi"],
     )
     magnet = get_image_magnet(cfg, image_id)
     return jsonify({"magnet": magnet})
