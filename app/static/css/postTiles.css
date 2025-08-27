@@ -1,0 +1,15 @@
+.post-tile {
+    position: relative;
+    width: 20rem;
+    height: 20rem;
+    background-size: cover;
+    background-position: center;
+    border-radius: 0.5rem;
+    transition: transform 0.6s;
+    transform-style: preserve-3d;
+    cursor: pointer;
+}
+
+.post-tile:hover {
+    transform: rotateY(180deg);
+}
