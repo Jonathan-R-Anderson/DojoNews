@@ -34,7 +34,8 @@ function fetchCommentTree() {
 
 if (typeof postUrlID !== "undefined") {
   fetchCommentTree();
-  setInterval(fetchCommentTree, 5000);
+  const evtSource = new EventSource(`/post/${postUrlID}/comments/stream`);
+  evtSource.onmessage = () => fetchCommentTree();
 }
 
 function renderCommentTree(data) {
@@ -80,15 +81,23 @@ function renderCommentTree(data) {
     .angle((d) => d.x)
     .radius((d) => d.y);
 
-  svg
+  const links = svg
     .append("g")
-    .selectAll("path")
+    .selectAll("g")
     .data(root.links())
-    .join("path")
+    .join("g");
+
+  links
+    .append("path")
     .attr("class", "link")
+    .attr("d", linkGen);
+
+  links
+    .append("path")
+    .attr("class", "link-hover")
     .attr("d", linkGen)
-    .on("mouseover", (_, d) => showBranch(d.target))
-    .on("mouseout", showAll);
+    .on("mouseenter", (_, d) => showBranch(d.target))
+    .on("mouseleave", showAll);
 
   svg
     .append("g")
@@ -125,7 +134,8 @@ function renderCommentTree(data) {
     document.querySelectorAll("[data-comment-id]").forEach((el) => {
       el.style.display = "";
     });
-    document.getElementById("branch-legend").textContent = "";
+    document.getElementById("branch-legend").textContent =
+      "Hover near a branch to see details";
   }
 
   showAll();
