@@ -54,8 +54,8 @@ class Settings:
     APP_NAME = "flaskBlog"
     APP_VERSION = "3.0.0dev"
     APP_ROOT_PATH = "."
-    APP_HOST = "localhost"
-    APP_PORT = 1283
+    APP_HOST = "0.0.0.0"
+    APP_PORT = 80
     DEBUG_MODE = True
 
     # Feature Toggles
@@ -146,14 +146,13 @@ class Settings:
     RECAPTCHA_VERIFY_URL = "https://www.google.com/recaptcha/api/siteverify"
 
     # Blockchain Configuration
-    BLOCKCHAIN_RPC_URL = "http://localhost:8545"
-    BLOCKCHAIN_CONTRACT_ADDRESS = "0x0000000000000000000000000000000000000000"
+    BLOCKCHAIN_RPC_URL = "https://mainnet.era.zksync.io"
     BLOCKCHAIN_ABI = []
     ADMIN_WALLET_ADDRESS = "0xB2b36AaD18d7be5d4016267BC4cCec2f12a64b6e"
     # Addresses and ABIs for individual smart contracts managed by the sysop
     BLOCKCHAIN_CONTRACTS = {
         "UserRegistry": {
-            "address": "0x0000000000000000000000000000000000000000",
+            "address": "0x43E8B0B9D20D0E4E3Ca681670D59c4416244986d",
             "abi": json.loads(
                 '''[
     {
