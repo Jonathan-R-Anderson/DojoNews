@@ -38,9 +38,7 @@
 <div
     id="posts-container"
     class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mx-auto w-11/12 md:w-11/12 lg:w-10/12 2xl:w-9/12 mt-6"
->
-    {% include 'components/postCards.html' %}
-</div>
+></div>
 
 <div class="text-center mt-4 mb-2 text-xs font-medium">
     <div class="mb-1">
@@ -55,13 +53,5 @@
     <br />
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/ethers@5.7.2/dist/ethers.umd.min.js"></script>
-<script>
-    const postContractAddress = "{{ post_contract_address }}";
-    const postContractAbi = {{ post_contract_abi | tojson }};
-
-    document.addEventListener('DOMContentLoaded', () => {
-        // placeholder for future on-chain post loading
-    });
-</script>
+<script src="{{ url_for('static', filename='js/loadPosts.js') }}"></script>
 {% endblock body %}
