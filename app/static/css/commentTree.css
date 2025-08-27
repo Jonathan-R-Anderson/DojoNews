@@ -29,15 +29,13 @@
 }
 
 #comment-tree .node {
-  fill: #f43f5e;
-  stroke: #fb7185;
   stroke-width: 1.5px;
   cursor: pointer;
-  transition: fill 0.2s;
+  transition: stroke-width 0.2s, fill 0.2s;
 }
 
 #comment-tree .node:hover {
-  fill: #be123c;
+  stroke-width: 2.5px;
 }
 
 #comment-tree #branch-legend {
