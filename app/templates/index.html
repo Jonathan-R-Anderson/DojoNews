@@ -52,6 +52,8 @@
     {{ translations.about.credits | safe }}
     <br />
 </div>
-
-<script src="{{ url_for('static', filename='js/loadPosts.js') }}"></script>
 {% endblock body %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/loadPosts.js') }}"></script>
+{% endblock scripts %}
