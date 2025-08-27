@@ -2,9 +2,18 @@ document.addEventListener('DOMContentLoaded', () => {
   const root = document.documentElement;
 
   // Theme handling
+  const initialTheme = root.getAttribute('data-theme');
   const storedTheme = localStorage.getItem('theme');
   const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-  const theme = storedTheme || (prefersDark ? 'dark' : 'light');
+
+  let theme = storedTheme || initialTheme || (prefersDark ? 'dark' : 'light');
+
+  // If the server provided a different theme, sync it to localStorage
+  if (initialTheme && initialTheme !== storedTheme) {
+    theme = initialTheme;
+    localStorage.setItem('theme', theme);
+  }
+
   root.setAttribute('data-theme', theme);
 
   const themeToggle = document.getElementById('theme-toggle');
