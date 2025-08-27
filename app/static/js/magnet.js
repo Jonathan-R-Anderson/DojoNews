@@ -15,10 +15,15 @@
             document.head.appendChild(s);
         });
     }
-    const provider = new ethers.providers.JsonRpcProvider(rpcUrl);
+    const url = typeof window !== "undefined" ? window.rpcUrl : undefined;
+    if (!url) {
+        console.error("RPC URL is not defined");
+        return;
+    }
+    const provider = new ethers.providers.JsonRpcProvider(url);
     const contract = new ethers.Contract(
-        postContractAddress,
-        postContractAbi,
+        window.postContractAddress,
+        window.postContractAbi,
         provider
     );
     const client = new WebTorrent();
