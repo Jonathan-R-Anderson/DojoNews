@@ -26,14 +26,26 @@ window.addEventListener('DOMContentLoaded', () => {
             const category = form.postCategory.value;
             const magnet = magnetField ? magnetField.value.trim() : '';
             const payload = `${title}|${tags}|${abs}|${content}|${category}|${magnet}`;
-            const contentHash = ethers.utils.sha256(
-                ethers.utils.toUtf8Bytes(payload)
-            );
             const provider = new ethers.providers.Web3Provider(window.ethereum);
             const signer = provider.getSigner();
             const contract = new ethers.Contract(postContractAddress, postContractAbi, signer);
-            const tx = await contract.createPost(contentHash, magnet);
-            await tx.wait();
+            const tx = await contract.createPost(payload, magnet);
+            const receipt = await tx.wait();
+            let postId;
+            try {
+                const event = receipt.events.find(e => e.event === 'PostCreated');
+                postId = event ? event.args.postId.toNumber() : null;
+            } catch {
+                postId = null;
+            }
+            if (postId && magnet) {
+                try {
+                    const tx2 = await contract.setImageMagnet(`${postId}.png`, magnet);
+                    await tx2.wait();
+                } catch (err) {
+                    console.error('Failed to set image magnet', err);
+                }
+            }
             window.location.href = '/';
         } catch (err) {
             console.error('Failed to create post on-chain', err);

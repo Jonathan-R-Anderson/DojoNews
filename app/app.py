@@ -46,9 +46,6 @@ from routes.changeProfilePicture import (
 from routes.changeUserName import (
     changeUserNameBlueprint,
 )
-from routes.createPost import (
-    createPostBlueprint,
-)
 from routes.dashboard import (
     dashboardBlueprint,
 )
@@ -281,7 +278,6 @@ app.register_blueprint(editPostBlueprint)
 app.register_blueprint(dashboardBlueprint)
 app.register_blueprint(searchBarBlueprint)
 app.register_blueprint(adminPanelBlueprint)
-app.register_blueprint(createPostBlueprint)
 app.register_blueprint(verifyUserBlueprint)
 app.register_blueprint(setLanguageBlueprint)
 app.register_blueprint(setThemeBlueprint)

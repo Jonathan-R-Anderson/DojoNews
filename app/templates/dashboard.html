@@ -127,9 +127,7 @@
 {% else %}
 <p class="text-center mt-32 select-none">
     {{translations.dashboard.noPost}}
-    <a href="/createpost" class="hover:text-rose-500 duration-150 font-medium"
-        >{{translations.dashboard.create}}</a
-    >?
+    {{translations.dashboard.create}}?
 </p>
 {% endif %} {% endif %} {% if showComments and not request.path ==
 "/admin/posts" %}
