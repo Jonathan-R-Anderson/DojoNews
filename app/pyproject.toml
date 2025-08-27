@@ -17,5 +17,6 @@ dependencies = [
     "bleach",
     "html2text",
     "networkx",
+    "nltk",
     "scikit-learn",
 ]
