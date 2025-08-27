@@ -1,6 +1,9 @@
 {% extends 'layout.html'%}
 {%block head%}
 <title>{{translations.login.title}}</title>
+<script>
+    const csrfToken = "{{ csrf_token() }}";
+</script>
 <script src="{{ url_for('static', filename='js/metamaskLogin.js') }}"></script>
 {% endblock head %}
 {%block body%}

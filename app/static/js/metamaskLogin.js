@@ -13,7 +13,7 @@ async function loginWithMetaMask(redirectUrl) {
         });
         const resp = await fetch(`/login?redirect=${encodeURIComponent(redirectUrl)}`, {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
+            headers: { 'Content-Type': 'application/json', 'X-CSRFToken': csrfToken },
             body: JSON.stringify({ address, signature }),
         });
         const data = await resp.json();
