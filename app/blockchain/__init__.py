@@ -107,3 +107,17 @@ def get_image_magnet(cfg: BlockchainConfig, image_id: str) -> str:
     except Exception:
         return ""
 
+
+# ---------------------------------------------------------------------------
+# Post storage helpers
+# ---------------------------------------------------------------------------
+
+def create_post(cfg: BlockchainConfig, content_hash: str) -> str:
+    """Create a post on-chain storing a hash of its content."""
+    contract = _connect(cfg)
+    sysop = contract.functions.sysop().call()
+    tx = contract.functions.createPost(content_hash).build_transaction(
+        {"from": sysop, "nonce": 0}
+    )
+    return tx.hex()
+
