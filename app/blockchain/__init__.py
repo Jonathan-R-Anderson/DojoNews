@@ -1,9 +1,9 @@
 """Blockchain interaction utilities for FlaskBlog.
 
-These helpers show how the application could interact with the
-`FlaskBlogPortal` contract deployed on an Ethereum-compatible network
-(e.g. zkSync). They do not form a complete replacement for the existing
-SQLite database but provide an outline for migration.
+These helpers show how the application could interact with the suite of
+smart contracts (``UserRegistry``, ``TipJar``, ``ImageStorage`` and others)
+that replace the traditional database. They provide an outline for
+migration to a fully on-chain architecture.
 """
 from dataclasses import dataclass
 from typing import Optional
@@ -25,16 +25,44 @@ def _connect(cfg: BlockchainConfig) -> Contract:
     return w3.eth.contract(address=cfg.contract_address, abi=cfg.abi)
 
 
+# ---------------------------------------------------------------------------
+# User registry helpers
+# ---------------------------------------------------------------------------
+
 def register_user(cfg: BlockchainConfig, user_address: str, tier: int) -> str:
-    """Register a user on-chain. Tier values correspond to the `Tier` enum."""
+    """Register a user on-chain. Tier values correspond to the ``Tier`` enum."""
     contract = _connect(cfg)
     sysop = contract.functions.sysop().call()
-    tx = contract.functions.registerUser(Web3.to_checksum_address(user_address), tier).build_transaction({
+    tx = contract.functions.register(Web3.to_checksum_address(user_address), tier).build_transaction({
         "from": sysop,
         "nonce": 0,
     })
     return tx.hex()
 
+
+def set_tier(cfg: BlockchainConfig, user_address: str, tier: int) -> str:
+    contract = _connect(cfg)
+    sysop = contract.functions.sysop().call()
+    tx = contract.functions.setTier(Web3.to_checksum_address(user_address), tier).build_transaction({
+        "from": sysop,
+        "nonce": 0,
+    })
+    return tx.hex()
+
+
+def record_view(cfg: BlockchainConfig, user_address: str) -> str:
+    contract = _connect(cfg)
+    sysop = contract.functions.sysop().call()
+    tx = contract.functions.recordView(Web3.to_checksum_address(user_address)).build_transaction({
+        "from": sysop,
+        "nonce": 0,
+    })
+    return tx.hex()
+
+
+# ---------------------------------------------------------------------------
+# Tip jar helpers
+# ---------------------------------------------------------------------------
 
 def send_tip(cfg: BlockchainConfig, author: str, post_id: bytes, amount_wei: int) -> str:
     contract = _connect(cfg)
@@ -47,7 +75,6 @@ def send_tip(cfg: BlockchainConfig, author: str, post_id: bytes, amount_wei: int
 
 
 def set_sysop_tip_bps(cfg: BlockchainConfig, bps: int) -> str:
-    """Set the tip percentage (in basis points) that goes to the sysop."""
     contract = _connect(cfg)
     sysop = contract.functions.sysop().call()
     tx = contract.functions.setSysopTipBps(bps).build_transaction({
@@ -56,6 +83,10 @@ def set_sysop_tip_bps(cfg: BlockchainConfig, bps: int) -> str:
     })
     return tx.hex()
 
+
+# ---------------------------------------------------------------------------
+# Image magnet helpers
+# ---------------------------------------------------------------------------
 
 def set_image_magnet(cfg: BlockchainConfig, image_id: str, magnet_uri: str) -> str:
     """Store the magnet URI for a static image on-chain."""
@@ -72,3 +103,4 @@ def get_image_magnet(cfg: BlockchainConfig, image_id: str) -> str:
     """Fetch the magnet URI for a static image from the chain."""
     contract = _connect(cfg)
     return contract.functions.getImageMagnet(image_id).call()
+
