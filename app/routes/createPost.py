@@ -10,6 +10,7 @@ from utils.generateUrlIdFromPost import generateurlID
 from utils.log import Log
 from utils.time import currentTimeStamp
 from utils.categories import get_categories, DEFAULT_CATEGORIES
+from blockchain import BlockchainConfig, set_image_magnet
 
 createPostBlueprint = Blueprint("createPost", __name__)
 
@@ -40,6 +41,7 @@ def createPost():
             postAbstract = request.form["postAbstract"]
             postContent = request.form["postContent"]
             postBanner = request.files["postBanner"].read()
+            bannerMagnet = request.form.get("postBannerMagnet", "")
             selectedCategory = request.form.get("postCategory", "").strip()
             newCategory = request.form.get("newCategory", "").strip()
 
@@ -135,10 +137,25 @@ def createPost():
                         postAbstract,
                     ),
                 )
+                post_id = cursor.lastrowid
                 connection.commit()
                 Log.success(
                     f'Post: "{postTitle}" posted by "{session["userName"]}"',
                 )
+
+                if bannerMagnet:
+                    contract = Settings.BLOCKCHAIN_CONTRACTS["ImageStorage"]
+                    cfg = BlockchainConfig(
+                        rpc_url=Settings.BLOCKCHAIN_RPC_URL,
+                        contract_address=contract["address"],
+                        abi=contract["abi"],
+                    )
+                    try:
+                        set_image_magnet(cfg, f"{post_id}.png", bannerMagnet)
+                    except Exception as e:
+                        Log.error(
+                            f"Failed to store magnet for post {post_id}: {e}"
+                        )
 
                 addPoints(20, session["userName"])
                 flashMessage(
