@@ -40,6 +40,9 @@
             link.appendChild(overlay);
             container.appendChild(link);
         }
+        if (typeof window.loadMagnets === 'function') {
+            window.loadMagnets();
+        }
     } catch (err) {
         console.error('Failed to load posts from blockchain', err);
     }
