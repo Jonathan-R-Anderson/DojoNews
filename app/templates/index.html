@@ -23,6 +23,7 @@
     name="twitter:image"
     content="https://raw.githubusercontent.com/DogukanUrker/flaskBlog/main/images/Icon180.ico"
 />
+<link rel="stylesheet" href="{{ url_for('static', filename='css/postTiles.css') }}" />
 {% endblock head %} {% block body %}
 
 <div
@@ -75,77 +76,20 @@
                 } catch (err) {
                     console.error(err);
                 }
-                const card = document.createElement('div');
-                card.className = 'flex flex-col bg-base-200 rounded-box w-[20rem] h-[30rem] hover:scale-105 duration-150';
 
-                const imgWrap = document.createElement('div');
-                imgWrap.className = 'overflow-hidden flex-shrink-0';
-                const img = document.createElement('img');
-                img.className = 'h-48 w-full group-hover:scale-110 transition duration-150 object-cover rounded-t-md select-none';
-                imgWrap.appendChild(img);
-                card.appendChild(imgWrap);
+                const card = document.createElement('a');
+                card.href = meta.url || '#';
+                card.className = 'post-tile';
 
                 if (meta.magnet) {
                     try {
                         const imgRes = await fetch(meta.magnet);
                         const blob = await imgRes.blob();
-                        img.src = URL.createObjectURL(blob);
+                        card.style.backgroundImage = `url(${URL.createObjectURL(blob)})`;
                     } catch (err) {
                         console.error(err);
                     }
                 }
-
-                const body = document.createElement('div');
-                body.className = 'flex flex-col gap-4 p-6 flex-grow';
-
-                const cat = document.createElement('h3');
-                cat.className = 'text-secondary font-medium text-sm line-clamp-1';
-                cat.textContent = meta.category || '';
-                body.appendChild(cat);
-
-                const link = document.createElement('a');
-                link.href = meta.url || '#';
-                link.className = 'link link-hover text-xl font-bold line-clamp-2 leading-tight';
-                link.textContent = meta.title || `Post ${i}`;
-                body.appendChild(link);
-
-                const abstractDiv = document.createElement('div');
-                abstractDiv.className = 'overflow-hidden flex-grow';
-                const abstractSpan = document.createElement('span');
-                abstractSpan.className = 'text-sm leading-relaxed line-clamp-4 break-words';
-                abstractSpan.textContent = meta.abstract || '';
-                abstractDiv.appendChild(abstractSpan);
-                body.appendChild(abstractDiv);
-
-                const footer = document.createElement('div');
-                footer.className = 'flex justify-between items-center mt-auto pt-2 w-full';
-                const authorLink = document.createElement('a');
-                authorLink.href = '/user/' + (meta.author || onchain.author);
-                authorLink.className = 'flex items-center gap-2 min-w-0';
-
-                const avatar = document.createElement('img');
-                avatar.alt = 'Profile';
-                avatar.src = meta.author_picture || '';
-                avatar.className = 'w-8 h-8 rounded object-cover flex-shrink-0';
-                authorLink.appendChild(avatar);
-
-                const nameSpan = document.createElement('span');
-                nameSpan.className = 'font-medium text-sm truncate';
-                nameSpan.textContent = meta.author || onchain.author;
-                authorLink.appendChild(nameSpan);
-
-                const dateSpan = document.createElement('span');
-                dateSpan.className = 'date text-sm flex-shrink-0';
-                if (meta.timestamp) {
-                    dateSpan.textContent = new Date(meta.timestamp * 1000).toLocaleDateString();
-                } else {
-                    dateSpan.textContent = '';
-                }
-
-                footer.appendChild(authorLink);
-                footer.appendChild(dateSpan);
-                body.appendChild(footer);
-                card.appendChild(body);
 
                 container.appendChild(card);
             }
