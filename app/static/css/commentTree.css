@@ -14,7 +14,7 @@
 
 #comment-tree .link {
   stroke: #9ca3af;
-  stroke-width: 1.5px;
+  stroke-width: 3px;
   fill: none;
 }
 
@@ -45,4 +45,20 @@
   pointer-events: none;
   font-size: 0.875rem;
   z-index: 1;
+}
+
+[data-comment-id] {
+  transition: max-height 0.4s ease, opacity 0.4s ease, margin 0.4s ease,
+    padding 0.4s ease;
+  max-height: 1000px;
+  overflow: hidden;
+}
+
+.hidden-comment {
+  opacity: 0;
+  max-height: 0;
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
 }

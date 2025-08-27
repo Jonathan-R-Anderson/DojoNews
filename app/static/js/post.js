@@ -116,11 +116,16 @@ function renderCommentTree(data) {
 
   container.on("mouseleave", showAll);
 
-  function showBranch(d) {
-    const ids = d.descendants().map((n) => n.data.id);
+  function animateComments(ids) {
     document.querySelectorAll("[data-comment-id]").forEach((el) => {
-      el.style.display = ids.includes(parseInt(el.dataset.commentId)) ? "" : "none";
+      const show = ids.has(parseInt(el.dataset.commentId));
+      el.classList.toggle("hidden-comment", !show);
     });
+  }
+
+  function showBranch(d) {
+    const ids = new Set(d.descendants().map((n) => n.data.id));
+    animateComments(ids);
     const keywords = d.data.keywords || [];
     const sentiments = d.descendants().map((n) => n.data.sentiment || 0);
     const avgSent =
@@ -133,11 +138,7 @@ function renderCommentTree(data) {
   }
 
   function showAll() {
-    document.querySelectorAll("[data-comment-id]").forEach((el) => {
-      el.style.display = treeCommentIds.has(parseInt(el.dataset.commentId))
-        ? ""
-        : "none";
-    });
+    animateComments(treeCommentIds);
     legend.textContent = "Hover near a branch to see details";
   }
 
