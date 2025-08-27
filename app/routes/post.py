@@ -1,5 +1,7 @@
 import sqlite3
 import queue
+import os
+from re import sub
 from typing import Dict
 
 from flask import (
@@ -13,7 +15,9 @@ from flask import (
     session,
     stream_with_context,
     url_for,
+    send_file,
 )
+from gtts import gTTS
 from settings import Settings
 from utils.addPoints import addPoints
 from utils.calculateReadTime import calculateReadTime
@@ -287,6 +291,30 @@ def vote_post(urlID):
     connection.close()
 
     return redirect(request.referrer or "/")
+
+
+@postBlueprint.route("/post/<urlID>/audio")
+def post_audio(urlID):
+    Log.database(f"Connecting to '{Settings.DB_POSTS_ROOT}' database")
+
+    connection = sqlite3.connect(Settings.DB_POSTS_ROOT)
+    connection.set_trace_callback(Log.database)
+    cursor = connection.cursor()
+    cursor.execute("select content from posts where urlID = ?", (urlID,))
+    row = cursor.fetchone()
+    connection.close()
+    if not row:
+        abort(404)
+
+    text = sub(r"<[^>]+>", "", row[0])
+    audio_dir = os.path.join(Settings.APP_ROOT_PATH, "static", "audio")
+    os.makedirs(audio_dir, exist_ok=True)
+    file_path = os.path.join(audio_dir, f"{urlID}.mp3")
+    if not os.path.exists(file_path):
+        tts = gTTS(text)
+        tts.save(file_path)
+
+    return send_file(file_path, mimetype="audio/mpeg")
 
 
 @postBlueprint.route("/post/<urlID>/comment-tree")
