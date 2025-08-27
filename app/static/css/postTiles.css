@@ -8,6 +8,7 @@
     transition: transform 0.6s;
     transform-style: preserve-3d;
     cursor: pointer;
+    display: block;
 }
 
 .post-tile:hover {
