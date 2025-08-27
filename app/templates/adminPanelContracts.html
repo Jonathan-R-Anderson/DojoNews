@@ -1,11 +1,11 @@
 {% extends 'layout.html' %}
 {% block head %}
-<title>{{ translations.adminPanelContracts.title | default('Admin Panel - Contracts') }}</title>
+<title>{{ translations.get('adminPanelContracts', {}).get('title', 'Admin Panel - Contracts') }}</title>
 {% endblock head %}
 {% block body %}
 <div class="w-fit mx-auto mt-32 text-center text-2xl font-medium">
     <h1 class="my-4">
-        {{ translations.adminPanelContracts.title | default('Admin Panel - Contracts') }}
+        {{ translations.get('adminPanelContracts', {}).get('title', 'Admin Panel - Contracts') }}
     </h1>
     {% for name, data in contracts.items() %}
     <div class="my-4">
