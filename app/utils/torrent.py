@@ -21,3 +21,18 @@ def seed_file(file_path: str) -> str:
     ti = lt.torrent_info(torrent_path)
     _session.add_torrent({"ti": ti, "save_path": base_path})
     return lt.make_magnet_uri(ti)
+
+
+def ensure_seeding(directory: str) -> None:
+    """Seed any ``.torrent`` files found in ``directory``."""
+    if not os.path.isdir(directory):
+        return
+    for name in os.listdir(directory):
+        if not name.endswith(".torrent"):
+            continue
+        torrent_path = os.path.join(directory, name)
+        try:
+            ti = lt.torrent_info(torrent_path)
+            _session.add_torrent({"ti": ti, "save_path": directory})
+        except Exception:
+            continue
