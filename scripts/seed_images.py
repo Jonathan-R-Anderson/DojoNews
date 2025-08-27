@@ -14,10 +14,11 @@ def seed_images(image_dir: str = "images") -> None:
     """
     ses = lt.session()
     ses.listen_on(6881, 6891)
+    contract = Settings.BLOCKCHAIN_CONTRACTS["ImageStorage"]
     cfg = BlockchainConfig(
         rpc_url=Settings.BLOCKCHAIN_RPC_URL,
-        contract_address=Settings.BLOCKCHAIN_CONTRACT_ADDRESS,
-        abi=Settings.BLOCKCHAIN_ABI,
+        contract_address=contract["address"],
+        abi=contract["abi"],
     )
     for img in Path(image_dir).glob("*"):
         if img.is_file():
