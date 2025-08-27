@@ -18,7 +18,7 @@ purposes without permission is strictly prohibited.
 
 from json import load
 
-from flask import Blueprint, redirect, render_template, session
+from flask import Blueprint, redirect, render_template, session, request
 from settings import Settings
 from utils.log import Log
 from utils.paginate import paginate_query
@@ -28,7 +28,7 @@ indexBlueprint = Blueprint("index", __name__)
 
 @indexBlueprint.route("/")
 @indexBlueprint.route("/by=<by>/sort=<sort>")
-def index(by="hot", sort="desc"):
+def index(by="views", sort="desc"):
     """
     This function maps the home page route ("/") to the index function.
 
@@ -69,10 +69,13 @@ def index(by="hot", sort="desc"):
         select_query,
     )
 
+    original_by = by
     if by == "timeStamp":
-        by = "create"
+        translation_by = "create"
     elif by == "lastEditTimeStamp":
-        by = "edit"
+        translation_by = "edit"
+    else:
+        translation_by = by
 
     language = session.get("language")
     translationFile = f"./translations/{language}.json"
@@ -81,7 +84,7 @@ def index(by="hot", sort="desc"):
 
     translations = translations["sortMenu"]
 
-    sortName = translations[by] + " - " + translations[sort]
+    sortName = translations[translation_by] + " - " + translations[sort]
 
     Log.info(f"Sorting posts on index page by: {sortName}")
 
@@ -92,4 +95,41 @@ def index(by="hot", sort="desc"):
         source="",
         page=page,
         total_pages=total_pages,
+        by=original_by,
+        sort=sort,
     )
+
+
+@indexBlueprint.route("/load_posts")
+def load_posts():
+    """Return additional posts for infinite scrolling."""
+
+    by = request.args.get("by", "views")
+    sort = request.args.get("sort", "desc")
+
+    byOptions = ["timeStamp", "title", "views", "category", "lastEditTimeStamp", "hot"]
+    sortOptions = ["asc", "desc"]
+
+    if by not in byOptions or sort not in sortOptions:
+        Log.warning(
+            f"The provided sorting options are not valid: By: {by} Sort: {sort}"
+        )
+        return "", 400
+
+    if by == "hot":
+        select_query = (
+            "SELECT *, (views * 1 / log(1 + (strftime('%s', 'now') - timeStamp) / 3600 + 2)) "
+            f"AS hotScore FROM posts ORDER BY hotScore {sort}"
+        )
+    else:
+        select_query = f"select * from posts order by {by} {sort}"
+
+    limit = request.args.get("limit", type=int)
+    posts, _, _ = paginate_query(
+        Settings.DB_POSTS_ROOT,
+        "select count(*) from posts",
+        select_query,
+        per_page=limit or 9,
+    )
+
+    return render_template("components/postCards.html", posts=posts)

@@ -35,6 +35,7 @@
 </div>
 
 <div
+    id="posts-container"
     class="flex item-center justify-center flex-wrap gap-x-4 gap-y-6 mx-auto w-11/12 md:w-11/12 lg:w-10/12 2xl:w-9/12 mt-6"
 >
     {% for post in posts %}
@@ -42,9 +43,6 @@
         {{ postCard(post=post, authorProfilePicture=getProfilePicture(post[5])) }}
     {% endfor %}
 </div>
-
-{% from "components/pagination.html" import pagination %}
-{{ pagination(page, total_pages, request.path) }}
 
 <div class="text-center mt-4 mb-2 text-xs font-medium">
     <div class="mb-1">
@@ -58,4 +56,49 @@
     {{ translations.about.credits | safe }}
     <br />
 </div>
+
+<script>
+    const postsContainer = document.getElementById('posts-container');
+    let page = 1;
+    const totalPages = {{ total_pages }};
+    const by = "{{ by }}";
+    const sort = "{{ sort }}";
+    let loading = false;
+
+    async function loadMorePosts() {
+        if (loading || page >= totalPages) return;
+        loading = true;
+        page += 1;
+        try {
+            const response = await fetch(`/load_posts?by=${by}&sort=${sort}&page=${page}`);
+            if (response.ok) {
+                const html = await response.text();
+                postsContainer.insertAdjacentHTML('beforeend', html);
+            }
+        } finally {
+            loading = false;
+        }
+    }
+
+    window.addEventListener('scroll', () => {
+        if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 100) {
+            loadMorePosts();
+        }
+    });
+
+    async function refreshPosts() {
+        const count = postsContainer.children.length;
+        try {
+            const response = await fetch(`/load_posts?by=${by}&sort=${sort}&page=1&limit=${count}`);
+            if (response.ok) {
+                const html = await response.text();
+                postsContainer.innerHTML = html;
+            }
+        } catch (e) {
+            console.error(e);
+        }
+    }
+
+    setInterval(refreshPosts, 10000);
+</script>
 {% endblock body %}
