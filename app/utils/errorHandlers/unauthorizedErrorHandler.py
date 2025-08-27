@@ -10,6 +10,10 @@ def unauthorizedErrorHandler(e):
     :return: A tuple containing the Jinja template for the 401 error and the status code
     """
 
-    Log.error(e)
+    # Tamga expects the message argument to be a string. Passing the exception
+    # object directly would raise a ``TypeError`` because ``Tamga.error`` tries
+    # to concatenate the message with additional metadata. Convert the exception
+    # to its string representation so the 401 error details are logged safely.
+    Log.error(str(e))
 
     return render_template("unauthorized.html"), 401
