@@ -11,7 +11,7 @@ async function loginWithMetaMask(redirectUrl) {
             method: 'personal_sign',
             params: [message, address],
         });
-        const resp = await fetch(`/login/redirect=${encodeURIComponent(redirectUrl)}`, {
+        const resp = await fetch(`/login?redirect=${encodeURIComponent(redirectUrl)}`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ address, signature }),

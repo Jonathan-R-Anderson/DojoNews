@@ -96,4 +96,4 @@ def dashboard(userName):
             language=session["language"],
         )
 
-        return redirect("/login/redirect=&dashboard&user")
+        return redirect("/login?redirect=/dashboard/user")

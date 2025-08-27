@@ -93,7 +93,7 @@ def changePassword():
                         language=language,
                     )
 
-                    return redirect("/login/redirect=&")
+                    return redirect("/login?redirect=/")
             else:
                 flashMessage(
                     page="changePassword",
@@ -117,4 +117,4 @@ def changePassword():
             language=language,
         )
 
-        return redirect("/login/redirect=changepassword")
+        return redirect("/login?redirect=/changepassword")

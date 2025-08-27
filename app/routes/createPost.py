@@ -179,4 +179,4 @@ def createPost():
             category="error",
             language=session["language"],
         )
-        return redirect("/login/redirect=&createpost")
+        return redirect("/login?redirect=/createpost")

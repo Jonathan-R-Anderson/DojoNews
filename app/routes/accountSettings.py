@@ -35,4 +35,4 @@ def accountSettings():
             f"{request.remote_addr} tried to reach account settings without being logged in"
         )
 
-        return redirect("/login/redirect=&accountsettings")
+        return redirect("/login?redirect=/accountsettings")
