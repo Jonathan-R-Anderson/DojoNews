@@ -18,12 +18,23 @@ if (visitorID != null) {
   }, 5000);
 }
 
-if (typeof postUrlID !== "undefined") {
+let currentTreeSignature = "";
+
+function fetchCommentTree() {
   fetch(`/post/${postUrlID}/comment-tree`)
     .then((response) => response.json())
     .then((data) => {
-      renderCommentTree(data);
+      const signature = data.nodes.map((n) => n.id).sort().join(",");
+      if (signature !== currentTreeSignature) {
+        currentTreeSignature = signature;
+        renderCommentTree(data);
+      }
     });
+}
+
+if (typeof postUrlID !== "undefined") {
+  fetchCommentTree();
+  setInterval(fetchCommentTree, 5000);
 }
 
 function renderCommentTree(data) {
@@ -56,13 +67,12 @@ function renderCommentTree(data) {
   const tree = d3.tree().size([2 * Math.PI, radius - 40]);
   tree(root);
 
-  const svg = d3
-    .select("#comment-tree")
+  const container = d3.select("#comment-tree");
+  container.selectAll("*").remove();
+  const svg = container
     .append("svg")
-    .attr("width", width)
-    .attr("height", width)
-    .append("g")
-    .attr("transform", `translate(${radius},${radius})`);
+    .attr("viewBox", `${-radius} ${-radius} ${width} ${width}`)
+    .append("g");
 
   const linkGen = d3
     .linkRadial()
@@ -74,9 +84,8 @@ function renderCommentTree(data) {
     .selectAll("path")
     .data(root.links())
     .join("path")
-    .attr("d", linkGen)
-    .attr("stroke", "#d1d5db")
-    .attr("fill", "none");
+    .attr("class", "link")
+    .attr("d", linkGen);
 
   svg
     .append("g")
@@ -87,9 +96,12 @@ function renderCommentTree(data) {
       "transform",
       (d) => `rotate(${(d.x * 180) / Math.PI - 90}) translate(${d.y},0)`
     )
-    .attr("r", 4)
-    .attr("fill", "#f43f5e")
-    .on("click", (_, d) => showBranch(d));
+    .attr("r", 5)
+    .attr("class", "node")
+    .on("mouseover", (_, d) => showBranch(d))
+    .on("mouseout", showAll);
+
+  container.on("mouseleave", showAll);
 
   function showBranch(d) {
     const ids = d.descendants().map((n) => n.data.id);
@@ -101,5 +113,12 @@ function renderCommentTree(data) {
     kwDiv.textContent = keywords.length ? `Keywords: ${keywords.join(", ")}` : "";
   }
 
-  showBranch(root);
+  function showAll() {
+    document.querySelectorAll("[data-comment-id]").forEach((el) => {
+      el.style.display = "";
+    });
+    document.getElementById("branch-keywords").textContent = "";
+  }
+
+  showAll();
 }

@@ -1,0 +1,25 @@
+#comment-tree svg {
+  width: 100%;
+  height: auto;
+  max-width: 600px;
+  display: block;
+  margin: 0 auto;
+}
+
+#comment-tree .link {
+  stroke: #9ca3af;
+  stroke-width: 1.5px;
+  fill: none;
+}
+
+#comment-tree .node {
+  fill: #f43f5e;
+  stroke: #fb7185;
+  stroke-width: 1.5px;
+  cursor: pointer;
+  transition: fill 0.2s;
+}
+
+#comment-tree .node:hover {
+  fill: #be123c;
+}

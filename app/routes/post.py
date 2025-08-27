@@ -172,6 +172,7 @@ def post(urlID=None, slug=None):
             content=post[3],
             author=post[5],
             views=post[6],
+            downvotes=post[12],
             timeStamp=post[7],
             lastEditTimeStamp=post[8],
             urlID=post[10],
@@ -222,6 +223,53 @@ def vote_comment(comment_id):
         cursor.execute(
             "update comments set upvotes = upvotes + 1 where id = ?",
             (comment_id,),
+        )
+
+    connection.commit()
+    connection.close()
+
+    return redirect(request.referrer or "/")
+
+
+@postBlueprint.route("/post/<urlID>/vote", methods=["POST"])
+def vote_post(urlID):
+    if "userName" not in session:
+        return abort(401)
+
+    Log.database(f"Connecting to '{Settings.DB_POSTS_ROOT}' database")
+
+    connection = sqlite3.connect(Settings.DB_POSTS_ROOT)
+    connection.set_trace_callback(Log.database)
+    cursor = connection.cursor()
+
+    cursor.execute("select id from posts where urlID = ?", (urlID,))
+    row = cursor.fetchone()
+    if not row:
+        connection.close()
+        abort(404)
+    post_id = row[0]
+
+    cursor.execute(
+        "select id from postDownvotes where postID = ? and user = ?",
+        (post_id, session["userName"]),
+    )
+    if cursor.fetchone():
+        cursor.execute(
+            "delete from postDownvotes where postID = ? and user = ?",
+            (post_id, session["userName"]),
+        )
+        cursor.execute(
+            "update posts set downvotes = downvotes - 1 where id = ?",
+            (post_id,),
+        )
+    else:
+        cursor.execute(
+            "insert into postDownvotes(postID, user) values(?, ?)",
+            (post_id, session["userName"]),
+        )
+        cursor.execute(
+            "update posts set downvotes = downvotes + 1 where id = ?",
+            (post_id,),
         )
 
     connection.commit()
