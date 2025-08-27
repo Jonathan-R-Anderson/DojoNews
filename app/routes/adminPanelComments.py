@@ -1,3 +1,5 @@
+import sqlite3
+
 from flask import (
     Blueprint,
     redirect,
@@ -17,25 +19,38 @@ adminPanelCommentsBlueprint = Blueprint("adminPanelComments", __name__)
 def adminPanelComments():
     if "userName" in session:
         Log.info(f"Admin: {session['userName']} reached to comments admin panel")
-        Log.database(f"Connecting to '{Settings.DB_COMMENTS_ROOT}' database")
-
-        comments, page, total_pages = paginate_query(
-            Settings.DB_COMMENTS_ROOT,
-            "select count(*) from comments",
-            "select * from comments order by timeStamp desc",
+        Log.database(f"Connecting to '{Settings.DB_USERS_ROOT}' database")
+        connection = sqlite3.connect(Settings.DB_USERS_ROOT)
+        connection.set_trace_callback(Log.database)
+        cursor = connection.cursor()
+        cursor.execute(
+            """select role from users where userName = ? """,
+            [(session["userName"])],
         )
+        role = cursor.fetchone()[0]
 
-        Log.info(f"Rendering adminPanelComments.html: params: comments={comments}")
-
-        return render_template(
-            "adminPanelComments.html",
-            comments=comments,
-            page=page,
-            total_pages=total_pages,
-        )
-    else:
+        if role == "admin":
+            Log.database(f"Connecting to '{Settings.DB_COMMENTS_ROOT}' database")
+            comments, page, total_pages = paginate_query(
+                Settings.DB_COMMENTS_ROOT,
+                "select count(*) from comments",
+                "select * from comments order by timeStamp desc",
+            )
+            Log.info(
+                f"Rendering adminPanelComments.html: params: comments={comments}"
+            )
+            return render_template(
+                "adminPanelComments.html",
+                comments=comments,
+                page=page,
+                total_pages=total_pages,
+                admin_check=True,
+            )
         Log.error(
-            f"{request.remote_addr} tried to reach comment admin panel being logged in"
+            f"{request.remote_addr} tried to reach comment admin panel without being admin",
         )
-
         return redirect("/")
+    Log.error(
+        f"{request.remote_addr} tried to reach comment admin panel being logged in",
+    )
+    return redirect("/")

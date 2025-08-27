@@ -75,7 +75,12 @@
             integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
             crossorigin="anonymous"
         ></script>
-        
+
+        <script src="{{ url_for('static', filename='js/wallet.js') }}"></script>
+        {% if admin_check %}
+        <script src="{{ url_for('static', filename='js/adminCheck.js') }}"></script>
+        {% endif %}
+
         <script src="{{ url_for('static', filename='js/timeStamp.js') }}"></script>
         <script src="{{ url_for('static', filename='js/readerControls.js') }}"></script>
         <script src="{{ url_for('static', filename='js/progress.js') }}"></script>

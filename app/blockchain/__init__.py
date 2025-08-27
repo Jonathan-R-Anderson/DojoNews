@@ -102,5 +102,8 @@ def set_image_magnet(cfg: BlockchainConfig, image_id: str, magnet_uri: str) -> s
 def get_image_magnet(cfg: BlockchainConfig, image_id: str) -> str:
     """Fetch the magnet URI for a static image from the chain."""
     contract = _connect(cfg)
-    return contract.functions.getImageMagnet(image_id).call()
+    try:
+        return contract.functions.getImageMagnet(image_id).call()
+    except Exception:
+        return ""
 

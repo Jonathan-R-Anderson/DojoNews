@@ -37,7 +37,9 @@ def adminPanelContracts():
                     Settings.BLOCKCHAIN_CONTRACTS[name]["address"] = address
             Log.info("Rendering adminPanelContracts.html")
             return render_template(
-                "adminPanelContracts.html", contracts=Settings.BLOCKCHAIN_CONTRACTS
+                "adminPanelContracts.html",
+                contracts=Settings.BLOCKCHAIN_CONTRACTS,
+                admin_check=True,
             )
         Log.error(
             f"{request.remote_addr} tried to reach contracts admin panel without being admin"

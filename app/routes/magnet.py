@@ -4,6 +4,8 @@ from flask import Blueprint, jsonify
 
 from settings import Settings
 from blockchain import BlockchainConfig, get_image_magnet
+from requests.exceptions import RequestException
+
 
 magnetBlueprint = Blueprint("magnet", __name__)
 
@@ -17,5 +19,8 @@ def fetch_magnet(image_id: str):
         contract_address=contract["address"],
         abi=contract["abi"],
     )
-    magnet = get_image_magnet(cfg, image_id)
+    try:
+        magnet = get_image_magnet(cfg, image_id)
+    except Exception:
+        magnet = ""
     return jsonify({"magnet": magnet})

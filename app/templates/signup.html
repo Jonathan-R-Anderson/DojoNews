@@ -22,7 +22,9 @@
                     >
                     {{form.userName(class_="input input-bordered w-full",
                     autocomplete="off",
-                    placeholder=translations.signup.username)}}
+                    placeholder=translations.signup.username,
+                    readonly=True,
+                    id="userName")}}
                     <label class="label">{{translations.signup.email}}</label>
                     {{form.email(class_="input input-bordered w-full",
                     autocomplete="off", placeholder=translations.signup.email)}}
@@ -40,6 +42,8 @@
                         data-callback="onSubmit"
                         data-action="submit"
                         class="g-recaptcha btn btn-neutral mt-4"
+                        id="signup-btn"
+                        disabled
                     >
                         {{translations.signup.title}}
                     </button>
@@ -67,7 +71,9 @@
                     >
                     {{form.userName(class_="input input-bordered w-full",
                     autocomplete="off",
-                    placeholder=translations.signup.username)}}
+                    placeholder=translations.signup.username,
+                    readonly=True,
+                    id="userName")}}
                     <label class="label">{{translations.signup.email}}</label>
                     {{form.email(class_="input input-bordered w-full",
                     autocomplete="off", placeholder=translations.signup.email)}}
@@ -79,7 +85,7 @@
                     <label class="label">{{translations.signup.confirm}}</label>
                     {{form.passwordConfirm(class_="input input-bordered w-full",
                     placeholder=translations.signup.confirm)}}
-                    <button type="submit" class="btn btn-neutral mt-4">
+                    <button type="submit" class="btn btn-neutral mt-4" id="signup-btn" disabled>
                         {{translations.signup.title}}
                     </button>
                     <div class="text-xs select-none mt-2 w-full text-center">
