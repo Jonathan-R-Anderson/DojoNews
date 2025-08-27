@@ -16,16 +16,9 @@
 </div>
 
 <div
+    id="posts-container"
     class="flex item-center justify-center flex-wrap gap-x-2 gap-y-6 mx-auto w-11/12 md:w-10/12 lg:w-9/12 2xl:w-8/12 mt-6"
->
-    {% for post in posts %}
-        {% from "components/postCardMacro.html" import postCard with context %}
-        {{ postCard(post=post, authorProfilePicture=getProfilePicture(post[5])) }}
-    {% endfor %}
-</div>
-
-{% from "components/pagination.html" import pagination %}
-{{ pagination(page, total_pages, request.path) }}
+></div>
 
 <div class="text-center mt-4 mb-2 text-xs font-medium">
     <div class="mb-1">
@@ -39,4 +32,111 @@
     {{ translations.about.credits | safe }}
     <br />
 </div>
+
+<script src="https://cdn.jsdelivr.net/npm/ethers@5.7.2/dist/ethers.umd.min.js"></script>
+<script>
+    const rpcUrl = "{{ rpc_url }}";
+    const postContractAddress = "{{ post_contract_address }}";
+    const postContractAbi = {{ post_contract_abi | tojson }};
+    const targetCategory = "{{ raw_category|lower }}";
+
+    async function renderCategoryPosts() {
+        const container = document.getElementById('posts-container');
+        container.innerHTML = '';
+        try {
+            const provider = new ethers.providers.JsonRpcProvider(rpcUrl);
+            const contract = new ethers.Contract(postContractAddress, postContractAbi, provider);
+            const nextId = await contract.nextPostId();
+            for (let i = 0; i < nextId; i++) {
+                const onchain = await contract.posts(i);
+                if (!onchain.exists) continue;
+                let meta = {};
+                try {
+                    const metaRes = await fetch(onchain.contentHash);
+                    meta = await metaRes.json();
+                } catch (err) {
+                    console.error(err);
+                }
+                if ((meta.category || '').toLowerCase() !== targetCategory) continue;
+                const card = document.createElement('div');
+                card.className = 'flex flex-col bg-base-200 rounded-box w-[20rem] h-[30rem] hover:scale-105 duration-150';
+
+                const imgWrap = document.createElement('div');
+                imgWrap.className = 'overflow-hidden flex-shrink-0';
+                const img = document.createElement('img');
+                img.className = 'h-48 w-full group-hover:scale-110 transition duration-150 object-cover rounded-t-md select-none';
+                imgWrap.appendChild(img);
+                card.appendChild(imgWrap);
+
+                if (meta.magnet) {
+                    try {
+                        const imgRes = await fetch(meta.magnet);
+                        const blob = await imgRes.blob();
+                        img.src = URL.createObjectURL(blob);
+                    } catch (err) {
+                        console.error(err);
+                    }
+                }
+
+                const body = document.createElement('div');
+                body.className = 'flex flex-col gap-4 p-6 flex-grow';
+
+                const cat = document.createElement('h3');
+                cat.className = 'text-secondary font-medium text-sm line-clamp-1';
+                cat.textContent = meta.category || '';
+                body.appendChild(cat);
+
+                const link = document.createElement('a');
+                link.href = meta.url || '#';
+                link.className = 'link link-hover text-xl font-bold line-clamp-2 leading-tight';
+                link.textContent = meta.title || `Post ${i}`;
+                body.appendChild(link);
+
+                const abstractDiv = document.createElement('div');
+                abstractDiv.className = 'overflow-hidden flex-grow';
+                const abstractSpan = document.createElement('span');
+                abstractSpan.className = 'text-sm leading-relaxed line-clamp-4 break-words';
+                abstractSpan.textContent = meta.abstract || '';
+                abstractDiv.appendChild(abstractSpan);
+                body.appendChild(abstractDiv);
+
+                const footer = document.createElement('div');
+                footer.className = 'flex justify-between items-center mt-auto pt-2 w-full';
+                const authorLink = document.createElement('a');
+                authorLink.href = '/user/' + (meta.author || onchain.author);
+                authorLink.className = 'flex items-center gap-2 min-w-0';
+
+                const avatar = document.createElement('img');
+                avatar.alt = 'Profile';
+                avatar.src = meta.author_picture || '';
+                avatar.className = 'w-8 h-8 rounded object-cover flex-shrink-0';
+                authorLink.appendChild(avatar);
+
+                const nameSpan = document.createElement('span');
+                nameSpan.className = 'font-medium text-sm truncate';
+                nameSpan.textContent = meta.author || onchain.author;
+                authorLink.appendChild(nameSpan);
+
+                const dateSpan = document.createElement('span');
+                dateSpan.className = 'date text-sm flex-shrink-0';
+                if (meta.timestamp) {
+                    dateSpan.textContent = new Date(meta.timestamp * 1000).toLocaleDateString();
+                } else {
+                    dateSpan.textContent = '';
+                }
+
+                footer.appendChild(authorLink);
+                footer.appendChild(dateSpan);
+                body.appendChild(footer);
+                card.appendChild(body);
+
+                container.appendChild(card);
+            }
+        } catch (e) {
+            console.error(e);
+        }
+    }
+
+    document.addEventListener('DOMContentLoaded', renderCategoryPosts);
+</script>
 {% endblock body %}

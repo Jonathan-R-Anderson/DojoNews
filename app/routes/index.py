@@ -99,6 +99,9 @@ def index(by="views", sort="desc"):
         by=original_by,
         sort=sort,
         categories=get_categories(),
+        post_contract_address=Settings.BLOCKCHAIN_CONTRACTS["PostStorage"]["address"],
+        post_contract_abi=Settings.BLOCKCHAIN_CONTRACTS["PostStorage"]["abi"],
+        rpc_url=Settings.BLOCKCHAIN_RPC_URL,
     )
 
 

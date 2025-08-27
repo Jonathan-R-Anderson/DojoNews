@@ -69,9 +69,13 @@ def category(category, by="timeStamp", sort="desc"):
         "category.html",
         posts=posts,
         category=translations["categories"].get(category.lower(), category),
+        raw_category=category,
         sortName=sortName,
         source=f"/category/{category}",
         page=page,
         total_pages=total_pages,
         categories=get_categories(),
+        post_contract_address=Settings.BLOCKCHAIN_CONTRACTS["PostStorage"]["address"],
+        post_contract_abi=Settings.BLOCKCHAIN_CONTRACTS["PostStorage"]["abi"],
+        rpc_url=Settings.BLOCKCHAIN_RPC_URL,
     )
