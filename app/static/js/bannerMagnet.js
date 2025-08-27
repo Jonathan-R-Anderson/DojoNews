@@ -1,36 +1,12 @@
-(async () => {
+(() => {
     const bannerInput = document.querySelector('input[name="postBanner"]');
     if (!bannerInput) return;
 
-    // Create hidden input to hold magnet URI
+    // Hidden field to store returned magnet URI
     const magnetField = document.createElement('input');
     magnetField.type = 'hidden';
     magnetField.name = 'postBannerMagnet';
     bannerInput.insertAdjacentElement('afterend', magnetField);
-
-    async function loadClient() {
-        if (typeof WebTorrent === 'undefined') {
-            await new Promise((resolve) => {
-                const s = document.createElement('script');
-                s.src = 'https://cdn.jsdelivr.net/npm/webtorrent@latest/webtorrent.min.js';
-                s.onload = resolve;
-                document.head.appendChild(s);
-            });
-        }
-        return new WebTorrent();
-    }
-
-    const client = await loadClient();
-
-    function seedFile(file) {
-        return new Promise((resolve) => {
-            client.seed(file, (torrent) => {
-                const magnet = torrent.magnetURI;
-                torrent.destroy();
-                resolve(magnet);
-            });
-        });
-    }
 
     const form = bannerInput.form;
     form.addEventListener('submit', async (e) => {
@@ -39,7 +15,17 @@
         }
         e.preventDefault();
         const file = bannerInput.files[0];
-        magnetField.value = await seedFile(file);
+        const data = new FormData();
+        data.append('image', file);
+        const csrf = form.querySelector('input[name="csrf_token"]');
+        if (csrf) data.append('csrf_token', csrf.value);
+        try {
+            const res = await fetch('/magnet/seed', { method: 'POST', body: data });
+            const json = await res.json();
+            magnetField.value = json.magnet || '';
+        } catch (err) {
+            console.error('Failed to seed image', err);
+        }
         form.requestSubmit();
     });
 })();
