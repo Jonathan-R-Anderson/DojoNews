@@ -1,9 +1,18 @@
 import os
+import subprocess
+import sys
 import libtorrent as lt
 
-# Maintain a persistent libtorrent session so seeded torrents remain available.
-_session = lt.session()
-_session.listen_on(6881, 6891)
+
+def _spawn_seeder(torrent_path: str, save_path: str) -> None:
+    """Launch a background process to seed ``torrent_path``."""
+    worker = os.path.join(os.path.dirname(__file__), "torrent_worker.py")
+    subprocess.Popen(
+        [sys.executable, worker, torrent_path, save_path],
+        stdout=subprocess.DEVNULL,
+        stderr=subprocess.DEVNULL,
+        close_fds=True,
+    )
 
 
 def seed_file(file_path: str) -> str:
@@ -19,8 +28,9 @@ def seed_file(file_path: str) -> str:
     with open(torrent_path, "wb") as f:
         f.write(lt.bencode(torrent))
     ti = lt.torrent_info(torrent_path)
-    _session.add_torrent({"ti": ti, "save_path": base_path})
-    return lt.make_magnet_uri(ti)
+    magnet = lt.make_magnet_uri(ti)
+    _spawn_seeder(torrent_path, base_path)
+    return magnet
 
 
 def ensure_seeding(directory: str) -> None:
@@ -31,8 +41,5 @@ def ensure_seeding(directory: str) -> None:
         if not name.endswith(".torrent"):
             continue
         torrent_path = os.path.join(directory, name)
-        try:
-            ti = lt.torrent_info(torrent_path)
-            _session.add_torrent({"ti": ti, "save_path": directory})
-        except Exception:
-            continue
+        _spawn_seeder(torrent_path, directory)
+
