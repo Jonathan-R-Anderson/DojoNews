@@ -17,8 +17,8 @@
     }
     const provider = new ethers.providers.JsonRpcProvider(rpcUrl);
     const contract = new ethers.Contract(
-        imageContractAddress,
-        imageContractAbi,
+        postContractAddress,
+        postContractAbi,
         provider
     );
     const client = new WebTorrent();

@@ -348,121 +348,25 @@ class Settings:
             "address": "0xcD745f5432080bCC601c68604b5cC9881292ca33",
             "abi": json.loads(
                 '''[
-    {
-      "inputs": [],
-      "stateMutability": "nonpayable",
-      "type": "constructor"
-    },
-    {
-      "anonymous": false,
-      "inputs": [
-        {"indexed": true, "internalType": "uint256", "name": "postId", "type": "uint256"},
-        {"indexed": true, "internalType": "address", "name": "author", "type": "address"},
-        {"indexed": false, "internalType": "string", "name": "contentHash", "type": "string"}
-      ],
-      "name": "PostCreated",
-      "type": "event"
-    },
-    {
-      "anonymous": false,
-      "inputs": [
-        {"indexed": true, "internalType": "uint256", "name": "postId", "type": "uint256"}
-      ],
-      "name": "PostDeleted",
-      "type": "event"
-    },
-    {
-      "anonymous": false,
-      "inputs": [
-        {"indexed": true, "internalType": "uint256", "name": "postId", "type": "uint256"},
-        {"indexed": false, "internalType": "bool", "name": "isBlacklisted", "type": "bool"}
-      ],
-      "name": "PostBlacklistUpdated",
-      "type": "event"
-    },
-    {
-      "inputs": [
-        {"internalType": "string", "name": "contentHash", "type": "string"}
-      ],
-      "name": "createPost",
-      "outputs": [
-        {"internalType": "uint256", "name": "postId", "type": "uint256"}
-      ],
-      "stateMutability": "nonpayable",
-      "type": "function"
-    },
-    {
-      "inputs": [
-        {"internalType": "uint256", "name": "postId", "type": "uint256"}
-      ],
-      "name": "deletePost",
-      "outputs": [],
-      "stateMutability": "nonpayable",
-      "type": "function"
-    },
-    {
-      "inputs": [
-        {"internalType": "uint256", "name": "postId", "type": "uint256"},
-        {"internalType": "bool", "name": "isBlacklisted", "type": "bool"}
-      ],
-      "name": "setBlacklist",
-      "outputs": [],
-      "stateMutability": "nonpayable",
-      "type": "function"
-    },
-    {
-      "inputs": [
-        {"internalType": "uint256", "name": "postId", "type": "uint256"}
-      ],
-      "name": "getPost",
-      "outputs": [
-        {
-          "components": [
-            {"internalType": "address", "name": "author", "type": "address"},
-            {"internalType": "string", "name": "contentHash", "type": "string"},
-            {"internalType": "bool", "name": "exists", "type": "bool"},
-            {"internalType": "bool", "name": "blacklisted", "type": "bool"}
-          ],
-          "internalType": "struct PostStorage.Post",
-          "name": "",
-          "type": "tuple"
-        }
-      ],
-      "stateMutability": "view",
-      "type": "function"
-    },
-    {
-      "inputs": [],
-      "name": "nextPostId",
-      "outputs": [
-        {"internalType": "uint256", "name": "", "type": "uint256"}
-      ],
-      "stateMutability": "view",
-      "type": "function"
-    },
-    {
-      "inputs": [
-        {"internalType": "uint256", "name": "", "type": "uint256"}
-      ],
-      "name": "posts",
-      "outputs": [
-        {"internalType": "address", "name": "author", "type": "address"},
-        {"internalType": "string", "name": "contentHash", "type": "string"},
-        {"internalType": "bool", "name": "exists", "type": "bool"},
-        {"internalType": "bool", "name": "blacklisted", "type": "bool"}
-      ],
-      "stateMutability": "view",
-      "type": "function"
-    },
-    {
-      "inputs": [],
-      "name": "sysop",
-      "outputs": [
-        {"internalType": "address", "name": "", "type": "address"}
-      ],
-      "stateMutability": "view",
-      "type": "function"
-    }
+    {"inputs":[],"stateMutability":"nonpayable","type":"constructor"},
+    {"anonymous":false,"inputs":[{"indexed":true,"internalType":"uint256","name":"postId","type":"uint256"},{"indexed":true,"internalType":"address","name":"author","type":"address"},{"indexed":false,"internalType":"string","name":"contentHash","type":"string"},{"indexed":false,"internalType":"string","name":"magnetURI","type":"string"}],"name":"PostCreated","type":"event"},
+    {"anonymous":false,"inputs":[{"indexed":true,"internalType":"uint256","name":"postId","type":"uint256"}],"name":"PostDeleted","type":"event"},
+    {"anonymous":false,"inputs":[{"indexed":true,"internalType":"uint256","name":"postId","type":"uint256"},{"indexed":false,"internalType":"bool","name":"isBlacklisted","type":"bool"}],"name":"PostBlacklistUpdated","type":"event"},
+    {"anonymous":false,"inputs":[{"indexed":true,"internalType":"string","name":"imageId","type":"string"},{"indexed":false,"internalType":"string","name":"magnetURI","type":"string"}],"name":"ImageMagnetSet","type":"event"},
+    {"anonymous":false,"inputs":[{"indexed":true,"internalType":"string","name":"imageId","type":"string"},{"indexed":false,"internalType":"bool","name":"isBlacklisted","type":"bool"}],"name":"ImageBlacklistUpdated","type":"event"},
+    {"inputs":[{"internalType":"string","name":"contentHash","type":"string"},{"internalType":"string","name":"magnetURI","type":"string"}],"name":"createPost","outputs":[{"internalType":"uint256","name":"postId","type":"uint256"}],"stateMutability":"nonpayable","type":"function"},
+    {"inputs":[{"internalType":"uint256","name":"postId","type":"uint256"}],"name":"deletePost","outputs":[],"stateMutability":"nonpayable","type":"function"},
+    {"inputs":[{"internalType":"uint256","name":"postId","type":"uint256"},{"internalType":"bool","name":"isBlacklisted","type":"bool"}],"name":"setBlacklist","outputs":[],"stateMutability":"nonpayable","type":"function"},
+    {"inputs":[{"internalType":"string","name":"imageId","type":"string"},{"internalType":"string","name":"magnetURI","type":"string"}],"name":"setImageMagnet","outputs":[],"stateMutability":"nonpayable","type":"function"},
+    {"inputs":[{"internalType":"string","name":"imageId","type":"string"},{"internalType":"bool","name":"isBlacklisted","type":"bool"}],"name":"setImageBlacklist","outputs":[],"stateMutability":"nonpayable","type":"function"},
+    {"inputs":[{"internalType":"uint256","name":"postId","type":"uint256"}],"name":"getPost","outputs":[{"components":[{"internalType":"address","name":"author","type":"address"},{"internalType":"string","name":"contentHash","type":"string"},{"internalType":"string","name":"magnetURI","type":"string"},{"internalType":"bool","name":"exists","type":"bool"},{"internalType":"bool","name":"blacklisted","type":"bool"}],"internalType":"struct PostStorage.Post","name":"","type":"tuple"}],"stateMutability":"view","type":"function"},
+    {"inputs":[{"internalType":"string","name":"imageId","type":"string"}],"name":"getImageMagnet","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"view","type":"function"},
+    {"inputs":[{"internalType":"string","name":"imageId","type":"string"}],"name":"getImage","outputs":[{"internalType":"string","name":"magnetURI","type":"string"},{"internalType":"bool","name":"isBlacklisted","type":"bool"}],"stateMutability":"view","type":"function"},
+    {"inputs":[],"name":"nextPostId","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},
+    {"inputs":[{"internalType":"uint256","name":"","type":"uint256"}],"name":"posts","outputs":[{"internalType":"address","name":"author","type":"address"},{"internalType":"string","name":"contentHash","type":"string"},{"internalType":"string","name":"magnetURI","type":"string"},{"internalType":"bool","name":"exists","type":"bool"},{"internalType":"bool","name":"blacklisted","type":"bool"}],"stateMutability":"view","type":"function"},
+    {"inputs":[{"internalType":"string","name":"","type":"string"}],"name":"imageMagnets","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"view","type":"function"},
+    {"inputs":[{"internalType":"string","name":"","type":"string"}],"name":"blacklistedImages","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"view","type":"function"},
+    {"inputs":[],"name":"sysop","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"}
   ]'''
             ),
         },
@@ -710,110 +614,6 @@ class Settings:
           "name": "",
           "type": "uint256"
         }
-      ],
-      "stateMutability": "view",
-      "type": "function"
-    }
-  ]'''
-            ),
-        },
-        "ImageStorage": {
-            "address": "0x45912652f4AE65Ea26b02813C96836Fb3E6A0f7D",
-            "abi": json.loads(
-                '''[
-    {
-      "inputs": [],
-      "stateMutability": "nonpayable",
-      "type": "constructor"
-    },
-    {
-      "anonymous": false,
-      "inputs": [
-        {"indexed": true, "internalType": "string", "name": "imageId", "type": "string"},
-        {"indexed": false, "internalType": "string", "name": "magnetURI", "type": "string"}
-      ],
-      "name": "ImageMagnetSet",
-      "type": "event"
-    },
-    {
-      "anonymous": false,
-      "inputs": [
-        {"indexed": true, "internalType": "string", "name": "imageId", "type": "string"},
-        {"indexed": false, "internalType": "bool", "name": "isBlacklisted", "type": "bool"}
-      ],
-      "name": "ImageBlacklistUpdated",
-      "type": "event"
-    },
-    {
-      "inputs": [
-        {"internalType": "string", "name": "imageId", "type": "string"},
-        {"internalType": "string", "name": "magnetURI", "type": "string"}
-      ],
-      "name": "setImageMagnet",
-      "outputs": [],
-      "stateMutability": "nonpayable",
-      "type": "function"
-    },
-    {
-      "inputs": [
-        {"internalType": "string", "name": "imageId", "type": "string"},
-        {"internalType": "bool", "name": "isBlacklisted", "type": "bool"}
-      ],
-      "name": "setBlacklist",
-      "outputs": [],
-      "stateMutability": "nonpayable",
-      "type": "function"
-    },
-    {
-      "inputs": [
-        {"internalType": "string", "name": "imageId", "type": "string"}
-      ],
-      "name": "getImageMagnet",
-      "outputs": [
-        {"internalType": "string", "name": "", "type": "string"}
-      ],
-      "stateMutability": "view",
-      "type": "function"
-    },
-    {
-      "inputs": [
-        {"internalType": "string", "name": "imageId", "type": "string"}
-      ],
-      "name": "getImage",
-      "outputs": [
-        {"internalType": "string", "name": "magnetURI", "type": "string"},
-        {"internalType": "bool", "name": "isBlacklisted", "type": "bool"}
-      ],
-      "stateMutability": "view",
-      "type": "function"
-    },
-    {
-      "inputs": [
-        {"internalType": "string", "name": "", "type": "string"}
-      ],
-      "name": "imageMagnets",
-      "outputs": [
-        {"internalType": "string", "name": "", "type": "string"}
-      ],
-      "stateMutability": "view",
-      "type": "function"
-    },
-    {
-      "inputs": [
-        {"internalType": "string", "name": "", "type": "string"}
-      ],
-      "name": "blacklisted",
-      "outputs": [
-        {"internalType": "bool", "name": "", "type": "bool"}
-      ],
-      "stateMutability": "view",
-      "type": "function"
-    },
-    {
-      "inputs": [],
-      "name": "sysop",
-      "outputs": [
-        {"internalType": "address", "name": "", "type": "address"}
       ],
       "stateMutability": "view",
       "type": "function"

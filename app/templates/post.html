@@ -19,11 +19,11 @@
     <img data-magnet-id="{{ id }}.png" class="mx-auto rounded-md shadow-md select-none" />
     <h1 class="text-2xl md:text-3xl mt-3 text-rose-500 w-full text-center font-bold">{{ title }}</h1>
     <div class="flex items-center justify-center gap-2 my-4 select-none opacity-75">
-        <p class="text-sm font-medium">{{ readingTime|string + ' ' + translations.post.minRead }}</p>
+        <p class="text-sm font-medium"><span id="reading-time"></span> {{ translations.post.minRead }}</p>
     </div>
     <div class="text-center font-sm max-w-full">{{ abstract }}</div>
     <div class="divider"></div>
-    <div class="markdown-content">{{ render_markdown(content) }}</div>
+    <div id="post-content" class="markdown-content"></div>
     <div class="select-none mt-4">
         <div class="flex w-full justify-between my-1">
             <div class="flex items-center">
@@ -40,4 +40,8 @@
         </div>
     </div>
 </div>
+    <script>
+        const postUrlID = {{ id }};
+    </script>
+    <script src="{{ url_for('static', filename='js/postContent.js') }}"></script>
 {% endblock body %}

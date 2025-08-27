@@ -9,7 +9,6 @@ from utils.forms.CreatePostForm import CreatePostForm
 from utils.log import Log
 from utils.time import currentTimeStamp
 from utils.categories import get_categories, DEFAULT_CATEGORIES
-from blockchain import BlockchainConfig, set_image_magnet
 from utils.torrent import seed_file
 
 editPostBlueprint = Blueprint("editPost", __name__)
@@ -73,7 +72,6 @@ def editPost(urlID):
                     newCategory = request.form.get("newCategory", "").strip()
                     postBannerFile = request.files["postBanner"]
                     postBanner = postBannerFile.read()
-                    bannerMagnet = ""
 
                     connection = sqlite3.connect(Settings.DB_POSTS_ROOT)
                     cursor = connection.cursor()
@@ -159,23 +157,11 @@ def editPost(urlID):
                             image_path = os.path.join(images_dir, f"{post[0]}.png")
                             with open(image_path, "wb") as f:
                                 f.write(postBanner)
-                            bannerMagnet = seed_file(image_path)
+                            seed_file(image_path)
                             cursor.execute(
                                 """update posts set banner = ? where id = ? """,
                                 (postBanner, post[0]),
                             )
-                            contract = Settings.BLOCKCHAIN_CONTRACTS["ImageStorage"]
-                            cfg = BlockchainConfig(
-                                rpc_url=Settings.BLOCKCHAIN_RPC_URL,
-                                contract_address=contract["address"],
-                                abi=contract["abi"],
-                            )
-                            try:
-                                set_image_magnet(cfg, f"{post[0]}.png", bannerMagnet)
-                            except Exception as e:
-                                Log.error(
-                                    f"Failed to store magnet for post {post[0]}: {e}"
-                                )
                         cursor.execute(
                             """update posts set lastEditTimeStamp = ? where id = ? """,
                             [(currentTimeStamp()), (post[0])],

@@ -86,8 +86,8 @@
         <script src="{{ url_for('static', filename='js/progress.js') }}"></script>
         <script>
             const rpcUrl = "{{ rpc_url }}";
-            const imageContractAddress = "{{ image_contract_address }}";
-            const imageContractAbi = {{ image_contract_abi | tojson }};
+            const postContractAddress = "{{ post_contract_address }}";
+            const postContractAbi = {{ post_contract_abi | tojson }};
         </script>
         <script src="{{ url_for('static', filename='js/magnet.js') }}"></script>
         <script src="{{ url_for('static', filename='js/torrentSeeder.js') }}"></script>
