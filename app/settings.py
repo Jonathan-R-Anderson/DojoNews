@@ -345,7 +345,7 @@ class Settings:
             ),
         },
         "PostStorage": {
-            "address": "0x6532Ee939bDe9a961De65Df67fEF12E29C80571F",
+            "address": "0xcD745f5432080bCC601c68604b5cC9881292ca33",
             "abi": json.loads(
                 '''[
     {
@@ -467,7 +467,7 @@ class Settings:
             ),
         },
         "CommentStorage": {
-            "address": "0xF1E649E9780c70e2e808f610ce1e3b4369f57660",
+            "address": "0x99DA839de05C2c9d97FAA742b85C50AC75d875f3",
             "abi": json.loads(
                 '''[
     {
@@ -718,7 +718,7 @@ class Settings:
             ),
         },
         "ImageStorage": {
-            "address": "0x69Cc804383A60af177a80E2f86457cD17dBC8cBA",
+            "address": "0x45912652f4AE65Ea26b02813C96836Fb3E6A0f7D",
             "abi": json.loads(
                 '''[
     {
