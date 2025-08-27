@@ -14,13 +14,17 @@
         try {
             const res = await fetch(`/magnet/${id}`);
             const data = await res.json();
-            client.add(data.magnet, (torrent) => {
-                torrent.files[0].getBlob((err, blob) => {
-                    if (!err) {
-                        img.src = URL.createObjectURL(blob);
-                    }
+            if (data.magnet) {
+                client.add(data.magnet, (torrent) => {
+                    torrent.files[0].getBlob((err, blob) => {
+                        if (!err) {
+                            img.src = URL.createObjectURL(blob);
+                        }
+                    });
                 });
-            });
+            } else {
+                console.warn("No magnet URI returned for", id);
+            }
         } catch (e) {
             console.error("Failed to load magnet", id, e);
         }
