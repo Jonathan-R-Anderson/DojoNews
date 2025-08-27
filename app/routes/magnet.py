@@ -2,19 +2,15 @@
 
 import os
 
-import libtorrent as lt
 from flask import Blueprint, jsonify, request
 from werkzeug.utils import secure_filename
 
 from settings import Settings
 from blockchain import BlockchainConfig, get_image_magnet
+from utils.torrent import seed_file
 
 
 magnetBlueprint = Blueprint("magnet", __name__)
-
-# Keep a global libtorrent session so seeded torrents remain available.
-_session = lt.session()
-_session.listen_on(6881, 6891)
 
 
 @magnetBlueprint.route("/magnet/<string:image_id>")
@@ -46,17 +42,5 @@ def seed_image():
     image_path = os.path.join(images_dir, filename)
     image.save(image_path)
 
-    fs = lt.file_storage()
-    lt.add_files(fs, image_path)
-    t = lt.create_torrent(fs)
-    t.add_tracker("udp://tracker.openbittorrent.com:80")
-    lt.set_piece_hashes(t, images_dir)
-    torrent = t.generate()
-    torrent_path = image_path + ".torrent"
-    with open(torrent_path, "wb") as f:
-        f.write(lt.bencode(torrent))
-    ti = lt.torrent_info(torrent_path)
-    _session.add_torrent({"ti": ti, "save_path": images_dir})
-    magnet = lt.make_magnet_uri(ti)
-
+    magnet = seed_file(image_path)
     return jsonify({"magnet": magnet})

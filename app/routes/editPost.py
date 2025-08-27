@@ -1,5 +1,6 @@
 import sqlite3
 import math
+import os
 
 from flask import Blueprint, redirect, render_template, request, session, flash
 from settings import Settings
@@ -9,6 +10,7 @@ from utils.log import Log
 from utils.time import currentTimeStamp
 from utils.categories import get_categories, DEFAULT_CATEGORIES
 from blockchain import BlockchainConfig, set_image_magnet
+from utils.torrent import seed_file
 
 editPostBlueprint = Blueprint("editPost", __name__)
 
@@ -69,8 +71,9 @@ def editPost(urlID):
                     postAbstract = request.form["postAbstract"]
                     selectedCategory = request.form.get("postCategory", "").strip()
                     newCategory = request.form.get("newCategory", "").strip()
-                    postBanner = request.files["postBanner"].read()
-                    bannerMagnet = request.form.get("postBannerMagnet", "")
+                    postBannerFile = request.files["postBanner"]
+                    postBanner = postBannerFile.read()
+                    bannerMagnet = ""
 
                     connection = sqlite3.connect(Settings.DB_POSTS_ROOT)
                     cursor = connection.cursor()
@@ -151,23 +154,28 @@ def editPost(urlID):
                             (postCategory, post[0]),
                         )
                         if postBanner != b"":
+                            images_dir = os.path.join(Settings.APP_ROOT_PATH, "images")
+                            os.makedirs(images_dir, exist_ok=True)
+                            image_path = os.path.join(images_dir, f"{post[0]}.png")
+                            with open(image_path, "wb") as f:
+                                f.write(postBanner)
+                            bannerMagnet = seed_file(image_path)
                             cursor.execute(
                                 """update posts set banner = ? where id = ? """,
                                 (postBanner, post[0]),
                             )
-                            if bannerMagnet:
-                                contract = Settings.BLOCKCHAIN_CONTRACTS["ImageStorage"]
-                                cfg = BlockchainConfig(
-                                    rpc_url=Settings.BLOCKCHAIN_RPC_URL,
-                                    contract_address=contract["address"],
-                                    abi=contract["abi"],
+                            contract = Settings.BLOCKCHAIN_CONTRACTS["ImageStorage"]
+                            cfg = BlockchainConfig(
+                                rpc_url=Settings.BLOCKCHAIN_RPC_URL,
+                                contract_address=contract["address"],
+                                abi=contract["abi"],
+                            )
+                            try:
+                                set_image_magnet(cfg, f"{post[0]}.png", bannerMagnet)
+                            except Exception as e:
+                                Log.error(
+                                    f"Failed to store magnet for post {post[0]}: {e}"
                                 )
-                                try:
-                                    set_image_magnet(cfg, f"{post[0]}.png", bannerMagnet)
-                                except Exception as e:
-                                    Log.error(
-                                        f"Failed to store magnet for post {post[0]}: {e}"
-                                    )
                         cursor.execute(
                             """update posts set lastEditTimeStamp = ? where id = ? """,
                             [(currentTimeStamp()), (post[0])],

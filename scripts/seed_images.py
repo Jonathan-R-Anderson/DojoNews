@@ -1,9 +1,8 @@
 from pathlib import Path
 
-import libtorrent as lt
-
 from app.blockchain import BlockchainConfig, set_image_magnet
 from app.settings import Settings
+from app.utils.torrent import seed_file
 
 
 def seed_images(image_dir: str = "images") -> None:
@@ -12,8 +11,6 @@ def seed_images(image_dir: str = "images") -> None:
     The server continues to host the original files, while seeding them on
     BitTorrent for additional distribution capacity.
     """
-    ses = lt.session()
-    ses.listen_on(6881, 6891)
     contract = Settings.BLOCKCHAIN_CONTRACTS["ImageStorage"]
     cfg = BlockchainConfig(
         rpc_url=Settings.BLOCKCHAIN_RPC_URL,
@@ -22,18 +19,8 @@ def seed_images(image_dir: str = "images") -> None:
     )
     for img in Path(image_dir).glob("*"):
         if img.is_file():
-            fs = lt.file_storage()
-            lt.add_files(fs, str(img))
-            t = lt.create_torrent(fs)
-            t.add_tracker("udp://tracker.openbittorrent.com:80")
-            lt.set_piece_hashes(t, str(img.parent))
-            torrent = t.generate()
+            magnet = seed_file(str(img))
             torrent_path = img.with_suffix(img.suffix + ".torrent")
-            with open(torrent_path, "wb") as f:
-                f.write(lt.bencode(torrent))
-            ti = lt.torrent_info(torrent_path)
-            ses.add_torrent({"ti": ti, "save_path": str(img.parent)})
-            magnet = lt.make_magnet_uri(ti)
             tx = set_image_magnet(cfg, img.name, magnet)
             print(
                 f"Seeding {img.name} (torrent: {torrent_path.name}) - stored magnet tx {tx}"
