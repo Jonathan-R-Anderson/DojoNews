@@ -65,7 +65,7 @@
         try {
             const provider = new ethers.providers.JsonRpcProvider(rpcUrl);
             const contract = new ethers.Contract(postContractAddress, postContractAbi, provider);
-            const nextId = await contract.nextPostId();
+            const nextId = (await contract.nextPostId()).toNumber();
             for (let i = 0; i < nextId; i++) {
                 const onchain = await contract.posts(i);
                 if (!onchain.exists) continue;
