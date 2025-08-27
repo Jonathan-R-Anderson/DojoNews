@@ -1,12 +1,9 @@
-{% extends 'layout.html' %} {% block head %}
+{% extends 'layout.html' %}
+{% block head %}
 <title>{{ title }}</title>
-
 <meta property="og:type" content="article" />
 <meta property="og:title" content="{{ title }}" />
-<meta
-    property="og:image"
-    content="{{ banner_magnet }}"
-/>
+<meta property="og:image" content="{{ banner_magnet }}" />
 <meta name="keywords" content="{{ tags }}" />
 <meta name="author" content="{{ author }}" />
 <meta property="og:url" content="{{ blogPostUrl }}" />
@@ -14,278 +11,33 @@
 <meta name="twitter:site" content="{{ appName }}" />
 <meta name="twitter:title" content="{{ title }}" />
 <meta name="twitter:description" content="{{ abstract | striptags + '...' }}" />
-<meta
-    name="twitter:image"
-    content="{{ banner_magnet }}"
-/>
+<meta name="twitter:image" content="{{ banner_magnet }}" />
 <meta property="og:site_name" content="{{ appName }}" />
-
-<link
-    rel="stylesheet"
-    href="{{ url_for('static', filename='css/commentTree.css') }}"
-/>
-
-{% endblock head %} {% block body %}
-<script>
-    let visitorID = parseInt("{{ idForRandomVisitor | safe }}");
-    const csrfToken = "{{ csrf_token() }}";
-    const postUrlID = "{{ urlID }}";
-</script>
-<div
-    class="w-11/12 md:w-5/6 lg:w-7/12 xl:w-5/12 mx-auto mt-6 md:mt-10 break-words"
->
-    <img
-        data-magnet-id="{{ id }}.png"
-        class="mx-auto rounded-md shadow-md select-none"
-    />
-
-    <h1
-        class="text-2xl md:text-3xl mt-3 text-rose-500 w-full text-center font-bold"
-    >
-        {{ title }}
-    </h1>
-
-    <div
-        class="flex items-center justify-center gap-2 my-4 select-none opacity-75"
-    >
-        <p class="text-sm font-medium">
-            {{ readingTime|string + " " + translations.post.minRead }}
-        </p>
-        <button
-            id="listen-btn"
-            data-audio="{{ url_for('post.post_audio', urlID=urlID) }}"
-            class="btn btn-xs"
-            title="Listen"
-        >
-            <i class="ti ti-volume"></i>
-        </button>
-        <button
-            id="theme-toggle"
-            class="btn btn-xs"
-            title="Toggle theme"
-        >
-            <i class="ti ti-moon"></i>
-        </button>
-        <div class="join">
-            <button
-                id="font-dec"
-                class="btn btn-xs join-item"
-                title="Decrease font"
-            >
-                A-
-            </button>
-            <button
-                id="font-inc"
-                class="btn btn-xs join-item"
-                title="Increase font"
-            >
-                A+
-            </button>
-        </div>
-        {% if author == session["userName"] or "admin" == session["userName"] %}
-        <a
-            href="/analytics/posts/{{ urlID }}"
-            class="shadow-lg hover:text-rose-500 duration-150"
-            >{{ translations.post.viewPerformance }}</a
-        >
-        {% endif %}
+{% endblock head %}
+{% block body %}
+<div class="w-11/12 md:w-5/6 lg:w-7/12 xl:w-5/12 mx-auto mt-6 md:mt-10 break-words">
+    <img data-magnet-id="{{ id }}.png" class="mx-auto rounded-md shadow-md select-none" />
+    <h1 class="text-2xl md:text-3xl mt-3 text-rose-500 w-full text-center font-bold">{{ title }}</h1>
+    <div class="flex items-center justify-center gap-2 my-4 select-none opacity-75">
+        <p class="text-sm font-medium">{{ readingTime|string + ' ' + translations.post.minRead }}</p>
     </div>
-
     <div class="text-center font-sm max-w-full">{{ abstract }}</div>
-
     <div class="divider"></div>
-
     <div class="markdown-content">{{ render_markdown(content) }}</div>
-
-    <div class="select-none">
+    <div class="select-none mt-4">
         <div class="flex w-full justify-between my-1">
             <div class="flex items-center">
-                <i class="ti ti-tags mr-1 text-2xl"></i>
-                {{ tags.replace(",", ", ") }}
+                <i class="ti ti-tags mr-1 text-2xl"></i>{{ tags.replace(',', ', ') }}
             </div>
-            <a
-                target="_blank"
-                href="https://x.com/intent/tweet?text={{ title }} by {{ author }} on {{
-          appName
-        }} {{ request.base_url }}"
-            >
-                <i
-                    class="hover:text-rose-500 duration-150 ti ti-brand-x text-2xl"
-                ></i>
-            </a>
         </div>
-
         <div class="flex w-full justify-between my-1">
-            <h5>
-                <div class="flex items-center">
-                    <i class="ti ti-eye mr-1 text-2xl"></i>
-                    {{ views }}
-                </div>
-            </h5>
-            <h5 class="time">{{ timeStamp }}</h5>
-        </div>
-
-        <div class="flex w-full justify-end my-1">
-            <form
-                method="post"
-                action="{{ url_for('post.vote_post', urlID=urlID) }}"
-                class="mx-2"
-            >
-                <input
-                    type="hidden"
-                    name="csrf_token"
-                    value="{{ csrf_token() }}"
-                />
-                <button
-                    type="submit"
-                    class="hover:text-rose-500 duration-150 flex items-center"
-                >
-                    <i class="ti ti-arrow-big-down mr-1 text-2xl"></i>
-                    {{ downvotes }}
-                </button>
-            </form>
-        </div>
-
-        <div class="flex w-full justify-between my-1">
-            <a
-                href="/user/{{ author | lower }}"
-                class="hover:text-rose-500 duration-150"
-            >
+            <a href="/user/{{ author | lower }}" class="hover:text-rose-500 duration-150">
                 <h5 class="m-1 flex">
-                    <img
-                        class="w-7 mr-2 select-none"
-                        src="{{ getProfilePicture(author) }}"
-                        alt="{{ author }}"
-                    />
+                    <img class="w-7 mr-2 select-none" src="{{ getProfilePicture(author) }}" alt="{{ author }}" />
                     {{ author }}
                 </h5>
             </a>
-            <h5 class="date">{{ timeStamp }}</h5>
         </div>
-    </div>
-
-    {% if author == session["userName"] %}
-    <div class="flex justify-between px-2">
-        <form method="post">
-            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
-            <button
-                type="submit"
-                name="postDeleteButton"
-                class="text-rose-500 hover:text-rose-500/75 duration-150"
-            >
-                <i class="ti ti-trash-x mr-1 text-2xl"></i>
-            </button>
-        </form>
-        <a
-            href="/editpost/{{ urlID }}"
-            class="text-rose-500 hover:text-rose-500/75 duration-150"
-        >
-            <i class="ti ti-edit mr-1 text-2xl"></i>
-        </a>
-    </div>
-    {% endif %}
-
-    <div id="comment-tree" class="w-full my-4">
-        <div id="branch-legend" class="text-sm"></div>
-    </div>
-    <div class="flex justify-end gap-4">
-        <a
-            href="{{ url_for('post.post', urlID=urlID, sort='new') }}"
-            class="hover:text-rose-500 duration-150 {{ 'font-bold' if sort == 'new' else '' }}"
-            >New</a
-        >
-        <a
-            href="{{ url_for('post.post', urlID=urlID, sort='top') }}"
-            class="hover:text-rose-500 duration-150 {{ 'font-bold' if sort == 'top' else '' }}"
-            >Top</a
-        >
-    </div>
-    <div id="comments-section" class="overflow-y-auto max-h-[60vh]">
-        {% for comment in comments %}
-        <div class="flex flex-col mx-auto mt-8 mb-4 p-2 max-w-lg" data-comment-id="{{ comment[0] }}">
-            <div class="flex w-full justify-between">
-                <div class="flex items-center">
-                    <form
-                        method="post"
-                        action="{{ url_for('post.vote_comment', comment_id=comment[0]) }}"
-                        class="mx-2 my-1"
-                    >
-                        <input
-                            type="hidden"
-                            name="csrf_token"
-                            value="{{ csrf_token() }}"
-                        />
-                        <button
-                            type="submit"
-                            class="hover:text-rose-500 duration-150 flex items-center"
-                        >
-                            <i class="ti ti-arrow-big-up mr-1 text-xl"></i>
-                            {{ comment[5] }}
-                        </button>
-                    </form>
-                </div>
-                <div class="mx-2">
-                    <a
-                        href="/user/{{ comment[3] }}"
-                        class="flex items-center hover:text-rose-500 duration-150 select-none"
-                    >
-                        <img
-                            class="w-7 mr-2"
-                            src="{{ getProfilePicture(comment[3]) }}"
-                            alt=""
-                        />
-                        <div>{{ comment[3] }}</div>
-                    </a>
-                </div>
-                {% if session["userName"] == comment[3] %}
-                <form method="post" class="mx-2 my-1">
-                    <input
-                        type="hidden"
-                        name="csrf_token"
-                        value="{{ csrf_token() }}"
-                    />
-                    <input
-                        type="hidden"
-                        name="commentID"
-                        value="{{ comment[0] }}"
-                    />
-                    <button
-                        type="submit"
-                        name="commentDeleteButton"
-                        class="hover:text-rose-500 duration-150"
-                    >
-                        <i class="ti ti-trash-x mr-1 text-xl"></i>
-                    </button>
-                </form>
-                {% endif %}
-            </div>
-            <p class="break-words ml-8">
-                <i
-                    class="ti ti-corner-down-right mr-1 text-xl inline-block"
-                ></i>
-                {{ comment[2] | e }}
-            </p>
-        </div>
-        {% endfor %}
     </div>
 </div>
-<div class="mx-auto text-center my-8 w-10/12 md:w-5/12 lg:w-4/12 xl:w-3/12">
-    <form method="post" class="md:w-max">
-        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
-        {% if session["userName"] %}
-        <div class="border rounded border-rose-500/25">
-            {{ form.comment(class_="textarea textarea-bordered w-full h-24 my-2",placeholder=translations.post.placeholder) }}
-            <button
-                type="submit"
-                class="btn btn-neutral mt-2"
-            >
-                <i class="ti ti-arrow-narrow-up mr-1 text-xl"></i>
-            </button>
-        </div>
-    </form>
-    {% endif %}
-</div>
-
-<script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
-<script src="{{ url_for('static', filename='js/post.js') }}"></script>
 {% endblock body %}
