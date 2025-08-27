@@ -1,0 +1,36 @@
+{% extends 'layout.html' %}
+{% block head %}
+<title>{{ translations.adminPanelContracts.title | default('Admin Panel - Contracts') }}</title>
+{% endblock head %}
+{% block body %}
+<div class="w-fit mx-auto mt-32 text-center text-2xl font-medium">
+    <h1 class="my-4">
+        {{ translations.adminPanelContracts.title | default('Admin Panel - Contracts') }}
+    </h1>
+    {% for name, data in contracts.items() %}
+    <div class="my-4">
+        <p class="font-medium">{{ name }}: {{ data['address'] }}</p>
+        <form method="post" class="flex items-center justify-center mt-2">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
+            <input type="hidden" name="contractName" value="{{ name }}" />
+            <input
+                type="text"
+                name="contractAddress"
+                value="{{ data['address'] }}"
+                class="input input-bordered mr-2"
+            />
+            <button
+                type="submit"
+                name="contractUpdateButton"
+                class="hover:text-rose-500 duration-150 font-medium"
+            >
+                <i class="ti ti-device-floppy mr-1 text-2xl"></i>
+            </button>
+        </form>
+    </div>
+    {% endfor %}
+</div>
+<a href="/admin" class="hidden md:block fixed bottom-0 left-1">
+    <i class="ti ti-arrow-back mr-1 text-xl hover:text-rose-500 duration-150"></i>
+</a>
+{% endblock body %}

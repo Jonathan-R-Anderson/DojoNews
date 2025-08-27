@@ -148,3 +148,30 @@ class Settings:
     BLOCKCHAIN_RPC_URL = "http://localhost:8545"
     BLOCKCHAIN_CONTRACT_ADDRESS = "0x0000000000000000000000000000000000000000"
     BLOCKCHAIN_ABI = []
+    # Addresses and ABIs for individual smart contracts managed by the sysop
+    BLOCKCHAIN_CONTRACTS = {
+        "UserRegistry": {
+            "address": "0x0000000000000000000000000000000000000000",
+            "abi": [],
+        },
+        "PostStorage": {
+            "address": "0x0000000000000000000000000000000000000000",
+            "abi": [],
+        },
+        "CommentStorage": {
+            "address": "0x0000000000000000000000000000000000000000",
+            "abi": [],
+        },
+        "TipJar": {
+            "address": "0x0000000000000000000000000000000000000000",
+            "abi": [],
+        },
+        "ImageStorage": {
+            "address": "0x0000000000000000000000000000000000000000",
+            "abi": [],
+        },
+        "SponsorSlots": {
+            "address": "0x0000000000000000000000000000000000000000",
+            "abi": [],
+        },
+    }
