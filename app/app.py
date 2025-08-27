@@ -3,6 +3,7 @@ This file contains the main function
 """
 
 from datetime import timedelta
+import os
 
 from flask import Flask
 from flask_wtf.csrf import (
@@ -131,6 +132,7 @@ from utils.generateUrlIdFromPost import getSlugFromPostTitle
 from utils.log import Log
 from utils.terminalASCII import terminalASCII
 from utils.time import currentTimeStamp
+from utils.torrent import ensure_seeding
 
 startTime = currentTimeStamp()
 
@@ -155,6 +157,9 @@ app.config["SESSION_PERMANENT"] = Settings.SESSION_PERMANENT
 
 
 csrf = CSRFProtect(app)
+
+images_dir = os.path.join(Settings.APP_ROOT_PATH, "images")
+ensure_seeding(images_dir)
 
 
 app.context_processor(isLogin)
