@@ -13,6 +13,7 @@ from blockchain import (
     create_post,
     get_next_post_id,
 )
+from utils.torrent import seed_file
 
 createPostBlueprint = Blueprint("createPost", __name__)
 
@@ -81,8 +82,9 @@ def createPost():
                     if postBannerFile:
                         images_dir = os.path.join(Settings.APP_ROOT_PATH, "images")
                         os.makedirs(images_dir, exist_ok=True)
-                        postBannerFile.save(os.path.join(images_dir, f"{post_id}.png"))
-                    if bannerMagnet:
+                        image_path = os.path.join(images_dir, f"{post_id}.png")
+                        postBannerFile.save(image_path)
+                        bannerMagnet = seed_file(image_path)
                         contract_img = Settings.BLOCKCHAIN_CONTRACTS["ImageStorage"]
                         cfg_img = BlockchainConfig(
                             rpc_url=Settings.BLOCKCHAIN_RPC_URL,
