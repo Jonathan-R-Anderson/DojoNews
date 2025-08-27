@@ -16,7 +16,7 @@ subject to change without notice. Use of this code for commercial or non-commerc
 purposes without permission is strictly prohibited.
 """
 
-from flask import Blueprint, render_template, session
+from flask import Blueprint, render_template
 from settings import Settings
 from utils.categories import get_categories
 
@@ -25,9 +25,14 @@ indexBlueprint = Blueprint("index", __name__)
 
 @indexBlueprint.route("/")
 def index():
-    """Render index page with blockchain details if user is logged in."""
-    if "walletAddress" not in session:
-        return ""
+    """Render the index page.
+
+    The previous implementation returned a blank response when the user was not
+    logged in (i.e. no ``walletAddress`` in the session). This caused the home
+    page to be completely empty for anonymous visitors. Instead, always render
+    the index template so that the login/signup options in the navigation bar
+    remain accessible.
+    """
 
     return render_template(
         "index.html",
