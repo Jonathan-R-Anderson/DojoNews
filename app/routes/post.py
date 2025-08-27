@@ -1,13 +1,17 @@
 import sqlite3
+import queue
+from typing import Dict
 
 from flask import (
     Blueprint,
     abort,
     jsonify,
+    Response,
     redirect,
     render_template,
     request,
     session,
+    stream_with_context,
     url_for,
 )
 from settings import Settings
@@ -23,6 +27,12 @@ from utils.time import currentTimeStamp
 from utils.commentTree import build_comment_tree
 
 postBlueprint = Blueprint("post", __name__)
+
+_comment_queues: Dict[str, queue.Queue] = {}
+
+
+def _get_comment_queue(url_id: str) -> queue.Queue:
+    return _comment_queues.setdefault(url_id, queue.Queue())
 
 
 @postBlueprint.route("/post/<urlID>", methods=["GET", "POST"])
@@ -97,6 +107,7 @@ def post(urlID=None, slug=None):
                 ),
             )
             connection.commit()
+            _get_comment_queue(urlID).put("update")
 
             Log.success(
                 f'User: "{session["userName"]}" commented to post: "{urlID}"',
@@ -303,3 +314,16 @@ def comment_tree(urlID):
 
     tree = build_comment_tree(comments)
     return jsonify(tree)
+
+
+@postBlueprint.route("/post/<urlID>/comments/stream")
+def comment_stream(urlID):
+    def gen(q: queue.Queue):
+        while True:
+            data = q.get()
+            yield f"data: {data}\n\n"
+
+    return Response(
+        stream_with_context(gen(_get_comment_queue(urlID))),
+        mimetype="text/event-stream",
+    )
