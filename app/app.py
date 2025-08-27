@@ -52,6 +52,9 @@ from routes.dashboard import (
 from routes.editPost import (
     editPostBlueprint,
 )
+from routes.createPost import (
+    createPostBlueprint,
+)
 from routes.index import (
     indexBlueprint,
 )
@@ -278,6 +281,7 @@ app.register_blueprint(editPostBlueprint)
 app.register_blueprint(dashboardBlueprint)
 app.register_blueprint(searchBarBlueprint)
 app.register_blueprint(adminPanelBlueprint)
+app.register_blueprint(createPostBlueprint)
 app.register_blueprint(verifyUserBlueprint)
 app.register_blueprint(setLanguageBlueprint)
 app.register_blueprint(setThemeBlueprint)
