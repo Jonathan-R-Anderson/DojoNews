@@ -1,4 +1,4 @@
-(async () => {
+async function loadMagnets() {
     if (typeof WebTorrent === "undefined") {
         await new Promise((resolve) => {
             const s = document.createElement("script");
@@ -47,4 +47,9 @@
             console.error("Failed to load magnet", id, e);
         }
     }
-})();
+}
+
+if (typeof window !== "undefined") {
+    window.loadMagnets = loadMagnets;
+    loadMagnets();
+}
