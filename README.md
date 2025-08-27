@@ -54,9 +54,9 @@ are also seeded over BitTorrent for additional distribution. A helper script
 [`scripts/seed_images.py`](scripts/seed_images.py) generates torrents for the
 images and seeds them using `libtorrent`. These torrent files can also be
 loaded into a uTorrent client so the server and peers share the load.
-Magnet URLs for the images are stored on-chain and fetched through the
-`/magnet/<id>` route, then rendered in the browser using WebTorrent and Blob
-URLs for load-balanced delivery.
+Magnet URLs for the images are stored on-chain and fetched directly in the
+browser via the ImageStorage smart contract, then rendered using WebTorrent and
+Blob URLs for load-balanced delivery.
 
 ### Default Admin Account
 - Username: `admin`

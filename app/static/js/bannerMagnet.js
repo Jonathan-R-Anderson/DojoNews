@@ -16,11 +16,11 @@
         e.preventDefault();
         const file = bannerInput.files[0];
         const data = new FormData();
-        data.append('image', file);
+        data.append('postBanner', file);
         const csrf = form.querySelector('input[name="csrf_token"]');
         if (csrf) data.append('csrf_token', csrf.value);
         try {
-            const res = await fetch('/magnet/seed', { method: 'POST', body: data });
+            const res = await fetch('/createpost', { method: 'POST', body: data });
             const json = await res.json();
             magnetField.value = json.magnet || '';
         } catch (err) {

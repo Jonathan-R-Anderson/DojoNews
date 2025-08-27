@@ -1,19 +1,63 @@
-{% extends 'layout.html' %}
-{% block head %}
+{% extends 'layout.html' %} {% block head %}
 <title>{{ translations.createPost.title }}</title>
-{% endblock head %}
-{% block body %}
+<link
+    rel="stylesheet"
+    href="{{ url_for('static', filename='css/markdownEditor.css') }}"
+/>
+{% endblock head %} {% block body %}
 <div class="w-fit mx-auto mt-8">
     <form method="post" enctype="multipart/form-data">
         <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
+
+        {{ form.postTitle(class_="input input-bordered w-full my-2",
+        autocomplete="off",placeholder=translations.createPost.titlePlaceholder)
+        }} {{ form.postTags(class_="input input-bordered w-full my-2",
+        autocomplete="off",placeholder=translations.createPost.tags) }} {{
+        form.postAbstract(class_="textarea textarea-bordered w-full my-2",
+        autocomplete="off",placeholder=translations.createPost.abstractPlaceholder)
+        }}
+        <p class="text-xs text-center w-fit mx-auto mb-2">
+            {{ translations.createPost.separate }}
+        </p>
+
         <div class="w-72 mx-auto text-center mb-4">
-            <label class="block mt-2 mb-1">{{ translations.createPost.banner }}</label>
-            <input type="file" name="postBanner" class="file-input file-input-bordered w-full" />
+            <label class="block mt-2 mb-1"
+                >{{ translations.createPost.banner }}</label
+            >
+            {{ form.postBanner(class_="file-input file-input-bordered w-full",
+            placeholder=translations.createPost.bannerPlaceholder) }}
         </div>
+
+        <div class="mx-auto w-fit">
+            <label class="block my-1 text-center"
+                >{{ translations.createPost.category }}</label
+            >
+            <select
+                class="select select-bordered w-72"
+                id="postCategory"
+                name="postCategory"
+            >
+                {% for cat in categories %}
+                {% set key = cat|lower %}
+                <option value="{{ cat }}">{{
+                    translations.categories[key] if key in translations.categories else cat
+                }}</option>
+                {% endfor %}
+            </select>
+            {{ form.newCategory(class_="input input-bordered w-72 mt-2", autocomplete="off", placeholder="New Category") }}
+        </div>
+
+        <div>
+            {{ form.postContent(class_="textarea textarea-bordered w-full h-96",
+            id_="markdown-editor", autocomplete="off") }}
+        </div>
+
         <button type="submit" class="btn btn-neutral btn-block mt-4">
             {{ translations.createPost.post }}
         </button>
     </form>
+    <script src="{{ url_for('static', filename='js/markdownEditor.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/bannerMagnet.js') }}"></script>
     <script src="https://cdn.jsdelivr.net/npm/ethers@5.7.2/dist/ethers.umd.min.js"></script>
     <script>
         const postContractAddress = "{{ post_contract_address }}";

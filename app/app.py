@@ -64,9 +64,6 @@ from routes.login import (
 from routes.logout import (
     logoutBlueprint,
 )
-from routes.magnet import (
-    magnetBlueprint,
-)
 from routes.passwordReset import (
     passwordResetBlueprint,
 )
@@ -301,7 +298,6 @@ app.register_blueprint(adminPanelCommentsBlueprint)
 app.register_blueprint(changeProfilePictureBlueprint)
 app.register_blueprint(analyticsBlueprint)
 app.register_blueprint(returnPostAnalyticsDataBlueprint)
-app.register_blueprint(magnetBlueprint)
 
 
 if __name__ == "__main__":
