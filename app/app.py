@@ -21,6 +21,9 @@ from routes.adminPanel import (
 from routes.adminPanelComments import (
     adminPanelCommentsBlueprint,
 )
+from routes.adminPanelContracts import (
+    adminPanelContractsBlueprint,
+)
 from routes.adminPanelPosts import (
     adminPanelPostsBlueprint,
 )
@@ -286,6 +289,7 @@ app.register_blueprint(changePasswordBlueprint)
 app.register_blueprint(changeLanguageBlueprint)
 app.register_blueprint(adminPanelUsersBlueprint)
 app.register_blueprint(adminPanelPostsBlueprint)
+app.register_blueprint(adminPanelContractsBlueprint)
 app.register_blueprint(accountSettingsBlueprint)
 app.register_blueprint(returnPostBannerBlueprint)
 app.register_blueprint(adminPanelCommentsBlueprint)
