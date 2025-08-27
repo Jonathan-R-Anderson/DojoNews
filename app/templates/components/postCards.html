@@ -1,0 +1,4 @@
+{% for post in posts %}
+    {% from "components/postCardMacro.html" import postCard with context %}
+    {{ postCard(post=post, authorProfilePicture=getProfilePicture(post[5])) }}
+{% endfor %}

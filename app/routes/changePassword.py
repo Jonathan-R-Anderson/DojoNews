@@ -29,6 +29,8 @@ def changePassword():
         render_template: a rendered template with the form
     """
 
+    language = session.get("language", "en")
+
     if "userName" in session:
         form = ChangePasswordForm(request.form)
 
@@ -53,7 +55,7 @@ def changePassword():
                         page="changePassword",
                         message="same",
                         category="error",
-                        language=session["language"],
+                        language=language,
                     )
 
                 if password != passwordConfirm:
@@ -61,7 +63,7 @@ def changePassword():
                         page="changePassword",
                         message="match",
                         category="error",
-                        language=session["language"],
+                        language=language,
                     )
 
                 if oldPassword != password and password == passwordConfirm:
@@ -83,11 +85,12 @@ def changePassword():
                     )
 
                     session.clear()
+                    session["language"] = language
                     flashMessage(
                         page="changePassword",
                         message="success",
                         category="success",
-                        language=session["language"],
+                        language=language,
                     )
 
                     return redirect("/login/redirect=&")
@@ -96,7 +99,7 @@ def changePassword():
                     page="changePassword",
                     message="old",
                     category="error",
-                    language=session["language"],
+                    language=language,
                 )
 
         return render_template(
@@ -111,7 +114,7 @@ def changePassword():
             page="changePassword",
             message="login",
             category="error",
-            language=session["language"],
+            language=language,
         )
 
         return redirect("/login/redirect=changepassword")
