@@ -88,6 +88,6 @@ function observeNewImages() {
 }
 
 if (typeof window !== "undefined") {
-    window.loadMagnets = () => loadMagnets();
+    window.loadMagnets = loadMagnets;
     loadMagnets().then(observeNewImages);
 }
