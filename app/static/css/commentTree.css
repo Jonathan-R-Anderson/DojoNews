@@ -64,3 +64,8 @@
   padding-top: 0 !important;
   padding-bottom: 0 !important;
 }
+
+#comments-section {
+  max-height: 60vh;
+  overflow-y: auto;
+}
