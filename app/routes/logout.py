@@ -22,17 +22,17 @@ def logout():
     If the user is not logged in, a message is displayed indicating that they are not logged in.
     The user is then redirected to the homepage.
     """
-    if "userName" in session:
-        Log.success(f"User: {session['userName']} logged out")
+    if "walletAddress" in session:
+        Log.success(f"Wallet: {session['walletAddress']} logged out")
         flashMessage(
             page="logout",
             message="success",
             category="success",
             language=session["language"],
         )
-        session.pop("userName")
-        session.pop("userRole")
+        session.pop("walletAddress")
+        session.pop("userName", None)
+        session.pop("userRole", None)
         return redirect("/")
-    else:
-        Log.error(f"{request.remote_addr} tried to logout without being logged in")
-        return redirect("/")
+    Log.error(f"{request.remote_addr} tried to logout without being logged in")
+    return redirect("/")
