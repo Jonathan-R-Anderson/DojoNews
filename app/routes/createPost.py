@@ -1,5 +1,6 @@
 import sqlite3
 import math
+import hashlib
 
 from flask import Blueprint, redirect, render_template, request, session, flash
 from settings import Settings
@@ -10,7 +11,7 @@ from utils.generateUrlIdFromPost import generateurlID
 from utils.log import Log
 from utils.time import currentTimeStamp
 from utils.categories import get_categories, DEFAULT_CATEGORIES
-from blockchain import BlockchainConfig, set_image_magnet
+from blockchain import BlockchainConfig, set_image_magnet, create_post
 
 createPostBlueprint = Blueprint("createPost", __name__)
 
@@ -156,6 +157,21 @@ def createPost():
                         Log.error(
                             f"Failed to store magnet for post {post_id}: {e}"
                         )
+
+                try:
+                    contract = Settings.BLOCKCHAIN_CONTRACTS["PostStorage"]
+                    cfg = BlockchainConfig(
+                        rpc_url=Settings.BLOCKCHAIN_RPC_URL,
+                        contract_address=contract["address"],
+                        abi=contract["abi"],
+                    )
+                    payload = (
+                        f"{postTitle}|{postTags}|{postAbstract}|{postContent}|{postCategory}|{bannerMagnet}"
+                    )
+                    content_hash = hashlib.sha256(payload.encode()).hexdigest()
+                    create_post(cfg, content_hash)
+                except Exception as e:
+                    Log.error(f"Failed to store post on-chain: {e}")
 
                 addPoints(20, session["userName"])
                 flashMessage(
