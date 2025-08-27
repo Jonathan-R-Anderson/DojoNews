@@ -87,7 +87,7 @@
         <script>
             window.rpcUrl = "{{ rpc_url }}";
             window.postContractAddress = "{{ post_contract_address }}";
-            window.postContractAbi = {{ post_contract_abi | tojson }};
+            window.postContractAbi = {{ post_contract_abi | default([], true) | tojson }};
         </script>
         <script src="{{ url_for('static', filename='js/magnet.js') }}"></script>
         <script src="{{ url_for('static', filename='js/torrentSeeder.js') }}"></script>
