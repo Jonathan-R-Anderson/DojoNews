@@ -6,6 +6,7 @@ from flask import (
     session,
 )
 from settings import Settings
+from utils.delete import Delete
 from utils.log import Log
 from utils.paginate import paginate_query
 
@@ -18,6 +19,15 @@ def adminPanelPosts():
     if "userName" in session:
         Log.info(f"Admin: {session['userName']} reached to posts admin panel")
         Log.database(f"Connecting to '{Settings.DB_POSTS_ROOT}' database")
+
+        if request.method == "POST":
+            if "postDeleteButton" in request.form:
+                Log.info(
+                    f"Admin: {session['userName']} deleted post: {request.form['postID']}"
+                )
+                Delete.post(request.form["postID"])
+
+                return redirect("/admin/posts")
 
         posts, page, total_pages = paginate_query(
             Settings.DB_POSTS_ROOT,
