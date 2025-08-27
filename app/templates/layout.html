@@ -84,6 +84,11 @@
         <script src="{{ url_for('static', filename='js/timeStamp.js') }}"></script>
         <script src="{{ url_for('static', filename='js/readerControls.js') }}"></script>
         <script src="{{ url_for('static', filename='js/progress.js') }}"></script>
+        <script>
+            const rpcUrl = "{{ rpc_url }}";
+            const imageContractAddress = "{{ image_contract_address }}";
+            const imageContractAbi = {{ image_contract_abi | tojson }};
+        </script>
         <script src="{{ url_for('static', filename='js/magnet.js') }}"></script>
         <link
             rel="stylesheet"

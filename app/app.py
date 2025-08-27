@@ -110,6 +110,7 @@ from utils.contextProcessor.returnPostUrlSlug import returnPostUrlSlug
 from utils.contextProcessor.returnUserProfilePicture import returnUserProfilePicture
 from utils.contextProcessor.translations import injectTranslations
 from utils.contextProcessor.markdown import markdown_processor
+from utils.contextProcessor.blockchain import inject_blockchain
 from utils.dbChecker import (
     analyticsTable,
     commentsTable,
@@ -164,6 +165,7 @@ app.context_processor(returnPostUrlID)
 app.context_processor(returnPostUrlSlug)
 app.context_processor(injectTranslations)
 app.context_processor(markdown_processor)
+app.context_processor(inject_blockchain)
 app.before_request(browserLanguage)
 app.jinja_env.globals.update(getSlugFromPostTitle=getSlugFromPostTitle)
 

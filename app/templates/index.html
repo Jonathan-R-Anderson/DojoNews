@@ -38,7 +38,9 @@
 <div
     id="posts-container"
     class="flex item-center justify-center flex-wrap gap-x-4 gap-y-6 mx-auto w-11/12 md:w-11/12 lg:w-10/12 2xl:w-9/12 mt-6"
-></div>
+>
+    {% include 'components/postCards.html' %}
+</div>
 
 <div class="text-center mt-4 mb-2 text-xs font-medium">
     <div class="mb-1">
@@ -55,49 +57,11 @@
 
 <script src="https://cdn.jsdelivr.net/npm/ethers@5.7.2/dist/ethers.umd.min.js"></script>
 <script>
-    const rpcUrl = "{{ rpc_url }}";
     const postContractAddress = "{{ post_contract_address }}";
     const postContractAbi = {{ post_contract_abi | tojson }};
 
-    async function renderPosts() {
-        const container = document.getElementById('posts-container');
-        container.innerHTML = '';
-        try {
-            const provider = new ethers.providers.JsonRpcProvider(rpcUrl);
-            const contract = new ethers.Contract(postContractAddress, postContractAbi, provider);
-            const nextId = (await contract.nextPostId()).toNumber();
-            for (let i = 0; i < nextId; i++) {
-                const onchain = await contract.posts(i);
-                if (!onchain.exists) continue;
-                let meta = {};
-                try {
-                    const metaRes = await fetch(onchain.contentHash);
-                    meta = await metaRes.json();
-                } catch (err) {
-                    console.error(err);
-                }
-
-                const card = document.createElement('a');
-                card.href = meta.url || '#';
-                card.className = 'post-tile';
-
-                if (meta.magnet) {
-                    try {
-                        const imgRes = await fetch(meta.magnet);
-                        const blob = await imgRes.blob();
-                        card.style.backgroundImage = `url(${URL.createObjectURL(blob)})`;
-                    } catch (err) {
-                        console.error(err);
-                    }
-                }
-
-                container.appendChild(card);
-            }
-        } catch (e) {
-            console.error(e);
-        }
-    }
-
-    document.addEventListener('DOMContentLoaded', renderPosts);
+    document.addEventListener('DOMContentLoaded', () => {
+        // placeholder for future on-chain post loading
+    });
 </script>
 {% endblock body %}
