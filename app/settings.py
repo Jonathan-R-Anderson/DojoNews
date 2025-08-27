@@ -149,6 +149,7 @@ class Settings:
     BLOCKCHAIN_RPC_URL = "http://localhost:8545"
     BLOCKCHAIN_CONTRACT_ADDRESS = "0x0000000000000000000000000000000000000000"
     BLOCKCHAIN_ABI = []
+    ADMIN_WALLET_ADDRESS = "0xB2b36AaD18d7be5d4016267BC4cCec2f12a64b6e"
     # Addresses and ABIs for individual smart contracts managed by the sysop
     BLOCKCHAIN_CONTRACTS = {
         "UserRegistry": {

@@ -27,6 +27,29 @@
                 <i class="ti ti-device-floppy mr-1 text-2xl"></i>
             </button>
         </form>
+        <form method="post" class="flex items-center justify-center mt-2">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
+            <input type="hidden" name="contractName" value="{{ name }}" />
+            <input
+                type="text"
+                name="contractMethod"
+                placeholder="method"
+                class="input input-bordered mr-2"
+            />
+            <input
+                type="text"
+                name="contractArgs"
+                placeholder='["arg1",123]'
+                class="input input-bordered mr-2"
+            />
+            <button
+                type="submit"
+                name="contractCallButton"
+                class="hover:text-rose-500 duration-150 font-medium"
+            >
+                <i class="ti ti-terminal mr-1 text-2xl"></i>
+            </button>
+        </form>
     </div>
     {% endfor %}
 </div>
@@ -34,3 +57,4 @@
     <i class="ti ti-arrow-back mr-1 text-xl hover:text-rose-500 duration-150"></i>
 </a>
 {% endblock body %}
+
