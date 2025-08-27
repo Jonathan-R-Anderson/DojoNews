@@ -33,15 +33,31 @@
     <br />
 </div>
 
+<script src="https://cdn.jsdelivr.net/npm/ethers@5.7.2/dist/ethers.umd.min.js"></script>
 <script>
+    const rpcUrl = "{{ rpc_url }}";
+    const postContractAddress = "{{ post_contract_address }}";
+    const postContractAbi = {{ post_contract_abi | tojson }};
+    const targetCategory = "{{ raw_category|lower }}";
+
     async function renderCategoryPosts() {
         const container = document.getElementById('posts-container');
         container.innerHTML = '';
         try {
-            const response = await fetch('/api/posts?category={{ raw_category|lower }}');
-            if (!response.ok) return;
-            const data = await response.json();
-            for (const post of data.posts) {
+            const provider = new ethers.providers.JsonRpcProvider(rpcUrl);
+            const contract = new ethers.Contract(postContractAddress, postContractAbi, provider);
+            const nextId = await contract.nextPostId();
+            for (let i = 0; i < nextId; i++) {
+                const onchain = await contract.posts(i);
+                if (!onchain.exists) continue;
+                let meta = {};
+                try {
+                    const metaRes = await fetch(onchain.contentHash);
+                    meta = await metaRes.json();
+                } catch (err) {
+                    console.error(err);
+                }
+                if ((meta.category || '').toLowerCase() !== targetCategory) continue;
                 const card = document.createElement('div');
                 card.className = 'flex flex-col bg-base-200 rounded-box w-[20rem] h-[30rem] hover:scale-105 duration-150';
 
@@ -52,9 +68,9 @@
                 imgWrap.appendChild(img);
                 card.appendChild(imgWrap);
 
-                if (post.magnet) {
+                if (meta.magnet) {
                     try {
-                        const imgRes = await fetch(post.magnet);
+                        const imgRes = await fetch(meta.magnet);
                         const blob = await imgRes.blob();
                         img.src = URL.createObjectURL(blob);
                     } catch (err) {
@@ -67,43 +83,47 @@
 
                 const cat = document.createElement('h3');
                 cat.className = 'text-secondary font-medium text-sm line-clamp-1';
-                cat.textContent = post.category;
+                cat.textContent = meta.category || '';
                 body.appendChild(cat);
 
                 const link = document.createElement('a');
-                link.href = post.url;
+                link.href = meta.url || '#';
                 link.className = 'link link-hover text-xl font-bold line-clamp-2 leading-tight';
-                link.textContent = post.title;
+                link.textContent = meta.title || `Post ${i}`;
                 body.appendChild(link);
 
                 const abstractDiv = document.createElement('div');
                 abstractDiv.className = 'overflow-hidden flex-grow';
                 const abstractSpan = document.createElement('span');
                 abstractSpan.className = 'text-sm leading-relaxed line-clamp-4 break-words';
-                abstractSpan.textContent = post.abstract;
+                abstractSpan.textContent = meta.abstract || '';
                 abstractDiv.appendChild(abstractSpan);
                 body.appendChild(abstractDiv);
 
                 const footer = document.createElement('div');
                 footer.className = 'flex justify-between items-center mt-auto pt-2 w-full';
                 const authorLink = document.createElement('a');
-                authorLink.href = '/user/' + post.author;
+                authorLink.href = '/user/' + (meta.author || onchain.author);
                 authorLink.className = 'flex items-center gap-2 min-w-0';
 
                 const avatar = document.createElement('img');
                 avatar.alt = 'Profile';
-                avatar.src = post.author_picture || '';
+                avatar.src = meta.author_picture || '';
                 avatar.className = 'w-8 h-8 rounded object-cover flex-shrink-0';
                 authorLink.appendChild(avatar);
 
                 const nameSpan = document.createElement('span');
                 nameSpan.className = 'font-medium text-sm truncate';
-                nameSpan.textContent = post.author;
+                nameSpan.textContent = meta.author || onchain.author;
                 authorLink.appendChild(nameSpan);
 
                 const dateSpan = document.createElement('span');
                 dateSpan.className = 'date text-sm flex-shrink-0';
-                dateSpan.textContent = new Date(post.timestamp * 1000).toLocaleDateString();
+                if (meta.timestamp) {
+                    dateSpan.textContent = new Date(meta.timestamp * 1000).toLocaleDateString();
+                } else {
+                    dateSpan.textContent = '';
+                }
 
                 footer.appendChild(authorLink);
                 footer.appendChild(dateSpan);

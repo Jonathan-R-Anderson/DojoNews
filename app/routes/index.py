@@ -18,22 +18,11 @@ purposes without permission is strictly prohibited.
 
 from json import load
 
-from flask import (
-    Blueprint,
-    redirect,
-    render_template,
-    session,
-    request,
-    jsonify,
-    url_for,
-)
+from flask import Blueprint, redirect, render_template, session, request
 from settings import Settings
 from utils.log import Log
 from utils.paginate import paginate_query
 from utils.categories import get_categories
-from utils.generateUrlIdFromPost import getSlugFromPostTitle
-from utils.getProfilePicture import getProfilePicture
-from blockchain import BlockchainConfig, get_image_magnet
 
 indexBlueprint = Blueprint("index", __name__)
 
@@ -110,59 +99,10 @@ def index(by="views", sort="desc"):
         by=original_by,
         sort=sort,
         categories=get_categories(),
-    )
-
-
-@indexBlueprint.route("/api/posts")
-def api_posts():
-    """Return post data along with magnet URIs."""
-    category = request.args.get("category")
-
-    base_select = (
-        "select id, title, author, timeStamp, category, urlID, abstract from posts"
-    )
-    base_count = "select count(*) from posts"
-    params = []
-    if category:
-        base_select += " where lower(category) = ?"
-        base_count += " where lower(category) = ?"
-        params.append(category.lower())
-    base_select += " order by timeStamp desc"
-
-    posts, _, _ = paginate_query(
-        Settings.DB_POSTS_ROOT, base_count, base_select, params, per_page=50
-    )
-
-    contract = Settings.BLOCKCHAIN_CONTRACTS.get("ImageStorage", {})
-    cfg = BlockchainConfig(
+        post_contract_address=Settings.BLOCKCHAIN_CONTRACTS["PostStorage"]["address"],
+        post_contract_abi=Settings.BLOCKCHAIN_CONTRACTS["PostStorage"]["abi"],
         rpc_url=Settings.BLOCKCHAIN_RPC_URL,
-        contract_address=contract.get("address", "0x0"),
-        abi=contract.get("abi", []),
     )
-
-    data = []
-    for p in posts:
-        try:
-            magnet = get_image_magnet(cfg, f"{p[0]}.png")
-        except Exception:
-            magnet = ""
-        data.append(
-            {
-                "id": p[0],
-                "title": p[1],
-                "author": p[2],
-                "timestamp": p[3],
-                "category": p[4],
-                "url": url_for(
-                    "post.post", slug=getSlugFromPostTitle(p[1]), urlID=p[5]
-                ),
-                "abstract": p[6],
-                "author_picture": getProfilePicture(p[2]),
-                "magnet": magnet,
-            }
-        )
-
-    return jsonify({"posts": data})
 
 
 @indexBlueprint.route("/load_posts")

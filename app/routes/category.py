@@ -75,4 +75,7 @@ def category(category, by="timeStamp", sort="desc"):
         page=page,
         total_pages=total_pages,
         categories=get_categories(),
+        post_contract_address=Settings.BLOCKCHAIN_CONTRACTS["PostStorage"]["address"],
+        post_contract_abi=Settings.BLOCKCHAIN_CONTRACTS["PostStorage"]["abi"],
+        rpc_url=Settings.BLOCKCHAIN_RPC_URL,
     )
