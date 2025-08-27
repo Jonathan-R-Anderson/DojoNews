@@ -29,6 +29,7 @@ from utils.getDataFromUserIP import getDataFromUserIP
 from utils.log import Log
 from utils.time import currentTimeStamp
 from utils.commentTree import build_comment_tree
+from blockchain import BlockchainConfig, get_image_magnet
 
 postBlueprint = Blueprint("post", __name__)
 
@@ -178,6 +179,18 @@ def post(urlID=None, slug=None):
         else:
             idForRandomVisitor = None
 
+        contract = Settings.BLOCKCHAIN_CONTRACTS["ImageStorage"]
+        cfg = BlockchainConfig(
+            rpc_url=Settings.BLOCKCHAIN_RPC_URL,
+            contract_address=contract["address"],
+            abi=contract["abi"],
+        )
+        try:
+            banner_magnet = get_image_magnet(cfg, f"{post[0]}.png")
+        except Exception as e:
+            Log.error(f"Failed to load magnet for post {post[0]}: {e}")
+            banner_magnet = ""
+
         return render_template(
             "post.html",
             id=post[0],
@@ -198,6 +211,7 @@ def post(urlID=None, slug=None):
             readingTime=calculateReadTime(post[3]),
             idForRandomVisitor=idForRandomVisitor,
             sort=sort_option,
+            banner_magnet=banner_magnet,
         )
 
     else:
