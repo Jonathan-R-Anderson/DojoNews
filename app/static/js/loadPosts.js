@@ -24,6 +24,7 @@
             link.className = 'post-tile';
             const img = document.createElement('img');
             img.dataset.magnetId = `${id}.png`;
+            img.src = 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==';
             img.alt = title;
             img.className = 'select-none';
             link.appendChild(img);
