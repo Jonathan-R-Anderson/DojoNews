@@ -69,8 +69,11 @@ function renderCommentTree(data) {
   const tree = d3.tree().size([2 * Math.PI, radius - 40]);
   tree(root);
 
+  const treeCommentIds = new Set(data.nodes.map((n) => n.id));
+
   const container = d3.select("#comment-tree");
-  container.selectAll("*").remove();
+  const legend = container.select("#branch-legend").node();
+  container.select("svg").remove();
   const svg = container
     .append("svg")
     .attr("viewBox", `${-radius} ${-radius} ${width} ${width}`)
@@ -124,7 +127,6 @@ function renderCommentTree(data) {
       sentiments.reduce((a, b) => a + b, 0) / sentiments.length;
     const sentimentLabel =
       avgSent > 0.05 ? "positive" : avgSent < -0.05 ? "negative" : "neutral";
-    const legend = document.getElementById("branch-legend");
     const parts = [`Sentiment: ${sentimentLabel} (${avgSent.toFixed(2)})`];
     if (keywords.length) parts.push(`Keywords: ${keywords.join(", ")}`);
     legend.textContent = parts.join(" | ");
@@ -132,10 +134,11 @@ function renderCommentTree(data) {
 
   function showAll() {
     document.querySelectorAll("[data-comment-id]").forEach((el) => {
-      el.style.display = "";
+      el.style.display = treeCommentIds.has(parseInt(el.dataset.commentId))
+        ? ""
+        : "none";
     });
-    document.getElementById("branch-legend").textContent =
-      "Hover near a branch to see details";
+    legend.textContent = "Hover near a branch to see details";
   }
 
   showAll();
