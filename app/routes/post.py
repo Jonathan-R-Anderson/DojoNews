@@ -2,6 +2,8 @@ import sqlite3
 
 from flask import (
     Blueprint,
+    abort,
+    jsonify,
     redirect,
     render_template,
     request,
@@ -18,6 +20,7 @@ from utils.generateUrlIdFromPost import getSlugFromPostTitle
 from utils.getDataFromUserIP import getDataFromUserIP
 from utils.log import Log
 from utils.time import currentTimeStamp
+from utils.commentTree import build_comment_tree
 
 postBlueprint = Blueprint("post", __name__)
 
@@ -116,9 +119,14 @@ def post(urlID=None, slug=None):
         connection.set_trace_callback(Log.database)
         cursor = connection.cursor()
 
+        sort_option = request.args.get("sort", "new")
+        order_by = "timeStamp desc"
+        if sort_option == "top":
+            order_by = "upvotes desc"
+
         cursor.execute(
-            """select * from comments where post = ? order by timeStamp desc""",
-            [(post[0])],
+            f"select * from comments where post = ? order by {order_by}",
+            (post[0],),
         )
         comments = cursor.fetchall()
 
@@ -173,9 +181,77 @@ def post(urlID=None, slug=None):
             blogPostUrl=request.root_url,
             readingTime=calculateReadTime(post[3]),
             idForRandomVisitor=idForRandomVisitor,
+            sort=sort_option,
         )
 
     else:
         Log.error(f"{request.remote_addr} tried to reach unknown post")
 
         return render_template("notFound.html")
+
+
+@postBlueprint.route("/comment/<int:comment_id>/vote", methods=["POST"])
+def vote_comment(comment_id):
+    if "userName" not in session:
+        return abort(401)
+
+    Log.database(f"Connecting to '{Settings.DB_COMMENTS_ROOT}' database")
+
+    connection = sqlite3.connect(Settings.DB_COMMENTS_ROOT)
+    connection.set_trace_callback(Log.database)
+    cursor = connection.cursor()
+
+    cursor.execute(
+        "select id from commentVotes where commentID = ? and user = ?",
+        (comment_id, session["userName"]),
+    )
+    if cursor.fetchone():
+        cursor.execute(
+            "delete from commentVotes where commentID = ? and user = ?",
+            (comment_id, session["userName"]),
+        )
+        cursor.execute(
+            "update comments set upvotes = upvotes - 1 where id = ?",
+            (comment_id,),
+        )
+    else:
+        cursor.execute(
+            "insert into commentVotes(commentID, user) values(?, ?)",
+            (comment_id, session["userName"]),
+        )
+        cursor.execute(
+            "update comments set upvotes = upvotes + 1 where id = ?",
+            (comment_id,),
+        )
+
+    connection.commit()
+    connection.close()
+
+    return redirect(request.referrer or "/")
+
+
+@postBlueprint.route("/post/<urlID>/comment-tree")
+def comment_tree(urlID):
+    Log.database(f"Connecting to '{Settings.DB_POSTS_ROOT}' database")
+
+    connection = sqlite3.connect(Settings.DB_POSTS_ROOT)
+    connection.set_trace_callback(Log.database)
+    cursor = connection.cursor()
+    cursor.execute("select id from posts where urlID = ?", (urlID,))
+    row = cursor.fetchone()
+    connection.close()
+    if not row:
+        abort(404)
+    post_id = row[0]
+
+    Log.database(f"Connecting to '{Settings.DB_COMMENTS_ROOT}' database")
+
+    connection = sqlite3.connect(Settings.DB_COMMENTS_ROOT)
+    connection.set_trace_callback(Log.database)
+    cursor = connection.cursor()
+    cursor.execute("select * from comments where post = ?", (post_id,))
+    comments = cursor.fetchall()
+    connection.close()
+
+    tree = build_comment_tree(comments)
+    return jsonify(tree)

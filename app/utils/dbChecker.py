@@ -198,8 +198,6 @@ def commentsTable():
         cursor.execute("""select id from comments; """).fetchall()
 
         Log.info(f'Table: "comments" found in "{Settings.DB_COMMENTS_ROOT}"')
-
-        connection.close()
     except Exception:
         Log.error(f'Table: "comments" not found in "{Settings.DB_COMMENTS_ROOT}"')
 
@@ -210,6 +208,7 @@ def commentsTable():
             "comment"   text,
             "user"  text,
             "timeStamp" integer,
+            "upvotes" integer default 0,
             primary key("id" autoincrement)
         );"""
 
@@ -217,9 +216,34 @@ def commentsTable():
 
         connection.commit()
 
-        connection.close()
-
         Log.success(f'Table: "comments" created in "{Settings.DB_COMMENTS_ROOT}"')
+
+    # Ensure upvotes column exists
+    try:
+        cursor.execute("""select upvotes from comments limit 1""")
+    except Exception:
+        cursor.execute("alter table comments add column upvotes integer default 0")
+        connection.commit()
+        Log.success('Column: "upvotes" added to "comments" table')
+
+    # Ensure commentVotes table exists
+    try:
+        cursor.execute("""select id from commentVotes;""")
+    except Exception:
+        commentVotesTable = """
+        create table if not exists commentVotes(
+            "id" integer not null,
+            "commentID" integer not null,
+            "user" text not null,
+            primary key("id" autoincrement),
+            unique(commentID, user)
+        );"""
+
+        cursor.execute(commentVotesTable)
+        connection.commit()
+        Log.success(f'Table: "commentVotes" created in "{Settings.DB_COMMENTS_ROOT}"')
+
+    connection.close()
 
 
 def analyticsTable():

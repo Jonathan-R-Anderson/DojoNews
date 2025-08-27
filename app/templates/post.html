@@ -28,6 +28,7 @@
 <script>
     let visitorID = parseInt("{{ idForRandomVisitor | safe }}");
     const csrfToken = "{{ csrf_token() }}";
+    const postUrlID = "{{ urlID }}";
 </script>
 <div
     class="w-11/12 md:w-5/6 lg:w-7/12 xl:w-5/12 mx-auto mt-6 md:mt-10 break-words"
@@ -131,10 +132,44 @@
     </div>
     {% endif %}
 
+    <div id="comment-tree" class="w-full my-4"></div>
+    <div id="branch-keywords" class="text-center text-sm mb-4"></div>
+    <div class="flex justify-end gap-4">
+        <a
+            href="{{ url_for('post.post', urlID=urlID, sort='new') }}"
+            class="hover:text-rose-500 duration-150 {{ 'font-bold' if sort == 'new' else '' }}"
+            >New</a
+        >
+        <a
+            href="{{ url_for('post.post', urlID=urlID, sort='top') }}"
+            class="hover:text-rose-500 duration-150 {{ 'font-bold' if sort == 'top' else '' }}"
+            >Top</a
+        >
+    </div>
     <div>
         {% for comment in comments %}
-        <div class="flex flex-col mx-auto mt-8 mb-4 p-2 max-w-lg">
+        <div class="flex flex-col mx-auto mt-8 mb-4 p-2 max-w-lg" data-comment-id="{{ comment[0] }}">
             <div class="flex w-full justify-between">
+                <div class="flex items-center">
+                    <form
+                        method="post"
+                        action="{{ url_for('post.vote_comment', comment_id=comment[0]) }}"
+                        class="mx-2 my-1"
+                    >
+                        <input
+                            type="hidden"
+                            name="csrf_token"
+                            value="{{ csrf_token() }}"
+                        />
+                        <button
+                            type="submit"
+                            class="hover:text-rose-500 duration-150 flex items-center"
+                        >
+                            <i class="ti ti-arrow-big-up mr-1 text-xl"></i>
+                            {{ comment[5] }}
+                        </button>
+                    </form>
+                </div>
                 <div class="mx-2">
                     <a
                         href="/user/{{ comment[3] }}"
@@ -197,5 +232,6 @@
     {% endif %}
 </div>
 
+<script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
 <script src="{{ url_for('static', filename='js/post.js') }}"></script>
 {% endblock body %}
