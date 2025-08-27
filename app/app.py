@@ -79,9 +79,6 @@ from routes.privacyPolicy import (
 from routes.returnPostAnalyticsData import (
     returnPostAnalyticsDataBlueprint,
 )
-from routes.returnPostBanner import (
-    returnPostBannerBlueprint,
-)
 from routes.search import (
     searchBlueprint,
 )
@@ -291,7 +288,6 @@ app.register_blueprint(adminPanelUsersBlueprint)
 app.register_blueprint(adminPanelPostsBlueprint)
 app.register_blueprint(adminPanelContractsBlueprint)
 app.register_blueprint(accountSettingsBlueprint)
-app.register_blueprint(returnPostBannerBlueprint)
 app.register_blueprint(adminPanelCommentsBlueprint)
 app.register_blueprint(changeProfilePictureBlueprint)
 app.register_blueprint(analyticsBlueprint)
