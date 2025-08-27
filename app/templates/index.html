@@ -37,12 +37,7 @@
 <div
     id="posts-container"
     class="flex item-center justify-center flex-wrap gap-x-4 gap-y-6 mx-auto w-11/12 md:w-11/12 lg:w-10/12 2xl:w-9/12 mt-6"
->
-    {% for post in posts %}
-        {% from "components/postCardMacro.html" import postCard with context %}
-        {{ postCard(post=post, authorProfilePicture=getProfilePicture(post[5])) }}
-    {% endfor %}
-</div>
+></div>
 
 <div class="text-center mt-4 mb-2 text-xs font-medium">
     <div class="mb-1">
@@ -58,47 +53,89 @@
 </div>
 
 <script>
-    const postsContainer = document.getElementById('posts-container');
-    let page = 1;
-    const totalPages = {{ total_pages }};
-    const by = "{{ by }}";
-    const sort = "{{ sort }}";
-    let loading = false;
-
-    async function loadMorePosts() {
-        if (loading || page >= totalPages) return;
-        loading = true;
-        page += 1;
+    async function renderPosts() {
+        const container = document.getElementById('posts-container');
+        container.innerHTML = '';
         try {
-            const response = await fetch(`/load_posts?by=${by}&sort=${sort}&page=${page}`);
-            if (response.ok) {
-                const html = await response.text();
-                postsContainer.insertAdjacentHTML('beforeend', html);
-            }
-        } finally {
-            loading = false;
-        }
-    }
+            const response = await fetch('/api/posts');
+            if (!response.ok) return;
+            const data = await response.json();
+            for (const post of data.posts) {
+                const card = document.createElement('div');
+                card.className = 'flex flex-col bg-base-200 rounded-box w-[20rem] h-[30rem] hover:scale-105 duration-150';
 
-    window.addEventListener('scroll', () => {
-        if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 100) {
-            loadMorePosts();
-        }
-    });
+                const imgWrap = document.createElement('div');
+                imgWrap.className = 'overflow-hidden flex-shrink-0';
+                const img = document.createElement('img');
+                img.className = 'h-48 w-full group-hover:scale-110 transition duration-150 object-cover rounded-t-md select-none';
+                imgWrap.appendChild(img);
+                card.appendChild(imgWrap);
 
-    async function refreshPosts() {
-        const count = postsContainer.children.length;
-        try {
-            const response = await fetch(`/load_posts?by=${by}&sort=${sort}&page=1&limit=${count}`);
-            if (response.ok) {
-                const html = await response.text();
-                postsContainer.innerHTML = html;
+                if (post.magnet) {
+                    try {
+                        const imgRes = await fetch(post.magnet);
+                        const blob = await imgRes.blob();
+                        img.src = URL.createObjectURL(blob);
+                    } catch (err) {
+                        console.error(err);
+                    }
+                }
+
+                const body = document.createElement('div');
+                body.className = 'flex flex-col gap-4 p-6 flex-grow';
+
+                const cat = document.createElement('h3');
+                cat.className = 'text-secondary font-medium text-sm line-clamp-1';
+                cat.textContent = post.category;
+                body.appendChild(cat);
+
+                const link = document.createElement('a');
+                link.href = post.url;
+                link.className = 'link link-hover text-xl font-bold line-clamp-2 leading-tight';
+                link.textContent = post.title;
+                body.appendChild(link);
+
+                const abstractDiv = document.createElement('div');
+                abstractDiv.className = 'overflow-hidden flex-grow';
+                const abstractSpan = document.createElement('span');
+                abstractSpan.className = 'text-sm leading-relaxed line-clamp-4 break-words';
+                abstractSpan.textContent = post.abstract;
+                abstractDiv.appendChild(abstractSpan);
+                body.appendChild(abstractDiv);
+
+                const footer = document.createElement('div');
+                footer.className = 'flex justify-between items-center mt-auto pt-2 w-full';
+                const authorLink = document.createElement('a');
+                authorLink.href = '/user/' + post.author;
+                authorLink.className = 'flex items-center gap-2 min-w-0';
+
+                const avatar = document.createElement('img');
+                avatar.alt = 'Profile';
+                avatar.src = post.author_picture || '';
+                avatar.className = 'w-8 h-8 rounded object-cover flex-shrink-0';
+                authorLink.appendChild(avatar);
+
+                const nameSpan = document.createElement('span');
+                nameSpan.className = 'font-medium text-sm truncate';
+                nameSpan.textContent = post.author;
+                authorLink.appendChild(nameSpan);
+
+                const dateSpan = document.createElement('span');
+                dateSpan.className = 'date text-sm flex-shrink-0';
+                dateSpan.textContent = new Date(post.timestamp * 1000).toLocaleDateString();
+
+                footer.appendChild(authorLink);
+                footer.appendChild(dateSpan);
+                body.appendChild(footer);
+                card.appendChild(body);
+
+                container.appendChild(card);
             }
         } catch (e) {
             console.error(e);
         }
     }
 
-    setInterval(refreshPosts, 10000);
+    document.addEventListener('DOMContentLoaded', renderPosts);
 </script>
 {% endblock body %}
