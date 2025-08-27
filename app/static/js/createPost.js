@@ -26,10 +26,9 @@ window.addEventListener('DOMContentLoaded', () => {
             const category = form.postCategory.value;
             const magnet = magnetField ? magnetField.value.trim() : '';
             const payload = `${title}|${tags}|${abs}|${content}|${category}|${magnet}`;
-            const encoder = new TextEncoder();
-            const hashBuffer = await crypto.subtle.digest('SHA-256', encoder.encode(payload));
-            const hashArray = Array.from(new Uint8Array(hashBuffer));
-            const contentHash = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+            const contentHash = ethers.utils.sha256(
+                ethers.utils.toUtf8Bytes(payload)
+            );
             const provider = new ethers.providers.Web3Provider(window.ethereum);
             const signer = provider.getSigner();
             const contract = new ethers.Contract(postContractAddress, postContractAbi, signer);
