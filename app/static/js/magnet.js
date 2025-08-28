@@ -75,7 +75,8 @@
                     pdf.type = 'application/pdf';
                     pdf.className = img.className;
                     pdf.style.width = '100%';
-                    pdf.style.height = '100%';
+                    pdf.style.height = 'auto';
+                    pdf.style.pointerEvents = 'none';
                     pdf.dataset.magnetId = img.dataset.magnetId;
                     pdf.dataset.magnetLoaded = 'true';
 
@@ -89,6 +90,10 @@
                     }
 
                     img.replaceWith(pdf);
+                    const tile = pdf.closest('.post-tile');
+                    if (tile && window.applyMasonry) {
+                        window.applyMasonry(tile);
+                    }
                 } else {
                     setImage(cached.url);
                 }
@@ -124,7 +129,8 @@
                             pdf.type = 'application/pdf';
                             pdf.className = img.className;
                             pdf.style.width = '100%';
-                            pdf.style.height = '100%';
+                            pdf.style.height = 'auto';
+                            pdf.style.pointerEvents = 'none';
                             pdf.dataset.magnetId = img.dataset.magnetId;
                             pdf.dataset.magnetLoaded = 'true';
 
@@ -138,6 +144,10 @@
                             }
 
                             img.replaceWith(pdf);
+                            const tile = pdf.closest('.post-tile');
+                            if (tile && window.applyMasonry) {
+                                window.applyMasonry(tile);
+                            }
                         } else {
                             imageCache[magnet] = { url: newUrl, type: blob.type };
                             setImage(newUrl);
