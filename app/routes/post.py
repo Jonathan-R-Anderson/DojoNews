@@ -1,6 +1,7 @@
 import os
 from math import ceil
 from re import sub
+import sqlite3
 
 from flask import (
     Blueprint,
@@ -40,6 +41,16 @@ def _get_onchain_post(urlID: int):
 @postBlueprint.route("/post/<int:urlID>", methods=["GET"])
 @postBlueprint.route("/post/<slug>-<int:urlID>", methods=["GET"])
 def post(urlID: int, slug: str | None = None):
+    with sqlite3.connect(Settings.DB_POSTS_ROOT) as connection:
+        connection.set_trace_callback(Log.database)
+        cursor = connection.cursor()
+        cursor.execute(
+            "select 1 from deletedPosts where urlID = ?",
+            (str(urlID),),
+        )
+        if cursor.fetchone():
+            return render_template("notFound.html")
+
     onchain = _get_onchain_post(urlID)
     if not onchain:
         return render_template("notFound.html")

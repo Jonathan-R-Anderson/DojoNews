@@ -47,12 +47,18 @@ class Delete:
         connection.set_trace_callback(Log.database)
         cursor = connection.cursor()
         cursor.execute(
-            """select author from posts where id = ? """,
-            [(postID)],
+            """select urlID from posts where id = ?""",
+            (postID,),
         )
+        row = cursor.fetchone()
+        if row:
+            cursor.execute(
+                """insert or ignore into deletedPosts(urlID) values(?)""",
+                (row[0],),
+            )
         cursor.execute(
             """delete from posts where id = ? """,
-            [(postID)],
+            (postID,),
         )
         cursor.execute("update sqlite_sequence set seq = seq-1")
         connection.commit()
