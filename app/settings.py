@@ -345,7 +345,7 @@ class Settings:
             ),
         },
         "PostStorage": {
-            "address": "0x8f945Cb834788d8a301Da5DAeDe59229Be9F8651",
+            "address": "0xC17125035e1329bf25C803Bb0D83c3c7CBd70A06",
             "abi": json.loads(
                 '''[
     {
