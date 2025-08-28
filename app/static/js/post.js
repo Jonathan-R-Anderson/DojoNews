@@ -1,3 +1,6 @@
+const debug = (...args) => window.debugLog('post.js', ...args);
+debug('Loaded');
+
 let initialSpendTime = 0;
 
 if (visitorID != null) {
@@ -8,7 +11,7 @@ if (visitorID != null) {
       visitorID: visitorID,
       spendTime: initialSpendTime,
     };
-
+    debug('Sending spend time', data);
     fetch("/api/v1/timeSpendsDuration", {
       method: "POST",
       headers: { "X-CSRFToken": csrfToken, "Content-Type": "application/json" },
@@ -21,9 +24,11 @@ if (visitorID != null) {
 let currentTreeSignature = "";
 
 function fetchCommentTree() {
+  debug('fetchCommentTree');
   fetch(`/post/${postUrlID}/comment-tree`)
     .then((response) => response.json())
     .then((data) => {
+      debug('comment tree data', data);
       const signature = data.nodes.map((n) => n.id).sort().join(",");
       if (signature !== currentTreeSignature) {
         currentTreeSignature = signature;
@@ -33,12 +38,17 @@ function fetchCommentTree() {
 }
 
 if (typeof postUrlID !== "undefined") {
+  debug('Setting up comment stream', postUrlID);
   fetchCommentTree();
   const evtSource = new EventSource(`/post/${postUrlID}/comments/stream`);
-  evtSource.onmessage = () => fetchCommentTree();
+  evtSource.onmessage = () => {
+    debug('SSE message received');
+    fetchCommentTree();
+  };
 }
 
 function renderCommentTree(data) {
+  debug('renderCommentTree', data);
   if (!data.nodes.length) return;
 
   const nodeMap = new Map(data.nodes.map((n) => [n.id, n]));
@@ -145,6 +155,7 @@ function renderCommentTree(data) {
     });
 
   function animateComments(ids) {
+    debug('animateComments', ids.size);
     document.querySelectorAll("[data-comment-id]").forEach((el) => {
       const show = ids.has(parseInt(el.dataset.commentId));
       el.classList.toggle("hidden-comment", !show);
@@ -152,6 +163,7 @@ function renderCommentTree(data) {
   }
 
   function showBranch(d) {
+    debug('showBranch', d.data.id);
     const ids = new Set(d.descendants().map((n) => n.data.id));
     animateComments(ids);
     const keywords = d.data.keywords || [];
@@ -168,6 +180,7 @@ function renderCommentTree(data) {
   }
 
   function showAll() {
+    debug('showAll');
     animateComments(treeCommentIds);
     legend.textContent = "Hover or click a branch to see details";
   }

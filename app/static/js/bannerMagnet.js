@@ -1,6 +1,13 @@
+const debug = (...args) => window.debugLog('bannerMagnet.js', ...args);
+debug('Loaded');
+
 (() => {
+    debug('Initializing banner magnet handling');
     const bannerInput = document.querySelector('input[name="postBanner"]');
-    if (!bannerInput) return;
+    if (!bannerInput) {
+        debug('No banner input found');
+        return;
+    }
 
     // Hidden field to store returned magnet URI
     const magnetField = document.createElement('input');
@@ -13,11 +20,17 @@
 
     const form = bannerInput.form;
     form.addEventListener('submit', async (e) => {
+        debug('Form submit triggered', {
+            hasFile: bannerInput.files.length,
+            existingMagnet: magnetField.value
+        });
         if (!bannerInput.files.length || magnetField.value) {
+            debug('No file to seed or magnet already exists');
             return;
         }
         e.preventDefault();
         const file = bannerInput.files[0];
+        debug('Seeding file', file.name);
         if (typeof WebTorrent === 'undefined') {
             await new Promise((resolve) => {
                 const s = document.createElement('script');
@@ -30,10 +43,12 @@
             const client = new WebTorrent();
             client.seed(file, async (torrent) => {
                 magnetField.value = torrent.magnetURI || '';
+                debug('Seeded torrent', magnetField.value);
 
                 // If editing an existing post, update magnet on-chain
                 if (window.location.pathname.includes('/editpost/')) {
                     const postId = window.location.pathname.split('/').pop();
+                    debug('Editing post', postId);
                     if (typeof ethers === 'undefined') {
                         await new Promise((resolve) => {
                             const s = document.createElement('script');
@@ -49,8 +64,9 @@
                     try {
                         const tx = await contract.setImageMagnet(`${postId}.png`, magnetField.value);
                         await tx.wait();
+                        debug('Magnet updated on-chain');
                     } catch (chainErr) {
-                        console.error('Failed to set magnet on-chain', chainErr);
+                        debug('Failed to set magnet on-chain', chainErr);
                     }
                 }
 
@@ -69,6 +85,7 @@
                 magnetDisplay.insertAdjacentElement('afterend', cancelButton);
 
                 cancelButton.addEventListener('click', () => {
+                    debug('Banner image cancelled');
                     bannerInput.value = '';
                     magnetField.value = '';
                     if (magnetDisplay) {
@@ -82,9 +99,10 @@
                 });
 
                 form.requestSubmit();
+                debug('Form resubmitted');
             });
         } catch (err) {
-            console.error('Failed to seed image', err);
+            debug('Failed to seed image', err);
         }
     });
 })();

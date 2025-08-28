@@ -1,8 +1,12 @@
+const debug = (...args) => window.debugLog('magnet.js', ...args);
+debug('Loaded');
+
 let provider;
 let contract;
 let client;
 
 async function initMagnetClient() {
+    debug('initMagnetClient start');
     if (client) return;
     if (typeof WebTorrent === "undefined") {
         await new Promise((resolve) => {
@@ -22,7 +26,7 @@ async function initMagnetClient() {
     }
     const url = typeof window !== "undefined" ? window.rpcUrl : undefined;
     if (!url) {
-        console.error("RPC URL is not defined");
+        debug("RPC URL is not defined");
         return;
     }
     provider = new ethers.providers.JsonRpcProvider(url);
@@ -32,18 +36,22 @@ async function initMagnetClient() {
         provider
     );
     client = new WebTorrent();
+    debug('initMagnetClient complete');
 }
 
 async function fetchMagnet(img) {
+    debug('fetchMagnet', img);
     if (!img || img.dataset.magnetLoaded) return;
     const id = img.dataset.magnetId;
     if (!id) return;
     await initMagnetClient();
     try {
         const magnet = await contract.getImageMagnet(id);
+        debug('magnet URI', magnet);
         if (magnet) {
             client.add(magnet, async (torrent) => {
                 try {
+                    debug('torrent added', torrent.infoHash);
                     const blob = await torrent.files[0].blob();
                     const newUrl = URL.createObjectURL(blob);
                     if (img.src && img.src.startsWith("blob:")) {
@@ -51,30 +59,35 @@ async function fetchMagnet(img) {
                     }
                     img.src = newUrl;
                     img.dataset.magnetLoaded = "true";
+                    debug('image updated', id);
                 } catch (err) {
-                    console.error("Failed to load magnet", id, err);
+                    debug("Failed to load magnet", id, err);
                 }
             });
         } else {
-            console.warn("No magnet URI returned for", id);
+            debug("No magnet URI returned for", id);
         }
     } catch (e) {
-        console.error("Failed to load magnet", id, e);
+        debug("Failed to load magnet", id, e);
     }
 }
 
 async function loadMagnets() {
+    debug('loadMagnets start');
     await initMagnetClient();
     const images = document.querySelectorAll("[data-magnet-id]");
+    debug('found images', images.length);
     images.forEach(fetchMagnet);
 }
 
 function observeNewImages() {
     const observer = new MutationObserver((mutations) => {
+        debug('DOM mutations', mutations.length);
         for (const mutation of mutations) {
             mutation.addedNodes.forEach((node) => {
                 if (node.nodeType !== 1) return;
                 if (node.dataset && node.dataset.magnetId) {
+                    debug('new image node', node.dataset.magnetId);
                     fetchMagnet(node);
                 }
                 node
@@ -84,6 +97,7 @@ function observeNewImages() {
         }
     });
     observer.observe(document.body, { childList: true, subtree: true });
+    debug('observer attached');
 }
 
 if (typeof window !== "undefined") {

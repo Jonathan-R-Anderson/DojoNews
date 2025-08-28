@@ -1,13 +1,20 @@
+const debug = (...args) => window.debugLog('wallet.js', ...args);
+debug('Loaded');
+
 const ADMIN_ADDRESS = "0xB2b36AaD18d7be5d4016267BC4cCec2f12a64b6e".toLowerCase();
 
 async function connectWallet() {
+    debug('connectWallet called');
     if (typeof window.ethereum === 'undefined') {
+        debug('No ethereum provider');
         return;
     }
     try {
         const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
+        debug('Accounts', accounts);
         const account = accounts[0]?.toLowerCase();
         if (!account) {
+            debug('No account returned');
             return;
         }
         window.userAddress = account;
@@ -22,9 +29,11 @@ async function connectWallet() {
         }
         if (account === ADMIN_ADDRESS) {
             document.body.classList.add('admin-wallet');
+            debug('Admin wallet detected');
         }
+        debug('Wallet connected', account);
     } catch (err) {
-        console.error('Wallet connection failed', err);
+        debug('Wallet connection failed', err);
     }
 }
 

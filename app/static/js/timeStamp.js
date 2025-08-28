@@ -1,8 +1,12 @@
+const debug = (...args) => window.debugLog('timeStamp.js', ...args);
+debug('Loaded');
+
 const timeElements = document.getElementsByClassName("time");
 const dateElements = document.getElementsByClassName("date");
 
 function formatTimeElement(element) {
   let unixTimeStamp = element.innerText;
+  debug('formatTimeElement', unixTimeStamp);
 
   let dateObject = new Date(unixTimeStamp * 1000);
 
@@ -16,6 +20,7 @@ function formatTimeElement(element) {
 
 function formatDateElement(element) {
   let unixTimeStamp = element.innerText;
+  debug('formatDateElement', unixTimeStamp);
 
   let dateObject = new Date(unixTimeStamp * 1000);
 
@@ -30,9 +35,11 @@ function formatDateElement(element) {
 }
 
 for (element of timeElements) {
+  debug('Processing time element', element);
   formatTimeElement(element);
 }
 
 for (element of dateElements) {
+  debug('Processing date element', element);
   formatDateElement(element);
 }
