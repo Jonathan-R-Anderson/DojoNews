@@ -41,6 +41,14 @@
             </div>
         </a>
 
+        {% if session.get('userRole') == 'admin' %}
+        <a href="/admin" class="text-center">
+            <button class="hover:text-rose-500 duration-150">
+                <i class="ti ti-settings text-2xl"></i>
+            </button>
+        </a>
+        {% endif %}
+
         <a href="/createpost" class="text-center">
             <button class="hover:text-rose-500 duration-150">
                 <i class="ti ti-pencil-plus text-2xl"></i>
