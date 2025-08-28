@@ -1,5 +1,8 @@
 (() => {
-  const debug = (...args) => window.debugLog('post.js', ...args);
+  const debug = (...args) =>
+    (window.debugLog
+      ? window.debugLog('post.js', ...args)
+      : console.log('post.js', ...args));
   debug('Loaded');
 
 let currentTreeSignature = "";
