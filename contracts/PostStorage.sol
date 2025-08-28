@@ -10,6 +10,7 @@ contract PostStorage {
         address author;
         string contentHash;
         string magnetURI;
+        string authorInfo;
         bool exists;
         bool blacklisted;
     }
@@ -41,10 +42,12 @@ contract PostStorage {
 
     function createPost(
         string calldata contentHash,
-        string calldata magnetURI
+        string calldata magnetURI,
+        string calldata authorInfo
     ) external returns (uint256 postId) {
         postId = nextPostId++;
-        posts[postId] = Post(msg.sender, contentHash, magnetURI, true, false);
+        posts[postId] =
+            Post(msg.sender, contentHash, magnetURI, authorInfo, true, false);
         string memory imageId = string.concat(_uintToString(postId), ".png");
         imageMagnets[imageId] = magnetURI;
         emit PostCreated(postId, msg.sender, contentHash, magnetURI);
@@ -82,6 +85,16 @@ contract PostStorage {
     ) external onlySysop {
         blacklistedImages[imageId] = isBlacklisted;
         emit ImageBlacklistUpdated(imageId, isBlacklisted);
+    }
+
+    event AuthorInfoUpdated(uint256 indexed postId, string authorInfo);
+
+    function updateAuthorInfo(uint256 postId, string calldata authorInfo) external {
+        Post storage p = posts[postId];
+        require(p.exists, "no post");
+        require(msg.sender == p.author || msg.sender == sysop, "not authorized");
+        p.authorInfo = authorInfo;
+        emit AuthorInfoUpdated(postId, authorInfo);
     }
 
     function getImageMagnet(string calldata imageId)

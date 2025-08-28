@@ -32,14 +32,15 @@
             const title = form.postTitle.value.trim();
             const tags = form.postTags.value.trim();
             const abs = form.postAbstract.value.trim();
+            const info = form.authorInfo ? form.authorInfo.value.trim() : '';
             const content = form.postContent.value.trim();
             const category = form.postCategory.value;
             const magnet = magnetField ? magnetField.value.trim() : '';
-            const payload = `${title}|${tags}|${abs}|${content}|${category}|${magnet}`;
+            const payload = `${title}|${tags}|${abs}|${content}|${category}`;
             const provider = new ethers.providers.Web3Provider(window.ethereum);
             const signer = provider.getSigner();
             const contract = new ethers.Contract(postContractAddress, postContractAbi, signer);
-            const tx = await contract.createPost(payload, magnet);
+            const tx = await contract.createPost(payload, magnet, info);
             debug('Transaction sent', tx.hash);
             const receipt = await tx.wait();
             debug('Transaction mined', receipt.transactionHash);
