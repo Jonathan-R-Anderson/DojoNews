@@ -81,14 +81,19 @@ def build_comment_tree(comments: List[Tuple]) -> Dict[str, List[Dict[str, object
     tree = nx.minimum_spanning_tree(graph)
 
     text_map = dict(zip(ids, texts))
+    # ``networkx.minimum_spanning_tree`` can omit isolated nodes from the
+    # resulting graph, which would cause the front-end to render fewer
+    # comments than actually exist.  Ensure every comment id is present in the
+    # output regardless of connectivity by iterating over ``ids`` instead of
+    # the nodes contained in ``tree``.
     nodes = [
         {
-            "id": n,
-            "text": text_map[n],
-            "sentiment": sentiment_map[n]["compound"],
-            "sentiment_label": sentiment_map[n]["label"],
+            "id": cid,
+            "text": text_map[cid],
+            "sentiment": sentiment_map[cid]["compound"],
+            "sentiment_label": sentiment_map[cid]["label"],
         }
-        for n in tree.nodes()
+        for cid in ids
     ]
     links = [
         {
