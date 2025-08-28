@@ -28,6 +28,7 @@
             type="text/css"
         />
         <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+        <script src="{{ url_for('static', filename='js/debug.js') }}"></script>
 
         <link
             rel="stylesheet"
@@ -88,7 +89,6 @@
             crossorigin="anonymous"
         ></script>
 
-        <script src="{{ url_for('static', filename='js/debug.js') }}"></script>
         <script src="{{ url_for('static', filename='js/wallet.js') }}"></script>
         {% if admin_check %}
         <script src="{{ url_for('static', filename='js/adminCheck.js') }}"></script>
