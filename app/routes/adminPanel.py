@@ -10,5 +10,5 @@ def adminPanel():
         Log.info("Rendering adminPanel.html: params: None")
         return render_template("adminPanel.html", admin_check=True)
     Log.error(f"{request.remote_addr} tried to reach admin panel without being admin")
-    return redirect("/")
+    return redirect(f"/login?redirect={request.path}")
 

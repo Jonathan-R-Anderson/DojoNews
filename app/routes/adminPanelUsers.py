@@ -43,5 +43,5 @@ def adminPanelUsers():
     Log.error(
         f"{request.remote_addr} tried to reach user admin panel without being admin"
     )
-    return redirect("/")
+    return redirect(f"/login?redirect={request.path}")
 

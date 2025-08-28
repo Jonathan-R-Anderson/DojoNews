@@ -32,5 +32,5 @@ def adminPanelComments():
     Log.error(
         f"{request.remote_addr} tried to reach comment admin panel without being admin",
     )
-    return redirect("/")
+    return redirect(f"/login?redirect={request.path}")
 
