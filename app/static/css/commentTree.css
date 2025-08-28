@@ -49,6 +49,17 @@
   z-index: 1;
 }
 
+#comment-tree #branch-tooltip {
+  position: absolute;
+  pointer-events: none;
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid #d1d5db;
+  padding: 4px;
+  font-size: 0.75rem;
+  z-index: 2;
+  display: none;
+}
+
 [data-comment-id] {
   transition: max-height 0.4s ease, opacity 0.4s ease, margin 0.4s ease,
     padding 0.4s ease;
@@ -63,6 +74,10 @@
   margin-bottom: 0 !important;
   padding-top: 0 !important;
   padding-bottom: 0 !important;
+}
+
+.highlight-comment {
+  outline: 2px solid #f59e0b;
 }
 
 #comments-section {

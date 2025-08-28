@@ -28,10 +28,51 @@
     const form = document.getElementById('comment-form');
     const textarea = document.getElementById('comment-input');
     const loginPrompt = document.getElementById('comment-login-prompt');
+    const loadedComments = new Set();
 
-    async function loadComments() {
-      debug('Loading comments');
-      commentsEl.innerHTML = '';
+    function formatContent(text) {
+      return text.replace(/#(\d+)/g, (m, id) =>
+        `<a href="#comment-${id}" data-ref-id="${id}" class="comment-ref">#${id}</a>`
+      );
+    }
+
+    function setupReferences(root = commentsEl) {
+      root.querySelectorAll('.comment-ref').forEach((el) => {
+        const id = el.dataset.refId;
+        const target = () => commentsEl.querySelector(`[data-comment-id="${id}"]`);
+        el.addEventListener('mouseenter', () => {
+          const t = target();
+          if (t) t.classList.add('highlight-comment');
+        });
+        el.addEventListener('mouseleave', () => {
+          const t = target();
+          if (t) t.classList.remove('highlight-comment');
+        });
+        el.addEventListener('click', (e) => {
+          e.preventDefault();
+          const t = target();
+          if (t) t.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        });
+      });
+    }
+
+    function renderComment(id, author, content) {
+      if (loadedComments.has(id)) return;
+      loadedComments.add(id);
+      if (commentsEl.firstChild && !commentsEl.firstChild.dataset.commentId) {
+        commentsEl.innerHTML = '';
+      }
+      const div = document.createElement('div');
+      div.className = 'my-2 p-2 border rounded';
+      div.dataset.commentId = id;
+      div.id = `comment-${id}`;
+      div.innerHTML = `<p class="mb-1">${formatContent(content)}</p><p class="text-sm opacity-70">#${id} ${author}</p>`;
+      commentsEl.appendChild(div);
+      setupReferences(div);
+    }
+
+    async function loadExistingComments() {
+      debug('Loading existing comments');
       let nextId;
       try {
         nextId = await contract.nextCommentId();
@@ -41,22 +82,17 @@
         return;
       }
       const total = nextId.toNumber ? nextId.toNumber() : parseInt(nextId);
-      let count = 0;
       for (let i = 0; i < total; i++) {
+        if (loadedComments.has(i)) continue;
         try {
           const c = await contract.getComment(i);
           if (!c.exists || c.postId.toString() !== postUrlID.toString() || c.blacklisted) continue;
-          count++;
-          const div = document.createElement('div');
-          div.className = 'my-2 p-2 border rounded';
-          div.dataset.commentId = i;
-          div.innerHTML = `<p class="mb-1">${c.content}</p><p class="text-sm opacity-70">${c.author}</p>`;
-          commentsEl.appendChild(div);
+          renderComment(i, c.author, c.content);
         } catch (err) {
           debug('getComment failed', i, err);
         }
       }
-      if (count === 0) {
+      if (loadedComments.size === 0) {
         commentsEl.innerHTML = '<p>No comments yet.</p>';
       }
       window.dispatchEvent(new Event('comments-updated'));
@@ -82,7 +118,6 @@
         const tx = await c.addComment(postUrlID, content);
         await tx.wait();
         textarea.value = '';
-        loadComments();
       } catch (err) {
         debug('submit failed', err);
       }
@@ -120,7 +155,14 @@
 
     form.addEventListener('submit', submitComment);
 
-    loadComments();
+    await loadExistingComments();
+
+    contract.on('CommentAdded', (commentId, postId, author, content) => {
+      if (postId.toString() !== postUrlID.toString()) return;
+      const id = commentId.toNumber ? commentId.toNumber() : parseInt(commentId);
+      renderComment(id, author, content);
+      window.dispatchEvent(new Event('comments-updated'));
+    });
   }
 
   window.addEventListener('load', init);

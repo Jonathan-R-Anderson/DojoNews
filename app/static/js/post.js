@@ -71,6 +71,7 @@ function renderCommentTree(data) {
 
   const container = d3.select("#comment-tree");
   const legend = container.select("#branch-legend").node();
+  const tooltip = container.select("#branch-tooltip").node();
   let selectedBranch = null;
   container.select("svg").remove();
   const svg = container
@@ -98,15 +99,13 @@ function renderCommentTree(data) {
     .append("path")
     .attr("class", "link-hover")
     .attr("d", linkGen)
-    .on("mouseenter", (_, d) => {
-      if (!selectedBranch) showBranch(d.target);
-    })
-    .on("mouseleave", () => {
-      if (!selectedBranch) showAll();
-    })
+    .on("mouseenter", (event, d) => showTooltip(event, d.target))
+    .on("mousemove", (event) => moveTooltip(event))
+    .on("mouseleave", hideTooltip)
     .on("click", (event, d) => {
       selectedBranch = d.target;
-      showBranch(d.target);
+      filterBranch(d.target);
+      hideTooltip();
       event.stopPropagation();
     });
 
@@ -122,17 +121,19 @@ function renderCommentTree(data) {
     .attr("r", 5)
     .attr("class", "node")
     .attr("fill", (d) => sentimentColors[d.data.sentiment_label])
-    .attr("stroke", (d) => sentimentColors[d.data.sentiment_label]);
+    .attr("stroke", (d) => sentimentColors[d.data.sentiment_label])
+    .on("mouseenter", (event, d) => showTooltip(event, d))
+    .on("mousemove", (event) => moveTooltip(event))
+    .on("mouseleave", hideTooltip);
 
   container
-    .on("mouseleave", () => {
-      if (!selectedBranch) showAll();
-    })
+    .on("mouseleave", hideTooltip)
     .on("click", () => {
       if (selectedBranch) {
         selectedBranch = null;
         showAll();
       }
+      hideTooltip();
     });
 
   function animateComments(ids) {
@@ -143,8 +144,8 @@ function renderCommentTree(data) {
     });
   }
 
-  function showBranch(d) {
-    debug('showBranch', d.data.id);
+  function filterBranch(d) {
+    debug('filterBranch', d.data.id);
     const ids = new Set(d.descendants().map((n) => n.data.id));
     animateComments(ids);
     const keywords = d.data.keywords || [];
@@ -163,7 +164,24 @@ function renderCommentTree(data) {
   function showAll() {
     debug('showAll');
     animateComments(treeCommentIds);
-    legend.textContent = "Hover or click a branch to see details";
+    legend.textContent = "Click a branch to filter comments";
+  }
+
+  function showTooltip(event, d) {
+    const keywords = d.data.keywords || [];
+    if (!keywords.length) return;
+    tooltip.textContent = keywords.join(", ");
+    tooltip.style.display = "block";
+    moveTooltip(event);
+  }
+
+  function moveTooltip(event) {
+    tooltip.style.left = `${event.offsetX + 10}px`;
+    tooltip.style.top = `${event.offsetY + 10}px`;
+  }
+
+  function hideTooltip() {
+    tooltip.style.display = "none";
   }
 
   showAll();
