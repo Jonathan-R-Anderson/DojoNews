@@ -16,10 +16,18 @@ def seed(torrent_path: str) -> None:
 
     ses = lt.session()
 
-    # ``listen_on`` is deprecated; configure the interface via settings pack
-    settings = lt.settings_pack()
-    settings.set_str("listen_interfaces", "0.0.0.0:6881")
-    ses.apply_settings(settings)
+    # ``listen_on`` is deprecated in newer libtorrent versions, which
+    # instead use ``settings_pack`` to configure interfaces.  Older Python
+    # bindings, however, don't expose ``settings_pack``.  Support both
+    # scenarios so the worker can run regardless of the installed
+    # libtorrent version.
+    try:
+        settings = lt.settings_pack()
+        settings.set_str("listen_interfaces", "0.0.0.0:6881")
+        ses.apply_settings(settings)
+    except AttributeError:
+        # Fall back to the legacy ``listen_on`` API
+        ses.listen_on(6881, 6881)
 
     ti = lt.torrent_info(torrent_path)
     ses.add_torrent({"ti": ti, "save_path": save_path})
