@@ -1,6 +1,7 @@
+/* Root variables controlling spacing and sizing */
 :root {
-    --gap: 14px; /* space between tiles */
-    --row: 10px; /* base row height for auto row spanning */
+    --gap: 8px; /* space between tiles */
+    --row: 5px; /* base row height for auto row spanning */
     --minCol: 220px; /* minimum column width */
 }
 
@@ -59,6 +60,11 @@
     font-size: 1.25rem;
     font-weight: 700;
     margin: 0;
+    display: inline-block;
+    padding: 0.25rem 0.5rem;
+    background-color: rgba(255, 255, 255, 0.85);
+    color: #000;
+    border-radius: 0.25rem;
 }
 
 .tile-category {
