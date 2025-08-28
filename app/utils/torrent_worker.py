@@ -1,37 +1,40 @@
 import os
-import sys
 import subprocess
+import sys
 
 
-def seed(torrent_path: str) -> None:
-    """Seed ``torrent_path`` using the WebTorrent CLI.
+def seed(file_path: str) -> None:
+    """Seed ``file_path`` using the WebTorrent CLI.
 
-    The files referenced by the ``.torrent`` file are expected to live
-    alongside it. The WebTorrent command line tool is used to verify the
-    files and keep them seeding indefinitely.
+    The magnet URI produced by WebTorrent is printed to stdout so that the
+    parent process can capture it before this worker continues seeding
+    indefinitely.
     """
 
-    save_path = os.path.dirname(os.path.abspath(torrent_path)) or os.getcwd()
+    save_path = os.path.dirname(os.path.abspath(file_path)) or os.getcwd()
 
-    cmd = [
-        "webtorrent",
-        "download",
-        torrent_path,
-        "--keep-seeding",
-        "--out",
-        save_path,
-    ]
+    cmd = ["webtorrent", "seed", file_path, "--out", save_path]
 
-    proc = subprocess.Popen(cmd)
-    try:
-        proc.wait()
-    except KeyboardInterrupt:
-        proc.terminate()
-        proc.wait()
+    # Capture output so we can forward the magnet URI to the parent process.
+    proc = subprocess.Popen(
+        cmd, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True
+    )
+
+    # Forward the magnet URI to the caller and discard the remaining output.
+    assert proc.stdout is not None
+    magnet_printed = False
+    for line in proc.stdout:
+        if not magnet_printed and line.startswith("Magnet:"):
+            print(line.split("Magnet:")[1].strip(), flush=True)
+            magnet_printed = True
+
+    # Wait for the WebTorrent process to exit (normally never, since we keep
+    # seeding indefinitely).
+    proc.wait()
 
 
 if __name__ == "__main__":
     if len(sys.argv) != 2:
-        print("usage: torrent_worker.py <torrent_path>")
+        print("usage: torrent_worker.py <file_path>")
         sys.exit(1)
     seed(sys.argv[1])
