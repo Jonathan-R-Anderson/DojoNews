@@ -1,40 +1,28 @@
-{% extends 'layout.html' %} {% block head %}
-<title>{{ translations.about.title }} {{ appName }}</title>
-{% endblock head %} {% block body %}
-<div
-    class="w-10/12 md:w-4/6 lg:w-6/12 xl:w-5/12 mx-auto mt-20 md:mt-32 break-words text-center text-lg"
->
-    <a
-        class="text-rose-500 text-4xl font-bold select-none"
-        href="https://dogukanurker.com/flaskblog"
-        target="_blank"
-    >
-        {{ appName }}
-    </a>
-
-    <div class="mt-1 text-xs">
-        {{ translations.about.version }}: {{ appVersion }}
-    </div>
-
-    <div class="mt-4 mx-auto">{{ translations.about.description }}</div>
-
-    <div class="mt-4 mx-auto">
-        <a href="https://github.com/DogukanUrker/flaskBlog" target="_blank">
-            {{ translations.about.moreInfo }}
-            <p class="text-rose-500 inline-block">{{ appName }}</p>
-            <p class="inline-block"><i class="ti ti-brand-github"></i></p>
-        </a>
-    </div>
-
-    <div class="mx-auto text-xs absolute bottom-2 left-0 right-0 select-none">
-        <a
-            href="https://github.com/DogukanUrker/flaskBlog"
-            target="_blank"
-            class="text-rose-500 font-medium block"
-        >
-            {{ translations.about.sourceRepo }}</a
-        >
-        {{ translations.about.credits | safe }}
-    </div>
+{% extends 'layout.html' %}
+{% block head %}
+<title>About Us {{ appName }}</title>
+{% endblock head %}
+{% block body %}
+<div class="w-10/12 md:w-4/6 lg:w-6/12 xl:w-5/12 mx-auto mt-20 md:mt-32 break-words text-lg space-y-4">
+  <h1 class="text-center text-4xl font-bold text-rose-500">About Us</h1>
+  <p><strong>Welcome to The Dojo</strong>, a resource dedicated to exploring and reporting on the <strong>darknet</strong>, <strong>cybersecurity</strong>, and <strong>online privacy</strong>.</p>
+  <p>Our mission is to provide <em>clear, reliable, and research-driven</em> coverage of topics that are often hidden from the surface web. From darknet marketplaces and forums to law enforcement actions and cybersecurity trends, we bring you the latest updates, analysis, and context — without sensationalism or bias.</p>
+  <h2 class="text-2xl font-semibold mt-6">What We Cover</h2>
+  <ul class="list-disc pl-6 space-y-2">
+    <li><strong>Darknet News</strong> – Developments across darknet marketplaces, forums, and communities.</li>
+    <li><strong>Cybercrime &amp; Security</strong> – Breaches, takedowns, and investigative reporting on digital threats.</li>
+    <li><strong>Privacy &amp; Anonymity</strong> – Guides, tools, and discussions around staying safe online.</li>
+    <li><strong>Law Enforcement &amp; Policy</strong> – Updates on global efforts to address illicit activity in the hidden web.</li>
+  </ul>
+  <h2 class="text-2xl font-semibold mt-6">Our Approach</h2>
+  <p>We believe in <strong>responsible reporting</strong>. While we cover stories from the darknet, our goal is to <strong>inform</strong>, not <strong>endorse illegal activity</strong>. All content is published for <em>educational and research purposes</em>, helping readers better understand an important part of the internet ecosystem.</p>
+  <h2 class="text-2xl font-semibold mt-6">Who We Serve</h2>
+  <p>Our readers include:</p>
+  <ul class="list-disc pl-6 space-y-2">
+    <li><strong>Researchers</strong> looking to study darknet trends.</li>
+    <li><strong>Cybersecurity professionals</strong> monitoring threats.</li>
+    <li><strong>Students &amp; educators</strong> seeking clear explanations of complex topics.</li>
+    <li><strong>General readers</strong> curious about the hidden corners of the web.</li>
+  </ul>
 </div>
 {% endblock body %}

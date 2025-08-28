@@ -5,7 +5,7 @@ A modern blog application built with Flask, featuring a clean UI and powerful ad
 Sponsored by [CreateMyBanner](https://createmybanner.com)
 
 ![FlaskBlog Light Theme](/images/Light.png)
-[Watch demo on YouTube](https://youtu.be/WyIpAlSp2RM) — [See screenshots (mobile/desktop, dark/light)](https://github.com/DogukanUrker/flaskBlog/tree/main/images)
+[Watch demo on YouTube](https://youtu.be/WyIpAlSp2RM)
 
 ## ✨ Features
 
