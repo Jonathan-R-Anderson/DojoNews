@@ -1,7 +1,8 @@
-const debug = (...args) => window.debugLog('post.js', ...args);
-debug('Loaded');
+(() => {
+  const debug = (...args) => window.debugLog('post.js', ...args);
+  debug('Loaded');
 
-let initialSpendTime = 0;
+  let initialSpendTime = 0;
 
 if (visitorID != null) {
   setInterval(() => {
@@ -186,4 +187,4 @@ function renderCommentTree(data) {
   }
 
   showAll();
-}
+})();

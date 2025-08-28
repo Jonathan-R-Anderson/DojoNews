@@ -1,7 +1,8 @@
-const debug = (...args) => window.debugLog('loadPosts.js', ...args);
-debug('Loaded');
+(() => {
+    const debug = (...args) => window.debugLog('loadPosts.js', ...args);
+    debug('Loaded');
 
-(async () => {
+    (async () => {
     debug('Loading posts');
     if (typeof ethers === 'undefined') {
         await new Promise((resolve) => {
@@ -61,4 +62,5 @@ debug('Loaded');
     } catch (err) {
         debug('Failed to load posts from blockchain', err);
     }
+    })();
 })();

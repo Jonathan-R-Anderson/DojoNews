@@ -1,9 +1,10 @@
-const debug = (...args) => window.debugLog('readerControls.js', ...args);
-debug('Loaded');
+(() => {
+  const debug = (...args) => window.debugLog('readerControls.js', ...args);
+  debug('Loaded');
 
-document.addEventListener('DOMContentLoaded', () => {
-  debug('DOMContentLoaded');
-  const root = document.documentElement;
+  document.addEventListener('DOMContentLoaded', () => {
+    debug('DOMContentLoaded');
+    const root = document.documentElement;
 
   // Theme handling
   const initialTheme = root.getAttribute('data-theme');
@@ -20,54 +21,55 @@ document.addEventListener('DOMContentLoaded', () => {
 
   root.setAttribute('data-theme', theme);
 
-  const themeToggle = document.getElementById('theme-toggle');
-  if (themeToggle) {
-    themeToggle.addEventListener('click', () => {
-      const current = root.getAttribute('data-theme');
-      const next = current === 'dark' ? 'light' : 'dark';
-      root.setAttribute('data-theme', next);
-      localStorage.setItem('theme', next);
-      debug('themeToggle', next);
-    });
-  }
+    const themeToggle = document.getElementById('theme-toggle');
+    if (themeToggle) {
+      themeToggle.addEventListener('click', () => {
+        const current = root.getAttribute('data-theme');
+        const next = current === 'dark' ? 'light' : 'dark';
+        root.setAttribute('data-theme', next);
+        localStorage.setItem('theme', next);
+        debug('themeToggle', next);
+      });
+    }
 
   // Font size controls
   let fontSize = parseInt(localStorage.getItem('fontSize'));
   if (!fontSize) {
     fontSize = parseInt(getComputedStyle(root).fontSize) / 16 * 100;
   }
-  const applySize = () => {
-    root.style.fontSize = fontSize + '%';
-    localStorage.setItem('fontSize', fontSize);
-    debug('applySize', fontSize);
-  };
-  applySize();
+    const applySize = () => {
+      root.style.fontSize = fontSize + '%';
+      localStorage.setItem('fontSize', fontSize);
+      debug('applySize', fontSize);
+    };
+    applySize();
 
-  const incBtn = document.getElementById('font-inc');
-  const decBtn = document.getElementById('font-dec');
-  if (incBtn) {
-    incBtn.addEventListener('click', () => {
-      fontSize = Math.min(fontSize + 10, 300);
-      debug('font increment', fontSize);
-      applySize();
-    });
-  }
-  if (decBtn) {
-    decBtn.addEventListener('click', () => {
-      fontSize = Math.max(fontSize - 10, 50);
-      debug('font decrement', fontSize);
-      applySize();
-    });
-  }
+    const incBtn = document.getElementById('font-inc');
+    const decBtn = document.getElementById('font-dec');
+    if (incBtn) {
+      incBtn.addEventListener('click', () => {
+        fontSize = Math.min(fontSize + 10, 300);
+        debug('font increment', fontSize);
+        applySize();
+      });
+    }
+    if (decBtn) {
+      decBtn.addEventListener('click', () => {
+        fontSize = Math.max(fontSize - 10, 50);
+        debug('font decrement', fontSize);
+        applySize();
+      });
+    }
 
   // Text-to-speech
-  const listenBtn = document.getElementById('listen-btn');
-  if (listenBtn) {
-    const audioUrl = listenBtn.dataset.audio;
-    const audio = new Audio(audioUrl);
-    listenBtn.addEventListener('click', () => {
-      debug('play audio', audioUrl);
-      audio.play();
-    });
-  }
-});
+    const listenBtn = document.getElementById('listen-btn');
+    if (listenBtn) {
+      const audioUrl = listenBtn.dataset.audio;
+      const audio = new Audio(audioUrl);
+      listenBtn.addEventListener('click', () => {
+        debug('play audio', audioUrl);
+        audio.play();
+      });
+    }
+  });
+})();

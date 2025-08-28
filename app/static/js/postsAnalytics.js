@@ -1,7 +1,8 @@
-const debug = (...args) => window.debugLog('postsAnalytics.js', ...args);
-debug('Loaded');
+(() => {
+  const debug = (...args) => window.debugLog('postsAnalytics.js', ...args);
+  debug('Loaded');
 
-window.Promise ||
+  window.Promise ||
   document.write(
     '<script src="https://cdn.jsdelivr.net/npm/promise-polyfill@8/dist/polyfill.min.js"><\/script>',
   );
@@ -348,4 +349,5 @@ async function onViewAllClick() {
   }
 }
 
-loadBarChart("viewAll=False");
+  loadBarChart("viewAll=False");
+})();
