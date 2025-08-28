@@ -60,7 +60,19 @@ function renderCommentTree(data) {
     };
   }
 
+  // Build the primary tree starting from the first node returned.
   const root = d3.hierarchy(build(rootId));
+  // Ensure disconnected nodes (no links) are also displayed by attaching them
+  // as children of the root node so that every comment appears in the radial
+  // tree.
+  const seen = new Set(root.descendants().map((d) => d.data.id));
+  data.nodes.forEach((n) => {
+    if (!seen.has(n.id)) {
+      const child = d3.hierarchy(build(n.id));
+      child.parent = root;
+      (root.children ||= []).push(child);
+    }
+  });
   const width = 600;
   const radius = width / 2;
 
