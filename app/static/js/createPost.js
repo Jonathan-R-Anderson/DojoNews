@@ -40,26 +40,13 @@
             const provider = new ethers.providers.Web3Provider(window.ethereum);
             const signer = provider.getSigner();
             const contract = new ethers.Contract(postContractAddress, postContractAbi, signer);
-            const tx = await contract.createPost(payload, magnet, info);
+            const images = magnet
+                ? [{ name: bannerInput.files[0]?.name || 'banner.png', magnetURI: magnet }]
+                : [];
+            const tx = await contract.createPost(payload, '', info, images, 0, []);
             debug('Transaction sent', tx.hash);
             const receipt = await tx.wait();
             debug('Transaction mined', receipt.transactionHash);
-            let postId;
-            try {
-                const event = receipt.events.find(e => e.event === 'PostCreated');
-                postId = event ? event.args.postId.toNumber() : null;
-            } catch {
-                postId = null;
-            }
-            if (postId && magnet) {
-                try {
-                    const tx2 = await contract.setImageMagnet(`${postId}.png`, magnet);
-                    await tx2.wait();
-                    debug('Image magnet set');
-                } catch (err) {
-                    debug('Failed to set image magnet', err);
-                }
-            }
             window.location.href = '/';
         } catch (err) {
             debug('Failed to create post on-chain', err);
