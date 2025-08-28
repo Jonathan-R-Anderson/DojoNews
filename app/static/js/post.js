@@ -167,4 +167,5 @@ function renderCommentTree(data) {
   }
 
   showAll();
+}
 })();
