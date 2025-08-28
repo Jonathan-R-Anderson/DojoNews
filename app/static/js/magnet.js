@@ -5,7 +5,7 @@
     let provider;
     let contract;
     let client;
-    const imageCache = {}; // cache loaded image object URLs by magnet
+    const imageCache = {}; // cache loaded media object URLs by magnet
 
     async function initMagnetClient() {
         debug('initMagnetClient start');
@@ -67,8 +67,31 @@
 
             // if we've already loaded this magnet, reuse the cached object URL
             if (imageCache[magnet]) {
-                debug('using cached image for', id);
-                setImage(imageCache[magnet]);
+                debug('using cached media for', id);
+                const cached = imageCache[magnet];
+                if (cached.type === 'application/pdf') {
+                    const pdf = document.createElement('object');
+                    pdf.data = cached.url;
+                    pdf.type = 'application/pdf';
+                    pdf.className = img.className;
+                    pdf.style.width = '100%';
+                    pdf.style.height = '100%';
+                    pdf.dataset.magnetId = img.dataset.magnetId;
+                    pdf.dataset.magnetLoaded = 'true';
+
+                    if (img.dataset.allowDownload === 'true') {
+                        const link = document.createElement('a');
+                        link.href = cached.url;
+                        link.download = `${id}.pdf`;
+                        link.textContent = 'Download PDF';
+                        link.className = 'btn btn-sm btn-primary mt-2 block text-center';
+                        pdf.insertAdjacentElement('afterend', link);
+                    }
+
+                    img.replaceWith(pdf);
+                } else {
+                    setImage(cached.url);
+                }
                 return;
             }
 
@@ -92,8 +115,33 @@
                             throw new Error("No blob method on torrent file");
                         }
                         const newUrl = URL.createObjectURL(blob);
-                        imageCache[magnet] = newUrl;
-                        setImage(newUrl);
+
+                        if (blob.type === 'application/pdf' || file.name.endsWith('.pdf')) {
+                            debug('Detected PDF file for', id);
+                            imageCache[magnet] = { url: newUrl, type: 'application/pdf' };
+                            const pdf = document.createElement('object');
+                            pdf.data = newUrl;
+                            pdf.type = 'application/pdf';
+                            pdf.className = img.className;
+                            pdf.style.width = '100%';
+                            pdf.style.height = '100%';
+                            pdf.dataset.magnetId = img.dataset.magnetId;
+                            pdf.dataset.magnetLoaded = 'true';
+
+                            if (img.dataset.allowDownload === 'true') {
+                                const link = document.createElement('a');
+                                link.href = newUrl;
+                                link.download = file.name || `${id}.pdf`;
+                                link.textContent = 'Download PDF';
+                                link.className = 'btn btn-sm btn-primary mt-2 block text-center';
+                                pdf.insertAdjacentElement('afterend', link);
+                            }
+
+                            img.replaceWith(pdf);
+                        } else {
+                            imageCache[magnet] = { url: newUrl, type: blob.type };
+                            setImage(newUrl);
+                        }
                     } catch (err) {
                         debug("Failed to load magnet", id, err);
                     }
