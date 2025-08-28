@@ -13,6 +13,7 @@
 <meta name="twitter:description" content="{{ abstract | striptags + '...' }}" />
 <meta name="twitter:image" content="{{ banner_magnet }}" />
 <meta property="og:site_name" content="{{ appName }}" />
+<link rel="stylesheet" href="{{ url_for('static', filename='css/commentTree.css') }}" />
 {% endblock head %}
 {% block body %}
 <div class="w-11/12 md:w-5/6 lg:w-7/12 xl:w-5/12 mx-auto mt-6 md:mt-10 break-words">
@@ -43,6 +44,10 @@
     </div>
 </div>
 
+<div id="comment-tree" class="w-11/12 md:w-5/6 lg:w-7/12 xl:w-5/12 mx-auto mt-8">
+    <div id="branch-legend" class="text-sm"></div>
+</div>
+
 <div id="comments-section" class="w-11/12 md:w-5/6 lg:w-7/12 xl:w-5/12 mx-auto mt-8">
     <h2 class="text-xl font-bold mb-4">{{ translations.comments }}</h2>
     <div id="comments"></div>
@@ -59,5 +64,7 @@
 
 {% block scripts %}
 <script src="{{ url_for('static', filename='js/postContent.js') }}"></script>
+<script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
 <script src="{{ url_for('static', filename='js/comments.js') }}"></script>
+<script src="{{ url_for('static', filename='js/post.js') }}"></script>
 {% endblock scripts %}

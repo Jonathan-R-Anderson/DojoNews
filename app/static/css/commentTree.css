@@ -1,0 +1,71 @@
+#comment-tree {
+  position: relative;
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
+  aspect-ratio: 1 / 1;
+}
+
+#comment-tree svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  max-width: 600px;
+  display: block;
+  margin: 0 auto;
+}
+
+#comment-tree .link {
+  stroke: #9ca3af;
+  stroke-width: 3px;
+  fill: none;
+}
+
+#comment-tree .link-hover {
+  stroke: transparent;
+  stroke-width: 20px;
+  fill: none;
+}
+
+#comment-tree .node {
+  stroke-width: 1.5px;
+  cursor: pointer;
+  transition: stroke-width 0.2s, fill 0.2s;
+}
+
+#comment-tree .node:hover {
+  stroke-width: 2.5px;
+}
+
+#comment-tree #branch-legend {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  background: rgba(255, 255, 255, 0.8);
+  padding: 4px;
+  pointer-events: none;
+  font-size: 0.875rem;
+  z-index: 1;
+}
+
+[data-comment-id] {
+  transition: max-height 0.4s ease, opacity 0.4s ease, margin 0.4s ease,
+    padding 0.4s ease;
+  max-height: 1000px;
+  overflow: hidden;
+}
+
+.hidden-comment {
+  opacity: 0;
+  max-height: 0;
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+}
+
+#comments-section {
+  max-height: 60vh;
+  overflow-y: auto;
+}
