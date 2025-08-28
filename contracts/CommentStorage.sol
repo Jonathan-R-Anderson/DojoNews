@@ -5,6 +5,7 @@ pragma solidity ^0.8.20;
 /// @notice Stores comments associated with posts.
 contract CommentStorage {
     address public sysop;
+    event SysopTransferred(address indexed previousSysop, address indexed newSysop);
 
     struct Comment {
         address author;
@@ -28,6 +29,12 @@ contract CommentStorage {
 
     constructor() {
         sysop = msg.sender;
+    }
+
+    function transferSysop(address newSysop) external onlySysop {
+        require(newSysop != address(0), "bad sysop");
+        emit SysopTransferred(sysop, newSysop);
+        sysop = newSysop;
     }
 
     function addComment(uint256 postId, string calldata content) external returns (uint256 commentId) {

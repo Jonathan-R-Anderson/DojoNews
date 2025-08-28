@@ -6,6 +6,7 @@ pragma solidity ^0.8.20;
 contract TipJar {
     address public sysop;
     uint256 public sysopTipBps; // commission in basis points
+    event SysopTransferred(address indexed previousSysop, address indexed newSysop);
 
     mapping(bytes32 => uint256) public tips; // author + postId => total tips
 
@@ -18,6 +19,12 @@ contract TipJar {
 
     constructor() {
         sysop = msg.sender;
+    }
+
+    function transferSysop(address newSysop) external onlySysop {
+        require(newSysop != address(0), "bad sysop");
+        emit SysopTransferred(sysop, newSysop);
+        sysop = newSysop;
     }
 
     function setSysopTipBps(uint256 bps) external onlySysop {
