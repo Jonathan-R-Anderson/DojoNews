@@ -2,15 +2,16 @@
 pragma solidity ^0.8.20;
 
 /// @title TipJar
-/// @notice Handles tips for authors with an optional sysop commission.
+/// @notice Handles tips for authors with an optional sysop flat tax.
 contract TipJar {
     address public sysop;
-    uint256 public sysopTipBps; // commission in basis points
+    uint256 public sysopTax; // flat tax in wei
     event SysopTransferred(address indexed previousSysop, address indexed newSysop);
 
     mapping(bytes32 => uint256) public tips; // author + postId => total tips
 
-    event TipSent(address indexed from, address indexed author, bytes32 indexed postId, uint256 amount, uint256 sysopFee);
+    event TipSent(address indexed from, address indexed author, bytes32 indexed postId, uint256 amount, uint256 sysopTax);
+    event SysopTaxUpdated(uint256 previousTax, uint256 newTax);
 
     modifier onlySysop() {
         require(msg.sender == sysop, "only sysop");
@@ -27,23 +28,24 @@ contract TipJar {
         sysop = newSysop;
     }
 
-    function setSysopTipBps(uint256 bps) external onlySysop {
-        require(bps <= 10_000, "bps too high");
-        sysopTipBps = bps;
+    function setSysopTax(uint256 tax) external onlySysop {
+        uint256 oldTax = sysopTax;
+        sysopTax = tax;
+        emit SysopTaxUpdated(oldTax, tax);
     }
 
     function tip(address author, bytes32 postId) external payable {
-        require(msg.value > 0, "no value");
-        uint256 fee = (msg.value * sysopTipBps) / 10_000;
-        uint256 payout = msg.value - fee;
-        if (fee > 0) {
-            (bool feeSent, ) = sysop.call{value: fee}("");
-            require(feeSent, "fee failed");
+        require(msg.value > sysopTax, "value <= tax");
+        uint256 tax = sysopTax;
+        uint256 payout = msg.value - tax;
+        if (tax > 0) {
+            (bool feeSent, ) = sysop.call{value: tax}("");
+            require(feeSent, "tax failed");
         }
         (bool sent, ) = author.call{value: payout}("");
         require(sent, "tip failed");
         tips[keccak256(abi.encodePacked(author, postId))] += payout;
-        emit TipSent(msg.sender, author, postId, payout, fee);
+        emit TipSent(msg.sender, author, postId, payout, tax);
     }
 }
 

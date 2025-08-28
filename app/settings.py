@@ -957,7 +957,7 @@ class Settings:
         {
           "indexed": false,
           "internalType": "uint256",
-          "name": "sysopFee",
+          "name": "sysopTax",
           "type": "uint256"
         }
       ],
@@ -968,11 +968,11 @@ class Settings:
       "inputs": [
         {
           "internalType": "uint256",
-          "name": "bps",
+          "name": "tax",
           "type": "uint256"
         }
       ],
-      "name": "setSysopTipBps",
+      "name": "setSysopTax",
       "outputs": [],
       "stateMutability": "nonpayable",
       "type": "function"
@@ -992,7 +992,7 @@ class Settings:
     },
     {
       "inputs": [],
-      "name": "sysopTipBps",
+      "name": "sysopTax",
       "outputs": [
         {
           "internalType": "uint256",
