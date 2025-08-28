@@ -49,6 +49,7 @@
           count++;
           const div = document.createElement('div');
           div.className = 'my-2 p-2 border rounded';
+          div.dataset.commentId = i;
           div.innerHTML = `<p class="mb-1">${c.content}</p><p class="text-sm opacity-70">${c.author}</p>`;
           commentsEl.appendChild(div);
         } catch (err) {
@@ -58,6 +59,7 @@
       if (count === 0) {
         commentsEl.innerHTML = '<p>No comments yet.</p>';
       }
+      window.dispatchEvent(new Event('comments-updated'));
     }
 
     async function submitComment(e) {

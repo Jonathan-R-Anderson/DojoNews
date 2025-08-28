@@ -5,6 +5,7 @@ from re import sub
 from flask import (
     Blueprint,
     abort,
+    jsonify,
     redirect,
     render_template,
     request,
@@ -14,6 +15,7 @@ from flask import (
 from gtts import gTTS
 from settings import Settings
 from utils.generateUrlIdFromPost import getSlugFromPostTitle
+from utils.commentTree import build_comment_tree
 from utils.log import Log
 from web3 import Web3
 
@@ -106,4 +108,35 @@ def post_audio(urlID: int):
         tts = gTTS(text)
         tts.save(file_path)
     return send_file(file_path, mimetype="audio/mpeg")
+
+
+@postBlueprint.route("/post/<int:urlID>/comment-tree")
+def comment_tree(urlID: int):
+    """Return a similarity tree for comments on ``urlID``."""
+
+    contract_info = Settings.BLOCKCHAIN_CONTRACTS["CommentStorage"]
+    w3 = Web3(Web3.HTTPProvider(Settings.BLOCKCHAIN_RPC_URL))
+    contract = w3.eth.contract(
+        address=contract_info["address"], abi=contract_info["abi"]
+    )
+    try:
+        next_id = contract.functions.nextCommentId().call()
+    except Exception as exc:  # pragma: no cover - network errors
+        Log.error(f"comment-tree: nextCommentId failed: {exc}")
+        return jsonify({"nodes": [], "links": []})
+
+    comments = []
+    for cid in range(next_id):
+        try:
+            c = contract.functions.getComment(cid).call()
+        except Exception as exc:  # pragma: no cover - network errors
+            Log.error(f"comment-tree: getComment failed: {cid} {exc}")
+            continue
+        author, post_id, content, exists, blacklisted = c
+        if not exists or blacklisted or post_id != urlID:
+            continue
+        comments.append((cid, author, content))
+
+    tree = build_comment_tree(comments)
+    return jsonify(tree)
 
