@@ -90,13 +90,7 @@ from routes.setLanguage import (
 from routes.setTheme import (
     setThemeBlueprint,
 )
-from routes.signup import (
-    signUpBlueprint,
-)
 from routes.user import userBlueprint
-from routes.verifyUser import (
-    verifyUserBlueprint,
-)
 from routes.comments import commentsBlueprint
 from settings import Settings
 from utils.afterRequest import (
@@ -104,7 +98,6 @@ from utils.afterRequest import (
 )
 from utils.beforeRequest.browserLanguage import browserLanguage
 from utils.contextProcessor.isLogin import isLogin
-from utils.contextProcessor.isRegistration import isRegistration
 from utils.contextProcessor.returnPostUrlID import returnPostUrlID
 from utils.contextProcessor.returnPostUrlSlug import returnPostUrlSlug
 from utils.contextProcessor.returnUserProfilePicture import returnUserProfilePicture
@@ -162,8 +155,6 @@ ensure_seeding(images_dir)
 
 
 app.context_processor(isLogin)
-
-app.context_processor(isRegistration)
 app.context_processor(returnUserProfilePicture)
 app.context_processor(returnPostUrlID)
 app.context_processor(returnPostUrlSlug)
@@ -199,7 +190,6 @@ Log.info(f"Root path: {Settings.APP_ROOT_PATH}")
 Log.info(f"Log folder root: {Settings.LOG_FOLDER_ROOT}")
 Log.info(f"Log file root: {Settings.LOG_FILE_ROOT}")
 Log.info(f"Log in: {Settings.LOG_IN}")
-Log.info(f"Registration: {Settings.REGISTRATION}")
 
 Log.info(f"SMTP server: {Settings.SMTP_SERVER}")
 Log.info(f"SMTP port: {Settings.SMTP_PORT}")
@@ -215,7 +205,7 @@ if Settings.RECAPTCHA:
             "Please check your recaptcha keys or set recaptcha to false from true in 'settings.py'",
         )
     else:
-        Log.info("reCAPTCHA is on for login and signup pages")
+        Log.info("reCAPTCHA is on for login page")
         Log.info(f"reCAPTCHA recaptcha site key: {Settings.RECAPTCHA_SITE_KEY}")
         Log.info(f"reCAPTCHA verify url: {Settings.RECAPTCHA_VERIFY_URL}")
 
@@ -275,7 +265,6 @@ app.register_blueprint(userBlueprint)
 app.register_blueprint(indexBlueprint)
 app.register_blueprint(aboutBlueprint)
 app.register_blueprint(loginBlueprint)
-app.register_blueprint(signUpBlueprint)
 app.register_blueprint(logoutBlueprint)
 app.register_blueprint(searchBlueprint)
 app.register_blueprint(categoryBlueprint)
@@ -284,7 +273,6 @@ app.register_blueprint(dashboardBlueprint)
 app.register_blueprint(searchBarBlueprint)
 app.register_blueprint(adminPanelBlueprint)
 app.register_blueprint(createPostBlueprint)
-app.register_blueprint(verifyUserBlueprint)
 app.register_blueprint(setLanguageBlueprint)
 app.register_blueprint(setThemeBlueprint)
 app.register_blueprint(privacyPolicyBlueprint)

@@ -24,10 +24,6 @@
                 uname.value = account;
                 uname.readOnly = true;
             }
-            const submitBtn = document.getElementById('signup-btn');
-            if (submitBtn) {
-                submitBtn.disabled = false;
-            }
             if (account === ADMIN_ADDRESS) {
                 document.body.classList.add('admin-wallet');
                 debug('Admin wallet detected');

@@ -30,8 +30,8 @@ def index():
     The previous implementation returned a blank response when the user was not
     logged in (i.e. no ``walletAddress`` in the session). This caused the home
     page to be completely empty for anonymous visitors. Instead, always render
-    the index template so that the login/signup options in the navigation bar
-    remain accessible.
+    the index template so that the login option in the navigation bar
+    remains accessible.
     """
 
     return render_template(
