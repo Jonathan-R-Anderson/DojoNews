@@ -50,14 +50,6 @@
             img.className = 'select-none';
             link.appendChild(img);
 
-            const titleBar = document.createElement('div');
-            titleBar.className = 'tile-title-bar';
-            const titleEl = document.createElement('h2');
-            titleEl.className = 'tile-title';
-            titleEl.textContent = title;
-            titleBar.appendChild(titleEl);
-            link.appendChild(titleBar);
-
             const overlay = document.createElement('div');
             overlay.className = 'tile-overlay';
             const overlayTitle = document.createElement('h2');
