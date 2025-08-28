@@ -55,7 +55,7 @@ def post(urlID: int, slug: str | None = None):
     if not onchain:
         return render_template("notFound.html")
 
-    # onchain tuple: (author, contentHash, magnetURI, authorInfo, exists, blacklisted)
+    # onchain tuple: (author, contentHash, magnetURI, authorInfo, exists, blacklisted, imageIds, bannerImageId, videoIds)
     content_hash = onchain[1]
     parts = content_hash.split("|", 5)
     title = parts[0] if len(parts) > 0 else ""
@@ -65,6 +65,7 @@ def post(urlID: int, slug: str | None = None):
     category = parts[4] if len(parts) > 4 else ""
     author = onchain[0]
     author_info = onchain[3]
+    video_ids = onchain[8] if len(onchain) > 8 else []
 
     postSlug = getSlugFromPostTitle(title) if title else slug
     if title and slug != postSlug:
@@ -91,6 +92,7 @@ def post(urlID: int, slug: str | None = None):
         idForRandomVisitor=None,
         sort="new",
         banner_magnet=onchain[2],
+        video_ids=video_ids,
         rpc_url=Settings.BLOCKCHAIN_RPC_URL,
         post_contract_address=Settings.BLOCKCHAIN_CONTRACTS["PostStorage"]["address"],
         post_contract_abi=Settings.BLOCKCHAIN_CONTRACTS["PostStorage"]["abi"],

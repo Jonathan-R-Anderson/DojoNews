@@ -5,7 +5,7 @@
     let provider;
     let contract;
     let client;
-    const imageCache = {}; // cache loaded media object URLs by magnet
+    const mediaCache = {}; // cache loaded media object URLs by magnet
 
     async function initMagnetClient() {
         debug('initMagnetClient start');
@@ -66,9 +66,9 @@
             };
 
             // if we've already loaded this magnet, reuse the cached object URL
-            if (imageCache[magnet]) {
+            if (mediaCache[magnet]) {
                 debug('using cached media for', id);
-                const cached = imageCache[magnet];
+                const cached = mediaCache[magnet];
                 if (cached.type === 'application/pdf') {
                     const pdf = document.createElement('object');
                     pdf.data = cached.url;
@@ -123,7 +123,7 @@
 
                         if (blob.type === 'application/pdf' || file.name.endsWith('.pdf')) {
                             debug('Detected PDF file for', id);
-                            imageCache[magnet] = { url: newUrl, type: 'application/pdf' };
+                            mediaCache[magnet] = { url: newUrl, type: 'application/pdf' };
                             const pdf = document.createElement('object');
                             pdf.data = newUrl;
                             pdf.type = 'application/pdf';
@@ -149,7 +149,7 @@
                                 window.applyMasonry(tile);
                             }
                         } else {
-                            imageCache[magnet] = { url: newUrl, type: blob.type };
+                            mediaCache[magnet] = { url: newUrl, type: blob.type };
                             setImage(newUrl);
                         }
                     } catch (err) {
@@ -175,15 +175,100 @@
         }
     }
 
+    async function fetchVideo(video) {
+        debug('fetchVideo', video);
+        if (!video || video.dataset.magnetLoaded) return;
+        const id = video.dataset.videoId;
+        if (!id) return;
+        await initMagnetClient();
+        try {
+            const magnet = await contract.getVideoMagnet(id);
+            debug('video magnet URI', magnet);
+            if (!magnet) {
+                debug('No magnet URI returned for', id);
+                return;
+            }
+            const setVideo = (url) => {
+                if (video.src && video.src.startsWith('blob:')) {
+                    URL.revokeObjectURL(video.src);
+                }
+                video.src = url;
+                video.dataset.magnetLoaded = 'true';
+                video.classList.add('video-js');
+                try {
+                    if (typeof videojs !== 'undefined') {
+                        videojs(video);
+                    } else {
+                        video.controls = true;
+                    }
+                } catch (err) {
+                    debug('videojs init failed', err);
+                }
+                debug('video updated', id);
+            };
+
+            if (mediaCache[magnet]) {
+                const cached = mediaCache[magnet];
+                setVideo(cached.url);
+                return;
+            }
+
+            const handleTorrent = (torrent) => {
+                const processTorrent = async () => {
+                    try {
+                        debug('torrent available', torrent.infoHash);
+                        const file = torrent.files[0];
+                        if (!file) {
+                            debug('No files in torrent yet');
+                            return;
+                        }
+                        let blob;
+                        if (typeof file.getBlob === 'function') {
+                            blob = await new Promise((resolve, reject) => {
+                                file.getBlob((err, b) => (err ? reject(err) : resolve(b)));
+                            });
+                        } else if (typeof file.blob === 'function') {
+                            blob = await file.blob();
+                        } else {
+                            throw new Error('No blob method on torrent file');
+                        }
+                        const newUrl = URL.createObjectURL(blob);
+                        mediaCache[magnet] = { url: newUrl, type: blob.type };
+                        setVideo(newUrl);
+                    } catch (err) {
+                        debug('Failed to load magnet', id, err);
+                    }
+                };
+                if (torrent.files && torrent.files.length) {
+                    processTorrent();
+                } else {
+                    torrent.once('ready', processTorrent);
+                }
+            };
+
+            const existing = client.get(magnet);
+            if (existing) {
+                handleTorrent(existing);
+            } else {
+                client.add(magnet, handleTorrent);
+            }
+        } catch (e) {
+            debug('Failed to load magnet', id, e);
+        }
+    }
+
     async function loadMagnets() {
         debug('loadMagnets start');
         await initMagnetClient();
         const images = document.querySelectorAll("[data-magnet-id]");
         debug('found images', images.length);
         images.forEach(fetchMagnet);
+        const videos = document.querySelectorAll('[data-video-id]');
+        debug('found videos', videos.length);
+        videos.forEach(fetchVideo);
     }
 
-    function observeNewImages() {
+    function observeNewMedia() {
         const observer = new MutationObserver((mutations) => {
             debug('DOM mutations', mutations.length);
             for (const mutation of mutations) {
@@ -192,10 +277,16 @@
                     if (node.dataset && node.dataset.magnetId) {
                         debug('new image node', node.dataset.magnetId);
                         fetchMagnet(node);
+                    } else if (node.dataset && node.dataset.videoId) {
+                        debug('new video node', node.dataset.videoId);
+                        fetchVideo(node);
                     }
                     node
-                        .querySelectorAll?.("[data-magnet-id]")
+                        .querySelectorAll?.('[data-magnet-id]')
                         .forEach((el) => fetchMagnet(el));
+                    node
+                        .querySelectorAll?.('[data-video-id]')
+                        .forEach((el) => fetchVideo(el));
                 });
             }
         });
@@ -205,6 +296,6 @@
 
     if (typeof window !== "undefined") {
         window.loadMagnets = loadMagnets;
-        loadMagnets().then(observeNewImages);
+        loadMagnets().then(observeNewMedia);
     }
 })();
