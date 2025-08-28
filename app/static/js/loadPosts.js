@@ -22,8 +22,15 @@
     try {
         const nextId = (await contract.nextPostId()).toNumber();
         debug('Next post id', nextId);
-        for (let id = 1; id < nextId; id++) {
-            const p = await contract.getPost(id);
+        for (let id = 0; id < nextId; id++) {
+            let p;
+            try {
+                // Use the public mapping to avoid reverts for missing posts
+                p = await contract.posts(id);
+            } catch (e) {
+                debug('Error fetching post', id, e);
+                continue;
+            }
             debug('Fetched post', id, p);
             if (!p.exists || p.blacklisted) {
                 debug('Skipping post', id);
