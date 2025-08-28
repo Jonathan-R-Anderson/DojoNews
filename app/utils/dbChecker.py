@@ -193,6 +193,19 @@ def postsTable():
         connection.commit()
         Log.success(f'Table: "postDownvotes" created in "{Settings.DB_POSTS_ROOT}"')
 
+    # Ensure deletedPosts table exists
+    try:
+        cursor.execute("""select urlID from deletedPosts limit 1""")
+    except Exception:
+        deletedPostsTable = """
+        create table if not exists deletedPosts(
+            "urlID" text not null unique
+        );"""
+
+        cursor.execute(deletedPostsTable)
+        connection.commit()
+        Log.success(f'Table: "deletedPosts" created in "{Settings.DB_POSTS_ROOT}"')
+
     connection.close()
 
 
