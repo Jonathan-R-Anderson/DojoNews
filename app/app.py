@@ -139,6 +139,8 @@ Log.info("Starting...")
 app = Flask(
     import_name=Settings.APP_NAME,
     root_path=Settings.APP_ROOT_PATH,
+    template_folder="app/templates",
+    static_folder="app/static",
 )
 
 
