@@ -5,6 +5,7 @@
     let provider;
     let contract;
     let client;
+    const imageCache = {}; // cache loaded image object URLs by magnet
 
     async function initMagnetClient() {
         debug('initMagnetClient start');
@@ -49,34 +50,56 @@
         try {
             const magnet = await contract.getImageMagnet(id);
             debug('magnet URI', magnet);
-            if (magnet) {
-                client.add(magnet, async (torrent) => {
-                    try {
-                        debug('torrent added', torrent.infoHash);
-                        const file = torrent.files[0];
-                        let blob;
-                        if (typeof file.getBlob === "function") {
-                            blob = await new Promise((resolve, reject) => {
-                                file.getBlob((err, b) => (err ? reject(err) : resolve(b)));
-                            });
-                        } else if (typeof file.blob === "function") {
-                            blob = await file.blob();
-                        } else {
-                            throw new Error("No blob method on torrent file");
-                        }
-                        const newUrl = URL.createObjectURL(blob);
-                        if (img.src && img.src.startsWith("blob:")) {
-                            URL.revokeObjectURL(img.src);
-                        }
-                        img.src = newUrl;
-                        img.dataset.magnetLoaded = "true";
-                        debug('image updated', id);
-                    } catch (err) {
-                        debug("Failed to load magnet", id, err);
-                    }
-                });
-            } else {
+            if (!magnet) {
                 debug("No magnet URI returned for", id);
+                return;
+            }
+
+            // helper to set image src and cache it
+            const setImage = (url) => {
+                if (img.src && img.src.startsWith("blob:")) {
+                    URL.revokeObjectURL(img.src);
+                }
+                img.src = url;
+                img.dataset.magnetLoaded = "true";
+                debug('image updated', id);
+            };
+
+            // if we've already loaded this magnet, reuse the cached object URL
+            if (imageCache[magnet]) {
+                debug('using cached image for', id);
+                setImage(imageCache[magnet]);
+                return;
+            }
+
+            const handleTorrent = async (torrent) => {
+                try {
+                    debug('torrent available', torrent.infoHash);
+                    const file = torrent.files[0];
+                    let blob;
+                    if (typeof file.getBlob === "function") {
+                        blob = await new Promise((resolve, reject) => {
+                            file.getBlob((err, b) => (err ? reject(err) : resolve(b)));
+                        });
+                    } else if (typeof file.blob === "function") {
+                        blob = await file.blob();
+                    } else {
+                        throw new Error("No blob method on torrent file");
+                    }
+                    const newUrl = URL.createObjectURL(blob);
+                    imageCache[magnet] = newUrl;
+                    setImage(newUrl);
+                } catch (err) {
+                    debug("Failed to load magnet", id, err);
+                }
+            };
+
+            // avoid duplicate torrent additions
+            const existing = client.get(magnet);
+            if (existing) {
+                handleTorrent(existing);
+            } else {
+                client.add(magnet, handleTorrent);
             }
         } catch (e) {
             debug("Failed to load magnet", id, e);
