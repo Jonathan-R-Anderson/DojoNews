@@ -1,4 +1,8 @@
+const debug = (...args) => window.debugLog('loadPosts.js', ...args);
+debug('Loaded');
+
 (async () => {
+    debug('Loading posts');
     if (typeof ethers === 'undefined') {
         await new Promise((resolve) => {
             const s = document.createElement('script');
@@ -8,14 +12,22 @@
         });
     }
     const container = document.getElementById('posts-container');
-    if (!container || typeof window.postContractAddress === 'undefined') return;
+    if (!container || typeof window.postContractAddress === 'undefined') {
+        debug('Container or contract address missing');
+        return;
+    }
     const provider = new ethers.providers.JsonRpcProvider(window.rpcUrl);
     const contract = new ethers.Contract(window.postContractAddress, window.postContractAbi, provider);
     try {
         const nextId = (await contract.nextPostId()).toNumber();
+        debug('Next post id', nextId);
         for (let id = 1; id < nextId; id++) {
             const p = await contract.getPost(id);
-            if (!p.exists || p.blacklisted) continue;
+            debug('Fetched post', id, p);
+            if (!p.exists || p.blacklisted) {
+                debug('Skipping post', id);
+                continue;
+            }
             const parts = p.contentHash.split('|');
             const title = parts[0] || '';
             const category = parts[4] || '';
@@ -40,11 +52,13 @@
             overlay.appendChild(titleEl);
             link.appendChild(overlay);
             container.appendChild(link);
+            debug('Added post tile', id);
         }
         if (typeof window.loadMagnets === 'function') {
+            debug('Loading magnets for posts');
             window.loadMagnets();
         }
     } catch (err) {
-        console.error('Failed to load posts from blockchain', err);
+        debug('Failed to load posts from blockchain', err);
     }
 })();

@@ -1,7 +1,14 @@
+const debug = (...args) => window.debugLog('markdownEditor.js', ...args);
+debug('Loaded');
+
 // Markdown Editor with Toolbar
 document.addEventListener('DOMContentLoaded', function() {
+    debug('DOMContentLoaded');
     const textarea = document.getElementById('markdown-editor');
-    if (!textarea) return;
+    if (!textarea) {
+        debug('No textarea found');
+        return;
+    }
     
     // Create editor container
     const container = document.createElement('div');
@@ -87,6 +94,7 @@ Use **bold**, *italic*, and other markdown features.
     // Character count
     function updateCharCount() {
         const count = textarea.value.length;
+        debug('updateCharCount', count);
         document.getElementById('char-count').textContent = count + ' characters';
     }
     
@@ -99,9 +107,9 @@ Use **bold**, *italic*, and other markdown features.
         const end = textarea.selectionEnd;
         const selectedText = textarea.value.substring(start, end);
         const newText = before + selectedText + after;
-        
+        debug('insertText', { before, after, selectedText });
         textarea.value = textarea.value.substring(0, start) + newText + textarea.value.substring(end);
-        
+
         // Set cursor position
         const newCursorPos = start + before.length + selectedText.length;
         textarea.setSelectionRange(newCursorPos, newCursorPos);
@@ -111,6 +119,7 @@ Use **bold**, *italic*, and other markdown features.
     
     // Keyboard shortcuts
     textarea.addEventListener('keydown', function(e) {
+        debug('keydown', e.key);
         if (e.ctrlKey || e.metaKey) {
             switch(e.key) {
                 case 'b':
@@ -127,11 +136,11 @@ Use **bold**, *italic*, and other markdown features.
                     break;
             }
         }
-        
+
         // Tab support
         if (e.key === 'Tab') {
             e.preventDefault();
             insertText('    ', '');
         }
     });
-}); 
+});

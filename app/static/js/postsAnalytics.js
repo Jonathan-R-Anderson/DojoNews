@@ -1,3 +1,6 @@
+const debug = (...args) => window.debugLog('postsAnalytics.js', ...args);
+debug('Loaded');
+
 window.Promise ||
   document.write(
     '<script src="https://cdn.jsdelivr.net/npm/promise-polyfill@8/dist/polyfill.min.js"><\/script>',
@@ -21,6 +24,7 @@ let lineChartErrorContainer = document.getElementById(
 );
 
 function startDropDownMenu() {
+  debug('startDropDownMenu');
   document
     .getElementById("durationRangeTab")
     .addEventListener("change", durationRangeCallback, false);
@@ -38,6 +42,7 @@ let durationRangeMap = {
 
 function durationRangeCallback() {
   let selectedDurationRange = document.getElementById("durationRangeTab").value;
+  debug('durationRangeCallback', selectedDurationRange);
   let dropDownMenuSpinner = document.getElementById("dropDownMenuSpinner");
 
   onTabDurationSelection(
@@ -48,6 +53,7 @@ function durationRangeCallback() {
 
 let initialStateTabId = "last48h";
 function changeTabState(tabID) {
+  debug('changeTabState', tabID);
   document
     .getElementById(initialStateTabId)
     .classList.remove("bg-rose-500/75", "text-black");
@@ -75,6 +81,7 @@ function changeTabState(tabID) {
 }
 
 async function onTabDurationSelection(durationRangeQuery, spinnerID) {
+  debug('onTabDurationSelection', durationRangeQuery);
   spinnerID.classList.remove("hidden");
 
   refreshedLineGraphData = await fetchTrafficGraphData(durationRangeQuery);
@@ -93,6 +100,7 @@ async function onTabDurationSelection(durationRangeQuery, spinnerID) {
 }
 
 async function fetchTrafficGraphData(durationRangeQuery) {
+  debug('fetchTrafficGraphData', durationRangeQuery);
   try {
     let response = await fetch(
       postAnalyticsDataTrafficGraphUrl + durationRangeQuery,
@@ -102,16 +110,17 @@ async function fetchTrafficGraphData(durationRangeQuery) {
     if (response.ok) {
       return responseData.payload;
     } else {
-      console.error(responseData.message);
+      debug('Traffic graph error', responseData.message);
       return null;
     }
   } catch (error) {
-    console.error(error);
+    debug('fetchTrafficGraphData error', error);
     return null;
   }
 }
 
 async function loadLineChart(durationRangeQuery) {
+  debug('loadLineChart', durationRangeQuery);
   lineChartSpinner.classList.remove("hidden");
 
   let lineGraphData = await fetchTrafficGraphData(durationRangeQuery);
@@ -236,22 +245,24 @@ let viewAllSpinner = document.getElementById("viewAllSpinner");
 let barChartErrorContainer = document.getElementById("barChartErrorContainer");
 
 async function fetchCountryGraphData(dataLimit) {
+  debug('fetchCountryGraphData', dataLimit);
   try {
     let response = await fetch(postAnalyticsDataCountryGraphUrl + dataLimit);
     let responseData = await response.json();
     if (response.ok) {
       return responseData.payload;
     } else {
-      console.error(responseData.message);
+      debug(responseData.message);
       return null;
     }
   } catch (error) {
-    console.error(error);
+    debug('fetchCountryGraphData error', error);
     return null;
   }
 }
 
 async function loadBarChart(dataLimit) {
+  debug('loadBarChart', dataLimit);
   const countryGraphData = await fetchCountryGraphData(dataLimit);
   let lengthOfCountryList = countryGraphData["countryCountList"].length;
 
@@ -312,6 +323,7 @@ async function loadBarChart(dataLimit) {
 }
 
 async function onViewAllClick() {
+  debug('onViewAllClick');
   viewAllSpinner.classList.remove("hidden");
   let refreshedCountryData = await fetchCountryGraphData("viewAll=True");
 

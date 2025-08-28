@@ -88,6 +88,7 @@
             crossorigin="anonymous"
         ></script>
 
+        <script src="{{ url_for('static', filename='js/debug.js') }}"></script>
         <script src="{{ url_for('static', filename='js/wallet.js') }}"></script>
         {% if admin_check %}
         <script src="{{ url_for('static', filename='js/adminCheck.js') }}"></script>

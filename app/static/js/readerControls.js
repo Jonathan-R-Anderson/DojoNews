@@ -1,4 +1,8 @@
+const debug = (...args) => window.debugLog('readerControls.js', ...args);
+debug('Loaded');
+
 document.addEventListener('DOMContentLoaded', () => {
+  debug('DOMContentLoaded');
   const root = document.documentElement;
 
   // Theme handling
@@ -23,6 +27,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const next = current === 'dark' ? 'light' : 'dark';
       root.setAttribute('data-theme', next);
       localStorage.setItem('theme', next);
+      debug('themeToggle', next);
     });
   }
 
@@ -34,6 +39,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const applySize = () => {
     root.style.fontSize = fontSize + '%';
     localStorage.setItem('fontSize', fontSize);
+    debug('applySize', fontSize);
   };
   applySize();
 
@@ -42,12 +48,14 @@ document.addEventListener('DOMContentLoaded', () => {
   if (incBtn) {
     incBtn.addEventListener('click', () => {
       fontSize = Math.min(fontSize + 10, 300);
+      debug('font increment', fontSize);
       applySize();
     });
   }
   if (decBtn) {
     decBtn.addEventListener('click', () => {
       fontSize = Math.max(fontSize - 10, 50);
+      debug('font decrement', fontSize);
       applySize();
     });
   }
@@ -58,6 +66,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const audioUrl = listenBtn.dataset.audio;
     const audio = new Audio(audioUrl);
     listenBtn.addEventListener('click', () => {
+      debug('play audio', audioUrl);
       audio.play();
     });
   }

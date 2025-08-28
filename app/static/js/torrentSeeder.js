@@ -1,4 +1,8 @@
+const debug = (...args) => window.debugLog('torrentSeeder.js', ...args);
+debug('Loaded');
+
 (async () => {
+    debug('torrentSeeder init');
     if (typeof WebTorrent === 'undefined') {
         await new Promise((resolve) => {
             const script = document.createElement('script');
@@ -11,10 +15,11 @@
     const client = new WebTorrent();
     window.torrentClient = client; // keep reference
     const links = document.querySelectorAll('a[href$=".torrent"]');
+    debug('Found torrent links', links.length);
     links.forEach((link) => {
         try {
             client.add(link.href, (torrent) => {
-                console.log('Seeding', torrent.infoHash);
+                debug('Seeding', torrent.infoHash);
 
                 if (torrent.files && torrent.files.length > 0) {
                     // Create container to hold rendered content
@@ -26,17 +31,18 @@
                         { autoplay: true, controls: true },
                         (err) => {
                             if (err) {
-                                console.error('Error rendering torrent', link.href, err);
+                                debug('Error rendering torrent', link.href, err);
                             }
                         }
                     );
 
                     // Remove placeholder link once content is rendered
                     link.remove();
+                    debug('Rendered torrent content');
                 }
             });
         } catch (err) {
-            console.error('Error adding torrent', link.href, err);
+            debug('Error adding torrent', link.href, err);
         }
     });
 })();
