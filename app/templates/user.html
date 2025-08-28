@@ -9,6 +9,7 @@
 <meta name="twitter:image" content="{{user[4]}}" />
 <meta name="twitter:description" content="{{ user[1] }}'s Profile" />
 <meta name="twitter:title" content="{{user[1]}}" />
+<link rel="stylesheet" href="{{ url_for('static', filename='css/postTiles.css') }}" />
 {% endblock head %} {%block body%}
 <div>
     <div
@@ -95,7 +96,8 @@
         {{translations.user.posts}}
     </h1>
     <div
-        class="flex item-center justify-center flex-wrap gap-x-2 gap-y-6 mx-auto w-11/12 md:w-10/12 lg:w-9/12 2xl:w-8/12 my-6"
+        id="posts-container"
+        class="post-tiles-grid mx-auto w-11/12 md:w-10/12 lg:w-9/12 2xl:w-8/12 my-6"
     >
         {% for post in posts %} {% from "components/postCardMacro.html" import
         postCard%} {{

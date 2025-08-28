@@ -1,17 +1,18 @@
+.post-tiles-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr));
+    grid-auto-rows: 10rem;
+    grid-auto-flow: dense;
+    gap: 1rem;
+}
+
 .post-tile {
     position: relative;
     width: 100%;
-    height: 20rem;
+    height: 100%;
     overflow: hidden;
     border-radius: 0.5rem;
     cursor: pointer;
-    transition: transform 0.6s;
-    transform-style: preserve-3d;
-    display: block;
-}
-
-.post-tile:hover {
-    transform: rotateY(180deg);
 }
 
 .post-tile img {
@@ -21,31 +22,63 @@
     width: 100%;
     height: 100%;
     object-fit: cover;
-    backface-visibility: hidden;
 }
 
-.post-tile .tile-overlay {
+.tile-title-bar {
     position: absolute;
     bottom: 0;
     left: 0;
     width: 100%;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-    padding: 1rem;
-    background: linear-gradient(to top, rgba(0, 0, 0, 0.7), transparent);
+    background: rgba(0, 0, 0, 0.6);
     color: #fff;
-    backface-visibility: hidden;
+    padding: 0.5rem 1rem;
 }
 
-.post-tile .tile-category {
-    font-size: 0.875rem;
-    margin-bottom: 0.25rem;
-}
-
-.post-tile .tile-title {
+.tile-title {
     font-size: 1.25rem;
     font-weight: 700;
-    line-height: 1.2;
+    background: rgba(239, 68, 68, 0.8);
+    padding: 0 0.25rem;
+    border-radius: 0.25rem;
+}
+
+.tile-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.85);
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 1rem;
+    transform: translateY(100%);
+    transition: transform 0.3s ease;
+}
+
+.post-tile:hover .tile-overlay {
+    transform: translateY(0);
+}
+
+.tile-overlay .tile-category,
+.tile-overlay .tile-views {
+    font-size: 0.875rem;
+    margin-top: 0.25rem;
+}
+
+.tile-overlay .tile-title {
+    background: none;
+    margin-bottom: 0.5rem;
+}
+
+.tile-small {
+    grid-row: span 2;
+}
+
+.tile-medium {
+    grid-row: span 3;
+}
+
+.tile-large {
+    grid-row: span 4;
 }

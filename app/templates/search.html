@@ -1,5 +1,6 @@
 {% extends 'layout.html' %} {% block head %}
 <title>{{translations.search.title}}: {{ query }}</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/postTiles.css') }}" />
 {% endblock head %} {% block body %}
 <div class="mx-auto">
     <h3 class="text-2xl text-center my-4">
@@ -29,7 +30,8 @@
         </div>
         {% from "components/postCardMacro.html" import postCard with context %}
         <div
-            class="flex item-center justify-center flex-wrap gap-x-2 gap-y-6 mx-auto w-11/12 md:w-10/12 lg:w-9/12 2xl:w-8/12"
+            id="posts-container"
+            class="post-tiles-grid mx-auto w-11/12 md:w-10/12 lg:w-9/12 2xl:w-8/12"
         >
             {% for post in posts %}
                 {% for post_data in post %}
