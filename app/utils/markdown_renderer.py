@@ -53,7 +53,7 @@ class SafeMarkdownRenderer:
             "a": ["href", "title"],
             "img": ["src", "alt", "title", "width", "height"],
         }
-        self.allowed_protocols = ["http", "https", "mailto"]
+        self.allowed_protocols = ["http", "https", "mailto", "magnet"]
         # Escape any raw HTML before conversion to ensure only Markdown is
         # processed. Fenced code blocks are supported so code is always
         # wrapped in <pre><code> blocks.

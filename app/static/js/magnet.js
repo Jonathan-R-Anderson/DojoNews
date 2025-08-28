@@ -266,6 +266,12 @@
         const videos = document.querySelectorAll('[data-video-id]');
         debug('found videos', videos.length);
         videos.forEach(fetchVideo);
+        const direct = document.querySelectorAll('a[href^="magnet:"], img[src^="magnet:"]');
+        debug('found direct magnets', direct.length);
+        direct.forEach((el) => {
+            const magnet = el.href || el.src;
+            fetchDirectMagnet(el, magnet);
+        });
     }
 
     function observeNewMedia() {
@@ -280,6 +286,8 @@
                     } else if (node.dataset && node.dataset.videoId) {
                         debug('new video node', node.dataset.videoId);
                         fetchVideo(node);
+                    } else if ((node.tagName === 'A' && node.href.startsWith('magnet:')) || (node.tagName === 'IMG' && node.src.startsWith('magnet:'))) {
+                        fetchDirectMagnet(node, node.href || node.src);
                     }
                     node
                         .querySelectorAll?.('[data-magnet-id]')
@@ -287,11 +295,62 @@
                     node
                         .querySelectorAll?.('[data-video-id]')
                         .forEach((el) => fetchVideo(el));
+                    node
+                        .querySelectorAll?.('a[href^="magnet:"], img[src^="magnet:"]')
+                        .forEach((el) => fetchDirectMagnet(el, el.href || el.src));
                 });
             }
         });
         observer.observe(document.body, { childList: true, subtree: true });
         debug('observer attached');
+    }
+
+    async function fetchDirectMagnet(el, magnet) {
+        debug('fetchDirectMagnet', magnet);
+        if (!magnet) return;
+        await initMagnetClient();
+        try {
+            const handle = (torrent) => {
+                const process = async () => {
+                    const file = torrent.files[0];
+                    if (!file) return;
+                    let blob;
+                    if (typeof file.getBlob === 'function') {
+                        blob = await new Promise((resolve, reject) => {
+                            file.getBlob((err, b) => (err ? reject(err) : resolve(b)));
+                        });
+                    } else {
+                        blob = await file.blob();
+                    }
+                    const url = URL.createObjectURL(blob);
+                    if (/\.(mp4|webm|ogg)$/i.test(file.name)) {
+                        const video = document.createElement('video');
+                        video.src = url;
+                        video.controls = true;
+                        video.className = el.className;
+                        el.replaceWith(video);
+                    } else {
+                        const img = document.createElement('img');
+                        img.src = url;
+                        img.className = el.className;
+                        el.replaceWith(img);
+                    }
+                };
+                if (torrent.files && torrent.files.length) {
+                    process();
+                } else {
+                    torrent.once('ready', process);
+                }
+            };
+            const existing = client.get(magnet);
+            if (existing) {
+                handle(existing);
+            } else {
+                client.add(magnet, handle);
+            }
+        } catch (err) {
+            debug('Failed to load direct magnet', err);
+        }
     }
 
     if (typeof window !== "undefined") {

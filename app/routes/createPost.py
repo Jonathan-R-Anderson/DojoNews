@@ -53,3 +53,21 @@ def createPost():
         post_contract_abi=post_contract["abi"],
         rpc_url=Settings.BLOCKCHAIN_RPC_URL,
     )
+
+
+@createPostBlueprint.route("/uploadmedia", methods=["POST"])
+def upload_media():
+    """Handle generic media uploads and return their magnet URI."""
+    file = request.files.get("file")
+    if not file or file.filename == "":
+        return jsonify({"error": "no file supplied"}), 400
+
+    media_dir = os.path.join(Settings.APP_ROOT_PATH, "images")
+    os.makedirs(media_dir, exist_ok=True)
+    filename = secure_filename(file.filename)
+    media_path = os.path.join(media_dir, filename)
+    file.save(media_path)
+
+    magnet = seed_file(media_path)
+    ensure_seeding(media_dir)
+    return jsonify({"magnet": magnet})
