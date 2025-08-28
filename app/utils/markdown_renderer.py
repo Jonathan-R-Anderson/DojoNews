@@ -1,3 +1,12 @@
+"""Utilities for safely rendering user supplied Markdown.
+
+This module converts Markdown input to HTML while stripping any tags or
+attributes that could lead to cross site scripting (XSS) vulnerabilities.
+Only basic Markdown-generated HTML is allowed and any embedded code is
+presented inside ``<pre><code>`` blocks so it cannot be executed by the
+browser.
+"""
+
 from markdown2 import Markdown
 import bleach
 from markupsafe import Markup
@@ -5,6 +14,9 @@ from markupsafe import Markup
 
 class SafeMarkdownRenderer:
     def __init__(self):
+        # HTML tags and attributes that are considered safe and commonly
+        # produced by Markdown syntax. Anything outside this list will be
+        # stripped from the rendered output.
         self.allowed_tags = [
             "p",
             "br",
@@ -32,37 +44,19 @@ class SafeMarkdownRenderer:
             "th",
             "td",
             "del",
-            "strike",
             "s",
             "ins",
-            "mark",
             "sub",
             "sup",
-            "input",
-            "label",
-            "span",
-            "div",
         ]
         self.allowed_attributes = {
-            "a": ["href", "title", "id"],
+            "a": ["href", "title"],
             "img": ["src", "alt", "title", "width", "height"],
-            "h1": ["id"],
-            "h2": ["id"],
-            "h3": ["id"],
-            "h4": ["id"],
-            "h5": ["id"],
-            "h6": ["id"],
-            "input": ["type", "checked", "disabled"],
-            "span": ["class"],
-            "div": ["class"],
-            "table": ["class"],
-            "thead": ["class"],
-            "tbody": ["class"],
-            "tr": ["class"],
-            "th": ["class"],
-            "td": ["class"],
         }
         self.allowed_protocols = ["http", "https", "mailto"]
+        # Escape any raw HTML before conversion to ensure only Markdown is
+        # processed. Fenced code blocks are supported so code is always
+        # wrapped in <pre><code> blocks.
         self.md = Markdown(
             extras=[
                 "fenced-code-blocks",
@@ -73,10 +67,17 @@ class SafeMarkdownRenderer:
                 "footnotes",
                 "header-ids",
                 "spoiler",
-            ]
+            ],
+            safe_mode="escape",
         )
 
     def render(self, text: str) -> Markup:
+        """Render Markdown into sanitized HTML safe for embedding.
+
+        Any disallowed tags or attributes are stripped and comments are removed
+        to prevent script execution. The returned value is marked as safe for
+        Jinja templates.
+        """
         html = self.md.convert(text or "")
         clean_html = bleach.clean(
             html,
@@ -84,5 +85,6 @@ class SafeMarkdownRenderer:
             attributes=self.allowed_attributes,
             protocols=self.allowed_protocols,
             strip=True,
+            strip_comments=True,
         )
         return Markup(clean_html)
