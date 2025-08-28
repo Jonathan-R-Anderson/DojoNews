@@ -22,7 +22,7 @@
     try {
         const nextId = (await contract.nextPostId()).toNumber();
         debug('Next post id', nextId);
-        for (let id = 0; id < nextId; id++) {
+        for (let id = nextId - 1; id >= 0; id--) {
             let p;
             try {
                 // Use the public mapping to avoid reverts for missing posts

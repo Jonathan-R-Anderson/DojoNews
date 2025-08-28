@@ -72,25 +72,36 @@
                 return;
             }
 
-            const handleTorrent = async (torrent) => {
-                try {
-                    debug('torrent available', torrent.infoHash);
-                    const file = torrent.files[0];
-                    let blob;
-                    if (typeof file.getBlob === "function") {
-                        blob = await new Promise((resolve, reject) => {
-                            file.getBlob((err, b) => (err ? reject(err) : resolve(b)));
-                        });
-                    } else if (typeof file.blob === "function") {
-                        blob = await file.blob();
-                    } else {
-                        throw new Error("No blob method on torrent file");
+            const handleTorrent = (torrent) => {
+                const processTorrent = async () => {
+                    try {
+                        debug('torrent available', torrent.infoHash);
+                        const file = torrent.files[0];
+                        if (!file) {
+                            debug('No files in torrent yet');
+                            return;
+                        }
+                        let blob;
+                        if (typeof file.getBlob === "function") {
+                            blob = await new Promise((resolve, reject) => {
+                                file.getBlob((err, b) => (err ? reject(err) : resolve(b)));
+                            });
+                        } else if (typeof file.blob === "function") {
+                            blob = await file.blob();
+                        } else {
+                            throw new Error("No blob method on torrent file");
+                        }
+                        const newUrl = URL.createObjectURL(blob);
+                        imageCache[magnet] = newUrl;
+                        setImage(newUrl);
+                    } catch (err) {
+                        debug("Failed to load magnet", id, err);
                     }
-                    const newUrl = URL.createObjectURL(blob);
-                    imageCache[magnet] = newUrl;
-                    setImage(newUrl);
-                } catch (err) {
-                    debug("Failed to load magnet", id, err);
+                };
+                if (torrent.files && torrent.files.length) {
+                    processTorrent();
+                } else {
+                    torrent.once('ready', processTorrent);
                 }
             };
 
