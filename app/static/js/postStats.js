@@ -7,6 +7,8 @@
             const data = await res.json();
             const overlay = tile.querySelector('.tile-overlay');
             if (!overlay) return;
+            // Remove any existing metadata to ensure metrics are fresh
+            overlay.querySelectorAll('.tile-meta').forEach(span => span.remove());
             const fields = [
                 ['Read', `${data.estimatedReadTime} min`],
                 ['Avg', `${data.avgTimeOnPage}s`],
