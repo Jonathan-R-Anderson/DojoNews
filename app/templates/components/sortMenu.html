@@ -1,12 +1,14 @@
 {% macro sortMenu(sortName,source,translations) %}
 <div class="dropdown">
-    <div
+    <button
         tabindex="0"
-        role="button"
+        type="button"
         class="btn w-full md:w-fit text-base-content"
+        aria-label="{{ sortName }}"
+        title="{{ sortName }}"
     >
-        {{sortName}}
-    </div>
+        &#8801;
+    </button>
     <ul
         tabindex="0"
         class="dropdown-content menu bg-base-100 rounded-box z-1 w-full md:w-fit p-2 shadow-sm"
