@@ -72,9 +72,12 @@
 
     <body id="body">
         <div id="progress-bar"></div>
-        {% include 'components/changeTheme.html'%} {% include
-        'components/navbar.html'%} {% from "components/flash.html" import flash
-        %} {{ flash() }} {% block body %} {% endblock body %}
+        {% include 'components/changeTheme.html'%}
+        {% if not hideNavbar %}
+        {% include 'components/navbar.html'%}
+        {% endif %}
+        {% from "components/flash.html" import flash %} {{ flash() }}
+        {% block body %} {% endblock body %}
 
         <div id="post-overlay" class="hidden">
             <div class="overlay-content">
