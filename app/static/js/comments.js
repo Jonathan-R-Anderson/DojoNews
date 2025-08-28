@@ -86,10 +86,34 @@
       }
     }
 
-    if (window.userAddress) {
-      form.classList.remove('hidden');
-    } else {
-      loginPrompt.classList.remove('hidden');
+    async function updateFormVisibility() {
+      let connected = !!window.userAddress;
+      if (!connected && window.ethereum) {
+        try {
+          const accounts = await window.ethereum.request({ method: 'eth_accounts' });
+          if (accounts[0]) {
+            window.userAddress = accounts[0].toLowerCase();
+            connected = true;
+          }
+        } catch (err) {
+          debug('eth_accounts failed', err);
+        }
+      }
+      if (connected) {
+        form.classList.remove('hidden');
+        loginPrompt.classList.add('hidden');
+      } else {
+        form.classList.add('hidden');
+        loginPrompt.classList.remove('hidden');
+      }
+    }
+
+    updateFormVisibility();
+    if (window.ethereum) {
+      window.ethereum.on('accountsChanged', () => {
+        window.userAddress = undefined;
+        updateFormVisibility();
+      });
     }
 
     form.addEventListener('submit', submitComment);
