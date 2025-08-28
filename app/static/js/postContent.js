@@ -1,7 +1,8 @@
-const debug = (...args) => window.debugLog('postContent.js', ...args);
-debug('Loaded');
+(() => {
+    const debug = (...args) => window.debugLog('postContent.js', ...args);
+    debug('Loaded');
 
-(async () => {
+    (async () => {
     debug('Loading post content');
     if (typeof ethers === 'undefined') {
         await new Promise((resolve) => {
@@ -41,4 +42,5 @@ debug('Loaded');
     } catch (err) {
         debug('Failed to load post content', err);
     }
+    })();
 })();

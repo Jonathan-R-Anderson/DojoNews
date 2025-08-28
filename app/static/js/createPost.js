@@ -1,10 +1,11 @@
-const debug = (...args) => window.debugLog('createPost.js', ...args);
-debug('Loaded');
+(() => {
+    const debug = (...args) => window.debugLog('createPost.js', ...args);
+    debug('Loaded');
 
-// Handle on-chain post creation before form submission
-window.addEventListener('DOMContentLoaded', () => {
-    debug('DOMContentLoaded');
-    const form = document.querySelector('form');
+    // Handle on-chain post creation before form submission
+    window.addEventListener('DOMContentLoaded', () => {
+        debug('DOMContentLoaded');
+        const form = document.querySelector('form');
     if (!form) {
         debug('No form found');
         return;
@@ -64,4 +65,4 @@ window.addEventListener('DOMContentLoaded', () => {
         }
         submitting = true;
     });
-});
+})();

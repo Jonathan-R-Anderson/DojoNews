@@ -1,7 +1,8 @@
-const debug = (...args) => window.debugLog('postOverlay.js', ...args);
-debug('Loaded');
+(() => {
+    const debug = (...args) => window.debugLog('postOverlay.js', ...args);
+    debug('Loaded');
 
-(function () {
+    (function () {
     debug('postOverlay init');
     const overlay = document.getElementById('post-overlay');
     const iframe = document.getElementById('post-iframe');
@@ -40,4 +41,5 @@ debug('Loaded');
     });
 
     closeBtn.addEventListener('click', closeOverlay);
+    })();
 })();

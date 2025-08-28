@@ -1,9 +1,10 @@
-const debug = (...args) => window.debugLog('markdownEditor.js', ...args);
-debug('Loaded');
+(() => {
+    const debug = (...args) => window.debugLog('markdownEditor.js', ...args);
+    debug('Loaded');
 
-// Markdown Editor with Toolbar
-document.addEventListener('DOMContentLoaded', function() {
-    debug('DOMContentLoaded');
+    // Markdown Editor with Toolbar
+    document.addEventListener('DOMContentLoaded', function() {
+        debug('DOMContentLoaded');
     const textarea = document.getElementById('markdown-editor');
     if (!textarea) {
         debug('No textarea found');
@@ -98,26 +99,26 @@ Use **bold**, *italic*, and other markdown features.
         document.getElementById('char-count').textContent = count + ' characters';
     }
     
-    textarea.addEventListener('input', updateCharCount);
-    updateCharCount();
-    
-    // Global function for toolbar buttons
-    window.insertText = function(before, after) {
-        const start = textarea.selectionStart;
-        const end = textarea.selectionEnd;
-        const selectedText = textarea.value.substring(start, end);
-        const newText = before + selectedText + after;
-        debug('insertText', { before, after, selectedText });
-        textarea.value = textarea.value.substring(0, start) + newText + textarea.value.substring(end);
-
-        // Set cursor position
-        const newCursorPos = start + before.length + selectedText.length;
-        textarea.setSelectionRange(newCursorPos, newCursorPos);
-        textarea.focus();
+        textarea.addEventListener('input', updateCharCount);
         updateCharCount();
-    };
-    
-    // Keyboard shortcuts
+
+        // Global function for toolbar buttons
+        window.insertText = function(before, after) {
+            const start = textarea.selectionStart;
+            const end = textarea.selectionEnd;
+            const selectedText = textarea.value.substring(start, end);
+            const newText = before + selectedText + after;
+            debug('insertText', { before, after, selectedText });
+            textarea.value = textarea.value.substring(0, start) + newText + textarea.value.substring(end);
+
+            // Set cursor position
+            const newCursorPos = start + before.length + selectedText.length;
+            textarea.setSelectionRange(newCursorPos, newCursorPos);
+            textarea.focus();
+            updateCharCount();
+        };
+
+        // Keyboard shortcuts
     textarea.addEventListener('keydown', function(e) {
         debug('keydown', e.key);
         if (e.ctrlKey || e.metaKey) {
@@ -143,4 +144,4 @@ Use **bold**, *italic*, and other markdown features.
             insertText('    ', '');
         }
     });
-});
+})();

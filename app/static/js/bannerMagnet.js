@@ -1,7 +1,6 @@
-const debug = (...args) => window.debugLog('bannerMagnet.js', ...args);
-debug('Loaded');
-
 (() => {
+    const debug = (...args) => window.debugLog('bannerMagnet.js', ...args);
+    debug('Loaded');
     debug('Initializing banner magnet handling');
     const bannerInput = document.querySelector('input[name="postBanner"]');
     if (!bannerInput) {

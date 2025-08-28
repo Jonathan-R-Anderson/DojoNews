@@ -1,7 +1,8 @@
-const debug = (...args) => window.debugLog('adminCheck.js', ...args);
-debug('Loaded');
+(() => {
+    const debug = (...args) => window.debugLog('adminCheck.js', ...args);
+    debug('Loaded');
 
-(function() {
+    (function() {
     debug('Checking admin wallet');
     if (!document.body.classList.contains('admin-wallet')) {
         debug('Admin wallet not found, redirecting');
@@ -9,4 +10,5 @@ debug('Loaded');
     } else {
         debug('Admin wallet present');
     }
+    })();
 })();
