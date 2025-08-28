@@ -99,7 +99,8 @@
     "post": "पोस्ट करें",
     "separate": "(टैग्स को कॉमा से अलग करें)",
     "abstract": "सारांश",
-    "abstractPlaceholder": "पोस्ट का सारांश"
+    "abstractPlaceholder": "पोस्ट का सारांश",
+    "contentPlaceholder": "Write your post using Markdown, e.g. **bold**, _italic_, `code`, and [links](https://example.com)."
   },
   "csrfError": {
     "reason": "कारण",

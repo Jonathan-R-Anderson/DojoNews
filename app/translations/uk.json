@@ -99,7 +99,8 @@
     "post": "Опублікувати",
     "separate": "(Розділяйте теги комами)",
     "abstract": "Анотація",
-    "abstractPlaceholder": "Анотація поста"
+    "abstractPlaceholder": "Анотація поста",
+    "contentPlaceholder": "Write your post using Markdown, e.g. **bold**, _italic_, `code`, and [links](https://example.com)."
   },
   "csrfError": {
     "reason": "Причина",

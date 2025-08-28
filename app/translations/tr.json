@@ -99,7 +99,8 @@
     "post": "Gönder",
     "separate": "(Etiketleri virgülle ayırın)",
     "abstract": "Özet",
-    "abstractPlaceholder": "gönderi özeti"
+    "abstractPlaceholder": "gönderi özeti",
+    "contentPlaceholder": "Write your post using Markdown, e.g. **bold**, _italic_, `code`, and [links](https://example.com)."
   },
   "csrfError": {
     "reason": "Sebep",

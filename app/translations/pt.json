@@ -99,7 +99,8 @@
     "post": "Publicar",
     "separate": "(Separe as tags com vírgulas)",
     "abstract": "Resumo",
-    "abstractPlaceholder": "resumo do post"
+    "abstractPlaceholder": "resumo do post",
+    "contentPlaceholder": "Write your post using Markdown, e.g. **bold**, _italic_, `code`, and [links](https://example.com)."
   },
   "csrfError": {
     "reason": "Motivo",

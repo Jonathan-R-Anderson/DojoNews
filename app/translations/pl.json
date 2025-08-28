@@ -99,7 +99,8 @@
     "post": "Opublikuj",
     "separate": "(Oddziel tagi przecinkami)",
     "abstract": "Abstrakt",
-    "abstractPlaceholder": "abstrakt postu"
+    "abstractPlaceholder": "abstrakt postu",
+    "contentPlaceholder": "Write your post using Markdown, e.g. **bold**, _italic_, `code`, and [links](https://example.com)."
   },
   "csrfError": {
     "reason": "Powód",
