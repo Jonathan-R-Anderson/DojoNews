@@ -25,13 +25,22 @@
             const files = [];
             inputs.forEach((inp) => files.push(...Array.from(inp.files || [])));
 
+            // CSRF token from hidden input injected by Flask-WTF
+            const csrfInput = document.querySelector('input[name="csrf_token"]');
+            const csrfToken = csrfInput ? csrfInput.value : null;
+
             debug('Uploading files', files.length);
             for (const file of files) {
                 const formData = new FormData();
                 formData.append('file', file);
+                if (csrfToken) {
+                    // include token so CSRF protection doesn't reject the request
+                    formData.append('csrf_token', csrfToken);
+                }
                 try {
                     const res = await fetch('/uploadmedia', {
                         method: 'POST',
+                        headers: csrfToken ? { 'X-CSRFToken': csrfToken } : {},
                         body: formData,
                     });
                     const data = await res.json();
