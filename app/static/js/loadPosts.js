@@ -45,7 +45,7 @@
             link.dataset.postId = id;
             link.dataset.w = Math.floor(Math.random() * 3) + 1;
             const img = document.createElement('img');
-            img.dataset.magnetId = `${id}.png`;
+            img.dataset.magnetId = p.bannerImageId;
             img.src = 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==';
             img.alt = title;
             img.className = 'media select-none';
