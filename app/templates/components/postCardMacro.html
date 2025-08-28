@@ -3,6 +3,7 @@
 <a
     href="{{ url_for('post.post', slug=getSlugFromPostTitle(post[1]), urlID=post[10]) }}"
     class="post-tile {{ size_class }}"
+    data-post-id="{{ post[0] }}"
 >
     <img
         data-magnet-id="{{ post[0] }}.png"
@@ -13,7 +14,6 @@
     <div class="tile-overlay">
         <h2 class="tile-title">{{ post[1] }}</h2>
         <span class="tile-category">Category: {{ post[9] }}</span>
-        <span class="tile-views">Views: {{ post[6] }}</span>
     </div>
 </a>
 {% endmacro %}
