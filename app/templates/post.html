@@ -44,7 +44,22 @@
         </div>
     </div>
 </div>
-    <script>
-        const postUrlID = {{ id }};
-    </script>
+
+<div id="comments-section" class="w-11/12 md:w-5/6 lg:w-7/12 xl:w-5/12 mx-auto mt-8">
+    <h2 class="text-xl font-bold mb-4">{{ translations.comments }}</h2>
+    <div id="comments"></div>
+    <form id="comment-form" class="mt-4 hidden">
+        <textarea id="comment-input" class="textarea textarea-bordered w-full" placeholder="Add a comment"></textarea>
+        <button id="submit-comment" class="btn btn-primary mt-2" type="submit">Submit</button>
+    </form>
+    <p id="comment-login-prompt" class="mt-4 hidden">Please connect your wallet to comment.</p>
+</div>
+<script>
+    const postUrlID = {{ id }};
+</script>
 {% endblock body %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/postContent.js') }}"></script>
+<script src="{{ url_for('static', filename='js/comments.js') }}"></script>
+{% endblock scripts %}
