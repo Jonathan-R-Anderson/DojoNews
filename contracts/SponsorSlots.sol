@@ -5,6 +5,7 @@ pragma solidity ^0.8.20;
 /// @notice Manages on-chain sponsor ad slots with frequency capping.
 contract SponsorSlots {
     address public sysop;
+    event SysopTransferred(address indexed previousSysop, address indexed newSysop);
 
     struct Slot {
         address sponsor;
@@ -26,6 +27,12 @@ contract SponsorSlots {
 
     constructor() {
         sysop = msg.sender;
+    }
+
+    function transferSysop(address newSysop) external onlySysop {
+        require(newSysop != address(0), "bad sysop");
+        emit SysopTransferred(sysop, newSysop);
+        sysop = newSysop;
     }
 
     function createSlot(uint256 maxImpressions) external onlySysop returns (uint256 slotId) {

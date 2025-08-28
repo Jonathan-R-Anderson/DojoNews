@@ -5,6 +5,7 @@ pragma solidity ^0.8.20;
 /// @notice Stores posts and image magnet URIs on-chain.
 contract PostStorage {
     address public sysop;
+    event SysopTransferred(address indexed previousSysop, address indexed newSysop);
 
     struct Post {
         address author;
@@ -38,6 +39,12 @@ contract PostStorage {
 
     constructor() {
         sysop = msg.sender;
+    }
+
+    function transferSysop(address newSysop) external onlySysop {
+        require(newSysop != address(0), "bad sysop");
+        emit SysopTransferred(sysop, newSysop);
+        sysop = newSysop;
     }
 
     function createPost(

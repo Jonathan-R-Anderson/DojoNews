@@ -12,6 +12,7 @@ contract UserRegistry {
     }
 
     address public sysop;
+    event SysopTransferred(address indexed previousSysop, address indexed newSysop);
     mapping(address => User) public users;
     mapping(Tier => uint256) public freeQuota;
 
@@ -29,6 +30,12 @@ contract UserRegistry {
         freeQuota[Tier.Free] = 3;
         freeQuota[Tier.Premium] = 10;
         freeQuota[Tier.Pro] = type(uint256).max;
+    }
+
+    function transferSysop(address newSysop) external onlySysop {
+        require(newSysop != address(0), "bad sysop");
+        emit SysopTransferred(sysop, newSysop);
+        sysop = newSysop;
     }
 
     function register(address user, Tier tier) external onlySysop {
