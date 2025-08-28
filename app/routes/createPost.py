@@ -71,3 +71,16 @@ def upload_media():
     magnet = seed_file(media_path)
     ensure_seeding(media_dir)
     return jsonify({"magnet": magnet})
+
+
+@createPostBlueprint.route("/deletemedia", methods=["POST"])
+def delete_media():
+    """Remove an uploaded media file so it isn't seeded or stored."""
+    filename = request.form.get("filename")
+    if not filename:
+        return jsonify({"error": "no filename supplied"}), 400
+    media_dir = os.path.join(Settings.APP_ROOT_PATH, "images")
+    file_path = os.path.join(media_dir, secure_filename(filename))
+    if os.path.exists(file_path):
+        os.remove(file_path)
+    return jsonify({"deleted": filename})

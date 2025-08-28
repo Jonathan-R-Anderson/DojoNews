@@ -64,9 +64,32 @@
                         copyBtn.className = 'btn btn-xs ml-2';
                         copyBtn.addEventListener('click', () => navigator.clipboard.writeText(data.magnet));
 
+                        const deleteBtn = document.createElement('button');
+                        deleteBtn.type = 'button';
+                        deleteBtn.textContent = '-';
+                        deleteBtn.className = 'btn btn-xs ml-2 btn-error';
+                        deleteBtn.addEventListener('click', async () => {
+                            try {
+                                const fd = new FormData();
+                                fd.append('filename', file.name);
+                                if (csrfToken) {
+                                    fd.append('csrf_token', csrfToken);
+                                }
+                                await fetch('/deletemedia', {
+                                    method: 'POST',
+                                    headers: csrfToken ? { 'X-CSRFToken': csrfToken } : {},
+                                    body: fd,
+                                });
+                            } catch (err) {
+                                debug('Delete failed', err);
+                            }
+                            row.remove();
+                        });
+
                         row.appendChild(name);
                         row.appendChild(url);
                         row.appendChild(copyBtn);
+                        row.appendChild(deleteBtn);
                         list.appendChild(row);
                     } else {
                         debug('No magnet returned for', file.name, data);

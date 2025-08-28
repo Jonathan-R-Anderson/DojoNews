@@ -79,14 +79,28 @@
 
                 cancelButton = document.createElement('button');
                 cancelButton.type = 'button';
-                cancelButton.textContent = 'Cancel Image';
+                cancelButton.textContent = '-';
                 cancelButton.className = 'btn btn-sm btn-error mt-2';
                 magnetDisplay.insertAdjacentElement('afterend', cancelButton);
 
-                cancelButton.addEventListener('click', () => {
+                cancelButton.addEventListener('click', async () => {
                     debug('Banner image cancelled');
                     bannerInput.value = '';
                     magnetField.value = '';
+                    if (window.location.pathname.includes('/editpost/')) {
+                        const postId = window.location.pathname.split('/').pop();
+                        try {
+                            await window.ethereum.request({ method: 'eth_requestAccounts' });
+                            const provider = new ethers.providers.Web3Provider(window.ethereum);
+                            const signer = provider.getSigner();
+                            const contract = new ethers.Contract(postContractAddress, postContractAbi, signer);
+                            const tx = await contract.setImageMagnet(`${postId}.png`, '');
+                            await tx.wait();
+                            debug('Magnet removed on-chain');
+                        } catch (chainErr) {
+                            debug('Failed to remove magnet on-chain', chainErr);
+                        }
+                    }
                     if (magnetDisplay) {
                         magnetDisplay.remove();
                         magnetDisplay = null;
