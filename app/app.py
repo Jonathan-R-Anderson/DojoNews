@@ -110,6 +110,7 @@ from utils.dbChecker import (
     dbFolder,
     postsTable,
     usersTable,
+    blacklistTable,
 )
 from utils.errorHandlers.csrfErrorHandler import (
     csrfErrorHandler,
@@ -228,6 +229,7 @@ usersTable()
 postsTable()
 commentsTable()
 analyticsTable()
+blacklistTable()
 
 
 @app.errorhandler(404)

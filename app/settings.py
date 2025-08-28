@@ -34,6 +34,8 @@ class Settings:
         DB_POSTS_ROOT (str): Root path of the posts database.
         DB_COMMENTS_ROOT (str): Root path of the comments database.
         DB_ANALYTICS_ROOT (str): Root path of the analytics database.
+        DB_CATEGORIES_ROOT (str): Root path of the categories configuration file.
+        DB_BLACKLIST_ROOT (str): Root path of the blacklist database.
         SMTP_SERVER (str): SMTP server address.
         SMTP_PORT (int): SMTP server port.
         SMTP_MAIL (str): SMTP mail address.
@@ -124,6 +126,7 @@ class Settings:
     DB_COMMENTS_ROOT = DB_FOLDER_ROOT + "comments.db"
     DB_ANALYTICS_ROOT = DB_FOLDER_ROOT + "analytics.db"
     DB_CATEGORIES_ROOT = DB_FOLDER_ROOT + "categories.json"
+    DB_BLACKLIST_ROOT = DB_FOLDER_ROOT + "blacklist.db"
 
     # SMTP Mail Configuration
     SMTP_SERVER = "smtp.gmail.com"
