@@ -1,7 +1,8 @@
 {% macro postCard(post, authorProfilePicture) %}
+{% set size_class = ['tile-small','tile-medium','tile-large']|random %}
 <a
     href="{{ url_for('post.post', slug=getSlugFromPostTitle(post[1]), urlID=post[10]) }}"
-    class="post-tile"
+    class="post-tile {{ size_class }}"
 >
     <img
         data-magnet-id="{{ post[0] }}.png"
@@ -9,9 +10,13 @@
         alt="{{ post[1] }}"
         class="select-none"
     />
-    <div class="tile-overlay">
-        <span class="tile-category">{{ post[9] }}</span>
+    <div class="tile-title-bar">
         <h2 class="tile-title">{{ post[1] }}</h2>
+    </div>
+    <div class="tile-overlay">
+        <h2 class="tile-title">{{ post[1] }}</h2>
+        <span class="tile-category">Category: {{ post[9] }}</span>
+        <span class="tile-views">Views: {{ post[6] }}</span>
     </div>
 </a>
 {% endmacro %}
