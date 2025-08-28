@@ -69,3 +69,35 @@ def update_post_stats():
         conn.execute(f"UPDATE postStats SET {placeholders} WHERE postID=?", values)
         conn.commit()
     return jsonify({"message": "ok"})
+
+
+@postStatsBlueprint.route("/api/v1/postStats/activity", methods=["POST"])
+def post_activity():
+    data = request.get_json(silent=True) or {}
+    post_id = data.get("postID")
+    action = data.get("action")
+    time_spent = data.get("timeSpent", 0)
+    if post_id is None or action not in {"enter", "leave"}:
+        return jsonify({"error": "invalid request"}), 400
+    with sqlite3.connect(DB_PATH) as conn:
+        conn.execute(
+            "INSERT OR IGNORE INTO postStats(postID) VALUES (?)", (post_id,)
+        )
+        row = conn.execute(
+            "SELECT currentReaders, totalReaders, avgTimeOnPage FROM postStats WHERE postID=?",
+            (post_id,),
+        ).fetchone()
+        current, total, avg = row
+        if action == "enter":
+            current += 1
+            total += 1
+        else:  # leave
+            current = max(0, current - 1)
+            if time_spent and total > 0:
+                avg = ((avg * (total - 1)) + float(time_spent)) / total
+        conn.execute(
+            "UPDATE postStats SET currentReaders=?, totalReaders=?, avgTimeOnPage=? WHERE postID=?",
+            (current, total, avg, post_id),
+        )
+        conn.commit()
+    return jsonify({"message": "ok"})
