@@ -99,7 +99,8 @@
     "post": "Опубликовать",
     "separate": "(Разделяйте теги запятыми)",
     "abstract": "Аннотация",
-    "abstractPlaceholder": "аннотация поста"
+    "abstractPlaceholder": "аннотация поста",
+    "contentPlaceholder": "Write your post using Markdown, e.g. **bold**, _italic_, `code`, and [links](https://example.com)."
   },
   "csrfError": {
     "reason": "Причина",

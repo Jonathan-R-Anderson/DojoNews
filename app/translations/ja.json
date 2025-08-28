@@ -99,7 +99,8 @@
     "post": "投稿",
     "separate": "(タグはカンマで区切ってください)",
     "abstract": "概要",
-    "abstractPlaceholder": "投稿の概要"
+    "abstractPlaceholder": "投稿の概要",
+    "contentPlaceholder": "Write your post using Markdown, e.g. **bold**, _italic_, `code`, and [links](https://example.com)."
   },
   "csrfError": {
     "reason": "理由",

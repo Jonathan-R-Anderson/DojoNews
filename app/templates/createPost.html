@@ -49,8 +49,12 @@
         </div>
 
         <div>
-            {{ form.postContent(class_="textarea textarea-bordered w-full h-96",
-            id_="markdown-editor", autocomplete="off") }}
+            {{ form.postContent(
+                class_="textarea textarea-bordered w-full h-96",
+                id_="markdown-editor",
+                autocomplete="off",
+                placeholder=translations.createPost.contentPlaceholder,
+            ) }}
         </div>
 
         <button type="submit" class="btn btn-neutral btn-block mt-4">

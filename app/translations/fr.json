@@ -99,7 +99,8 @@
     "post": "Publier",
     "separate": "(Séparez les étiquettes par des virgules)",
     "abstract": "Résumé",
-    "abstractPlaceholder": "résumé de l'article"
+    "abstractPlaceholder": "résumé de l'article",
+    "contentPlaceholder": "Write your post using Markdown, e.g. **bold**, _italic_, `code`, and [links](https://example.com)."
   },
   "csrfError": {
     "reason": "Raison",

@@ -98,7 +98,8 @@
     "post": "发布帖子",
     "separate": "(用逗号分隔标签)",
     "abstract": "摘要",
-    "abstractPlaceholder": "帖子摘要"
+    "abstractPlaceholder": "帖子摘要",
+    "contentPlaceholder": "Write your post using Markdown, e.g. **bold**, _italic_, `code`, and [links](https://example.com)."
   },
   "csrfError": {
     "reason": "原因",

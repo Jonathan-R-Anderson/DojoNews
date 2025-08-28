@@ -99,7 +99,8 @@
     "post": "Beitrag veröffentlichen",
     "separate": "(Trennen Sie die Tags mit Kommas)",
     "abstract": "Zusammenfassung",
-    "abstractPlaceholder": "Beitragszusammenfassung"
+    "abstractPlaceholder": "Beitragszusammenfassung",
+    "contentPlaceholder": "Write your post using Markdown, e.g. **bold**, _italic_, `code`, and [links](https://example.com)."
   },
   "csrfError": {
     "reason": "Grund",

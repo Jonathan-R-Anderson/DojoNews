@@ -78,20 +78,6 @@
     container.appendChild(textarea);
     container.appendChild(statusBar);
     
-    // Add placeholder
-    textarea.placeholder = `Write your amazing blog post here... 📝
-
-## Start writing!
-
-Use **bold**, *italic*, and other markdown features.
-
-### Tips:
-- Use # for headings
-- Use **text** for bold
-- Use *text* for italic
-- Use [text](url) for links
-- Use ![alt](url) for images`;
-    
     // Character count
     function updateCharCount() {
         const count = textarea.value.length;

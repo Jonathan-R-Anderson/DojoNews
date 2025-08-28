@@ -99,7 +99,8 @@
     "post": "Post",
     "separate": "(Separate tags with commas)",
     "abstract": "Abstract",
-    "abstractPlaceholder": "post abstract"
+    "abstractPlaceholder": "post abstract",
+    "contentPlaceholder": "Write your post using Markdown, e.g. **bold**, _italic_, `code`, and [links](https://example.com)."
   },
   "csrfError": {
     "reason": "Reason",
