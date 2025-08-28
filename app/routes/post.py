@@ -81,6 +81,8 @@ def post(urlID: int, slug: str | None = None):
         rpc_url=Settings.BLOCKCHAIN_RPC_URL,
         post_contract_address=Settings.BLOCKCHAIN_CONTRACTS["PostStorage"]["address"],
         post_contract_abi=Settings.BLOCKCHAIN_CONTRACTS["PostStorage"]["abi"],
+        comment_contract_address=Settings.BLOCKCHAIN_CONTRACTS["CommentStorage"]["address"],
+        comment_contract_abi=Settings.BLOCKCHAIN_CONTRACTS["CommentStorage"]["abi"],
         content=content,
         reading_time=reading_time,
     )
