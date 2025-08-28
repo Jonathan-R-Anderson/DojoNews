@@ -32,6 +32,11 @@ class CreatePostForm(Form):
         [validators.Length(min=150, max=200), validators.InputRequired()],
     )
 
+    authorInfo = TextAreaField(
+        "Author Info",
+        [validators.Optional(), validators.Length(max=200)],
+    )
+
     postContent = TextAreaField(
         "Post Content",
         [validators.Length(min=50)],

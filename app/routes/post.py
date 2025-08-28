@@ -42,22 +42,22 @@ def post(urlID: int, slug: str | None = None):
     if not onchain:
         return render_template("notFound.html")
 
-    # onchain tuple: (author, contentHash, magnetURI, exists, blacklisted)
+    # onchain tuple: (author, contentHash, magnetURI, authorInfo, exists, blacklisted)
     content_hash = onchain[1]
     parts = content_hash.split("|", 5)
     title = parts[0] if len(parts) > 0 else ""
     tags = parts[1] if len(parts) > 1 else ""
-    author = parts[2] if len(parts) > 2 else onchain[0]
+    abstract = parts[2] if len(parts) > 2 else ""
     content = parts[3] if len(parts) > 3 else ""
     category = parts[4] if len(parts) > 4 else ""
+    author = onchain[0]
+    author_info = onchain[3]
 
     postSlug = getSlugFromPostTitle(title) if title else slug
     if title and slug != postSlug:
         return redirect(url_for("post.post", urlID=urlID, slug=postSlug))
 
-    # simple abstract and reading time calculations
     clean_text = sub(r"<[^>]+>", "", content)
-    abstract = clean_text[:150]
     reading_time = max(1, ceil(len(clean_text.split()) / 200))
 
     return render_template(
@@ -85,6 +85,7 @@ def post(urlID: int, slug: str | None = None):
         comment_contract_abi=Settings.BLOCKCHAIN_CONTRACTS["CommentStorage"]["abi"],
         content=content,
         reading_time=reading_time,
+        author_info=author_info,
     )
 
 

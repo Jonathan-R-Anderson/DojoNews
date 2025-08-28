@@ -455,6 +455,25 @@ class Settings:
       "type": "event"
     },
     {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "uint256",
+          "name": "postId",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "internalType": "string",
+          "name": "authorInfo",
+          "type": "string"
+        }
+      ],
+      "name": "AuthorInfoUpdated",
+      "type": "event"
+    },
+    {
       "inputs": [
         {
           "internalType": "string",
@@ -483,6 +502,11 @@ class Settings:
         {
           "internalType": "string",
           "name": "magnetURI",
+          "type": "string"
+        },
+        {
+          "internalType": "string",
+          "name": "authorInfo",
           "type": "string"
         }
       ],
@@ -581,6 +605,11 @@ class Settings:
               "type": "string"
             },
             {
+              "internalType": "string",
+              "name": "authorInfo",
+              "type": "string"
+            },
+            {
               "internalType": "bool",
               "name": "exists",
               "type": "bool"
@@ -657,6 +686,11 @@ class Settings:
           "type": "string"
         },
         {
+          "internalType": "string",
+          "name": "authorInfo",
+          "type": "string"
+        },
+        {
           "internalType": "bool",
           "name": "exists",
           "type": "bool"
@@ -702,6 +736,24 @@ class Settings:
         }
       ],
       "name": "setImageBlacklist",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "postId",
+          "type": "uint256"
+        },
+        {
+          "internalType": "string",
+          "name": "authorInfo",
+          "type": "string"
+        }
+      ],
+      "name": "updateAuthorInfo",
       "outputs": [],
       "stateMutability": "nonpayable",
       "type": "function"

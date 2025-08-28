@@ -25,11 +25,17 @@
     try {
         const p = await contract.getPost(postUrlID);
         debug('Fetched post', p);
-        const content = p.contentHash;
+        const parts = p.contentHash.split('|');
+        const content = parts[3] || '';
+        const abstract = parts[2] || '';
         const contentEl = document.getElementById('post-content');
         if (contentEl) {
             contentEl.innerHTML = marked.parse(content);
             debug('Rendered content');
+        }
+        const abstractEl = document.querySelector('.text-center.font-sm.max-w-full');
+        if (abstractEl) {
+            abstractEl.textContent = abstract;
         }
         const cleanText = content.replace(/<[^>]+>/g, '');
         const words = cleanText.trim().split(/\s+/).filter(Boolean).length;
