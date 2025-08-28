@@ -120,13 +120,14 @@ class Settings:
     SESSION_PERMANENT = True
 
     # Database Configuration
-    DB_FOLDER_ROOT = "db/"
-    DB_USERS_ROOT = DB_FOLDER_ROOT + "users.db"
-    DB_POSTS_ROOT = DB_FOLDER_ROOT + "posts.db"
-    DB_COMMENTS_ROOT = DB_FOLDER_ROOT + "comments.db"
-    DB_ANALYTICS_ROOT = DB_FOLDER_ROOT + "analytics.db"
-    DB_CATEGORIES_ROOT = DB_FOLDER_ROOT + "categories.json"
-    DB_BLACKLIST_ROOT = DB_FOLDER_ROOT + "blacklist.db"
+    _DB_PATH = Path(__file__).resolve().parent / "db"
+    DB_FOLDER_ROOT = str(_DB_PATH)
+    DB_USERS_ROOT = str(_DB_PATH / "users.db")
+    DB_POSTS_ROOT = str(_DB_PATH / "posts.db")
+    DB_COMMENTS_ROOT = str(_DB_PATH / "comments.db")
+    DB_ANALYTICS_ROOT = str(_DB_PATH / "analytics.db")
+    DB_CATEGORIES_ROOT = str(_DB_PATH / "categories.json")
+    DB_BLACKLIST_ROOT = str(_DB_PATH / "blacklist.db")
 
     # SMTP Mail Configuration
     SMTP_SERVER = "smtp.gmail.com"
