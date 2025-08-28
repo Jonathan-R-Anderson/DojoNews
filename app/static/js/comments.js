@@ -16,6 +16,22 @@
         document.head.appendChild(s);
       });
     }
+    if (typeof DOMPurify === 'undefined') {
+      await new Promise((resolve) => {
+        const s = document.createElement('script');
+        s.src = 'https://cdn.jsdelivr.net/npm/dompurify@3.0.8/dist/purify.min.js';
+        s.onload = resolve;
+        document.head.appendChild(s);
+      });
+    }
+    if (typeof marked === 'undefined') {
+      await new Promise((resolve) => {
+        const s = document.createElement('script');
+        s.src = 'https://cdn.jsdelivr.net/npm/marked/marked.min.js';
+        s.onload = resolve;
+        document.head.appendChild(s);
+      });
+    }
 
     const provider = new ethers.providers.JsonRpcProvider(window.rpcUrl);
     const contract = new ethers.Contract(
@@ -34,6 +50,21 @@
       return text.replace(/#(\d+)/g, (m, id) =>
         `<a href="#comment-${id}" data-ref-id="${id}" class="comment-ref">#${id}</a>`
       );
+    }
+
+    function renderMarkdownSafe(text) {
+      const raw = marked.parse(text);
+      return DOMPurify.sanitize(raw, {
+        ALLOWED_TAGS: [
+          'p','br','strong','em','h1','h2','h3','h4','h5','h6',
+          'ul','ol','li','blockquote','code','pre','a','img','hr',
+          'table','thead','tbody','tr','th','td','del','s','ins','sub','sup'
+        ],
+        ALLOWED_ATTR: {
+          a: ['href', 'title', 'data-ref-id', 'class'],
+          img: ['src', 'alt', 'title', 'width', 'height', 'class']
+        }
+      });
     }
 
     function setupReferences(root = commentsEl) {
@@ -66,7 +97,8 @@
       div.className = 'my-2 p-2 border rounded';
       div.dataset.commentId = id;
       div.id = `comment-${id}`;
-      div.innerHTML = `<p class="mb-1">${formatContent(content)}</p><p class="text-sm opacity-70">#${id} ${author}</p>`;
+      const safe = renderMarkdownSafe(formatContent(content));
+      div.innerHTML = `<p class="mb-1">${safe}</p><p class="text-sm opacity-70">#${id} ${author}</p>`;
       commentsEl.appendChild(div);
       setupReferences(div);
     }
