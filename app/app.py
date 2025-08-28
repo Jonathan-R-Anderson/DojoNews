@@ -68,6 +68,7 @@ from routes.passwordReset import (
     passwordResetBlueprint,
 )
 from routes.post import postBlueprint
+from routes.postStats import postStatsBlueprint
 from routes.postsAnalytics import (
     analyticsBlueprint,
 )
@@ -96,6 +97,7 @@ from routes.user import userBlueprint
 from routes.verifyUser import (
     verifyUserBlueprint,
 )
+from routes.comments import commentsBlueprint
 from settings import Settings
 from utils.afterRequest import (
     afterRequestLogger,
@@ -298,6 +300,8 @@ app.register_blueprint(adminPanelCommentsBlueprint)
 app.register_blueprint(changeProfilePictureBlueprint)
 app.register_blueprint(analyticsBlueprint)
 app.register_blueprint(returnPostAnalyticsDataBlueprint)
+app.register_blueprint(postStatsBlueprint)
+app.register_blueprint(commentsBlueprint)
 
 
 if __name__ == "__main__":

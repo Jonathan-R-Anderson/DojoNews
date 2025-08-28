@@ -43,6 +43,7 @@
             link.href = `/post/${id}`;
             const sizes = ['tile-small', 'tile-medium', 'tile-large'];
             link.className = `post-tile ${sizes[Math.floor(Math.random() * sizes.length)]}`;
+            link.dataset.postId = id;
             const img = document.createElement('img');
             img.dataset.magnetId = `${id}.png`;
             img.src = 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==';
@@ -62,6 +63,9 @@
             overlay.appendChild(catSpan);
             link.appendChild(overlay);
             container.appendChild(link);
+            if (typeof window.applyPostStats === 'function') {
+                window.applyPostStats(link, id);
+            }
             debug('Added post tile', id);
         }
         if (typeof window.loadMagnets === 'function') {
