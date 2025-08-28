@@ -53,7 +53,8 @@ class Settings:
     # Application Configuration
     APP_NAME = "flaskBlog"
     APP_VERSION = "3.0.0dev"
-    APP_ROOT_PATH = "."
+    # Determine the repository root to consistently store uploaded files
+    APP_ROOT_PATH = str(Path(__file__).resolve().parent.parent)
     APP_HOST = "0.0.0.0"
     APP_PORT = 80
     DEBUG_MODE = True
