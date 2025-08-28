@@ -3,16 +3,28 @@
     debug('Loaded');
 
     window.addEventListener('DOMContentLoaded', () => {
-        const fileInput = document.getElementById('mediaFiles');
+        const inputsContainer = document.getElementById('mediaInputs');
+        const addBtn = document.getElementById('addMediaInput');
         const uploadBtn = document.getElementById('uploadMedia');
         const list = document.getElementById('mediaList');
-        if (!fileInput || !uploadBtn || !list) {
+
+        if (!inputsContainer || !addBtn || !uploadBtn || !list) {
             debug('Required elements not found');
             return;
         }
 
+        addBtn.addEventListener('click', () => {
+            const input = document.createElement('input');
+            input.type = 'file';
+            input.className = 'file-input file-input-bordered w-full mb-2';
+            inputsContainer.appendChild(input);
+        });
+
         uploadBtn.addEventListener('click', async () => {
-            const files = Array.from(fileInput.files || []);
+            const inputs = inputsContainer.querySelectorAll('input[type="file"]');
+            const files = [];
+            inputs.forEach((inp) => files.push(...Array.from(inp.files || [])));
+
             debug('Uploading files', files.length);
             for (const file of files) {
                 const formData = new FormData();
@@ -24,25 +36,29 @@
                     });
                     const data = await res.json();
                     if (data.magnet) {
-                        const container = document.createElement('div');
-                        container.className = 'mt-2';
-                        const label = document.createElement('span');
-                        label.className = 'block text-sm';
-                        label.textContent = file.name;
-                        const input = document.createElement('input');
-                        input.type = 'text';
-                        input.readOnly = true;
-                        input.value = data.magnet;
-                        input.className = 'input input-bordered w-full magnet-url';
+                        const row = document.createElement('div');
+                        row.className = 'flex items-center mt-2';
+
+                        const name = document.createElement('span');
+                        name.className = 'text-sm mr-2';
+                        name.textContent = file.name;
+
+                        const url = document.createElement('input');
+                        url.type = 'text';
+                        url.readOnly = true;
+                        url.value = data.magnet;
+                        url.className = 'input input-bordered flex-grow magnet-url';
+
                         const copyBtn = document.createElement('button');
                         copyBtn.type = 'button';
                         copyBtn.textContent = 'Copy';
                         copyBtn.className = 'btn btn-xs ml-2';
                         copyBtn.addEventListener('click', () => navigator.clipboard.writeText(data.magnet));
-                        container.appendChild(label);
-                        container.appendChild(input);
-                        container.appendChild(copyBtn);
-                        list.appendChild(container);
+
+                        row.appendChild(name);
+                        row.appendChild(url);
+                        row.appendChild(copyBtn);
+                        list.appendChild(row);
                     } else {
                         debug('No magnet returned for', file.name, data);
                     }
@@ -50,7 +66,9 @@
                     debug('Upload failed', err);
                 }
             }
-            fileInput.value = '';
+
+            inputs.forEach((inp) => (inp.value = ''));
         });
     });
 })();
+
