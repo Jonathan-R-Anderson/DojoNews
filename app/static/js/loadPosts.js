@@ -41,14 +41,14 @@
             const category = parts[4] || '';
             const link = document.createElement('a');
             link.href = `/post/${id}`;
-            const sizes = ['tile-small', 'tile-medium', 'tile-large'];
-            link.className = `post-tile ${sizes[Math.floor(Math.random() * sizes.length)]}`;
+            link.className = 'post-tile';
             link.dataset.postId = id;
+            link.dataset.w = Math.floor(Math.random() * 3) + 1;
             const img = document.createElement('img');
             img.dataset.magnetId = `${id}.png`;
             img.src = 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==';
             img.alt = title;
-            img.className = 'select-none';
+            img.className = 'media select-none';
             link.appendChild(img);
 
             const overlay = document.createElement('div');
@@ -65,6 +65,9 @@
             container.appendChild(link);
             if (typeof window.applyPostStats === 'function') {
                 window.applyPostStats(link, id);
+            }
+            if (typeof window.applyMasonry === 'function') {
+                window.applyMasonry(link);
             }
             debug('Added post tile', id);
         }

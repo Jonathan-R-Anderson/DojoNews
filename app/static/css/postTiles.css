@@ -1,45 +1,44 @@
-/* Layout */
+:root {
+    --gap: 14px; /* space between tiles */
+    --row: 10px; /* base row height for auto row spanning */
+    --minCol: 220px; /* minimum column width */
+}
+
+/* Container: CSS Grid Masonry with dense packing */
 .post-tiles-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(15rem, 25rem));
-    grid-auto-rows: minmax(10rem, 25rem);
+    grid-template-columns: repeat(auto-fill, minmax(var(--minCol), 1fr));
+    grid-auto-rows: var(--row);
     grid-auto-flow: dense;
-    gap: 1rem;
+    gap: var(--gap);
 }
 
+/* Tile card */
 .post-tile {
     position: relative;
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
+    display: block;
     border-radius: 0.5rem;
+    overflow: hidden;
     cursor: pointer;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    grid-column: span var(--col-span, 1);
+    grid-row: span var(--row-span, 1);
+    transition: transform 0.15s ease, box-shadow 0.2s ease;
 }
 
-.post-tile img {
-    position: absolute;
-    inset: 0;
+.post-tile:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+/* Media */
+.post-tile .media {
     width: 100%;
-    height: 100%;
+    display: block;
     object-fit: cover;
-    transition: transform 0.4s ease;
 }
 
-.post-tile:hover img {
-    transform: scale(1.05);
-}
-
-.tile-title-bar {
-    display: none;
-}
-
-.tile-title {
-    font-size: 1.25rem;
-    font-weight: 700;
-    margin: 0;
-}
-
+/* Overlay content */
 .tile-overlay {
     position: absolute;
     inset: 0;
@@ -56,6 +55,12 @@
     background: linear-gradient(to top, rgba(0, 0, 0, 0.85), rgba(0, 0, 0, 0.2));
 }
 
+.tile-title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    margin: 0;
+}
+
 .tile-category {
     font-size: 0.75rem;
     text-transform: uppercase;
@@ -64,26 +69,20 @@
     margin-top: 0.5rem;
 }
 
-.tile-views {
-    font-size: 0.75rem;
-    margin-top: 0.25rem;
-    color: rgba(255, 255, 255, 0.8);
-}
-
 .tile-meta {
     font-size: 0.75rem;
     margin-top: 0.25rem;
     color: rgba(255, 255, 255, 0.8);
 }
 
-.tile-small {
-    grid-row: span 1;
+/* Utility: force width spans with classes (optional) */
+.w-1 { --col-span: 1 }
+.w-2 { --col-span: 2 }
+.w-3 { --col-span: 3 }
+
+@media (max-width: 640px) {
+    :root {
+        --minCol: 180px;
+    }
 }
 
-.tile-medium {
-    grid-row: span 2;
-}
-
-.tile-large {
-    grid-row: span 3;
-}
