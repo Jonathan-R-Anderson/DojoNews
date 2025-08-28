@@ -44,6 +44,11 @@
             href="{{ url_for('static', filename='css/overlay.css') }}"
         />
 
+        <link
+            rel="stylesheet"
+            href="https://cdn.jsdelivr.net/npm/video.js@8/dist/video-js.min.css"
+        />
+
         <meta property="og:type" content="website" />
         <meta property="og:title" content="flaskBlog" />
         <meta
@@ -107,6 +112,7 @@
             window.commentContractAddress = "{{ comment_contract_address | default('') }}";
             window.commentContractAbi = {{ comment_contract_abi | default([], true) | tojson }};
         </script>
+        <script src="https://cdn.jsdelivr.net/npm/video.js@8/dist/video.min.js"></script>
         <script src="{{ url_for('static', filename='js/magnet.js') }}"></script>
         <script src="{{ url_for('static', filename='js/torrentSeeder.js') }}"></script>
         <script src="{{ url_for('static', filename='js/postOverlay.js') }}"></script>
