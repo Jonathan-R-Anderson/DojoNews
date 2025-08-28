@@ -50,8 +50,23 @@
 
         <div class="w-72 mx-auto text-center mt-4">
             <label class="block mb-1">Upload Media</label>
-            <input id="mediaFiles" type="file" multiple class="file-input file-input-bordered w-full" />
-            <button type="button" id="uploadMedia" class="btn btn-sm btn-neutral w-full mt-2">Upload Selected</button>
+            <div id="mediaInputs">
+                <input type="file" class="file-input file-input-bordered w-full mb-2" />
+            </div>
+            <button
+                type="button"
+                id="addMediaInput"
+                class="btn btn-xs btn-circle mb-2"
+            >
+                +
+            </button>
+            <button
+                type="button"
+                id="uploadMedia"
+                class="btn btn-sm btn-neutral w-full mt-2"
+            >
+                Upload Selected
+            </button>
             <div id="mediaList" class="mt-2 text-left"></div>
         </div>
 
