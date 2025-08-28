@@ -9,6 +9,7 @@
         />
     </a>
 
+    {% if not hideSearch %}
     <div class="hidden md:block">
         <input
             type="text"
@@ -21,11 +22,14 @@
             <i class="ti ti-search text-2xl"></i>
         </button>
     </div>
+    {% endif %}
 
     <div class="flex items-center justify-center gap-4 font-medium select-none">
+        {% if not hideSearch %}
         <div class="block md:hidden">
             <a href="/searchbar"><i class="ti ti-search text-2xl"></i></a>
         </div>
+        {% endif %}
 
         {% if session["userName"] %}
         <a href="/dashboard/{{ session['userName'].lower() }}">

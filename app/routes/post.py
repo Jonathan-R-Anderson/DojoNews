@@ -86,6 +86,8 @@ def post(urlID: int, slug: str | None = None):
         content=content,
         reading_time=reading_time,
         author_info=author_info,
+        hideNavbar=True,
+        hideSearch=True,
     )
 
 
