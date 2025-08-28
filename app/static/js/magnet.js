@@ -53,7 +53,17 @@
                 client.add(magnet, async (torrent) => {
                     try {
                         debug('torrent added', torrent.infoHash);
-                        const blob = await torrent.files[0].blob();
+                        const file = torrent.files[0];
+                        let blob;
+                        if (typeof file.getBlob === "function") {
+                            blob = await new Promise((resolve, reject) => {
+                                file.getBlob((err, b) => (err ? reject(err) : resolve(b)));
+                            });
+                        } else if (typeof file.blob === "function") {
+                            blob = await file.blob();
+                        } else {
+                            throw new Error("No blob method on torrent file");
+                        }
                         const newUrl = URL.createObjectURL(blob);
                         if (img.src && img.src.startsWith("blob:")) {
                             URL.revokeObjectURL(img.src);
