@@ -65,4 +65,5 @@
         }
         submitting = true;
     });
+    });
 })();
