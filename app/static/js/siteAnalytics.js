@@ -26,7 +26,7 @@
   async function fetchSiteStats() {
     debug('fetchSiteStats');
     try {
-      const res = await fetch(siteStatsUrl);
+      const res = await fetch(siteStatsUrl, { cache: 'no-store' });
       const data = await res.json();
       if (res.ok) {
         const payload = data.payload || {};
