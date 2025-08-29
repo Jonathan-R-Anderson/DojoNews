@@ -19,7 +19,8 @@
     "title": "एडमिन पैनल",
     "users": "यूज़र्स",
     "posts": "पोस्ट्स",
-    "comments": "टिप्पणियाँ"
+    "comments": "टिप्पणियाँ",
+    "analytics": "Analytics"
   },
   "adminPanelComments": {
     "title": "एडमिन पैनल - टिप्पणियाँ",
