@@ -110,18 +110,25 @@
                             return;
                         }
                         let blob;
-                        if (typeof file.getBlob === "function") {
-                            blob = await new Promise((resolve, reject) => {
-                                file.getBlob((err, b) => (err ? reject(err) : resolve(b)));
+                        let newUrl;
+                        if (typeof file.getBlobURL === 'function') {
+                            newUrl = await new Promise((resolve, reject) => {
+                                file.getBlobURL((err, url) => (err ? reject(err) : resolve(url)));
                             });
-                        } else if (typeof file.blob === "function") {
-                            blob = await file.blob();
                         } else {
-                            throw new Error("No blob method on torrent file");
+                            if (typeof file.getBlob === "function") {
+                                blob = await new Promise((resolve, reject) => {
+                                    file.getBlob((err, b) => (err ? reject(err) : resolve(b)));
+                                });
+                            } else if (typeof file.blob === "function") {
+                                blob = await file.blob();
+                            } else {
+                                throw new Error("No blob method on torrent file");
+                            }
+                            newUrl = URL.createObjectURL(blob);
                         }
-                        const newUrl = URL.createObjectURL(blob);
 
-                        if (blob.type === 'application/pdf' || file.name.endsWith('.pdf')) {
+                        if (file.name.endsWith('.pdf')) {
                             debug('Detected PDF file for', id);
                             mediaCache[magnet] = { url: newUrl, type: 'application/pdf' };
                             const pdf = document.createElement('object');
@@ -149,7 +156,7 @@
                                 window.applyMasonry(tile);
                             }
                         } else {
-                            mediaCache[magnet] = { url: newUrl, type: blob.type };
+                            mediaCache[magnet] = { url: newUrl, type: blob ? blob.type : '' };
                             setImage(newUrl);
                         }
                     } catch (err) {
