@@ -1,5 +1,8 @@
 (() => {
-  const debug = (...args) => window.debugLog('comments.js', ...args);
+  const debug = (...args) =>
+    (window.debugLog
+      ? window.debugLog('comments.js', ...args)
+      : console.log('comments.js', ...args));
   debug('Loaded');
 
   async function init() {
