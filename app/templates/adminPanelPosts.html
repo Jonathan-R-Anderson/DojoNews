@@ -26,7 +26,11 @@
         </p>
     </section>
 
-    <section class="flex w-full justify-center mt-4">
+    <section class="flex w-full justify-center mt-4 gap-4">
+        <a href="{{ url_for('analytics.analyticsPost', urlID=post.id) }}" class="flex items-center hover:text-rose-500 duration-150 font-medium select-none">
+            <i class="ti ti-chart-bar mr-1 text-xl"></i>
+            <p class="hidden md:block">{{ translations.analytics.title }}</p>
+        </a>
         <form method="post">
             <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
             <input type="hidden" name="postID" value="{{ post.id }}" />

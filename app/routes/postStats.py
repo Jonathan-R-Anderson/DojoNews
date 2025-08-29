@@ -1,5 +1,5 @@
 import sqlite3
-from flask import Blueprint, request, jsonify
+from flask import Blueprint, request, jsonify, session
 from settings import Settings
 
 postStatsBlueprint = Blueprint("postStats", __name__)
@@ -41,11 +41,16 @@ def get_post_stats():
             row = conn.execute(
                 "SELECT * FROM postStats WHERE postID=?", (post_id,)
             ).fetchone()
-    return jsonify(dict(row))
+    data = dict(row)
+    if session.get("userRole") != "admin":
+        data = {"postID": data["postID"], "estimatedReadTime": data["estimatedReadTime"]}
+    return jsonify(data)
 
 
 @postStatsBlueprint.route("/api/v1/postStats", methods=["POST"])
 def update_post_stats():
+    if session.get("userRole") != "admin":
+        return jsonify({"error": "forbidden"}), 403
     data = request.get_json(silent=True) or {}
     post_id = data.get("postID")
     if post_id is None:

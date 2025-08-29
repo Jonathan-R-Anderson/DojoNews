@@ -45,7 +45,7 @@ def returnPostTrafficGraphData() -> dict:
     hours = request.args.get("hours", type=float, default=0)
 
     if Settings.ANALYTICS:
-        if "userName" in session:
+        if "walletAddress" in session and session.get("userRole") == "admin":
             if postID:
                 return make_response(
                     {
@@ -103,7 +103,7 @@ def returnPostCountryGraphData() -> dict:
     viewAll = str(request.args.get("viewAll", default=False)).lower() == "true"
 
     if Settings.ANALYTICS:
-        if "userName" in session:
+        if "walletAddress" in session and session.get("userRole") == "admin":
             if postID:
                 return make_response(
                     {
