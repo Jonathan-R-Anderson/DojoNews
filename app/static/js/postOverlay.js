@@ -25,8 +25,17 @@
     document.addEventListener('click', function (e) {
         const link = e.target.closest('a');
         if (!link || !link.href) return;
+
+        // allow in-page anchor navigation without triggering the overlay
+        const hrefAttr = link.getAttribute('href');
+        if (hrefAttr && hrefAttr.startsWith('#')) return;
+
         const url = new URL(link.href, window.location.origin);
         debug('link click', url.pathname);
+
+        // if the link points to the current post with a hash, let the browser handle it
+        if (url.pathname === window.location.pathname && url.hash) return;
+
         if (url.pathname.startsWith('/post/')) {
             e.preventDefault();
             openOverlay(url.href);
