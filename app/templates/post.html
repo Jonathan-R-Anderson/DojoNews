@@ -44,6 +44,10 @@
                 <img class="w-7 mr-2 select-none" src="{{ getProfilePicture(author) }}" alt="{{ author }}" />
                 {{ author_info }}
             </h5>
+            <div class="flex gap-2">
+                <button id="blacklist-author" class="btn btn-xs">Blacklist Author</button>
+                <button id="blacklist-post" class="btn btn-xs">Blacklist Post</button>
+            </div>
         </div>
     </div>
 </div>
@@ -65,6 +69,16 @@
 <script>
     const postUrlID = {{ id }};
     window.blacklistedComments = {{ blacklisted_comments | tojson }};
+    document.getElementById('blacklist-author')?.addEventListener('click', () => {
+        if (window.Blacklist) {
+            window.Blacklist.addAuthor('{{ author }}');
+        }
+    });
+    document.getElementById('blacklist-post')?.addEventListener('click', () => {
+        if (window.Blacklist) {
+            window.Blacklist.addPost(postUrlID);
+        }
+    });
 </script>
 {% endblock body %}
 

@@ -43,7 +43,11 @@
       provider
     );
 
-    const localBlacklist = new Set((window.blacklistedComments || []).map((n) => parseInt(n)));
+    const userBL = (window.Blacklist && window.Blacklist.get()) || {authors:[],posts:[],comments:[]};
+    const localBlacklist = new Set([
+      ...(window.blacklistedComments || []),
+      ...(userBL.comments || [])
+    ].map((n) => parseInt(n)));
 
     const commentsEl = document.getElementById('comments');
     const form = document.getElementById('comment-form');
@@ -123,7 +127,7 @@
         if (loadedComments.has(i)) continue;
         try {
           const c = await contract.getComment(i);
-        if (!c.exists || c.postId.toString() !== postUrlID.toString() || c.blacklisted || localBlacklist.has(i)) continue;
+        if (!c.exists || c.postId.toString() !== postUrlID.toString() || c.blacklisted || localBlacklist.has(i) || (userBL.authors || []).includes(c.author.toLowerCase())) continue;
         renderComment(i, c.author, c.content);
       } catch (err) {
         debug('getComment failed', i, err);
@@ -197,7 +201,7 @@
     contract.on('CommentAdded', (commentId, postId, author, content) => {
       if (postId.toString() !== postUrlID.toString()) return;
       const id = commentId.toNumber ? commentId.toNumber() : parseInt(commentId);
-      if (localBlacklist.has(id)) return;
+      if (localBlacklist.has(id) || (userBL.authors || []).includes(author.toLowerCase())) return;
       renderComment(id, author, content);
       window.dispatchEvent(new Event('comments-updated'));
     });

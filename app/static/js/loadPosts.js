@@ -22,6 +22,7 @@
     try {
         const nextId = (await contract.nextPostId()).toNumber();
         debug('Next post id', nextId);
+        const bl = (window.Blacklist && window.Blacklist.get()) || {authors:[],posts:[]};
         for (let id = nextId - 1; id >= 0; id--) {
             let p;
             try {
@@ -32,7 +33,7 @@
                 continue;
             }
             debug('Fetched post', id, p);
-            if (!p.exists || p.blacklisted) {
+            if (!p.exists || p.blacklisted || bl.posts.includes(id) || bl.authors.includes(p.author.toLowerCase())) {
                 debug('Skipping post', id);
                 continue;
             }
