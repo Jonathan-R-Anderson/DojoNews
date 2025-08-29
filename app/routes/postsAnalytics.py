@@ -15,7 +15,7 @@ from utils.log import Log
 analyticsBlueprint = Blueprint("analytics", __name__)
 
 
-@analyticsBlueprint.route("/analytics/posts/<urlID>")
+@analyticsBlueprint.route("/admin/analytics/posts/<urlID>")
 def analyticsPost(urlID):
     """
     This function is used to render the post analytics page.
@@ -26,7 +26,7 @@ def analyticsPost(urlID):
     :rtype: flask.Response
     """
     if Settings.ANALYTICS:
-        if "userName" in session:
+        if "walletAddress" in session and session.get("userRole") == "admin":
             connection = sqlite3.connect(Settings.DB_POSTS_ROOT)
             connection.set_trace_callback(Log.database)
             cursor = connection.cursor()
