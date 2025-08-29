@@ -1,11 +1,14 @@
-"""Admin panel for listing authors from posts and comments."""
+"""Admin panel for listing authors from on-chain and DB content."""
 
 import sqlite3
+from collections import defaultdict
+
 from flask import Blueprint, redirect, render_template, request, session
 from settings import Settings
 from utils.blacklist import Blacklist
 from utils.delete import Delete
 from utils.log import Log
+from web3 import Web3
 
 adminPanelUsersBlueprint = Blueprint("adminPanelUsers", __name__)
 
@@ -31,14 +34,18 @@ def adminPanelUsers():
                 Blacklist.add_user_content(address)
                 return redirect("/admin/users")
 
-        authors = set()
+        # Collect post and comment counts per author from databases and contracts
+        authors = defaultdict(lambda: {"posts": 0, "comments": 0})
+
+        # Gather authors from database tables
         try:
             Log.database(f"Connecting to '{Settings.DB_POSTS_ROOT}' database")
             connection = sqlite3.connect(Settings.DB_POSTS_ROOT)
             connection.set_trace_callback(Log.database)
             cursor = connection.cursor()
-            cursor.execute("select distinct author from posts")
-            authors.update(row[0] for row in cursor.fetchall())
+            cursor.execute("select author from posts")
+            for (addr,) in cursor.fetchall():
+                authors[addr]["posts"] += 1
             connection.close()
         except Exception as exc:  # pragma: no cover - database may be missing
             Log.error(f"Fetching post authors failed: {exc}")
@@ -48,39 +55,44 @@ def adminPanelUsers():
             connection = sqlite3.connect(Settings.DB_COMMENTS_ROOT)
             connection.set_trace_callback(Log.database)
             cursor = connection.cursor()
-            cursor.execute("select distinct user from comments")
-            authors.update(row[0] for row in cursor.fetchall())
+            cursor.execute("select user from comments")
+            for (addr,) in cursor.fetchall():
+                authors[addr]["comments"] += 1
             connection.close()
         except Exception as exc:  # pragma: no cover - database may be missing
             Log.error(f"Fetching comment authors failed: {exc}")
 
-        author_data = []
-        for addr in sorted(authors):
-            posts_count = 0
-            comments_count = 0
-            try:
-                connection = sqlite3.connect(Settings.DB_POSTS_ROOT)
-                connection.set_trace_callback(Log.database)
-                cursor = connection.cursor()
-                cursor.execute("select count(*) from posts where author = ?", (addr,))
-                posts_count = cursor.fetchone()[0]
-                connection.close()
-            except Exception as exc:  # pragma: no cover
-                Log.error(f"Counting posts failed: {exc}")
-            try:
-                connection = sqlite3.connect(Settings.DB_COMMENTS_ROOT)
-                connection.set_trace_callback(Log.database)
-                cursor = connection.cursor()
-                cursor.execute(
-                    "select count(*) from comments where user = ?", (addr,)
-                )
-                comments_count = cursor.fetchone()[0]
-                connection.close()
-            except Exception as exc:  # pragma: no cover
-                Log.error(f"Counting comments failed: {exc}")
-            author_data.append(
-                {"address": addr, "posts": posts_count, "comments": comments_count}
+        # Gather authors from blockchain contracts
+        try:  # pragma: no cover - external calls
+            w3 = Web3(Web3.HTTPProvider(Settings.BLOCKCHAIN_RPC_URL))
+            post_info = Settings.BLOCKCHAIN_CONTRACTS["PostStorage"]
+            post_contract = w3.eth.contract(
+                address=post_info["address"], abi=post_info["abi"]
             )
+            next_post_id = post_contract.functions.nextPostId().call()
+            for pid in range(next_post_id):
+                data = post_contract.functions.posts(pid).call()
+                if data[4]:  # exists
+                    addr = data[0]
+                    authors[addr]["posts"] += 1
+
+            comment_info = Settings.BLOCKCHAIN_CONTRACTS["CommentStorage"]
+            comment_contract = w3.eth.contract(
+                address=comment_info["address"], abi=comment_info["abi"]
+            )
+            next_comment_id = comment_contract.functions.nextCommentId().call()
+            for cid in range(next_comment_id):
+                data = comment_contract.functions.comments(cid).call()
+                if data[3]:  # exists
+                    addr = data[0]
+                    authors[addr]["comments"] += 1
+        except Exception as exc:  # pragma: no cover - external calls
+            Log.error(f"Fetching authors from blockchain failed: {exc}")
+
+        author_data = [
+            {"address": addr, "posts": info["posts"], "comments": info["comments"]}
+            for addr, info in sorted(authors.items())
+        ]
 
         Log.info(
             f"Rendering adminPanelUsers.html: params: authors={len(author_data)}"
