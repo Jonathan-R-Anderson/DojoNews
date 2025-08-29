@@ -9,10 +9,62 @@ from settings import Settings
 from utils.getAnalyticsPageData import (
     getAnalyticsPageOSGraphData,
     getAnalyticsPageTrafficGraphData,
+    getSiteOSGraphData,
+    getSiteTrafficGraphData,
 )
 from utils.log import Log
 
 analyticsBlueprint = Blueprint("analytics", __name__)
+
+
+@analyticsBlueprint.route("/admin/analytics")
+def analyticsSite():
+    """Render site-wide analytics page."""
+    if Settings.ANALYTICS:
+        if "walletAddress" in session and session.get("userRole") == "admin":
+            connection = sqlite3.connect(Settings.DB_ANALYTICS_ROOT)
+            connection.set_trace_callback(Log.database)
+            cursor = connection.cursor()
+
+            cursor.execute("select count(*) from postsAnalytics")
+            totalVisitor = cursor.fetchone()[0] or 0
+            connection.close()
+
+            todaysVisitorData = getSiteTrafficGraphData(hours=24)
+            todaysVisitor = 0
+            for views in todaysVisitorData:
+                todaysVisitor += int(views[1])
+
+            osGraphData = getSiteOSGraphData()
+
+            connection = sqlite3.connect(Settings.DB_POSTS_ROOT)
+            connection.set_trace_callback(Log.database)
+            cursor = connection.cursor()
+            cursor.execute("select count(*) from posts")
+            totalPosts = cursor.fetchone()[0] or 0
+            connection.close()
+
+            connection = sqlite3.connect(Settings.DB_COMMENTS_ROOT)
+            connection.set_trace_callback(Log.database)
+            cursor = connection.cursor()
+            cursor.execute("select count(*) from comments")
+            totalComments = cursor.fetchone()[0] or 0
+            connection.close()
+
+            return render_template(
+                "siteAnalytics.html",
+                totalVisitor=totalVisitor,
+                todaysVisitor=todaysVisitor,
+                osGraphData=osGraphData,
+                totalPosts=totalPosts,
+                totalComments=totalComments,
+            )
+        else:
+            Log.error(f"{request.remote_addr} tried to reach admin analytics without permission")
+            return render_template("notFound.html")
+    else:
+        Log.error(f"{request.remote_addr} tried to reach admin analytics while disabled")
+        return render_template("notFound.html")
 
 
 @analyticsBlueprint.route("/admin/analytics/posts/<urlID>")
@@ -79,3 +131,4 @@ def analyticsPost(urlID):
         Log.error(f"{request.remote_addr} tried to reach unknown post")
 
         return render_template("notFound.html")
+        

@@ -19,7 +19,8 @@
     "title": "Admin-Bereich",
     "users": "Benutzer",
     "posts": "Beiträge",
-    "comments": "Kommentare"
+    "comments": "Kommentare",
+    "analytics": "Analytics"
   },
   "adminPanelComments": {
     "title": "Admin-Bereich - Kommentare",

@@ -5,6 +5,8 @@ from settings import Settings
 from utils.getAnalyticsPageData import (
     getAnalyticsPageCountryGraphData,
     getAnalyticsPageTrafficGraphData,
+    getSiteCountryGraphData,
+    getSiteTrafficGraphData,
 )
 from utils.log import Log
 
@@ -131,6 +133,55 @@ def returnPostCountryGraphData() -> dict:
             )
     else:
         return make_response({"message": "analytics is disabled by admin"}, 410)
+
+
+@returnPostAnalyticsDataBlueprint.route("/api/v1/siteTrafficGraphData")
+def returnSiteTrafficGraphData() -> dict:
+    """Return site-wide traffic graph data."""
+
+    sincePosted = str(request.args.get("sincePosted", default=False)).lower() == "true"
+    weeks = request.args.get("weeks", type=float, default=0)
+    days = request.args.get("days", type=float, default=0)
+    hours = request.args.get("hours", type=float, default=0)
+
+    if Settings.ANALYTICS:
+        if "walletAddress" in session and session.get("userRole") == "admin":
+            return make_response(
+                {
+                    "payload": getSiteTrafficGraphData(
+                        sincePosted=sincePosted, weeks=weeks, days=days, hours=hours
+                    )
+                },
+                200,
+            )
+        else:
+            return make_response(
+                {"message": "client don't have permission", "error": "request denied"},
+                403,
+            )
+    else:
+        return ({"message": "analytics is disabled by admin"}, 410)
+
+
+@returnPostAnalyticsDataBlueprint.route("/api/v1/siteCountryGraphData")
+def returnSiteCountryGraphData() -> dict:
+    """Return site-wide country graph data."""
+
+    viewAll = str(request.args.get("viewAll", default=False)).lower() == "true"
+
+    if Settings.ANALYTICS:
+        if "walletAddress" in session and session.get("userRole") == "admin":
+            return make_response(
+                {"payload": getSiteCountryGraphData(viewAll=viewAll)},
+                200,
+            )
+        else:
+            return make_response(
+                {"message": "client don't have permission", "error": "request denied"},
+                403,
+            )
+    else:
+        return ({"message": "analytics is disabled by admin"}, 410)
 
 
 @returnPostAnalyticsDataBlueprint.route("/api/v1/timeSpendsDuration", methods={"POST"})
