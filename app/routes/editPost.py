@@ -152,7 +152,7 @@ def editPost(urlID):
                             (postCategory, post[0]),
                         )
                         if postBanner != b"":
-                            images_dir = os.path.join(Settings.APP_ROOT_PATH, "images")
+                            images_dir = os.path.join(Settings.APP_ROOT_PATH, "app", "images")
                             os.makedirs(images_dir, exist_ok=True)
                             image_path = os.path.join(images_dir, f"{post[0]}.png")
                             with open(image_path, "wb") as f:
