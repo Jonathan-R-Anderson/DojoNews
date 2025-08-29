@@ -62,7 +62,7 @@ def adminPanelPosts():
                 content_hash = data[1]
                 exists = data[4]
                 blacklisted = data[5]
-                banner_id = data[7]
+                banner_id = data[6]
                 if not exists or blacklisted or str(pid) in deleted:
                     continue
                 title = content_hash.split("|", 1)[0] if content_hash else ""
