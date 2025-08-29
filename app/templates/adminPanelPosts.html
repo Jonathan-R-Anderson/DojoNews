@@ -10,29 +10,26 @@
 
 {% for post in posts %}
 <div class="w-12/12 md:w-8/12 lg:w-7/12 xl:w-5/12 h-fit mx-px md:mx-auto py-2 px-2 my-4 border-2 rounded-md shadow-md border-gray-500/25">
+    <img
+        data-magnet-id="{{ post.banner }}"
+        src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw=="
+        alt="{{ post.title }}"
+        class="w-full rounded-md mb-4"
+    />
     <section class="mb-4 text-center break-words">
-        <a href="/post/{{ post[10] }}" class="text-rose-500 hover:text-rose-500/75 duration-150">
-            {{ post[1] }}
+        <a href="/post/{{ post.id }}" class="text-rose-500 hover:text-rose-500/75 duration-150">
+            {{ post.title }}
         </a>
         <p class="mt-2">
             {{ translations.dashboard.author }}:
-            <a href="/user/{{ post[5].lower() }}" class="hover:text-rose-500 duration-150">{{ post[5] }}</a>
+            <a href="/user/{{ post.author.lower() }}" class="hover:text-rose-500 duration-150">{{ post.author }}</a>
         </p>
     </section>
 
-    <section class="flex w-full justify-between mt-4">
+    <section class="flex w-full justify-center mt-4">
         <form method="post">
             <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
-            <input type="hidden" name="postID" value="{{ post[0] }}" />
-            <button type="submit" name="postDeleteButton" class="flex items-center hover:text-rose-500 duration-150 font-medium select-none">
-                <i class="ti ti-trash-x mr-1 text-xl"></i>
-                <p class="hidden md:block">Delete</p>
-            </button>
-        </form>
-
-        <form method="post">
-            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
-            <input type="hidden" name="postID" value="{{ post[0] }}" />
+            <input type="hidden" name="postID" value="{{ post.id }}" />
             <button type="submit" name="blacklistButton" class="flex items-center hover:text-rose-500 duration-150 font-medium select-none">
                 <i class="ti ti-circle-minus mr-1 text-xl"></i>
                 <p class="hidden md:block">Blacklist</p>
