@@ -26,6 +26,31 @@
 <link rel="stylesheet" href="{{ url_for('static', filename='css/postTiles.css') }}" />
 {% endblock head %} {% block body %}
 
+<div class="flex justify-center gap-4 mt-4">
+    <a
+        href="mumble://q3bzznjvg5w67ookosiskiansjbck3nclcqzyvoh42t3afq3ittbgaid.onion:64738"
+        target="_blank"
+        rel="noopener noreferrer"
+    >
+        <img
+            src="{{ url_for('static', filename='images/mumble.svg') }}"
+            alt="Mumble"
+            class="w-8 h-8"
+        />
+    </a>
+    <a
+        href="irc://d53gteix2gwppg3xtar4brrlvw64rcwdg747l2q6xpobeafcmuhkhkad.onion:6667"
+        target="_blank"
+        rel="noopener noreferrer"
+    >
+        <img
+            src="{{ url_for('static', filename='images/mirc.svg') }}"
+            alt="IRC"
+            class="w-8 h-8"
+        />
+    </a>
+</div>
+
 <div
     class="flex justify-between mx-auto w-11/12 md:w-10/12 lg:w-9/12 2xl:w-8/12 mt-8"
 >
