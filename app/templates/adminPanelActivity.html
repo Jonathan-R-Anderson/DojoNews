@@ -5,31 +5,38 @@
 {% block body %}
 <div class="text-center">
     <h1 class="my-4 text-4xl font-medium select-none">User Activity</h1>
-    <div class="overflow-x-auto">
-        <table class="table-auto w-full max-w-5xl mx-auto text-left text-sm">
-            <thead>
-                <tr>
-                    <th class="px-2">Time</th>
-                    <th class="px-2">IP</th>
-                    <th class="px-2">Country</th>
-                    <th class="px-2">User</th>
-                    <th class="px-2">Method</th>
-                    <th class="px-2">Path</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for a in activities %}
-                <tr class="border-t">
-                    <td class="px-2 py-1">{{ a.time }}</td>
-                    <td class="px-2 py-1">{{ a.ip }}</td>
-                    <td class="px-2 py-1">{{ a.country }}</td>
-                    <td class="px-2 py-1">{{ a.userName or 'Anonymous' }}</td>
-                    <td class="px-2 py-1">{{ a.method }}</td>
-                    <td class="px-2 py-1">{{ a.path }}</td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
+    <div class="max-w-5xl mx-auto text-left text-sm space-y-4">
+        {% for group in activities_by_ip %}
+        <details class="border rounded">
+            <summary class="cursor-pointer px-2 py-1">
+                {{ group.ip }} ({{ group.activities|length }})
+            </summary>
+            <div class="overflow-x-auto">
+                <table class="table-auto w-full text-left text-sm">
+                    <thead>
+                        <tr>
+                            <th class="px-2">Time</th>
+                            <th class="px-2">Country</th>
+                            <th class="px-2">User</th>
+                            <th class="px-2">Method</th>
+                            <th class="px-2">Path</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for a in group.activities %}
+                        <tr class="border-t">
+                            <td class="px-2 py-1">{{ a.time }}</td>
+                            <td class="px-2 py-1">{{ a.country }}</td>
+                            <td class="px-2 py-1">{{ a.userName or 'Anonymous' }}</td>
+                            <td class="px-2 py-1">{{ a.method }}</td>
+                            <td class="px-2 py-1">{{ a.path }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </details>
+        {% endfor %}
     </div>
 </div>
 <a href="/admin" class="hidden md:block fixed bottom-0 left-1">
