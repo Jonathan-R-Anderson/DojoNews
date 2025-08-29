@@ -21,6 +21,34 @@
   lineChartSpinner.classList.remove("hidden");
   let lineChartErrorContainer = document.getElementById("lineChartErrorContainer");
 
+  const siteStatsUrl = "/api/v1/siteStats";
+
+  async function fetchSiteStats() {
+    debug('fetchSiteStats');
+    try {
+      const res = await fetch(siteStatsUrl);
+      const data = await res.json();
+      if (res.ok) {
+        const payload = data.payload || {};
+        const setText = (id, value) => {
+          const el = document.getElementById(id);
+          if (el) el.textContent = value;
+        };
+        setText('totalVisitor', payload.totalVisitor);
+        setText('todaysVisitor', payload.todaysVisitor);
+        setText('totalPosts', payload.totalPosts);
+        setText('totalComments', payload.totalComments);
+      } else {
+        debug('fetchSiteStats error', data.message);
+      }
+    } catch (err) {
+      debug('fetchSiteStats exception', err);
+    }
+  }
+
+  fetchSiteStats();
+  setInterval(fetchSiteStats, 5000);
+
   function startDropDownMenu() {
     debug('startDropDownMenu');
     document
@@ -30,13 +58,13 @@
 
   window.addEventListener("load", startDropDownMenu, false);
 
-  let durationRangeMap = {
-    sincePosted: "sincePosted=True",
-    last1m: "weeks=4",
-    last7d: "days=7",
-    last24h: "hours=24",
-    last48: "hours=48",
-  };
+    let durationRangeMap = {
+      sincePosted: "sincePosted=True",
+      last1m: "weeks=4",
+      last7d: "days=7",
+      last24h: "hours=24",
+      last48h: "hours=48",
+    };
 
   function durationRangeCallback() {
     let selectedDurationRange = document.getElementById("durationRangeTab").value;

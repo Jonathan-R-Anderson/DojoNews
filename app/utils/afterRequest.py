@@ -4,6 +4,8 @@ import time
 
 from flask import request, session
 from geoip2 import database, errors
+from user_agents import parse
+
 from utils.log import Log
 from settings import Settings
 
@@ -27,17 +29,23 @@ def _get_reader():
     return _reader
 
 
-def _lookup_country(ip: str) -> str:
+def _lookup_geo(ip: str) -> tuple[str, str]:
+    """Return (country, continent) for ``ip``.
+
+    If lookup fails or database missing, returns ("Unknown", "Unknown").
+    """
+
     reader = _get_reader()
     if not reader:
-        return "Unknown"
+        return "Unknown", "Unknown"
     try:
-        return reader.country(ip).country.name or "Unknown"
+        resp = reader.country(ip)
+        return resp.country.name or "Unknown", resp.continent.name or "Unknown"
     except errors.AddressNotFoundError:
-        return "Unknown"
+        return "Unknown", "Unknown"
     except Exception as exc:  # pragma: no cover - defensive
         Log.error(f"GeoIP lookup failed: {exc}")
-        return "Unknown"
+        return "Unknown", "Unknown"
 
 
 def afterRequestLogger(response):
@@ -64,9 +72,14 @@ def afterRequestLogger(response):
         Log.info(message)
 
     ip = request.remote_addr or "Unknown"
-    country = _lookup_country(ip)
+    country, continent = _lookup_geo(ip)
     user = session.get("walletAddress")
     time_stamp = int(time.time())
+    try:
+        os_name = parse(request.user_agent.string).os.family
+    except Exception:  # pragma: no cover - best effort
+        os_name = "Unknown"
+
     try:
         with sqlite3.connect(Settings.DB_ANALYTICS_ROOT) as conn:
             conn.execute(
@@ -86,6 +99,28 @@ def afterRequestLogger(response):
                 "insert into userActivity(ip, path, method, country, userName, timeStamp) values (?, ?, ?, ?, ?, ?)",
                 (ip, request.path, request.method, country, user, time_stamp),
             )
+
+            # Record post view in analytics
+            parts = request.path.strip("/").split("/")
+            if (
+                Settings.ANALYTICS
+                and request.method == "GET"
+                and len(parts) == 2
+                and parts[0] == "post"
+            ):
+                post_id_str = parts[1].split("-")[-1]
+                if post_id_str.isdigit():
+                    conn.execute(
+                        "insert into postsAnalytics(postID, visitorUserName, country, os, continent, timeStamp) values (?, ?, ?, ?, ?, ?)",
+                        (
+                            int(post_id_str),
+                            user,
+                            country,
+                            os_name,
+                            continent,
+                            time_stamp,
+                        ),
+                    )
             conn.commit()
     except Exception as exc:  # pragma: no cover - analytics is optional
         Log.error(f"Failed to log user activity: {exc}")
