@@ -13,7 +13,7 @@ from settings import Settings
 from utils.delete import Delete
 from utils.flashMessage import flashMessage
 from utils.log import Log
-from utils.paginate import paginate_query
+# Removed paginate_query; dashboard now shows combined activity
 
 dashboardBlueprint = Blueprint("dashboard", __name__)
 
@@ -30,56 +30,49 @@ def dashboard(userName):
                         redirect(url_for("dashboard.dashboard", userName=userName)),
                         301,
                     )
-            posts, page, total_pages = paginate_query(
-                Settings.DB_POSTS_ROOT,
-                "select count(*) from posts where author = ?",
+            # Fetch all posts for user
+            Log.database(f"Connecting to '{Settings.DB_POSTS_ROOT}' database")
+            p_conn = sqlite3.connect(Settings.DB_POSTS_ROOT)
+            p_conn.set_trace_callback(Log.database)
+            p_cur = p_conn.cursor()
+            p_cur.execute(
                 "select * from posts where author = ? order by timeStamp desc",
-                [session["userName"]],
+                (session["userName"],),
             )
+            posts = [list(row) for row in p_cur.fetchall()]
+            p_conn.close()
+
+            # Fetch all comments for user
             Log.database(f"Connecting to '{Settings.DB_COMMENTS_ROOT}' database")
-
-            connection = sqlite3.connect(Settings.DB_COMMENTS_ROOT)
-            connection.set_trace_callback(Log.database)
-            cursor = connection.cursor()
-
-            cursor.execute(
+            c_conn = sqlite3.connect(Settings.DB_COMMENTS_ROOT)
+            c_conn.set_trace_callback(Log.database)
+            c_cur = c_conn.cursor()
+            c_cur.execute(
                 """select * from comments where lower(user) = ? and id not in (select commentID from deletedComments) order by timeStamp desc""",
-                [(userName.lower())],
+                (userName.lower(),),
             )
-            comments = cursor.fetchall()
+            comments = c_cur.fetchall()
+            c_conn.close()
 
-            if posts == []:
-                showPosts = False
-            else:
-                showPosts = True
-
-            if comments == []:
-                showComments = False
-            else:
-                showComments = True
-
-            posts = list(posts)
-
-            for i in range(len(posts)):
-                posts[i] = list(posts[i])
-
+            # Translate categories for posts
             language = session.get("language")
             translationFile = f"./translations/{language}.json"
-
             with open(translationFile, "r", encoding="utf-8") as file:
                 translations = load(file)
-
             for post in posts:
                 post[9] = translations["categories"].get(post[9].lower(), post[9])
 
+            # Combine posts and comments into activity list
+            activity = []
+            for post in posts:
+                activity.append({"type": "post", "timestamp": post[7], "data": post})
+            for comment in comments:
+                activity.append({"type": "comment", "timestamp": comment[4], "data": comment})
+            activity.sort(key=lambda x: x["timestamp"], reverse=True)
+
             return render_template(
                 "/dashboard.html",
-                posts=posts,
-                comments=comments,
-                showPosts=showPosts,
-                showComments=showComments,
-                page=page,
-                total_pages=total_pages,
+                activity=activity,
             )
         else:
             Log.error(
