@@ -16,11 +16,24 @@
     }
     loadStats();
     function send(action, extra = {}) {
-        fetch('/api/v1/postStats/activity', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ postID: postUrlID, action, ...extra }),
-        }).catch((e) => debug('Failed to send activity', e));
+        const payload = JSON.stringify({ postID: postUrlID, action, ...extra });
+        if (action === 'leave' && navigator.sendBeacon) {
+            try {
+                navigator.sendBeacon(
+                    '/api/v1/postStats/activity',
+                    new Blob([payload], { type: 'application/json' }),
+                );
+            } catch (e) {
+                debug('Beacon failed', e);
+            }
+        } else {
+            fetch('/api/v1/postStats/activity', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: payload,
+                keepalive: action === 'leave',
+            }).catch((e) => debug('Failed to send activity', e));
+        }
     }
     send('enter');
     window.addEventListener('beforeunload', () => {
