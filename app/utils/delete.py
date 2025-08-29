@@ -162,6 +162,10 @@ class Delete:
             [(commentID)],
         )
         cursor.execute(
+            """insert or ignore into deletedComments(commentID) values(?)""",
+            (commentID,),
+        )
+        cursor.execute(
             """delete from comments where id = ? """,
             [(commentID)],
         )

@@ -43,7 +43,7 @@ def dashboard(userName):
             cursor = connection.cursor()
 
             cursor.execute(
-                """select * from comments where lower(user) = ? order by timeStamp desc""",
+                """select * from comments where lower(user) = ? and id not in (select commentID from deletedComments) order by timeStamp desc""",
                 [(userName.lower())],
             )
             comments = cursor.fetchall()

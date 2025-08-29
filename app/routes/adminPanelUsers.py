@@ -55,7 +55,9 @@ def adminPanelUsers():
             connection = sqlite3.connect(Settings.DB_COMMENTS_ROOT)
             connection.set_trace_callback(Log.database)
             cursor = connection.cursor()
-            cursor.execute("select user from comments")
+            cursor.execute(
+                "select user from comments where id not in (select commentID from deletedComments)"
+            )
             for (addr,) in cursor.fetchall():
                 authors[addr]["comments"] += 1
             connection.close()

@@ -279,6 +279,19 @@ def commentsTable():
         connection.commit()
         Log.success(f'Table: "commentVotes" created in "{Settings.DB_COMMENTS_ROOT}"')
 
+    # Ensure deletedComments table exists
+    try:
+        cursor.execute("""select commentID from deletedComments limit 1""")
+    except Exception:
+        deletedCommentsTable = """
+        create table if not exists deletedComments(
+            "commentID" integer not null unique
+        );"""
+
+        cursor.execute(deletedCommentsTable)
+        connection.commit()
+        Log.success(f'Table: "deletedComments" created in "{Settings.DB_COMMENTS_ROOT}"')
+
     connection.close()
 
 

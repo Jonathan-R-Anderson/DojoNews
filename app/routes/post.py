@@ -74,6 +74,12 @@ def post(urlID: int, slug: str | None = None):
     clean_text = sub(r"<[^>]+>", "", content)
     reading_time = max(1, ceil(len(clean_text.split()) / 200))
 
+    with sqlite3.connect(Settings.DB_COMMENTS_ROOT) as connection:
+        connection.set_trace_callback(Log.database)
+        cursor = connection.cursor()
+        cursor.execute("select commentID from deletedComments")
+        deleted_comments = [row[0] for row in cursor.fetchall()]
+
     return render_template(
         "post.html",
         id=urlID,
@@ -101,6 +107,7 @@ def post(urlID: int, slug: str | None = None):
         content=content,
         reading_time=reading_time,
         author_info=author_info,
+        blacklisted_comments=deleted_comments,
         hideNavbar=True,
         hideSearch=True,
     )
@@ -138,6 +145,17 @@ def comment_tree(urlID: int):
         Log.error(f"comment-tree: nextCommentId failed: {exc}")
         return jsonify({"nodes": [], "links": []})
 
+    deleted = set()
+    try:
+        connection = sqlite3.connect(Settings.DB_COMMENTS_ROOT)
+        connection.set_trace_callback(Log.database)
+        cursor = connection.cursor()
+        cursor.execute("select commentID from deletedComments")
+        deleted = {row[0] for row in cursor.fetchall()}
+        connection.close()
+    except Exception as exc:  # pragma: no cover - database may be missing
+        Log.error(f"Fetching deleted comments failed: {exc}")
+
     comments = []
     for cid in range(next_id):
         try:
@@ -146,7 +164,7 @@ def comment_tree(urlID: int):
             Log.error(f"comment-tree: getComment failed: {cid} {exc}")
             continue
         author, post_id, content, exists, blacklisted = c
-        if not exists or blacklisted or post_id != urlID:
+        if not exists or blacklisted or post_id != urlID or cid in deleted:
             continue
         comments.append((cid, author, content))
 

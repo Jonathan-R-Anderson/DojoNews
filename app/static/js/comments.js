@@ -40,6 +40,8 @@
       provider
     );
 
+    const localBlacklist = new Set((window.blacklistedComments || []).map((n) => parseInt(n)));
+
     const commentsEl = document.getElementById('comments');
     const form = document.getElementById('comment-form');
     const textarea = document.getElementById('comment-input');
@@ -118,11 +120,11 @@
         if (loadedComments.has(i)) continue;
         try {
           const c = await contract.getComment(i);
-          if (!c.exists || c.postId.toString() !== postUrlID.toString() || c.blacklisted) continue;
-          renderComment(i, c.author, c.content);
-        } catch (err) {
-          debug('getComment failed', i, err);
-        }
+        if (!c.exists || c.postId.toString() !== postUrlID.toString() || c.blacklisted || localBlacklist.has(i)) continue;
+        renderComment(i, c.author, c.content);
+      } catch (err) {
+        debug('getComment failed', i, err);
+      }
       }
       if (loadedComments.size === 0) {
         commentsEl.innerHTML = '<p>No comments yet.</p>';
@@ -192,6 +194,7 @@
     contract.on('CommentAdded', (commentId, postId, author, content) => {
       if (postId.toString() !== postUrlID.toString()) return;
       const id = commentId.toNumber ? commentId.toNumber() : parseInt(commentId);
+      if (localBlacklist.has(id)) return;
       renderComment(id, author, content);
       window.dispatchEvent(new Event('comments-updated'));
     });
