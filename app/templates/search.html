@@ -53,8 +53,6 @@
 {% endblock body %}
 
 {% block scripts %}
-<script src="{{ url_for('static', filename='js/postTilesLayout.js') }}"></script>
-{% if session.get('userRole') == 'admin' %}
-<script src="{{ url_for('static', filename='js/postStats.js') }}"></script>
-{% endif %}
-{% endblock scripts %}
+  <script src="{{ url_for('static', filename='js/postTilesLayout.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/postStats.js') }}"></script>
+  {% endblock scripts %}

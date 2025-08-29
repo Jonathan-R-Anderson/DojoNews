@@ -42,8 +42,6 @@ def get_post_stats():
                 "SELECT * FROM postStats WHERE postID=?", (post_id,)
             ).fetchone()
     data = dict(row)
-    if session.get("userRole") != "admin":
-        data = {"postID": data["postID"], "estimatedReadTime": data["estimatedReadTime"]}
     return jsonify(data)
 
 
