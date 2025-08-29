@@ -152,6 +152,7 @@ app.config["SESSION_PERMANENT"] = Settings.SESSION_PERMANENT
 
 
 csrf = CSRFProtect(app)
+csrf.exempt(postStatsBlueprint)
 
 images_dir = os.path.join(Settings.APP_ROOT_PATH, "app", "images")
 ensure_seeding(images_dir)
