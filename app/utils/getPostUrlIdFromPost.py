@@ -25,8 +25,10 @@ def getPostUrlIdFromPost(postID: int):
         urlID = cursor.fetchone()[0]
         Log.info(f"Returning post's id {postID} and post's urlID: {urlID}")
     except Exception:
-        urlID = None
-        Log.error(f"Failed to retrieve post's urlID for post id : {postID}")
+        urlID = postID
+        Log.error(
+            f"Failed to retrieve post's urlID for post id : {postID}; using provided value"
+        )
 
     cursor.close()
     connection.close()
