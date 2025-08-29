@@ -1,3 +1,5 @@
+import sqlite3
+
 from flask import Blueprint, redirect, render_template, request, session
 from settings import Settings
 from utils.delete import Delete
@@ -14,12 +16,33 @@ def adminPanelPosts():
         Log.info(f"Admin: {session['walletAddress']} reached to posts admin panel")
         Log.database(f"Connecting to '{Settings.DB_POSTS_ROOT}' database")
 
-        if request.method == "POST" and "postDeleteButton" in request.form:
-            Log.info(
-                f"Admin: {session['walletAddress']} deleted post: {request.form['postID']}"
-            )
-            Delete.post(request.form["postID"])
-            return redirect("/admin/posts")
+        if request.method == "POST":
+            post_id = request.form.get("postID")
+            if "postDeleteButton" in request.form:
+                Log.info(
+                    f"Admin: {session['walletAddress']} deleted post: {post_id}"
+                )
+                Delete.post(post_id)
+                return redirect("/admin/posts")
+            if "blacklistButton" in request.form:
+                Log.info(
+                    f"Admin: {session['walletAddress']} blacklisted post: {post_id}"
+                )
+                connection = sqlite3.connect(Settings.DB_POSTS_ROOT)
+                connection.set_trace_callback(Log.database)
+                cursor = connection.cursor()
+                cursor.execute(
+                    "select urlID from posts where id = ?", (post_id,)
+                )
+                row = cursor.fetchone()
+                if row:
+                    cursor.execute(
+                        "insert or ignore into deletedPosts(urlID) values(?)",
+                        (row[0],),
+                    )
+                    connection.commit()
+                connection.close()
+                return redirect("/admin/posts")
 
         posts, page, total_pages = paginate_query(
             Settings.DB_POSTS_ROOT,
@@ -28,13 +51,12 @@ def adminPanelPosts():
         )
 
         Log.info(
-            f"Rendering dashboard.html: params: posts={len(posts)} and showPosts=True"
+            f"Rendering adminPanelPosts.html: params: posts={len(posts)}"
         )
 
         return render_template(
-            "dashboard.html",
+            "adminPanelPosts.html",
             posts=posts,
-            showPosts=True,
             page=page,
             total_pages=total_pages,
             admin_check=True,
