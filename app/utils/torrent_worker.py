@@ -13,7 +13,14 @@ def seed(file_path: str) -> None:
 
     save_path = os.path.dirname(os.path.abspath(file_path)) or os.getcwd()
 
-    cmd = ["webtorrent", "seed", file_path, "--out", save_path]
+    cmd = [
+        "webtorrent",
+        "seed",
+        file_path,
+        "--keep-seeding",
+        "--out",
+        save_path,
+    ]
 
     # Capture output so we can forward the magnet URI to the parent process.
     proc = subprocess.Popen(

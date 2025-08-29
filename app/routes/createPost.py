@@ -21,7 +21,7 @@ def createPost():
         if not image or image.filename == "":
             return jsonify({"error": "no image supplied"}), 400
 
-        images_dir = os.path.join(Settings.APP_ROOT_PATH, "images")
+        images_dir = os.path.join(Settings.APP_ROOT_PATH, "app", "images")
         os.makedirs(images_dir, exist_ok=True)
         filename = secure_filename(image.filename)
         image_path = os.path.join(images_dir, filename)
@@ -62,7 +62,7 @@ def upload_media():
     if not file or file.filename == "":
         return jsonify({"error": "no file supplied"}), 400
 
-    media_dir = os.path.join(Settings.APP_ROOT_PATH, "images")
+    media_dir = os.path.join(Settings.APP_ROOT_PATH, "app", "images")
     os.makedirs(media_dir, exist_ok=True)
     filename = secure_filename(file.filename)
     media_path = os.path.join(media_dir, filename)
@@ -79,7 +79,7 @@ def delete_media():
     filename = request.form.get("filename")
     if not filename:
         return jsonify({"error": "no filename supplied"}), 400
-    media_dir = os.path.join(Settings.APP_ROOT_PATH, "images")
+    media_dir = os.path.join(Settings.APP_ROOT_PATH, "app", "images")
     file_path = os.path.join(media_dir, secure_filename(filename))
     if os.path.exists(file_path):
         os.remove(file_path)
