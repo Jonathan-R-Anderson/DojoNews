@@ -19,7 +19,8 @@
     "title": "Admin Panel",
     "users": "Users",
     "posts": "Posts",
-    "comments": "Comments"
+    "comments": "Comments",
+    "analytics": "Analytics"
   },
   "adminPanelComments": {
     "title": "Admin Panel - Comments",

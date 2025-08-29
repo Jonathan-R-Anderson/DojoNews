@@ -19,7 +19,8 @@
     "title": "Адміністративна панель",
     "users": "Користувачі",
     "posts": "Пости",
-    "comments": "Коментарі"
+    "comments": "Коментарі",
+    "analytics": "Analytics"
   },
   "adminPanelComments": {
     "title": "Адміністративна панель - Коментарі",

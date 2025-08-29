@@ -19,7 +19,8 @@
     "title": "管理面板",
     "users": "用户",
     "posts": "帖子",
-    "comments": "评论"
+    "comments": "评论",
+    "analytics": "Analytics"
   },
   "adminPanelComments": {
     "title": "管理面板 - 评论",

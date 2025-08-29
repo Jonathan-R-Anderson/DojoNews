@@ -19,7 +19,8 @@
     "title": "Yönetici Paneli",
     "users": "Kullanıcılar",
     "posts": "Gönderiler",
-    "comments": "Yorumlar"
+    "comments": "Yorumlar",
+    "analytics": "Analytics"
   },
   "adminPanelComments": {
     "title": "Yönetici Paneli - Yorumlar",
