@@ -1,9 +1,10 @@
 import sqlite3
+from math import ceil
 
 from flask import Blueprint, redirect, render_template, request, session
 from settings import Settings
 from utils.log import Log
-from utils.paginate import paginate_query
+from web3 import Web3
 
 adminPanelCommentsBlueprint = Blueprint("adminPanelComments", __name__)
 
@@ -32,18 +33,45 @@ def adminPanelComments():
                 connection.close()
                 return redirect("/admin/comments")
 
-        Log.database(f"Connecting to '{Settings.DB_COMMENTS_ROOT}' database")
-        comments, page, total_pages = paginate_query(
-            Settings.DB_COMMENTS_ROOT,
-            "select count(*) from comments where id not in (select commentID from deletedComments)",
-            "select * from comments where id not in (select commentID from deletedComments) order by timeStamp",
-        )
+        deleted = set()
+        try:
+            connection = sqlite3.connect(Settings.DB_COMMENTS_ROOT)
+            connection.set_trace_callback(Log.database)
+            cursor = connection.cursor()
+            cursor.execute("select commentID from deletedComments")
+            deleted = {row[0] for row in cursor.fetchall()}
+            connection.close()
+        except Exception as exc:  # pragma: no cover - database may be missing
+            Log.error(f"Fetching deleted comments failed: {exc}")
+
+        comments = []
+        try:  # pragma: no cover - external calls
+            w3 = Web3(Web3.HTTPProvider(Settings.BLOCKCHAIN_RPC_URL))
+            info = Settings.BLOCKCHAIN_CONTRACTS["CommentStorage"]
+            contract = w3.eth.contract(address=info["address"], abi=info["abi"])
+            next_id = contract.functions.nextCommentId().call()
+            for cid in range(next_id):
+                data = contract.functions.comments(cid).call()
+                author, post_id, content, exists, blacklisted = data
+                if not exists or blacklisted or cid in deleted:
+                    continue
+                comments.append((cid, post_id, content, author, ""))
+        except Exception as exc:
+            Log.error(f"Fetching comments from blockchain failed: {exc}")
+
+        comments.sort(key=lambda x: x[0])
+        page = request.args.get("page", 1, type=int)
+        per_page = 9
+        total_pages = max(ceil(len(comments) / per_page), 1)
+        start = (page - 1) * per_page
+        paged = comments[start : start + per_page]
+
         Log.info(
-            f"Rendering adminPanelComments.html: params: comments={comments}"
+            f"Rendering adminPanelComments.html: params: comments={len(paged)}"
         )
         return render_template(
             "adminPanelComments.html",
-            comments=comments,
+            comments=paged,
             page=page,
             total_pages=total_pages,
             admin_check=True,
