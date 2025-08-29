@@ -32,6 +32,7 @@ def get_post_stats():
         return jsonify({"error": "postID is required"}), 400
     with sqlite3.connect(DB_PATH) as conn:
         conn.row_factory = sqlite3.Row
+        # Ensure a stats row exists for the post
         row = conn.execute(
             "SELECT * FROM postStats WHERE postID=?", (post_id,)
         ).fetchone()
@@ -41,8 +42,36 @@ def get_post_stats():
             row = conn.execute(
                 "SELECT * FROM postStats WHERE postID=?", (post_id,)
             ).fetchone()
+
+        # Fetch up-to-date analytics for the post
+        analytics = conn.execute(
+            """
+            SELECT COUNT(*) AS totalReaders,
+                   AVG(timeSpendDuration) AS avgTimeOnPage
+            FROM postsAnalytics
+            WHERE postID=?
+            """,
+            (post_id,),
+        ).fetchone()
+
+        total_readers = analytics["totalReaders"] or 0
+        avg_time = analytics["avgTimeOnPage"] or 0
+
+        # Persist the calculated analytics to the stats table
+        conn.execute(
+            "UPDATE postStats SET totalReaders=?, avgTimeOnPage=? WHERE postID=?",
+            (total_readers, avg_time, post_id),
+        )
+        conn.commit()
+
+        row = conn.execute(
+            "SELECT * FROM postStats WHERE postID=?", (post_id,)
+        ).fetchone()
+
     data = dict(row)
-    return jsonify(data)
+    response = jsonify(data)
+    response.headers["Cache-Control"] = "no-store"
+    return response
 
 
 @postStatsBlueprint.route("/api/v1/postStats", methods=["POST"])
