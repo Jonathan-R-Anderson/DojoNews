@@ -31,6 +31,9 @@ from routes.adminPanelPosts import (
 from routes.adminPanelUsers import (
     adminPanelUsersBlueprint,
 )
+from routes.adminPanelActivity import (
+    adminPanelActivityBlueprint,
+)
 from routes.category import (
     categoryBlueprint,
 )
@@ -296,6 +299,7 @@ app.register_blueprint(changeProfilePictureBlueprint)
 app.register_blueprint(analyticsBlueprint)
 app.register_blueprint(returnPostAnalyticsDataBlueprint)
 app.register_blueprint(postStatsBlueprint)
+app.register_blueprint(adminPanelActivityBlueprint)
 app.register_blueprint(commentsBlueprint)
 
 

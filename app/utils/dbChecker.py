@@ -317,17 +317,16 @@ def analyticsTable():
     connection.set_trace_callback(Log.database)
     cursor = connection.cursor()
     try:
-        cursor.execute("""select id from postsAnalytics; """).fetchall()
-
-        Log.info(f'Table: "postsAnalytics" found in "{Settings.DB_ANALYTICS_ROOT}"')
-
-        connection.close()
+        cursor.execute("select id from postsAnalytics;").fetchall()
+        Log.info(
+            f'Table: "postsAnalytics" found in "{Settings.DB_ANALYTICS_ROOT}"'
+        )
     except Exception:
         Log.error(
             f'Table: "postsAnalytics" not found in "{Settings.DB_ANALYTICS_ROOT}"'
         )
-
-        analyticsTable = """
+        cursor.execute(
+            """
         create table if not exists postsAnalytics(
             "id"    integer not null,
             "postID"  integer,
@@ -339,16 +338,40 @@ def analyticsTable():
             "timeStamp" integer,
             primary key("id" autoincrement)
         );"""
-
-        cursor.execute(analyticsTable)
-
+        )
         connection.commit()
-
-        connection.close()
-
         Log.success(
             f'Table: "postsAnalytics" created in "{Settings.DB_ANALYTICS_ROOT}"'
         )
+
+    try:
+        cursor.execute("select id from userActivity;").fetchall()
+        Log.info(
+            f'Table: "userActivity" found in "{Settings.DB_ANALYTICS_ROOT}"'
+        )
+    except Exception:
+        Log.error(
+            f'Table: "userActivity" not found in "{Settings.DB_ANALYTICS_ROOT}"'
+        )
+        cursor.execute(
+            """
+        create table if not exists userActivity(
+            "id" integer not null,
+            "ip" text,
+            "path" text,
+            "method" text,
+            "country" text,
+            "userName" text,
+            "timeStamp" integer,
+            primary key("id" autoincrement)
+        );"""
+        )
+        connection.commit()
+        Log.success(
+            f'Table: "userActivity" created in "{Settings.DB_ANALYTICS_ROOT}"'
+        )
+
+    connection.close()
 
 
 def blacklistTable():
