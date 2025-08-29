@@ -21,6 +21,7 @@ def adminPanelContracts():
             "adminPanelContracts.html",
             contracts=Settings.BLOCKCHAIN_CONTRACTS,
             admin_check=True,
+            rpc_url=Settings.BLOCKCHAIN_RPC_URL,
         )
     Log.error(
         f"{request.remote_addr} tried to reach contracts admin panel without being admin"
