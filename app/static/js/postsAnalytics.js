@@ -28,7 +28,7 @@ const postStatsUrl = "/api/v1/postAnalyticsStats?postID=" + postID;
 async function fetchPostStats() {
   debug('fetchPostStats');
   try {
-    const res = await fetch(postStatsUrl);
+    const res = await fetch(postStatsUrl, { cache: 'no-store' });
     const data = await res.json();
     if (res.ok) {
       const payload = data.payload || {};
