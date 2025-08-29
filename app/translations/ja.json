@@ -19,7 +19,8 @@
     "title": "管理パネル",
     "users": "ユーザー",
     "posts": "投稿",
-    "comments": "コメント"
+    "comments": "コメント",
+    "analytics": "Analytics"
   },
   "adminPanelComments": {
     "title": "管理パネル - コメント",

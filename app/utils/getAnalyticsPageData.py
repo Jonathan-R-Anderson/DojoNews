@@ -141,3 +141,126 @@ def getAnalyticsPageCountryGraphData(postID: int, viewAll=False) -> dict:
             "countryNameList": [],
             "countryCountList": [],
         }
+
+
+def getSiteTrafficGraphData(
+    sincePosted: bool = False, weeks: float = 0, days: float = 0, hours: float = 0
+) -> list[list[int]]:
+    """Returns overall site traffic data.
+
+    Args:
+        sincePosted (bool): If True, returns data since the first record.
+        weeks (float): Number of weeks of data to include.
+        days (float): Number of days of data to include.
+        hours (float): Number of hours of data to include.
+
+    Returns:
+        list[list[int]]: Timestamp and count pairs for the chart.
+    """
+
+    if sincePosted is not True:
+        if weeks == 0 and days == 0 and hours == 0:
+            hours = 48
+
+    if sincePosted:
+        sqlQuery = (
+            """select strftime('%Y-%m-%d %H:%M', timeStamp, 'unixepoch') as visitTimeStamp, count(*) as visitCount from postsAnalytics GROUP BY visitTimeStamp ORDER BY visitTimeStamp ASC"""
+        )
+        parameter = ()
+    else:
+        timeDeltaArgs = {"weeks": weeks or 0, "days": days or 0, "hours": hours}
+        userQueryLimit = int((datetime.now() - timedelta(**timeDeltaArgs)).timestamp())
+        sqlQuery = (
+            """select strftime('%Y-%m-%d %H:%M', timeStamp, 'unixepoch') as visitTimeStamp, count(*) as visitCount from postsAnalytics where timeStamp > ? GROUP BY visitTimeStamp ORDER BY visitTimeStamp ASC"""
+        )
+        parameter = (userQueryLimit,)
+
+    try:
+        Log.database(f"Connecting to '{Settings.DB_ANALYTICS_ROOT}' database")
+
+        connection = sqlite3.connect(Settings.DB_ANALYTICS_ROOT)
+        connection.set_trace_callback(Log.database)
+        cursor = connection.cursor()
+
+        cursor.execute(sqlQuery, parameter)
+        siteTrafficData = cursor.fetchall()
+
+        jSTimeStampAndCount = [
+            [
+                int((datetime.strptime(entry[0], "%Y-%m-%d %H:%M")).timestamp() * 1000),
+                entry[1],
+            ]
+            for entry in siteTrafficData
+        ]
+
+        connection.close()
+
+        return jSTimeStampAndCount
+    except Exception:
+        Log.error("Failed to retrieve traffic data for site analytics")
+        return []
+
+
+def getSiteOSGraphData() -> dict:
+    """Returns operating system distribution for the entire site."""
+
+    try:
+        Log.database(f"Connecting to '{Settings.DB_ANALYTICS_ROOT}' database")
+
+        connection = sqlite3.connect(Settings.DB_ANALYTICS_ROOT)
+        connection.set_trace_callback(Log.database)
+        cursor = connection.cursor()
+
+        cursor.execute(
+            """select os as osName, count(*) as osCount from postsAnalytics GROUP BY os"""
+        )
+        siteGraphOSData = cursor.fetchall() or []
+
+        osGraphData = {
+            "osNameList": [os[0] for os in siteGraphOSData],
+            "osCountList": [counts[1] for counts in siteGraphOSData],
+        }
+        connection.close()
+
+        return osGraphData
+    except Exception:
+        Log.error("Failed to retrieve os data for site analytics")
+        return {"osNameList": [], "osCountList": []}
+
+
+def getSiteCountryGraphData(viewAll: bool = False) -> dict:
+    """Returns visitor country distribution for the entire site."""
+
+    if viewAll:
+        sqlQuery = (
+            """select country as countryName, count(*) as countryCount from postsAnalytics GROUP BY country ORDER BY countryCount DESC"""
+        )
+    else:
+        sqlQuery = (
+            """select country as countryName, count(*) as countryCount from postsAnalytics GROUP BY country ORDER BY countryCount DESC limit 25"""
+        )
+
+    try:
+        Log.database(f"Connecting to '{Settings.DB_ANALYTICS_ROOT}' database")
+
+        connection = sqlite3.connect(Settings.DB_ANALYTICS_ROOT)
+        connection.set_trace_callback(Log.database)
+        cursor = connection.cursor()
+
+        cursor.execute(sqlQuery)
+        siteCountryData = cursor.fetchall()
+
+        countryGraphData = {
+            "countryNameList": [country[0] for country in siteCountryData],
+            "countryCountList": [counts[1] for counts in siteCountryData],
+        }
+
+        connection.close()
+
+        return countryGraphData
+    except Exception:
+        Log.error("Failed to retrieve country data for site analytics")
+        return {
+            "countryNameList": [],
+            "countryCountList": [],
+        }

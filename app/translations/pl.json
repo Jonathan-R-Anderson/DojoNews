@@ -19,7 +19,8 @@
     "title": "Panel administracyjny",
     "users": "Użytkownicy",
     "posts": "Posty",
-    "comments": "Komentarze"
+    "comments": "Komentarze",
+    "analytics": "Analytics"
   },
   "adminPanelComments": {
     "title": "Panel administracyjny - Komentarze",
