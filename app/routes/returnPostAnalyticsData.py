@@ -218,7 +218,7 @@ def return_site_stats() -> dict:
                 totalComments = cursor.fetchone()[0] or 0
                 connection.close()
 
-                return make_response(
+                response = make_response(
                     {
                         "payload": {
                             "totalVisitor": totalVisitor,
@@ -229,6 +229,8 @@ def return_site_stats() -> dict:
                     },
                     200,
                 )
+                response.headers["Cache-Control"] = "no-store"
+                return response
             except Exception:
                 return make_response({"message": "Unexpected error occured"}, 500)
         else:
@@ -268,7 +270,7 @@ def return_post_analytics_stats() -> dict:
                     for views in todaysVisitorData:
                         todaysVisitor += int(views[1])
 
-                    return make_response(
+                    response = make_response(
                         {
                             "payload": {
                                 "totalVisitor": totalVisitor,
@@ -277,6 +279,8 @@ def return_post_analytics_stats() -> dict:
                         },
                         200,
                     )
+                    response.headers["Cache-Control"] = "no-store"
+                    return response
                 except Exception:
                     return make_response({"message": "Unexpected error occured"}, 500)
             else:
