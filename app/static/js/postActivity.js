@@ -3,6 +3,18 @@
     debug('Loaded');
     if (typeof postUrlID === 'undefined') return;
     let start = Date.now();
+    async function loadStats() {
+        try {
+            const res = await fetch(`/api/v1/postStats?postID=${postUrlID}`);
+            if (!res.ok) return;
+            const data = await res.json();
+            const el = document.getElementById('reading-time');
+            if (el && data.estimatedReadTime) el.textContent = data.estimatedReadTime;
+        } catch (e) {
+            debug('Failed to load stats', e);
+        }
+    }
+    loadStats();
     function send(action, extra = {}) {
         fetch('/api/v1/postStats/activity', {
             method: 'POST',

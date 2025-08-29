@@ -74,6 +74,21 @@ def post(urlID: int, slug: str | None = None):
     clean_text = sub(r"<[^>]+>", "", content)
     reading_time = max(1, ceil(len(clean_text.split()) / 200))
 
+    if Settings.ANALYTICS:
+        try:
+            with sqlite3.connect(Settings.DB_ANALYTICS_ROOT) as conn:
+                conn.execute(
+                    "INSERT OR IGNORE INTO postStats(postID) VALUES (?)",
+                    (urlID,),
+                )
+                conn.execute(
+                    "UPDATE postStats SET estimatedReadTime=? WHERE postID=?",
+                    (reading_time, urlID),
+                )
+                conn.commit()
+        except Exception as exc:  # pragma: no cover - analytics DB may be missing
+            Log.error(f"Failed to update postStats for {urlID}: {exc}")
+
     with sqlite3.connect(Settings.DB_COMMENTS_ROOT) as connection:
         connection.set_trace_callback(Log.database)
         cursor = connection.cursor()
