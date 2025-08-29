@@ -1,3 +1,5 @@
+import sqlite3
+
 from flask import Blueprint, redirect, render_template, request, session
 from settings import Settings
 from utils.log import Log
@@ -13,11 +15,28 @@ def adminPanelComments():
         Log.info(
             f"Admin: {session['walletAddress']} reached to comments admin panel"
         )
+        if request.method == "POST":
+            comment_id = request.form.get("commentID")
+            if "blacklistButton" in request.form and comment_id is not None:
+                Log.info(
+                    f"Admin: {session['walletAddress']} blacklisted comment: {comment_id}"
+                )
+                connection = sqlite3.connect(Settings.DB_COMMENTS_ROOT)
+                connection.set_trace_callback(Log.database)
+                cursor = connection.cursor()
+                cursor.execute(
+                    "insert or ignore into deletedComments(commentID) values(?)",
+                    (comment_id,),
+                )
+                connection.commit()
+                connection.close()
+                return redirect("/admin/comments")
+
         Log.database(f"Connecting to '{Settings.DB_COMMENTS_ROOT}' database")
         comments, page, total_pages = paginate_query(
             Settings.DB_COMMENTS_ROOT,
-            "select count(*) from comments",
-            "select * from comments order by timeStamp desc",
+            "select count(*) from comments where id not in (select commentID from deletedComments)",
+            "select * from comments where id not in (select commentID from deletedComments) order by timeStamp",
         )
         Log.info(
             f"Rendering adminPanelComments.html: params: comments={comments}"

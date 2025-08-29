@@ -61,7 +61,7 @@ def user(userName):
         connection.set_trace_callback(Log.database)
         cursor = connection.cursor()
         cursor.execute(
-            """select * from comments where lower(user) = ? """,
+            """select * from comments where lower(user) = ? and id not in (select commentID from deletedComments) """,
             [(userName.lower())],
         )
         comments = cursor.fetchall()

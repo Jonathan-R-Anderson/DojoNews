@@ -64,6 +64,7 @@
 </div>
 <script>
     const postUrlID = {{ id }};
+    window.blacklistedComments = {{ blacklisted_comments | tojson }};
 </script>
 {% endblock body %}
 
