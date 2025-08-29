@@ -257,7 +257,9 @@ def afterRequest(response):
         "script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://code.jquery.com https://cdn.tailwindcss.com blob:; "
         "worker-src 'self' blob:; "
         "style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://cdn.tailwindcss.com; "
-        "img-src 'self' data: https: blob:; "
+        "img-src * data: blob:; "
+        "media-src * data: blob:; "
+        "frame-src *; "
         "font-src 'self' https://cdn.jsdelivr.net; "
         "connect-src 'self' https://mainnet.era.zksync.io wss://tracker.btorrent.xyz wss://tracker.openwebtorrent.com wss://tracker.webtorrent.dev;"
     )

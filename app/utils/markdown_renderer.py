@@ -48,10 +48,16 @@ class SafeMarkdownRenderer:
             "ins",
             "sub",
             "sup",
+            "video",
+            "source",
+            "iframe",
         ]
         self.allowed_attributes = {
             "a": ["href", "title"],
             "img": ["src", "alt", "title", "width", "height"],
+            "video": ["src", "controls", "width", "height", "poster"],
+            "source": ["src", "type"],
+            "iframe": ["src", "width", "height", "allow", "allowfullscreen"],
         }
         self.allowed_protocols = ["http", "https", "mailto", "magnet"]
         # Escape any raw HTML before conversion to ensure only Markdown is
