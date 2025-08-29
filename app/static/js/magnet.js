@@ -6,6 +6,18 @@
     let contract;
     let client;
     const mediaCache = {}; // cache loaded media object URLs by magnet
+    let pdfLibLoaded = false;
+
+    async function initPdfViewer() {
+        if (pdfLibLoaded) return;
+        await new Promise((resolve) => {
+            const s = document.createElement('script');
+            s.src = 'https://cdnjs.cloudflare.com/ajax/libs/pdfobject/2.2.11/pdfobject.min.js';
+            s.onload = resolve;
+            document.head.appendChild(s);
+        });
+        pdfLibLoaded = true;
+    }
 
     async function initMagnetClient() {
         debug('initMagnetClient start');
@@ -70,15 +82,17 @@
                 debug('using cached media for', id);
                 const cached = mediaCache[magnet];
                 if (cached.type === 'application/pdf') {
-                    const pdf = document.createElement('object');
-                    pdf.data = cached.url;
-                    pdf.type = 'application/pdf';
-                    pdf.className = img.className;
-                    pdf.style.width = '100%';
-                    pdf.style.height = 'auto';
-                    pdf.style.pointerEvents = 'none';
-                    pdf.dataset.magnetId = img.dataset.magnetId;
-                    pdf.dataset.magnetLoaded = 'true';
+                    await initPdfViewer();
+                    const container = document.createElement('div');
+                    container.className = img.className;
+                    container.style.width = '100%';
+                    container.style.height = '600px';
+                    container.dataset.magnetId = img.dataset.magnetId;
+                    container.dataset.magnetLoaded = 'true';
+
+                    if (typeof PDFObject !== 'undefined') {
+                        PDFObject.embed(cached.url, container);
+                    }
 
                     if (img.dataset.allowDownload === 'true') {
                         const link = document.createElement('a');
@@ -86,11 +100,11 @@
                         link.download = `${id}.pdf`;
                         link.textContent = 'Download PDF';
                         link.className = 'btn btn-sm btn-primary mt-2 block text-center';
-                        pdf.insertAdjacentElement('afterend', link);
+                        container.insertAdjacentElement('afterend', link);
                     }
 
-                    img.replaceWith(pdf);
-                    const tile = pdf.closest('.post-tile');
+                    img.replaceWith(container);
+                    const tile = container.closest('.post-tile');
                     if (tile && window.applyMasonry) {
                         window.applyMasonry(tile);
                     }
@@ -131,15 +145,17 @@
                         if (file.name.endsWith('.pdf')) {
                             debug('Detected PDF file for', id);
                             mediaCache[magnet] = { url: newUrl, type: 'application/pdf' };
-                            const pdf = document.createElement('object');
-                            pdf.data = newUrl;
-                            pdf.type = 'application/pdf';
-                            pdf.className = img.className;
-                            pdf.style.width = '100%';
-                            pdf.style.height = 'auto';
-                            pdf.style.pointerEvents = 'none';
-                            pdf.dataset.magnetId = img.dataset.magnetId;
-                            pdf.dataset.magnetLoaded = 'true';
+                            await initPdfViewer();
+                            const container = document.createElement('div');
+                            container.className = img.className;
+                            container.style.width = '100%';
+                            container.style.height = '600px';
+                            container.dataset.magnetId = img.dataset.magnetId;
+                            container.dataset.magnetLoaded = 'true';
+
+                            if (typeof PDFObject !== 'undefined') {
+                                PDFObject.embed(newUrl, container);
+                            }
 
                             if (img.dataset.allowDownload === 'true') {
                                 const link = document.createElement('a');
@@ -147,11 +163,11 @@
                                 link.download = file.name || `${id}.pdf`;
                                 link.textContent = 'Download PDF';
                                 link.className = 'btn btn-sm btn-primary mt-2 block text-center';
-                                pdf.insertAdjacentElement('afterend', link);
+                                container.insertAdjacentElement('afterend', link);
                             }
 
-                            img.replaceWith(pdf);
-                            const tile = pdf.closest('.post-tile');
+                            img.replaceWith(container);
+                            const tile = container.closest('.post-tile');
                             if (tile && window.applyMasonry) {
                                 window.applyMasonry(tile);
                             }
@@ -336,6 +352,16 @@
                         video.controls = true;
                         video.className = el.className;
                         el.replaceWith(video);
+                    } else if (/\.pdf$/i.test(file.name)) {
+                        await initPdfViewer();
+                        const container = document.createElement('div');
+                        container.className = el.className;
+                        container.style.width = '100%';
+                        container.style.height = '600px';
+                        if (typeof PDFObject !== 'undefined') {
+                            PDFObject.embed(url, container);
+                        }
+                        el.replaceWith(container);
                     } else {
                         const img = document.createElement('img');
                         img.src = url;
