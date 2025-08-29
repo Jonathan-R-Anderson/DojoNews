@@ -14,19 +14,19 @@
         <dl class="mt-6 grid grid-cols-1 gap-4 sm:mt-8 sm:grid-cols-2 lg:grid-cols-4">
             <div class="flex flex-col rounded-lg bg-rose-50 px-4 py-8 text-center">
                 <dt class="order-last text-lg font-medium text-gray-500">{{ translations.analytics.totalVisitor }}</dt>
-                <dd class="text-4xl font-extrabold text-rose-500/75 md:text-5xl">{{ totalVisitor }}</dd>
+                <dd id="totalVisitor" class="text-4xl font-extrabold text-rose-500/75 md:text-5xl">{{ totalVisitor }}</dd>
             </div>
             <div class="flex flex-col rounded-lg bg-rose-50 px-4 py-8 text-center">
                 <dt class="order-last text-lg font-medium text-gray-500">{{ translations.analytics.todaysVisitor }}</dt>
-                <dd class="text-4xl font-extrabold text-rose-500/75 md:text-5xl">{{ todaysVisitor }}</dd>
+                <dd id="todaysVisitor" class="text-4xl font-extrabold text-rose-500/75 md:text-5xl">{{ todaysVisitor }}</dd>
             </div>
             <div class="flex flex-col rounded-lg bg-rose-50 px-4 py-8 text-center">
                 <dt class="order-last text-lg font-medium text-gray-500">{{ translations.dashboard.posts }}</dt>
-                <dd class="text-4xl font-extrabold text-rose-500/75 md:text-4xl">{{ totalPosts }}</dd>
+                <dd id="totalPosts" class="text-4xl font-extrabold text-rose-500/75 md:text-4xl">{{ totalPosts }}</dd>
             </div>
             <div class="flex flex-col rounded-lg bg-rose-50 px-4 py-8 text-center">
                 <dt class="order-last text-lg font-medium text-gray-500">{{ translations.dashboard.comments }}</dt>
-                <dd class="text-4xl font-extrabold text-rose-500/75 md:text-4xl">{{ totalComments }}</dd>
+                <dd id="totalComments" class="text-4xl font-extrabold text-rose-500/75 md:text-4xl">{{ totalComments }}</dd>
             </div>
         </dl>
     </div>

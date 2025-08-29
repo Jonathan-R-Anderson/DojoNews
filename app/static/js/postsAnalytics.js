@@ -21,8 +21,33 @@ let postAnalyticsDataTrafficGraphUrl =
 let lineChartSpinner = document.getElementById("lineChartSpinner");
 lineChartSpinner.classList.remove("hidden");
 let lineChartErrorContainer = document.getElementById(
-  "lineChartErrorContainer",
+  "lineChartErrorContainer"
 );
+const postStatsUrl = "/api/v1/postAnalyticsStats?postID=" + postID;
+
+async function fetchPostStats() {
+  debug('fetchPostStats');
+  try {
+    const res = await fetch(postStatsUrl);
+    const data = await res.json();
+    if (res.ok) {
+      const payload = data.payload || {};
+      const setText = (id, value) => {
+        const el = document.getElementById(id);
+        if (el) el.textContent = value;
+      };
+      setText('totalVisitor', payload.totalVisitor);
+      setText('todaysVisitor', payload.todaysVisitor);
+    } else {
+      debug('fetchPostStats error', data.message);
+    }
+  } catch (err) {
+    debug('fetchPostStats exception', err);
+  }
+}
+
+fetchPostStats();
+setInterval(fetchPostStats, 5000);
 
 function startDropDownMenu() {
   debug('startDropDownMenu');
@@ -38,7 +63,7 @@ let durationRangeMap = {
   last1m: "weeks=4",
   last7d: "days=7",
   last24h: "hours=24",
-  last48: "hours=48",
+  last48h: "hours=48",
 };
 
 function durationRangeCallback() {
@@ -350,4 +375,6 @@ async function onViewAllClick() {
 }
 
   loadBarChart("viewAll=False");
+  window.onViewAllClick = onViewAllClick;
+  window.changeTabState = changeTabState;
 })();
