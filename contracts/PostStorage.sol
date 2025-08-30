@@ -38,6 +38,11 @@ contract PostStorage {
         string magnetURI
     );
     event PostDeleted(uint256 indexed postId);
+    event PostUpdated(
+        uint256 indexed postId,
+        string contentHash,
+        string magnetURI
+    );
     event PostBlacklistUpdated(uint256 indexed postId, bool isBlacklisted);
     event ImageMagnetSet(string indexed imageId, string magnetURI);
     event ImageBlacklistUpdated(string indexed imageId, bool isBlacklisted);
@@ -141,6 +146,19 @@ contract PostStorage {
         }
         delete posts[postId];
         emit PostDeleted(postId);
+    }
+
+    function updatePost(
+        uint256 postId,
+        string calldata contentHash,
+        string calldata magnetURI
+    ) external {
+        Post storage p = posts[postId];
+        require(p.exists, "no post");
+        require(msg.sender == p.author || msg.sender == sysop, "not authorized");
+        p.contentHash = contentHash;
+        p.magnetURI = magnetURI;
+        emit PostUpdated(postId, contentHash, magnetURI);
     }
 
     function setBlacklist(uint256 postId, bool isBlacklisted) external onlySysop {
