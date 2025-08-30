@@ -1,4 +1,5 @@
 import sqlite3
+import time
 from flask import Blueprint, request, jsonify, session
 from settings import Settings
 
@@ -19,6 +20,16 @@ def _init_db() -> None:
             )
             """
         )
+        conn.execute(
+            """
+            CREATE TABLE IF NOT EXISTS postActiveReaders(
+                postID INTEGER,
+                sessionID TEXT,
+                lastSeen INTEGER,
+                PRIMARY KEY (postID, sessionID)
+            )
+            """
+        )
         conn.commit()
 
 
@@ -30,8 +41,13 @@ def get_post_stats():
     post_id = request.args.get("postID", type=int)
     if post_id is None:
         return jsonify({"error": "postID is required"}), 400
+    now = int(time.time())
     with sqlite3.connect(DB_PATH) as conn:
         conn.row_factory = sqlite3.Row
+        conn.execute(
+            "DELETE FROM postActiveReaders WHERE lastSeen < ?",
+            (now - 30,),
+        )
         # Ensure a stats row exists for the post
         row = conn.execute(
             "SELECT * FROM postStats WHERE postID=?", (post_id,)
@@ -61,6 +77,14 @@ def get_post_stats():
         conn.execute(
             "UPDATE postStats SET totalReaders=?, avgTimeOnPage=? WHERE postID=?",
             (total_readers, avg_time, post_id),
+        )
+        current = conn.execute(
+            "SELECT COUNT(*) FROM postActiveReaders WHERE postID=?",
+            (post_id,),
+        ).fetchone()[0]
+        conn.execute(
+            "UPDATE postStats SET currentReaders=? WHERE postID=?",
+            (current, post_id),
         )
         conn.commit()
 
@@ -108,28 +132,62 @@ def post_activity():
     data = request.get_json(silent=True) or {}
     post_id = data.get("postID")
     action = data.get("action")
+    session_id = data.get("sessionID")
     time_spent = data.get("timeSpent", 0)
-    if post_id is None or action not in {"enter", "leave"}:
+    if (
+        post_id is None
+        or action not in {"enter", "leave", "heartbeat"}
+        or not session_id
+    ):
         return jsonify({"error": "invalid request"}), 400
+    now = int(time.time())
     with sqlite3.connect(DB_PATH) as conn:
         conn.execute(
             "INSERT OR IGNORE INTO postStats(postID) VALUES (?)", (post_id,)
         )
-        row = conn.execute(
-            "SELECT currentReaders, totalReaders, avgTimeOnPage FROM postStats WHERE postID=?",
-            (post_id,),
-        ).fetchone()
-        current, total, avg = row
-        if action == "enter":
-            current += 1
-            total += 1
+        conn.execute(
+            "DELETE FROM postActiveReaders WHERE lastSeen < ?",
+            (now - 30,),
+        )
+        if action in {"enter", "heartbeat"}:
+            conn.execute(
+                "INSERT OR REPLACE INTO postActiveReaders(postID, sessionID, lastSeen) VALUES (?, ?, ?)",
+                (post_id, session_id, now),
+            )
         else:  # leave
-            current = max(0, current - 1)
+            conn.execute(
+                "DELETE FROM postActiveReaders WHERE postID=? AND sessionID=?",
+                (post_id, session_id),
+            )
+            row = conn.execute(
+                "SELECT totalReaders, avgTimeOnPage FROM postStats WHERE postID=?",
+                (post_id,),
+            ).fetchone()
+            total, avg = row
             if time_spent and total > 0:
                 avg = ((avg * (total - 1)) + float(time_spent)) / total
+            conn.execute(
+                "UPDATE postStats SET avgTimeOnPage=? WHERE postID=?",
+                (avg, post_id),
+            )
+        if action == "enter":
+            total = (
+                conn.execute(
+                    "SELECT totalReaders FROM postStats WHERE postID=?", (post_id,)
+                ).fetchone()[0]
+                + 1
+            )
+            conn.execute(
+                "UPDATE postStats SET totalReaders=? WHERE postID=?",
+                (total, post_id),
+            )
+        current = conn.execute(
+            "SELECT COUNT(*) FROM postActiveReaders WHERE postID=?",
+            (post_id,),
+        ).fetchone()[0]
         conn.execute(
-            "UPDATE postStats SET currentReaders=?, totalReaders=?, avgTimeOnPage=? WHERE postID=?",
-            (current, total, avg, post_id),
+            "UPDATE postStats SET currentReaders=? WHERE postID=?",
+            (current, post_id),
         )
         conn.commit()
     return jsonify({"message": "ok"})
