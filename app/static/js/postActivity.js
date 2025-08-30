@@ -3,6 +3,7 @@
     debug('Loaded');
     if (typeof postUrlID === 'undefined') return;
     let start = Date.now();
+    const sessionId = (self.crypto?.randomUUID?.() || Math.random().toString(36).slice(2));
     async function loadStats() {
         try {
             const res = await fetch(`/api/v1/postStats?postID=${postUrlID}`);
@@ -16,7 +17,7 @@
     }
     loadStats();
     function send(action, extra = {}) {
-        const payload = JSON.stringify({ postID: postUrlID, action, ...extra });
+        const payload = JSON.stringify({ postID: postUrlID, action, sessionID: sessionId, ...extra });
         if (action === 'leave' && navigator.sendBeacon) {
             try {
                 navigator.sendBeacon(
@@ -36,7 +37,9 @@
         }
     }
     send('enter');
+    const hb = setInterval(() => send('heartbeat'), 15000);
     window.addEventListener('beforeunload', () => {
+        clearInterval(hb);
         const timeSpent = Math.round((Date.now() - start) / 1000);
         send('leave', { timeSpent });
     });
