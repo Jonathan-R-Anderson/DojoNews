@@ -22,6 +22,7 @@ Sponsored by [CreateMyBanner](https://createmybanner.com)
 - **Member Tiers** – Metered paywall with on-chain accounting
 - **Sponsor Blocks** – First‑party ad slots with frequency capping
 - **Tip Jar** – Per‑author and per‑post tipping using Ethereum with a configurable sysop commission
+- **Forum Boards** – Minimal 4chan-inspired smart contract storing latest post images
 - **Torrent-backed Media** – Images are also distributed via BitTorrent for load balancing
 
 ## 🚀 Quick Start
@@ -42,6 +43,16 @@ uv run app.py
 ```
 
 Visit `http://localhost:1283` in your browser.
+
+### Docker Compose
+
+Run the app and a local Ethereum test chain with separate containers:
+
+```bash
+docker-compose up --build
+```
+
+The Flask service listens on `1283` while Ganache exposes `8545`.
 
 ### Blockchain
 
