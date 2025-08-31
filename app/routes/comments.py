@@ -9,15 +9,17 @@ commentsBlueprint = Blueprint("comments", __name__)
 def add_comment():
     data = request.get_json(silent=True) or {}
     post_id = data.get("postID")
+    username = data.get("username") or "Anonymous"
+    email = data.get("email") or ""
     content = data.get("content")
     if post_id is None or not content:
         return jsonify({"error": "postID and content are required"}), 400
 
-    contract_info = Settings.BLOCKCHAIN_CONTRACTS["CommentStorage"]
+    contract_info = Settings.BLOCKCHAIN_CONTRACTS["Comments"]
     w3 = Web3(Web3.HTTPProvider(Settings.BLOCKCHAIN_RPC_URL))
     contract = w3.eth.contract(address=contract_info["address"], abi=contract_info["abi"])
     try:
-        tx_hash = contract.functions.addComment(post_id, content).transact()
+        tx_hash = contract.functions.addComment(post_id, username, email, content).transact()
         return jsonify({"txHash": tx_hash.hex()}), 200
     except Exception as exc:  # pragma: no cover - external call
         return jsonify({"error": str(exc)}), 500
