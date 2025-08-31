@@ -2,9 +2,12 @@
 pragma solidity ^0.8.20;
 
 /// @title Board registry for forum boards
-/// @notice Stores board names and exposes their identifiers
+/// @notice Stores board metadata and exposes their identifiers
 contract Board {
     struct BoardInfo {
+        string subject;
+        string body;
+        string email;
         string name;
     }
 
@@ -12,8 +15,20 @@ contract Board {
     mapping(uint256 => BoardInfo) public boards;
     uint256 public boardCount;
 
-    event BoardCreated(uint256 indexed id, string name);
-    event BoardUpdated(uint256 indexed id, string name);
+    event BoardCreated(
+        uint256 indexed id,
+        string subject,
+        string body,
+        string email,
+        string name
+    );
+    event BoardUpdated(
+        uint256 indexed id,
+        string subject,
+        string body,
+        string email,
+        string name
+    );
     event SysopTransferred(address indexed previousSysop, address indexed newSysop);
 
     modifier onlySysop() {
@@ -31,33 +46,47 @@ contract Board {
         sysop = newSysop;
     }
 
-    /// @notice Create a new board
-    /// @param name Name of the board
-    /// @return id Identifier of the created board
-    function createBoard(string calldata name)
-        external
-        onlySysop
-        returns (uint256 id)
-    {
+    /// @notice Create a new board entry
+    /// @param subject Subject of the board entry
+    /// @param body Body content
+    /// @param email Optional contact email
+    /// @param name Display name, defaults to "Anonymous" if empty
+    /// @return id Identifier of the created board entry
+    function createBoard(
+        string calldata subject,
+        string calldata body,
+        string calldata email,
+        string calldata name
+    ) external onlySysop returns (uint256 id) {
         id = boardCount++;
-        boards[id] = BoardInfo(name);
-        emit BoardCreated(id, name);
+        string memory finalName = bytes(name).length > 0 ? name : "Anonymous";
+        boards[id] = BoardInfo(subject, body, email, finalName);
+        emit BoardCreated(id, subject, body, email, finalName);
     }
 
-    /// @notice Update an existing board's name
-    /// @param id Identifier of the board
-    /// @param name New name of the board
-    function setBoardName(uint256 id, string calldata name) external onlySysop {
+    /// @notice Update an existing board entry
+    /// @param id Identifier of the board entry
+    /// @param subject New subject
+    /// @param body New body content
+    /// @param email New contact email
+    /// @param name New display name, defaults to "Anonymous" if empty
+    function updateBoard(
+        uint256 id,
+        string calldata subject,
+        string calldata body,
+        string calldata email,
+        string calldata name
+    ) external onlySysop {
         require(id < boardCount, "invalid board");
-        boards[id].name = name;
-        emit BoardUpdated(id, name);
+        string memory finalName = bytes(name).length > 0 ? name : "Anonymous";
+        boards[id] = BoardInfo(subject, body, email, finalName);
+        emit BoardUpdated(id, subject, body, email, finalName);
     }
 
     /// @notice Retrieve board information
-    /// @param id Identifier of the board
-    /// @return name Name of the board
-    function getBoard(uint256 id) external view returns (string memory name) {
-        BoardInfo storage b = boards[id];
-        name = b.name;
+    /// @param id Identifier of the board entry
+    /// @return b Board information
+    function getBoard(uint256 id) external view returns (BoardInfo memory b) {
+        b = boards[id];
     }
 }
