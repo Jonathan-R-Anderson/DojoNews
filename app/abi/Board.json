@@ -2,6 +2,9 @@
   "abi": [
     {
       "inputs": [
+        {"internalType": "string", "name": "subject", "type": "string"},
+        {"internalType": "string", "name": "body", "type": "string"},
+        {"internalType": "string", "name": "email", "type": "string"},
         {"internalType": "string", "name": "name", "type": "string"}
       ],
       "name": "createBoard",
@@ -14,9 +17,12 @@
     {
       "inputs": [
         {"internalType": "uint256", "name": "id", "type": "uint256"},
+        {"internalType": "string", "name": "subject", "type": "string"},
+        {"internalType": "string", "name": "body", "type": "string"},
+        {"internalType": "string", "name": "email", "type": "string"},
         {"internalType": "string", "name": "name", "type": "string"}
       ],
-      "name": "setBoardName",
+      "name": "updateBoard",
       "outputs": [],
       "stateMutability": "nonpayable",
       "type": "function"
@@ -27,7 +33,17 @@
       ],
       "name": "getBoard",
       "outputs": [
-        {"internalType": "string", "name": "name", "type": "string"}
+        {
+          "components": [
+            {"internalType": "string", "name": "subject", "type": "string"},
+            {"internalType": "string", "name": "body", "type": "string"},
+            {"internalType": "string", "name": "email", "type": "string"},
+            {"internalType": "string", "name": "name", "type": "string"}
+          ],
+          "internalType": "struct Board.BoardInfo",
+          "name": "",
+          "type": "tuple"
+        }
       ],
       "stateMutability": "view",
       "type": "function"
@@ -63,6 +79,9 @@
       "anonymous": false,
       "inputs": [
         {"indexed": true, "internalType": "uint256", "name": "id", "type": "uint256"},
+        {"indexed": false, "internalType": "string", "name": "subject", "type": "string"},
+        {"indexed": false, "internalType": "string", "name": "body", "type": "string"},
+        {"indexed": false, "internalType": "string", "name": "email", "type": "string"},
         {"indexed": false, "internalType": "string", "name": "name", "type": "string"}
       ],
       "name": "BoardCreated",
@@ -72,6 +91,9 @@
       "anonymous": false,
       "inputs": [
         {"indexed": true, "internalType": "uint256", "name": "id", "type": "uint256"},
+        {"indexed": false, "internalType": "string", "name": "subject", "type": "string"},
+        {"indexed": false, "internalType": "string", "name": "body", "type": "string"},
+        {"indexed": false, "internalType": "string", "name": "email", "type": "string"},
         {"indexed": false, "internalType": "string", "name": "name", "type": "string"}
       ],
       "name": "BoardUpdated",

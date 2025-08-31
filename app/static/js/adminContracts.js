@@ -24,10 +24,21 @@
         return signer;
     }
 
+    const metrics = {};
     Object.entries(contracts).forEach(([name, info]) => {
         const container = document.getElementById(`functions-${name}`);
+        const metricsDiv = document.getElementById(`metrics-${name}`);
         if (!container) return;
         const contract = new ethers.Contract(info.address, info.abi, provider);
+
+        metrics[name] = { calls: 0, successes: 0, failures: 0 };
+        const updateMetrics = () => {
+            if (metricsDiv) {
+                const m = metrics[name];
+                metricsDiv.textContent = `Calls: ${m.calls}, Successes: ${m.successes}, Failures: ${m.failures}`;
+            }
+        };
+        updateMetrics();
 
         info.abi
             .filter((item) => item.type === 'function')
@@ -65,6 +76,7 @@
 
                 form.addEventListener('submit', async (e) => {
                     e.preventDefault();
+                    metrics[name].calls++;
                     const args = fn.inputs.map((_, idx) => form[`arg${idx}`].value);
                     try {
                         if (isReadOnly) {
@@ -80,10 +92,13 @@
                             await tx.wait();
                             result.textContent = `Success: ${tx.hash}`;
                         }
+                        metrics[name].successes++;
                     } catch (err) {
                         debug('Function call failed', err);
+                        metrics[name].failures++;
                         result.textContent = `Error: ${err.message || err}`;
                     }
+                    updateMetrics();
                 });
 
                 fnDiv.appendChild(form);
