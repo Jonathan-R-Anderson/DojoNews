@@ -12,6 +12,7 @@ This file contains functions to create the tables if they do not already exist, 
 import sqlite3
 from os import mkdir
 from os.path import exists
+import requests
 
 from passlib.hash import sha512_crypt as encryption
 from settings import Settings
@@ -375,31 +376,12 @@ def analyticsTable():
 
 
 def blacklistTable():
-    """Ensure the blacklist table exists."""
-    if exists(Settings.DB_BLACKLIST_ROOT):
-        Log.info(f'Blacklist database: "{Settings.DB_BLACKLIST_ROOT}" found')
-    else:
-        Log.error(f'Blacklist database: "{Settings.DB_BLACKLIST_ROOT}" not found')
-        open(Settings.DB_BLACKLIST_ROOT, "x")
-        Log.success(f'Blacklist database: "{Settings.DB_BLACKLIST_ROOT}" created')
-
-    Log.database(f"Connecting to '{Settings.DB_BLACKLIST_ROOT}' database")
-    connection = sqlite3.connect(Settings.DB_BLACKLIST_ROOT)
-    connection.set_trace_callback(Log.database)
-    cursor = connection.cursor()
+    """Ensure the blacklist service is reachable."""
     try:
-        cursor.execute("select id from blacklist;").fetchall()
-        Log.info(f'Table: "blacklist" found in "{Settings.DB_BLACKLIST_ROOT}"')
-    except Exception:
-        Log.error(f'Table: "blacklist" not found in "{Settings.DB_BLACKLIST_ROOT}"')
-        blacklist_table = """
-        create table if not exists blacklist(
-            "id" integer not null,
-            "type" text,
-            "contentID" integer,
-            primary key("id" autoincrement)
-        );"""
-        cursor.execute(blacklist_table)
-        connection.commit()
-        Log.success(f'Table: "blacklist" created in "{Settings.DB_BLACKLIST_ROOT}"')
-    connection.close()
+        requests.get(
+            f"http://{Settings.BLACKLIST_API_HOST}:{Settings.BLACKLIST_API_PORT}/blacklist",
+            timeout=5,
+        )
+        Log.info("Blacklist service reachable")
+    except Exception as exc:  # pragma: no cover - network errors
+        Log.error(f"Blacklist service unreachable: {exc}")

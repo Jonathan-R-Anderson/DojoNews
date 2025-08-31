@@ -96,6 +96,7 @@ from routes.setTheme import (
 )
 from routes.user import userBlueprint
 from routes.comments import commentsBlueprint
+from routes.api import apiBlueprint
 from settings import Settings
 from utils.afterRequest import (
     afterRequestLogger,
@@ -303,6 +304,7 @@ app.register_blueprint(postStatsBlueprint)
 app.register_blueprint(adminPanelActivityBlueprint)
 app.register_blueprint(boardBlueprint)
 app.register_blueprint(commentsBlueprint)
+app.register_blueprint(apiBlueprint)
 
 
 if __name__ == "__main__":

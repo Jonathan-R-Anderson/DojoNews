@@ -1,5 +1,6 @@
 """Utilities for blacklisting user content."""
 import sqlite3
+import requests
 from settings import Settings
 from utils.log import Log
 
@@ -9,24 +10,8 @@ class Blacklist:
 
     @staticmethod
     def add_user_content(user_name: str) -> None:
-        """Add all posts and comments of ``user_name`` to the blacklist table.
-
-        The function collects IDs of posts and comments authored by ``user_name``
-        and stores them in ``Settings.DB_BLACKLIST_ROOT``.
-        """
-        Log.database(f"Connecting to '{Settings.DB_BLACKLIST_ROOT}' database")
-        bl_conn = sqlite3.connect(Settings.DB_BLACKLIST_ROOT)
-        bl_conn.set_trace_callback(Log.database)
-        bl_cur = bl_conn.cursor()
-        bl_cur.execute(
-            """
-            create table if not exists blacklist(
-                id integer primary key autoincrement,
-                type text not null,
-                contentID integer not null
-            )
-            """
-        )
+        """Add all posts and comments of ``user_name`` via the blacklist API."""
+        base = f"http://{Settings.BLACKLIST_API_HOST}:{Settings.BLACKLIST_API_PORT}"
 
         # Blacklist posts
         try:
@@ -35,10 +20,14 @@ class Blacklist:
             cur = conn.cursor()
             cur.execute("select id from posts where author = ?", (user_name,))
             for (pid,) in cur.fetchall():
-                bl_cur.execute(
-                    "insert into blacklist(type, contentID) values(?, ?)",
-                    ("post", pid),
-                )
+                try:
+                    requests.post(
+                        f"{base}/blacklist",
+                        json={"type": "post", "contentID": pid},
+                        timeout=5,
+                    )
+                except Exception as exc:  # pragma: no cover - network errors
+                    Log.error(f"Blacklist post {pid} failed: {exc}")
             conn.close()
         except Exception as exc:  # pragma: no cover - database may be missing
             Log.error(f"Blacklist posts failed: {exc}")
@@ -53,14 +42,16 @@ class Blacklist:
                 (user_name.lower(),),
             )
             for (cid,) in cur.fetchall():
-                bl_cur.execute(
-                    "insert into blacklist(type, contentID) values(?, ?)",
-                    ("comment", cid),
-                )
+                try:
+                    requests.post(
+                        f"{base}/blacklist",
+                        json={"type": "comment", "contentID": cid},
+                        timeout=5,
+                    )
+                except Exception as exc:  # pragma: no cover - network errors
+                    Log.error(f"Blacklist comment {cid} failed: {exc}")
             conn.close()
         except Exception as exc:  # pragma: no cover - database may be missing
             Log.error(f"Blacklist comments failed: {exc}")
 
-        bl_conn.commit()
-        bl_conn.close()
         Log.success(f'Content for "{user_name}" added to blacklist')

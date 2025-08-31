@@ -22,4 +22,5 @@ dependencies = [
     "gTTS",
     "web3",
     "libtorrent",
+    "requests",
 ]
