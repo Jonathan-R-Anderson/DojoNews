@@ -128,6 +128,8 @@ class Settings:
     DB_ANALYTICS_ROOT = str(_DB_PATH / "analytics.db")
     DB_CATEGORIES_ROOT = str(_DB_PATH / "categories.json")
     DB_BLACKLIST_ROOT = str(_DB_PATH / "blacklist.db")
+    BLACKLIST_API_HOST = "blacklist"
+    BLACKLIST_API_PORT = 5001
 
     # SMTP Mail Configuration
     SMTP_SERVER = "smtp.gmail.com"
