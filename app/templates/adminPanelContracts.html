@@ -29,18 +29,38 @@
             </button>
         </form>
         <div id="metrics-{{ name }}" class="mt-2 text-sm"></div>
-        <div id="functions-{{ name }}" class="mt-4"></div>
+        <div class="mt-4 space-y-4">
+            {% for fn in data['abi'] if fn.type == 'function' %}
+            <details>
+                <summary class="cursor-pointer font-medium">{{ fn.name }}</summary>
+                <form
+                    class="contract-form flex flex-col items-center mt-2"
+                    data-contract="{{ name }}"
+                    data-method="{{ fn.name }}"
+                    data-action="{{ 'call' if fn.stateMutability in ['view', 'pure'] else 'transact' }}"
+                >
+                    {% for input in fn.inputs %}
+                    <input
+                        type="text"
+                        name="arg{{ loop.index0 }}"
+                        placeholder="{{ input.name or ('arg' ~ loop.index0) }} ({{ input.type }})"
+                        class="input input-bordered mb-2"
+                    />
+                    {% endfor %}
+                    <button type="submit" class="btn btn-sm btn-neutral">
+                        {{ 'Call' if fn.stateMutability in ['view', 'pure'] else 'Send' }}
+                    </button>
+                </form>
+                <div class="result mt-2 text-sm break-words"></div>
+            </details>
+            {% endfor %}
+        </div>
     </details>
     {% endfor %}
 </div>
 <a href="/admin" class="hidden md:block fixed bottom-0 left-1">
     <i class="ti ti-arrow-back mr-1 text-xl hover:text-rose-500 duration-150"></i>
 </a>
-<script>
-    window.contractsData = {{ contracts | tojson }};
-    window.rpcUrl = "{{ rpc_url }}";
-</script>
-<script src="https://cdn.jsdelivr.net/npm/ethers@5.7.2/dist/ethers.umd.min.js"></script>
 <script src="{{ url_for('static', filename='js/adminContracts.js') }}"></script>
 {% endblock body %}
 
