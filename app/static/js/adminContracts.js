@@ -24,7 +24,14 @@
             const method = form.dataset.method;
             const action = form.dataset.action;
             const paramInputs = Array.from(form.querySelectorAll('input[name^="arg"]'));
-            const params = paramInputs.map((inp) => inp.value);
+            const params = paramInputs.map((inp) => {
+                const val = inp.value.trim();
+                try {
+                    return JSON.parse(val);
+                } catch {
+                    return val;
+                }
+            });
             const txOptField = form.querySelector('[name="txOptions"]');
             let txOptions = {};
             if (txOptField && txOptField.value.trim()) {
