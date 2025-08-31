@@ -48,6 +48,28 @@
                     return;
                 }
             }
+            if (action === 'transact') {
+                if (!txOptions.from) {
+                    if (window.userAddress) {
+                        txOptions.from = window.userAddress;
+                    } else if (window.ethereum) {
+                        try {
+                            const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
+                            txOptions.from = accounts[0];
+                            window.userAddress = accounts[0];
+                        } catch (err) {
+                            debug('Wallet request failed', err);
+                        }
+                    }
+                    if (!txOptions.from) {
+                        m.failures++;
+                        const resultDiv = form.nextElementSibling;
+                        resultDiv.textContent = 'Error: wallet not connected';
+                        updateMetrics();
+                        return;
+                    }
+                }
+            }
             const resultDiv = form.nextElementSibling;
             try {
                 const res = await fetch(`/admin/contracts/${contract}/${method}`, {
