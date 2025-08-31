@@ -38,6 +38,7 @@ contract Posts {
     }
 
     constructor(address boardAddress) {
+        require(boardAddress != address(0), "invalid board address");
         sysop = msg.sender;
         boardContract = IBoard(boardAddress);
     }
@@ -46,10 +47,6 @@ contract Posts {
         require(newSysop != address(0), "bad sysop");
         emit SysopTransferred(sysop, newSysop);
         sysop = newSysop;
-    }
-
-    function setBoardContract(address boardAddress) external onlySysop {
-        boardContract = IBoard(boardAddress);
     }
 
     /// @notice Create a new post under a board
