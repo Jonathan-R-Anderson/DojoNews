@@ -3,9 +3,16 @@ pragma solidity ^0.8.20;
 
 /// @title CommentStorage
 /// @notice Stores comments associated with posts.
+interface IModeration {
+    function isBanned(address user) external view returns (bool);
+    function isModerator(address account) external view returns (bool);
+    function isPostBlacklisted(uint256 postId) external view returns (bool);
+}
+
 contract CommentStorage {
     address public sysop;
     event SysopTransferred(address indexed previousSysop, address indexed newSysop);
+    IModeration public moderationContract;
 
     struct Comment {
         address author;
@@ -27,8 +34,14 @@ contract CommentStorage {
         _;
     }
 
-    constructor() {
+    modifier onlyModerator() {
+        require(moderationContract.isModerator(msg.sender), "only moderator");
+        _;
+    }
+
+    constructor(address moderationAddress) {
         sysop = msg.sender;
+        moderationContract = IModeration(moderationAddress);
     }
 
     function transferSysop(address newSysop) external onlySysop {
@@ -38,6 +51,8 @@ contract CommentStorage {
     }
 
     function addComment(uint256 postId, string calldata content) external returns (uint256 commentId) {
+        require(!moderationContract.isBanned(msg.sender), "banned");
+        require(!moderationContract.isPostBlacklisted(postId), "post blacklisted");
         commentId = nextCommentId++;
         comments[commentId] = Comment(msg.sender, postId, content, true, false);
         emit CommentAdded(commentId, postId, msg.sender, content);
@@ -51,7 +66,7 @@ contract CommentStorage {
         emit CommentDeleted(commentId);
     }
 
-    function setBlacklist(uint256 commentId, bool isBlacklisted) external onlySysop {
+    function setBlacklist(uint256 commentId, bool isBlacklisted) external onlyModerator {
         Comment storage c = comments[commentId];
         require(c.exists, "no comment");
         c.blacklisted = isBlacklisted;
