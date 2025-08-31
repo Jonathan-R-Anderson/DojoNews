@@ -17,25 +17,13 @@
         {
           "indexed": false,
           "internalType": "string",
-          "name": "subject",
-          "type": "string"
-        },
-        {
-          "indexed": false,
-          "internalType": "string",
-          "name": "body",
-          "type": "string"
-        },
-        {
-          "indexed": false,
-          "internalType": "string",
-          "name": "email",
-          "type": "string"
-        },
-        {
-          "indexed": false,
-          "internalType": "string",
           "name": "name",
+          "type": "string"
+        },
+        {
+          "indexed": false,
+          "internalType": "string",
+          "name": "banner",
           "type": "string"
         }
       ],
@@ -54,29 +42,55 @@
         {
           "indexed": false,
           "internalType": "string",
-          "name": "subject",
-          "type": "string"
-        },
-        {
-          "indexed": false,
-          "internalType": "string",
-          "name": "body",
-          "type": "string"
-        },
-        {
-          "indexed": false,
-          "internalType": "string",
-          "name": "email",
-          "type": "string"
-        },
-        {
-          "indexed": false,
-          "internalType": "string",
           "name": "name",
+          "type": "string"
+        },
+        {
+          "indexed": false,
+          "internalType": "string",
+          "name": "banner",
           "type": "string"
         }
       ],
       "name": "BoardUpdated",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "uint256",
+          "name": "boardId",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "internalType": "address[]",
+          "name": "moderators",
+          "type": "address[]"
+        }
+      ],
+      "name": "ModeratorsUpdated",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "uint256",
+          "name": "boardId",
+          "type": "uint256"
+        },
+        {
+          "indexed": true,
+          "internalType": "uint256",
+          "name": "postId",
+          "type": "uint256"
+        }
+      ],
+      "name": "PostAdded",
       "type": "event"
     },
     {
@@ -99,6 +113,24 @@
       "type": "event"
     },
     {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "boardId",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "postId",
+          "type": "uint256"
+        }
+      ],
+      "name": "addPost",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
       "inputs": [],
       "name": "boardCount",
       "outputs": [
@@ -114,58 +146,19 @@
     {
       "inputs": [
         {
-          "internalType": "uint256",
-          "name": "",
-          "type": "uint256"
-        }
-      ],
-      "name": "boards",
-      "outputs": [
-        {
-          "internalType": "string",
-          "name": "subject",
-          "type": "string"
-        },
-        {
-          "internalType": "string",
-          "name": "body",
-          "type": "string"
-        },
-        {
-          "internalType": "string",
-          "name": "email",
-          "type": "string"
-        },
-        {
           "internalType": "string",
           "name": "name",
           "type": "string"
-        }
-      ],
-      "stateMutability": "view",
-      "type": "function"
-    },
-    {
-      "inputs": [
-        {
-          "internalType": "string",
-          "name": "subject",
-          "type": "string"
         },
         {
           "internalType": "string",
-          "name": "body",
+          "name": "banner",
           "type": "string"
         },
         {
-          "internalType": "string",
-          "name": "email",
-          "type": "string"
-        },
-        {
-          "internalType": "string",
-          "name": "name",
-          "type": "string"
+          "internalType": "address[]",
+          "name": "moderators",
+          "type": "address[]"
         }
       ],
       "name": "createBoard",
@@ -193,23 +186,30 @@
           "components": [
             {
               "internalType": "string",
-              "name": "subject",
-              "type": "string"
-            },
-            {
-              "internalType": "string",
-              "name": "body",
-              "type": "string"
-            },
-            {
-              "internalType": "string",
-              "name": "email",
-              "type": "string"
-            },
-            {
-              "internalType": "string",
               "name": "name",
               "type": "string"
+            },
+            {
+              "internalType": "string",
+              "name": "banner",
+              "type": "string"
+            },
+            {
+              "components": [
+                {
+                  "internalType": "uint256",
+                  "name": "id",
+                  "type": "uint256"
+                }
+              ],
+              "internalType": "struct Board.Post[]",
+              "name": "posts",
+              "type": "tuple[]"
+            },
+            {
+              "internalType": "address[]",
+              "name": "moderators",
+              "type": "address[]"
             }
           ],
           "internalType": "struct Board.BoardInfo",
@@ -255,23 +255,18 @@
         },
         {
           "internalType": "string",
-          "name": "subject",
-          "type": "string"
-        },
-        {
-          "internalType": "string",
-          "name": "body",
-          "type": "string"
-        },
-        {
-          "internalType": "string",
-          "name": "email",
-          "type": "string"
-        },
-        {
-          "internalType": "string",
           "name": "name",
           "type": "string"
+        },
+        {
+          "internalType": "string",
+          "name": "banner",
+          "type": "string"
+        },
+        {
+          "internalType": "address[]",
+          "name": "moderators",
+          "type": "address[]"
         }
       ],
       "name": "updateBoard",
@@ -281,4 +276,3 @@
     }
   ]
 }
-

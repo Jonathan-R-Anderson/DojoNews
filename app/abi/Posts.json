@@ -2,7 +2,16 @@
   "abi": [
     {
       "inputs": [
-        {"internalType": "address", "name": "boardAddress", "type": "address"}
+        {
+          "internalType": "address",
+          "name": "boardAddress",
+          "type": "address"
+        },
+        {
+          "internalType": "address",
+          "name": "moderationAddress",
+          "type": "address"
+        }
       ],
       "stateMutability": "nonpayable",
       "type": "constructor"
@@ -10,13 +19,48 @@
     {
       "anonymous": false,
       "inputs": [
-        {"indexed": true, "internalType": "uint256", "name": "id", "type": "uint256"},
-        {"indexed": true, "internalType": "uint256", "name": "boardId", "type": "uint256"},
-        {"indexed": true, "internalType": "address", "name": "author", "type": "address"},
-        {"indexed": false, "internalType": "string", "name": "username", "type": "string"},
-        {"indexed": false, "internalType": "string", "name": "email", "type": "string"},
-        {"indexed": false, "internalType": "string", "name": "subject", "type": "string"},
-        {"indexed": false, "internalType": "string", "name": "body", "type": "string"}
+        {
+          "indexed": true,
+          "internalType": "uint256",
+          "name": "id",
+          "type": "uint256"
+        },
+        {
+          "indexed": true,
+          "internalType": "uint256",
+          "name": "boardId",
+          "type": "uint256"
+        },
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "author",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "internalType": "string",
+          "name": "username",
+          "type": "string"
+        },
+        {
+          "indexed": false,
+          "internalType": "string",
+          "name": "email",
+          "type": "string"
+        },
+        {
+          "indexed": false,
+          "internalType": "string",
+          "name": "subject",
+          "type": "string"
+        },
+        {
+          "indexed": false,
+          "internalType": "string",
+          "name": "body",
+          "type": "string"
+        }
       ],
       "name": "PostCreated",
       "type": "event"
@@ -24,44 +68,119 @@
     {
       "anonymous": false,
       "inputs": [
-        {"indexed": true, "internalType": "address", "name": "previousSysop", "type": "address"},
-        {"indexed": true, "internalType": "address", "name": "newSysop", "type": "address"}
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "previousSysop",
+          "type": "address"
+        },
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "newSysop",
+          "type": "address"
+        }
       ],
       "name": "SysopTransferred",
       "type": "event"
     },
     {
+      "inputs": [],
+      "name": "boardContract",
+      "outputs": [
+        {
+          "internalType": "contract IBoard",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
       "inputs": [
-        {"internalType": "uint256", "name": "boardId", "type": "uint256"},
-        {"internalType": "string", "name": "username", "type": "string"},
-        {"internalType": "string", "name": "email", "type": "string"},
-        {"internalType": "string", "name": "subject", "type": "string"},
-        {"internalType": "string", "name": "body", "type": "string"}
+        {
+          "internalType": "uint256",
+          "name": "boardId",
+          "type": "uint256"
+        },
+        {
+          "internalType": "string",
+          "name": "username",
+          "type": "string"
+        },
+        {
+          "internalType": "string",
+          "name": "email",
+          "type": "string"
+        },
+        {
+          "internalType": "string",
+          "name": "subject",
+          "type": "string"
+        },
+        {
+          "internalType": "string",
+          "name": "body",
+          "type": "string"
+        }
       ],
       "name": "createPost",
       "outputs": [
-        {"internalType": "uint256", "name": "id", "type": "uint256"}
+        {
+          "internalType": "uint256",
+          "name": "id",
+          "type": "uint256"
+        }
       ],
       "stateMutability": "nonpayable",
       "type": "function"
     },
     {
       "inputs": [
-        {"internalType": "uint256", "name": "id", "type": "uint256"}
+        {
+          "internalType": "uint256",
+          "name": "id",
+          "type": "uint256"
+        }
       ],
       "name": "getPost",
       "outputs": [
         {
           "components": [
-            {"internalType": "address", "name": "author", "type": "address"},
-            {"internalType": "string", "name": "username", "type": "string"},
-            {"internalType": "string", "name": "email", "type": "string"},
-            {"internalType": "string", "name": "subject", "type": "string"},
-            {"internalType": "string", "name": "body", "type": "string"},
-            {"internalType": "uint256", "name": "boardId", "type": "uint256"}
+            {
+              "internalType": "address",
+              "name": "author",
+              "type": "address"
+            },
+            {
+              "internalType": "string",
+              "name": "username",
+              "type": "string"
+            },
+            {
+              "internalType": "string",
+              "name": "email",
+              "type": "string"
+            },
+            {
+              "internalType": "string",
+              "name": "subject",
+              "type": "string"
+            },
+            {
+              "internalType": "string",
+              "name": "body",
+              "type": "string"
+            },
+            {
+              "internalType": "uint256",
+              "name": "boardId",
+              "type": "uint256"
+            }
           ],
           "internalType": "struct Posts.Post",
-          "name": "",
+          "name": "p",
           "type": "tuple"
         }
       ],
@@ -70,9 +189,13 @@
     },
     {
       "inputs": [],
-      "name": "boardContract",
+      "name": "moderationContract",
       "outputs": [
-        {"internalType": "address", "name": "", "type": "address"}
+        {
+          "internalType": "contract IModeration",
+          "name": "",
+          "type": "address"
+        }
       ],
       "stateMutability": "view",
       "type": "function"
@@ -81,7 +204,55 @@
       "inputs": [],
       "name": "postCount",
       "outputs": [
-        {"internalType": "uint256", "name": "", "type": "uint256"}
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "name": "posts",
+      "outputs": [
+        {
+          "internalType": "address",
+          "name": "author",
+          "type": "address"
+        },
+        {
+          "internalType": "string",
+          "name": "username",
+          "type": "string"
+        },
+        {
+          "internalType": "string",
+          "name": "email",
+          "type": "string"
+        },
+        {
+          "internalType": "string",
+          "name": "subject",
+          "type": "string"
+        },
+        {
+          "internalType": "string",
+          "name": "body",
+          "type": "string"
+        },
+        {
+          "internalType": "uint256",
+          "name": "boardId",
+          "type": "uint256"
+        }
       ],
       "stateMutability": "view",
       "type": "function"
@@ -90,25 +261,24 @@
       "inputs": [],
       "name": "sysop",
       "outputs": [
-        {"internalType": "address", "name": "", "type": "address"}
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        }
       ],
       "stateMutability": "view",
       "type": "function"
     },
     {
       "inputs": [
-        {"internalType": "address", "name": "newSysop", "type": "address"}
+        {
+          "internalType": "address",
+          "name": "newSysop",
+          "type": "address"
+        }
       ],
       "name": "transferSysop",
-      "outputs": [],
-      "stateMutability": "nonpayable",
-      "type": "function"
-    },
-    {
-      "inputs": [
-        {"internalType": "address", "name": "boardAddress", "type": "address"}
-      ],
-      "name": "setBoardContract",
       "outputs": [],
       "stateMutability": "nonpayable",
       "type": "function"
