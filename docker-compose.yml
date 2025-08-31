@@ -6,9 +6,3 @@ services:
       - "1283:1283"
     volumes:
       - ./app:/app
-    depends_on:
-      - blockchain
-  blockchain:
-    image: trufflesuite/ganache-cli
-    ports:
-      - "8545:8545"
