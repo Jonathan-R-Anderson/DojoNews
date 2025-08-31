@@ -47,6 +47,14 @@
                         class="input input-bordered mb-2"
                     />
                     {% endfor %}
+                    {% if fn.stateMutability not in ['view', 'pure'] %}
+                    <textarea
+                        name="txOptions"
+                        placeholder='{"from": "0x..."}'
+                        class="textarea textarea-bordered mb-2"
+                        rows="2"
+                    ></textarea>
+                    {% endif %}
                     <button type="submit" class="btn btn-sm btn-neutral">
                         {{ 'Call' if fn.stateMutability in ['view', 'pure'] else 'Send' }}
                     </button>
