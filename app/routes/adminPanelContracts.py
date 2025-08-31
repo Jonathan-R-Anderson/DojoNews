@@ -11,6 +11,40 @@ from utils.log import Log
 from web3 import Web3
 import json
 
+# Functions that are reserved for administrative interaction on each contract.
+# These were derived from the Solidity sources under ``contracts/`` by looking
+# for functions protected by modifiers such as ``onlySysop`` or ``onlyOwner``.
+ADMIN_CONTRACT_FUNCTIONS = {
+    "Board": [
+        "transferSysop",
+        "createBoard",
+        "updateBoard",
+        "addPost",
+    ],
+    "Posts": ["transferSysop"],
+    "Comments": ["transferSysop"],
+    "PostStorage": [
+        "transferSysop",
+        "setImageMagnet",
+        "setImageBlacklist",
+        "setVideoMagnet",
+        "setVideoBlacklist",
+        "setBlacklist",
+    ],
+    "CommentStorage": ["transferSysop", "setBlacklist"],
+    "Moderation": [
+        "transferSysop",
+        "addModerator",
+        "removeModerator",
+        "banAddress",
+        "unbanAddress",
+        "blacklistPost",
+        "unblacklistPost",
+    ],
+    "SponsorSlots": ["transferSysop", "createSlot", "setImpressionPrice"],
+    "TipJar": ["transferSysop", "setSysopTax"],
+}
+
 
 adminPanelContractsBlueprint = Blueprint("adminPanelContracts", __name__)
 
@@ -38,10 +72,12 @@ def list_or_update_contracts():
             )
             Settings.BLOCKCHAIN_CONTRACTS[name]["address"] = address
 
-    contracts = {
-        name: {"address": info.get("address", "")}
-        for name, info in Settings.BLOCKCHAIN_CONTRACTS.items()
-    }
+    contracts = {}
+    for name, info in Settings.BLOCKCHAIN_CONTRACTS.items():
+        contracts[name] = {
+            "address": info.get("address", ""),
+            "functions": ADMIN_CONTRACT_FUNCTIONS.get(name, []),
+        }
     return jsonify(contracts)
 
 
@@ -59,7 +95,13 @@ def get_contract(contract_name: str):
     info = Settings.BLOCKCHAIN_CONTRACTS.get(contract_name)
     if not info:
         return jsonify({"error": "Unknown contract"}), 404
-    return jsonify({"address": info.get("address", ""), "abi": info.get("abi", [])})
+    return jsonify(
+        {
+            "address": info.get("address", ""),
+            "abi": info.get("abi", []),
+            "functions": ADMIN_CONTRACT_FUNCTIONS.get(contract_name, []),
+        }
+    )
 
 
 @adminPanelContractsBlueprint.route(
@@ -76,6 +118,10 @@ def interact(contract_name: str, method: str):
     info = Settings.BLOCKCHAIN_CONTRACTS.get(contract_name)
     if not info:
         return jsonify({"error": "Unknown contract"}), 404
+
+    allowed = ADMIN_CONTRACT_FUNCTIONS.get(contract_name, [])
+    if method not in allowed:
+        return jsonify({"error": "Function not allowed"}), 403
 
     payload = request.get_json(silent=True) or {}
     params = payload.get("params", [])
