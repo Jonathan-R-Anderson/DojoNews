@@ -159,24 +159,28 @@ class Settings:
     ABI_PATH = Path(__file__).resolve().parent / "abi"
     BLOCKCHAIN_CONTRACTS = {
         "Board": {
-            "address": "0x58A0Df72EF0195A2Ce115F0379dA0d4b5833B5b4",
+            "address": "0xe20Ba14058a6De592Ff9309A2B0D3B1c7cD18FB8",
             "abi": json.loads((ABI_PATH / "Board.json").read_text()),
         },
         "Posts": {
-            "address": "0x0000000000000000000000000000000000000000",
+            "address": "0xD594bf9FcfC4dD9A6dA8f65D5E29D9f71302a34E",
             "abi": json.loads((ABI_PATH / "Posts.json").read_text()),
         },
         "Comments": {
-            "address": "0x0000000000000000000000000000000000000000",
+            "address": "0x22EBB7E5Fa8b5E03f19F68f7F3925Bf84166F656",
             "abi": json.loads((ABI_PATH / "Comments.json").read_text()),
         },
         "PostStorage": {
-            "address": "0x73625B5ef40e8254E65179aBdD393733f6901A18",
+            "address": "0x1785Fa13F4b1cA4e512dBa71e213c86D0E019c91",
             "abi": json.loads((ABI_PATH / "PostStorage.json").read_text()),
         },
         "CommentStorage": {
-            "address": "0x96D82416251c601a285bA0eB92Df8b8A8E695Bc4",
+            "address": "0xCdB9Abfe1E5cc4Fba0E242F78Ddb0B37F85E5077",
             "abi": json.loads((ABI_PATH / "CommentStorage.json").read_text()),
+        },
+        "Moderation": {
+            "address": "0x3D44eE9487Bf815Fe9c0F619F415FDc32afb4170",
+            "abi": json.loads((ABI_PATH / "Moderation.json").read_text()),
         },
         "SponsorSlots": {
             "address": "0x4c01F8E45a0523e4B2f485dF47D35f7803e46f4D",
