@@ -13,11 +13,30 @@
     },
     {
       "inputs": [
+        {"internalType": "uint256", "name": "id", "type": "uint256"},
+        {"internalType": "string", "name": "name", "type": "string"}
+      ],
+      "name": "setBoardName",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
         {"internalType": "uint256", "name": "id", "type": "uint256"}
       ],
       "name": "getBoard",
       "outputs": [
         {"internalType": "string", "name": "name", "type": "string"}
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "sysop",
+      "outputs": [
+        {"internalType": "address", "name": "", "type": "address"}
       ],
       "stateMutability": "view",
       "type": "function"
@@ -32,12 +51,39 @@
       "type": "function"
     },
     {
+      "inputs": [
+        {"internalType": "address", "name": "newSysop", "type": "address"}
+      ],
+      "name": "transferSysop",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
       "anonymous": false,
       "inputs": [
         {"indexed": true, "internalType": "uint256", "name": "id", "type": "uint256"},
         {"indexed": false, "internalType": "string", "name": "name", "type": "string"}
       ],
       "name": "BoardCreated",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {"indexed": true, "internalType": "uint256", "name": "id", "type": "uint256"},
+        {"indexed": false, "internalType": "string", "name": "name", "type": "string"}
+      ],
+      "name": "BoardUpdated",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {"indexed": true, "internalType": "address", "name": "previousSysop", "type": "address"},
+        {"indexed": true, "internalType": "address", "name": "newSysop", "type": "address"}
+      ],
+      "name": "SysopTransferred",
       "type": "event"
     }
   ]
