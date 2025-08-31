@@ -1,47 +1,219 @@
 {
   "abi": [
     {
+      "inputs": [],
+      "stateMutability": "nonpayable",
+      "type": "constructor"
+    },
+    {
+      "anonymous": false,
       "inputs": [
-        {"internalType": "string", "name": "subject", "type": "string"},
-        {"internalType": "string", "name": "body", "type": "string"},
-        {"internalType": "string", "name": "email", "type": "string"},
-        {"internalType": "string", "name": "name", "type": "string"}
+        {
+          "indexed": true,
+          "internalType": "uint256",
+          "name": "id",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "internalType": "string",
+          "name": "subject",
+          "type": "string"
+        },
+        {
+          "indexed": false,
+          "internalType": "string",
+          "name": "body",
+          "type": "string"
+        },
+        {
+          "indexed": false,
+          "internalType": "string",
+          "name": "email",
+          "type": "string"
+        },
+        {
+          "indexed": false,
+          "internalType": "string",
+          "name": "name",
+          "type": "string"
+        }
+      ],
+      "name": "BoardCreated",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "uint256",
+          "name": "id",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "internalType": "string",
+          "name": "subject",
+          "type": "string"
+        },
+        {
+          "indexed": false,
+          "internalType": "string",
+          "name": "body",
+          "type": "string"
+        },
+        {
+          "indexed": false,
+          "internalType": "string",
+          "name": "email",
+          "type": "string"
+        },
+        {
+          "indexed": false,
+          "internalType": "string",
+          "name": "name",
+          "type": "string"
+        }
+      ],
+      "name": "BoardUpdated",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "previousSysop",
+          "type": "address"
+        },
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "newSysop",
+          "type": "address"
+        }
+      ],
+      "name": "SysopTransferred",
+      "type": "event"
+    },
+    {
+      "inputs": [],
+      "name": "boardCount",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "name": "boards",
+      "outputs": [
+        {
+          "internalType": "string",
+          "name": "subject",
+          "type": "string"
+        },
+        {
+          "internalType": "string",
+          "name": "body",
+          "type": "string"
+        },
+        {
+          "internalType": "string",
+          "name": "email",
+          "type": "string"
+        },
+        {
+          "internalType": "string",
+          "name": "name",
+          "type": "string"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "string",
+          "name": "subject",
+          "type": "string"
+        },
+        {
+          "internalType": "string",
+          "name": "body",
+          "type": "string"
+        },
+        {
+          "internalType": "string",
+          "name": "email",
+          "type": "string"
+        },
+        {
+          "internalType": "string",
+          "name": "name",
+          "type": "string"
+        }
       ],
       "name": "createBoard",
       "outputs": [
-        {"internalType": "uint256", "name": "id", "type": "uint256"}
+        {
+          "internalType": "uint256",
+          "name": "id",
+          "type": "uint256"
+        }
       ],
       "stateMutability": "nonpayable",
       "type": "function"
     },
     {
       "inputs": [
-        {"internalType": "uint256", "name": "id", "type": "uint256"},
-        {"internalType": "string", "name": "subject", "type": "string"},
-        {"internalType": "string", "name": "body", "type": "string"},
-        {"internalType": "string", "name": "email", "type": "string"},
-        {"internalType": "string", "name": "name", "type": "string"}
-      ],
-      "name": "updateBoard",
-      "outputs": [],
-      "stateMutability": "nonpayable",
-      "type": "function"
-    },
-    {
-      "inputs": [
-        {"internalType": "uint256", "name": "id", "type": "uint256"}
+        {
+          "internalType": "uint256",
+          "name": "id",
+          "type": "uint256"
+        }
       ],
       "name": "getBoard",
       "outputs": [
         {
           "components": [
-            {"internalType": "string", "name": "subject", "type": "string"},
-            {"internalType": "string", "name": "body", "type": "string"},
-            {"internalType": "string", "name": "email", "type": "string"},
-            {"internalType": "string", "name": "name", "type": "string"}
+            {
+              "internalType": "string",
+              "name": "subject",
+              "type": "string"
+            },
+            {
+              "internalType": "string",
+              "name": "body",
+              "type": "string"
+            },
+            {
+              "internalType": "string",
+              "name": "email",
+              "type": "string"
+            },
+            {
+              "internalType": "string",
+              "name": "name",
+              "type": "string"
+            }
           ],
           "internalType": "struct Board.BoardInfo",
-          "name": "",
+          "name": "b",
           "type": "tuple"
         }
       ],
@@ -52,23 +224,22 @@
       "inputs": [],
       "name": "sysop",
       "outputs": [
-        {"internalType": "address", "name": "", "type": "address"}
-      ],
-      "stateMutability": "view",
-      "type": "function"
-    },
-    {
-      "inputs": [],
-      "name": "boardCount",
-      "outputs": [
-        {"internalType": "uint256", "name": "", "type": "uint256"}
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        }
       ],
       "stateMutability": "view",
       "type": "function"
     },
     {
       "inputs": [
-        {"internalType": "address", "name": "newSysop", "type": "address"}
+        {
+          "internalType": "address",
+          "name": "newSysop",
+          "type": "address"
+        }
       ],
       "name": "transferSysop",
       "outputs": [],
@@ -76,37 +247,38 @@
       "type": "function"
     },
     {
-      "anonymous": false,
       "inputs": [
-        {"indexed": true, "internalType": "uint256", "name": "id", "type": "uint256"},
-        {"indexed": false, "internalType": "string", "name": "subject", "type": "string"},
-        {"indexed": false, "internalType": "string", "name": "body", "type": "string"},
-        {"indexed": false, "internalType": "string", "name": "email", "type": "string"},
-        {"indexed": false, "internalType": "string", "name": "name", "type": "string"}
+        {
+          "internalType": "uint256",
+          "name": "id",
+          "type": "uint256"
+        },
+        {
+          "internalType": "string",
+          "name": "subject",
+          "type": "string"
+        },
+        {
+          "internalType": "string",
+          "name": "body",
+          "type": "string"
+        },
+        {
+          "internalType": "string",
+          "name": "email",
+          "type": "string"
+        },
+        {
+          "internalType": "string",
+          "name": "name",
+          "type": "string"
+        }
       ],
-      "name": "BoardCreated",
-      "type": "event"
-    },
-    {
-      "anonymous": false,
-      "inputs": [
-        {"indexed": true, "internalType": "uint256", "name": "id", "type": "uint256"},
-        {"indexed": false, "internalType": "string", "name": "subject", "type": "string"},
-        {"indexed": false, "internalType": "string", "name": "body", "type": "string"},
-        {"indexed": false, "internalType": "string", "name": "email", "type": "string"},
-        {"indexed": false, "internalType": "string", "name": "name", "type": "string"}
-      ],
-      "name": "BoardUpdated",
-      "type": "event"
-    },
-    {
-      "anonymous": false,
-      "inputs": [
-        {"indexed": true, "internalType": "address", "name": "previousSysop", "type": "address"},
-        {"indexed": true, "internalType": "address", "name": "newSysop", "type": "address"}
-      ],
-      "name": "SysopTransferred",
-      "type": "event"
+      "name": "updateBoard",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
     }
   ]
 }
+
