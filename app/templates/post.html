@@ -29,6 +29,7 @@
     <h1 class="text-2xl md:text-3xl mt-3 text-rose-500 w-full text-center font-bold">{{ title }}</h1>
     <div class="flex items-center justify-center gap-2 my-4 select-none opacity-75">
         <p class="text-sm font-medium"><span id="reading-time">{{ reading_time }}</span> {{ translations.post.minRead }}</p>
+        {% if timeStamp %}<p class="text-sm">{{ timeStamp }}</p>{% endif %}
     </div>
     <div class="text-center font-sm max-w-full">{{ abstract }}</div>
     <div class="divider"></div>
@@ -79,6 +80,7 @@
     const postUrlID = {{ id }};
     window.postAuthor = "{{ author }}";
     window.blacklistedComments = {{ blacklisted_comments | tojson }};
+    window.boardWordFilters = {{ word_filters | tojson }};
     document.getElementById('blacklist-author')?.addEventListener('click', () => {
         if (window.Blacklist) {
             window.Blacklist.addAuthor('{{ author }}');

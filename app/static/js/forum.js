@@ -18,7 +18,7 @@ async function loadForumTiles() {
         tile.style.backgroundImage = `url(${b.latestImage})`;
         tile.innerHTML = `<div class="forum-tile-overlay"><span class="forum-tile-title">${b.name}</span></div>`;
         tile.addEventListener('click', () => {
-            window.location.href = `/board/${idx}`;
+            window.location.href = `/board`;
         });
         container.appendChild(tile);
     });

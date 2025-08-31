@@ -49,15 +49,24 @@
       ...(userBL.comments || [])
     ].map((n) => parseInt(n)));
 
-    const commentsEl = document.getElementById('comments');
-    const form = document.getElementById('comment-form');
-    const textarea = document.getElementById('comment-input');
-    const loginPrompt = document.getElementById('comment-login-prompt');
-    const loadedComments = new Set();
+  const commentsEl = document.getElementById('comments');
+  const form = document.getElementById('comment-form');
+  const textarea = document.getElementById('comment-input');
+  const loginPrompt = document.getElementById('comment-login-prompt');
+  const loadedComments = new Set();
+
+    function applyFilters(text) {
+      const filters = window.boardWordFilters || {};
+      for (const [bad, good] of Object.entries(filters)) {
+        const regex = new RegExp(bad, 'gi');
+        text = text.replace(regex, good);
+      }
+      return text;
+    }
 
     function formatContent(text) {
       return text.replace(/#(\d+)/g, (m, id) =>
-        `<a href="#comment-${id}" data-ref-id="${id}" class="comment-ref">#${id}</a>`
+        `<a href="#${id}" data-ref-id="${id}" class="comment-ref">#${id}</a>`
       );
     }
 
@@ -96,7 +105,7 @@
       });
     }
 
-    function renderComment(id, author, content) {
+    function renderComment(id, author, content, timestamp) {
       if (loadedComments.has(id)) return;
       loadedComments.add(id);
       if (commentsEl.firstChild && !commentsEl.firstChild.dataset.commentId) {
@@ -105,9 +114,10 @@
       const div = document.createElement('div');
       div.className = 'my-2 p-2 border rounded';
       div.dataset.commentId = id;
-      div.id = `comment-${id}`;
-      const safe = renderMarkdownSafe(formatContent(content));
-      div.innerHTML = `<p class="mb-1">${safe}</p><p class="text-sm opacity-70">#${id} ${author}</p>`;
+      div.id = `${id}`;
+      const safe = renderMarkdownSafe(formatContent(applyFilters(content)));
+      const timeText = timestamp ? new Date(timestamp * 1000).toLocaleString() : '';
+      div.innerHTML = `<p class="mb-1">${safe}</p><p class="text-sm opacity-70">#${id} ${author} ${timeText}</p>`;
       commentsEl.appendChild(div);
       setupReferences(div);
     }
@@ -128,7 +138,14 @@
         try {
           const c = await contract.getComment(i);
           if (c.postId.toString() !== postUrlID.toString() || localBlacklist.has(i) || (userBL.authors || []).includes(c.author.toLowerCase())) continue;
-          renderComment(i, c.username, c.body);
+          const filter = contract.filters.CommentAdded(i);
+          const events = await contract.queryFilter(filter);
+          let ts = 0;
+          if (events.length) {
+            const block = await provider.getBlock(events[0].blockNumber);
+            ts = block.timestamp;
+          }
+          renderComment(i, c.username, c.body, ts);
         } catch (err) {
           debug('getComment failed', i, err);
         }
@@ -137,6 +154,11 @@
         commentsEl.innerHTML = '<p>No comments yet.</p>';
       }
       window.dispatchEvent(new Event('comments-updated'));
+      const hash = window.location.hash.slice(1);
+      if (hash) {
+        const t = commentsEl.querySelector(`[data-comment-id="${hash}"]`);
+        if (t) t.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
     }
 
     async function submitComment(e) {
@@ -198,11 +220,18 @@
 
     await loadExistingComments();
 
-    contract.on('CommentAdded', (commentId, postId, author, content) => {
+    contract.on('CommentAdded', async (commentId, postId, author, username, email, content, event) => {
       if (postId.toString() !== postUrlID.toString()) return;
       const id = commentId.toNumber ? commentId.toNumber() : parseInt(commentId);
       if (localBlacklist.has(id) || (userBL.authors || []).includes(author.toLowerCase())) return;
-      renderComment(id, author, content);
+      let ts = 0;
+      try {
+        const block = await provider.getBlock(event.blockNumber);
+        ts = block.timestamp;
+      } catch (err) {
+        debug('block fetch failed', err);
+      }
+      renderComment(id, author, content, ts);
       window.dispatchEvent(new Event('comments-updated'));
     });
   }

@@ -1,7 +1,9 @@
 import os
 from math import ceil
 from re import sub
+import re
 import sqlite3
+from datetime import datetime
 
 from flask import (
     Blueprint,
@@ -40,6 +42,8 @@ def _get_onchain_post(urlID: int):
 
 @postBlueprint.route("/post/<int:urlID>", methods=["GET"])
 @postBlueprint.route("/post/<slug>-<int:urlID>", methods=["GET"])
+@postBlueprint.route("/board/<int:urlID>", methods=["GET"])
+@postBlueprint.route("/board/<slug>-<int:urlID>", methods=["GET"])
 def post(urlID: int, slug: str | None = None):
     with sqlite3.connect(Settings.DB_POSTS_ROOT) as connection:
         connection.set_trace_callback(Log.database)
@@ -69,10 +73,34 @@ def post(urlID: int, slug: str | None = None):
 
     postSlug = getSlugFromPostTitle(title) if title else slug
     if title and slug != postSlug:
-        return redirect(url_for("post.post", urlID=urlID, slug=postSlug))
+        return redirect(f"/board/{postSlug}-{urlID}")
+
+    def apply_filters(text: str) -> str:
+        for bad, good in Settings.BOARD_WORD_FILTERS.items():
+            text = re.sub(bad, good, text, flags=re.IGNORECASE)
+        return text
+
+    title = apply_filters(title)
+    tags = apply_filters(tags)
+    abstract = apply_filters(abstract)
+    content = apply_filters(content)
 
     clean_text = sub(r"<[^>]+>", "", content)
     reading_time = max(1, ceil(len(clean_text.split()) / 200))
+
+    timestamp = 0
+    try:
+        contract_info = Settings.BLOCKCHAIN_CONTRACTS["PostStorage"]
+        w3 = Web3(Web3.HTTPProvider(Settings.BLOCKCHAIN_RPC_URL))
+        contract = w3.eth.contract(address=contract_info["address"], abi=contract_info["abi"])
+        events = contract.events.PostCreated.create_filter(
+            fromBlock=0, argument_filters={"postId": urlID}
+        ).get_all_entries()
+        if events:
+            block = w3.eth.get_block(events[0]["blockNumber"])
+            timestamp = block.get("timestamp", 0)
+    except Exception as exc:  # pragma: no cover - network errors
+        Log.error(f"Failed to fetch timestamp for {urlID}: {exc}")
 
     if Settings.ANALYTICS:
         try:
@@ -104,7 +132,7 @@ def post(urlID: int, slug: str | None = None):
         author=author,
         views=0,
         downvotes=0,
-        timeStamp="",
+        timeStamp=datetime.utcfromtimestamp(timestamp).strftime("%Y-%m-%d %H:%M") if timestamp else "",
         lastEditTimeStamp="",
         urlID=urlID,
         comments=[],
@@ -127,10 +155,12 @@ def post(urlID: int, slug: str | None = None):
         blacklisted_comments=deleted_comments,
         hideNavbar=True,
         hideSearch=True,
+        word_filters=Settings.BOARD_WORD_FILTERS,
     )
 
 
 @postBlueprint.route("/post/<int:urlID>/audio")
+@postBlueprint.route("/board/<int:urlID>/audio")
 def post_audio(urlID: int):
     onchain = _get_onchain_post(urlID)
     if not onchain:
@@ -148,6 +178,7 @@ def post_audio(urlID: int):
 
 
 @postBlueprint.route("/post/<int:urlID>/comment-tree")
+@postBlueprint.route("/board/<int:urlID>/comment-tree")
 def comment_tree(urlID: int):
     """Return a similarity tree for comments on ``urlID``."""
 
