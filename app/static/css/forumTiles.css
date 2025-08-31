@@ -1,0 +1,43 @@
+/* Forum board tiles styling */
+
+.forum-tiles-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 1rem;
+}
+
+.forum-tile {
+    position: relative;
+    padding-top: 100%; /* square */
+    background-size: cover;
+    background-position: center;
+    border-radius: 0.5rem;
+    overflow: hidden;
+    cursor: pointer;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.15s ease, box-shadow 0.3s ease;
+}
+
+.forum-tile:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.forum-tile-overlay {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0));
+    padding: 0.5rem;
+}
+
+.forum-tile-title {
+    font-size: 0.875rem;
+    font-weight: 600;
+    background-color: rgba(255, 255, 255, 0.85);
+    color: #000;
+    padding: 0.25rem 0.5rem;
+    border-radius: 0.25rem;
+}

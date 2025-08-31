@@ -14,8 +14,9 @@ async function loadForumTiles() {
     const boards = await forum.getBoards();
     boards.forEach((b, idx) => {
         const tile = document.createElement('div');
-        tile.className = 'post-tile';
-        tile.innerHTML = `<img src="${b.latestImage}" alt="${b.name}" class="w-full h-32 object-cover"/><p class="mt-1 text-center">${b.name}</p>`;
+        tile.className = 'forum-tile';
+        tile.style.backgroundImage = `url(${b.latestImage})`;
+        tile.innerHTML = `<div class="forum-tile-overlay"><span class="forum-tile-title">${b.name}</span></div>`;
         tile.addEventListener('click', () => {
             window.location.href = `/board/${idx}`;
         });
