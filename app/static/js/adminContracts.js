@@ -2,6 +2,9 @@
     const debug = (...args) => window.debugLog('adminContracts.js', ...args);
     debug('Loaded');
 
+    const csrfTokenInput = document.querySelector('input[name="csrf_token"]');
+    const csrfToken = csrfTokenInput ? csrfTokenInput.value : null;
+
     const metrics = {};
     document.querySelectorAll('.contract-form').forEach((form) => {
         const contract = form.dataset.contract;
@@ -49,7 +52,10 @@
             try {
                 const res = await fetch(`/admin/contracts/${contract}/${method}`, {
                     method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
+                    headers: {
+                        'Content-Type': 'application/json',
+                        ...(csrfToken ? { 'X-CSRFToken': csrfToken } : {}),
+                    },
                     body: JSON.stringify({ params, action, txOptions }),
                 });
                 const data = await res.json();
