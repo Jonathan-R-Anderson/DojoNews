@@ -1,0 +1,12 @@
+{% extends 'layout.html' %}
+{% block head %}
+<title>Forum</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/forumTiles.css') }}" />
+{% endblock head %}
+{% block body %}
+<div id="board-tiles" class="forum-tiles-grid mx-auto w-11/12 md:w-10/12 lg:w-9/12 2xl:w-8/12 mt-6"></div>
+{% endblock body %}
+{% block scripts %}
+<script src="https://cdn.jsdelivr.net/npm/ethers@5.7.2/dist/ethers.umd.min.js"></script>
+<script src="{{ url_for('static', filename='js/forum.js') }}"></script>
+{% endblock scripts %}

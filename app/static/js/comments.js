@@ -114,24 +114,24 @@
 
     async function loadExistingComments() {
       debug('Loading existing comments');
-      let nextId;
+      let total;
       try {
-        nextId = await contract.nextCommentId();
+        total = await contract.commentCount();
       } catch (err) {
-        debug('nextCommentId failed', err);
+        debug('commentCount failed', err);
         commentsEl.textContent = 'Failed to load comments.';
         return;
       }
-      const total = nextId.toNumber ? nextId.toNumber() : parseInt(nextId);
-      for (let i = 0; i < total; i++) {
+      const count = total.toNumber ? total.toNumber() : parseInt(total);
+      for (let i = 0; i < count; i++) {
         if (loadedComments.has(i)) continue;
         try {
           const c = await contract.getComment(i);
-        if (!c.exists || c.postId.toString() !== postUrlID.toString() || c.blacklisted || localBlacklist.has(i) || (userBL.authors || []).includes(c.author.toLowerCase())) continue;
-        renderComment(i, c.author, c.content);
-      } catch (err) {
-        debug('getComment failed', i, err);
-      }
+          if (c.postId.toString() !== postUrlID.toString() || localBlacklist.has(i) || (userBL.authors || []).includes(c.author.toLowerCase())) continue;
+          renderComment(i, c.username, c.body);
+        } catch (err) {
+          debug('getComment failed', i, err);
+        }
       }
       if (loadedComments.size === 0) {
         commentsEl.innerHTML = '<p>No comments yet.</p>';
@@ -156,7 +156,7 @@
           window.commentContractAbi,
           signer
         );
-        const tx = await c.addComment(postUrlID, content);
+        const tx = await c.addComment(postUrlID, '', '', content);
         await tx.wait();
         textarea.value = '';
       } catch (err) {
