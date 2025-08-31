@@ -46,13 +46,13 @@ Visit `http://localhost:1283` in your browser.
 
 ### Docker Compose
 
-Run the app and a local Ethereum test chain with separate containers:
+Run the app with Docker:
 
 ```bash
 docker-compose up --build
 ```
 
-The Flask service listens on `1283` while Ganache exposes `8545`.
+The Flask service listens on `1283`.
 
 ### Blockchain
 
