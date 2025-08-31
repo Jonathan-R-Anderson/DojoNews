@@ -9,7 +9,7 @@ let currentTreeSignature = "";
 async function fetchCommentTree() {
   debug('fetchCommentTree');
   try {
-    const response = await fetch(`/post/${postUrlID}/comment-tree`);
+    const response = await fetch(`/board/${postUrlID}/comment-tree`);
     const data = await response.json();
     debug('comment tree data', data);
     const signature = data.nodes.map((n) => n.id).sort().join(",");

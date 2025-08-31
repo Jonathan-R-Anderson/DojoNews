@@ -2,6 +2,15 @@
     const debug = (...args) => window.debugLog('loadPosts.js', ...args);
     debug('Loaded');
 
+    function applyFilters(text) {
+        const filters = window.boardWordFilters || {};
+        for (const [bad, good] of Object.entries(filters)) {
+            const regex = new RegExp(bad, 'gi');
+            text = text.replace(regex, good);
+        }
+        return text;
+    }
+
     (async () => {
     debug('Loading posts');
     if (typeof ethers === 'undefined') {
@@ -38,10 +47,10 @@
                 continue;
             }
             const parts = p.contentHash.split('|');
-            const title = parts[0] || '';
+            const title = applyFilters(parts[0] || '');
             const category = parts[4] || '';
             const link = document.createElement('a');
-            link.href = `/post/${id}`;
+            link.href = `/board/${id}`;
             link.className = 'post-tile';
             link.dataset.postId = id;
             link.dataset.w = Math.floor(Math.random() * 3) + 1;
