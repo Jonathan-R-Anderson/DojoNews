@@ -1,0 +1,14 @@
+version: '3.8'
+services:
+  web:
+    build: .
+    ports:
+      - "1283:1283"
+    volumes:
+      - ./app:/app
+    depends_on:
+      - blockchain
+  blockchain:
+    image: trufflesuite/ganache-cli
+    ports:
+      - "8545:8545"
