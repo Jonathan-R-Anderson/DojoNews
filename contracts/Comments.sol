@@ -15,6 +15,7 @@ contract Comments {
         uint256 postId;
     }
 
+    address public sysop;
     IPosts public postsContract;
     uint256 public commentCount;
     mapping(uint256 => Comment) public comments;
@@ -27,8 +28,25 @@ contract Comments {
         string email,
         string body
     );
+    event SysopTransferred(address indexed previousSysop, address indexed newSysop);
+
+    modifier onlySysop() {
+        require(msg.sender == sysop, "only sysop");
+        _;
+    }
 
     constructor(address postsAddress) {
+        sysop = msg.sender;
+        postsContract = IPosts(postsAddress);
+    }
+
+    function transferSysop(address newSysop) external onlySysop {
+        require(newSysop != address(0), "bad sysop");
+        emit SysopTransferred(sysop, newSysop);
+        sysop = newSysop;
+    }
+
+    function setPostsContract(address postsAddress) external onlySysop {
         postsContract = IPosts(postsAddress);
     }
 

@@ -22,6 +22,15 @@
       "type": "event"
     },
     {
+      "anonymous": false,
+      "inputs": [
+        {"indexed": true, "internalType": "address", "name": "previousSysop", "type": "address"},
+        {"indexed": true, "internalType": "address", "name": "newSysop", "type": "address"}
+      ],
+      "name": "SysopTransferred",
+      "type": "event"
+    },
+    {
       "inputs": [
         {"internalType": "uint256", "name": "boardId", "type": "uint256"},
         {"internalType": "string", "name": "username", "type": "string"},
@@ -61,11 +70,47 @@
     },
     {
       "inputs": [],
+      "name": "boardContract",
+      "outputs": [
+        {"internalType": "address", "name": "", "type": "address"}
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
       "name": "postCount",
       "outputs": [
         {"internalType": "uint256", "name": "", "type": "uint256"}
       ],
       "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "sysop",
+      "outputs": [
+        {"internalType": "address", "name": "", "type": "address"}
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {"internalType": "address", "name": "newSysop", "type": "address"}
+      ],
+      "name": "transferSysop",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {"internalType": "address", "name": "boardAddress", "type": "address"}
+      ],
+      "name": "setBoardContract",
+      "outputs": [],
+      "stateMutability": "nonpayable",
       "type": "function"
     }
   ]

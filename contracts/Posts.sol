@@ -16,6 +16,7 @@ contract Posts {
         uint256 boardId;
     }
 
+    address public sysop;
     IBoard public boardContract;
     uint256 public postCount;
     mapping(uint256 => Post) public posts;
@@ -29,8 +30,25 @@ contract Posts {
         string subject,
         string body
     );
+    event SysopTransferred(address indexed previousSysop, address indexed newSysop);
+
+    modifier onlySysop() {
+        require(msg.sender == sysop, "only sysop");
+        _;
+    }
 
     constructor(address boardAddress) {
+        sysop = msg.sender;
+        boardContract = IBoard(boardAddress);
+    }
+
+    function transferSysop(address newSysop) external onlySysop {
+        require(newSysop != address(0), "bad sysop");
+        emit SysopTransferred(sysop, newSysop);
+        sysop = newSysop;
+    }
+
+    function setBoardContract(address boardAddress) external onlySysop {
         boardContract = IBoard(boardAddress);
     }
 
