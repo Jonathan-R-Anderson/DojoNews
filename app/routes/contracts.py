@@ -34,7 +34,16 @@ def interact(contract_name, method):
         return jsonify({"error": "Unknown contract"}), 404
 
     payload = request.get_json(silent=True) or {}
-    params = payload.get("params", [])
+    raw_params = payload.get("params", [])
+    params = []
+    for p in raw_params:
+        if isinstance(p, str):
+            try:
+                params.append(json.loads(p))
+                continue
+            except json.JSONDecodeError:
+                pass
+        params.append(p)
     tx_options = payload.get("txOptions", {})
     action = payload.get("action", "call")
 

@@ -157,38 +157,46 @@ class Settings:
     ADMIN_WALLET_ADDRESS = "0xB2b36AaD18d7be5d4016267BC4cCec2f12a64b6e"
     # Addresses and ABIs for individual smart contracts managed by the sysop
     ABI_PATH = Path(__file__).resolve().parent / "abi"
+
+    @staticmethod
+    def _load_abi(file_name: str):
+        """Return the ABI list from ``file_name`` regardless of artifact format."""
+        path = Path(__file__).resolve().parent / "abi" / file_name
+        data = json.loads(path.read_text())
+        return data.get("abi", data) if isinstance(data, dict) else data
+
     BLOCKCHAIN_CONTRACTS = {
         "Board": {
             "address": "0xe20Ba14058a6De592Ff9309A2B0D3B1c7cD18FB8",
-            "abi": json.loads((ABI_PATH / "Board.json").read_text()),
+            "abi": _load_abi("Board.json"),
         },
         "Posts": {
             "address": "0xD594bf9FcfC4dD9A6dA8f65D5E29D9f71302a34E",
-            "abi": json.loads((ABI_PATH / "Posts.json").read_text()),
+            "abi": _load_abi("Posts.json"),
         },
         "Comments": {
             "address": "0x22EBB7E5Fa8b5E03f19F68f7F3925Bf84166F656",
-            "abi": json.loads((ABI_PATH / "Comments.json").read_text()),
+            "abi": _load_abi("Comments.json"),
         },
         "PostStorage": {
             "address": "0x1785Fa13F4b1cA4e512dBa71e213c86D0E019c91",
-            "abi": json.loads((ABI_PATH / "PostStorage.json").read_text()),
+            "abi": _load_abi("PostStorage.json"),
         },
         "CommentStorage": {
             "address": "0xCdB9Abfe1E5cc4Fba0E242F78Ddb0B37F85E5077",
-            "abi": json.loads((ABI_PATH / "CommentStorage.json").read_text()),
+            "abi": _load_abi("CommentStorage.json"),
         },
         "Moderation": {
             "address": "0x3D44eE9487Bf815Fe9c0F619F415FDc32afb4170",
-            "abi": json.loads((ABI_PATH / "Moderation.json").read_text()),
+            "abi": _load_abi("Moderation.json"),
         },
         "SponsorSlots": {
             "address": "0x4c01F8E45a0523e4B2f485dF47D35f7803e46f4D",
-            "abi": json.loads((ABI_PATH / "SponsorSlots.json").read_text()),
+            "abi": _load_abi("SponsorSlots.json"),
         },
         "TipJar": {
             "address": "0x2c99CD9A504E01bb0d68540446B57c9582456931",
-            "abi": json.loads((ABI_PATH / "TipJar.json").read_text()),
+            "abi": _load_abi("TipJar.json"),
         },
     }
 
