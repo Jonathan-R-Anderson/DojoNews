@@ -185,6 +185,9 @@ def editPost(urlID):
                     content=post[3],
                     form=form,
                     categories=categories,
+                    post_contract_address=Settings.BLOCKCHAIN_CONTRACTS["PostStorage"]["address"],
+                    post_contract_abi=Settings.BLOCKCHAIN_CONTRACTS["PostStorage"]["abi"],
+                    rpc_url=Settings.BLOCKCHAIN_RPC_URL,
                 )
             else:
                 flashMessage(

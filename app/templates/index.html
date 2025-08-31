@@ -51,6 +51,8 @@
     </a>
 </div>
 
+<div id="board-tiles" class="post-tiles-grid mx-auto w-11/12 md:w-10/12 lg:w-9/12 2xl:w-8/12 mt-6"></div>
+
 <div
     class="flex justify-between mx-auto w-11/12 md:w-10/12 lg:w-9/12 2xl:w-8/12 mt-8"
 >
@@ -80,6 +82,8 @@
 {% endblock body %}
 
 {% block scripts %}
+  <script src="https://cdn.jsdelivr.net/npm/ethers@5.7.2/dist/ethers.umd.min.js"></script>
+  <script src="{{ url_for('static', filename='js/forum.js') }}"></script>
   <script src="{{ url_for('static', filename='js/postTilesLayout.js') }}"></script>
   <script src="{{ url_for('static', filename='js/loadPosts.js') }}"></script>
   <script src="{{ url_for('static', filename='js/postStats.js') }}"></script>
