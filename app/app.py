@@ -73,6 +73,8 @@ from routes.passwordReset import (
 from routes.post import postBlueprint
 from routes.board import boardBlueprint
 from routes.forum import forumBlueprint
+from routes.boards import boardsBlueprint
+from routes.posts import postsBlueprint
 from routes.postStats import postStatsBlueprint
 from routes.postsAnalytics import (
     analyticsBlueprint,
@@ -306,6 +308,8 @@ app.register_blueprint(postStatsBlueprint)
 app.register_blueprint(adminPanelActivityBlueprint)
 app.register_blueprint(boardBlueprint)
 app.register_blueprint(forumBlueprint)
+app.register_blueprint(boardsBlueprint)
+app.register_blueprint(postsBlueprint)
 app.register_blueprint(commentsBlueprint)
 app.register_blueprint(apiBlueprint)
 app.register_blueprint(contractsBlueprint)
