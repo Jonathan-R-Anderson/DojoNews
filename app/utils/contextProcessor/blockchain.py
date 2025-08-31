@@ -7,7 +7,7 @@ def inject_blockchain():
     if "walletAddress" not in session:
         return {}
     post_contract = Settings.BLOCKCHAIN_CONTRACTS.get("PostStorage", {})
-    comment_contract = Settings.BLOCKCHAIN_CONTRACTS.get("CommentStorage", {})
+    comment_contract = Settings.BLOCKCHAIN_CONTRACTS.get("Comments", {})
     tip_jar_contract = Settings.BLOCKCHAIN_CONTRACTS.get("TipJar", {})
     return {
         "rpc_url": Settings.BLOCKCHAIN_RPC_URL,

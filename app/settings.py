@@ -158,6 +158,18 @@ class Settings:
     # Addresses and ABIs for individual smart contracts managed by the sysop
     ABI_PATH = Path(__file__).resolve().parent / "abi"
     BLOCKCHAIN_CONTRACTS = {
+        "Board": {
+            "address": "0x0000000000000000000000000000000000000000",
+            "abi": json.loads((ABI_PATH / "Board.json").read_text()),
+        },
+        "Posts": {
+            "address": "0x0000000000000000000000000000000000000000",
+            "abi": json.loads((ABI_PATH / "Posts.json").read_text()),
+        },
+        "Comments": {
+            "address": "0x0000000000000000000000000000000000000000",
+            "abi": json.loads((ABI_PATH / "Comments.json").read_text()),
+        },
         "PostStorage": {
             "address": "0x73625B5ef40e8254E65179aBdD393733f6901A18",
             "abi": json.loads((ABI_PATH / "PostStorage.json").read_text()),

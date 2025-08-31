@@ -117,8 +117,8 @@ def post(urlID: int, slug: str | None = None):
         rpc_url=Settings.BLOCKCHAIN_RPC_URL,
         post_contract_address=Settings.BLOCKCHAIN_CONTRACTS["PostStorage"]["address"],
         post_contract_abi=Settings.BLOCKCHAIN_CONTRACTS["PostStorage"]["abi"],
-        comment_contract_address=Settings.BLOCKCHAIN_CONTRACTS["CommentStorage"]["address"],
-        comment_contract_abi=Settings.BLOCKCHAIN_CONTRACTS["CommentStorage"]["abi"],
+        comment_contract_address=Settings.BLOCKCHAIN_CONTRACTS["Comments"]["address"],
+        comment_contract_abi=Settings.BLOCKCHAIN_CONTRACTS["Comments"]["abi"],
         tip_jar_address=Settings.BLOCKCHAIN_CONTRACTS["TipJar"]["address"],
         tip_jar_abi=Settings.BLOCKCHAIN_CONTRACTS["TipJar"]["abi"],
         content=content,
@@ -151,15 +151,15 @@ def post_audio(urlID: int):
 def comment_tree(urlID: int):
     """Return a similarity tree for comments on ``urlID``."""
 
-    contract_info = Settings.BLOCKCHAIN_CONTRACTS["CommentStorage"]
+    contract_info = Settings.BLOCKCHAIN_CONTRACTS["Comments"]
     w3 = Web3(Web3.HTTPProvider(Settings.BLOCKCHAIN_RPC_URL))
     contract = w3.eth.contract(
         address=contract_info["address"], abi=contract_info["abi"]
     )
     try:
-        next_id = contract.functions.nextCommentId().call()
+        next_id = contract.functions.commentCount().call()
     except Exception as exc:  # pragma: no cover - network errors
-        Log.error(f"comment-tree: nextCommentId failed: {exc}")
+        Log.error(f"comment-tree: commentCount failed: {exc}")
         return jsonify({"nodes": [], "links": []})
 
     deleted = set()
@@ -180,10 +180,10 @@ def comment_tree(urlID: int):
         except Exception as exc:  # pragma: no cover - network errors
             Log.error(f"comment-tree: getComment failed: {cid} {exc}")
             continue
-        author, post_id, content, exists, blacklisted = c
-        if not exists or blacklisted or post_id != urlID or cid in deleted:
+        (author, username, email, body, post_id) = c
+        if post_id != urlID or cid in deleted:
             continue
-        comments.append((cid, author, content))
+        comments.append((cid, username, body))
 
     tree = build_comment_tree(comments)
     return jsonify(tree)
