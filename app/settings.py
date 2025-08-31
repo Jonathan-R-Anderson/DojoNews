@@ -159,7 +159,7 @@ class Settings:
     ABI_PATH = Path(__file__).resolve().parent / "abi"
     BLOCKCHAIN_CONTRACTS = {
         "Board": {
-            "address": "0x0000000000000000000000000000000000000000",
+            "address": "0x58A0Df72EF0195A2Ce115F0379dA0d4b5833B5b4",
             "abi": json.loads((ABI_PATH / "Board.json").read_text()),
         },
         "Posts": {
