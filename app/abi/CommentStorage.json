@@ -1,6 +1,12 @@
 [
     {
-      "inputs": [],
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "moderationAddress",
+          "type": "address"
+        }
+      ],
       "stateMutability": "nonpayable",
       "type": "constructor"
     },
@@ -210,6 +216,19 @@
     },
     {
       "inputs": [],
+      "name": "moderationContract",
+      "outputs": [
+        {
+          "internalType": "contract IModeration",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
       "name": "nextCommentId",
       "outputs": [
         {
@@ -265,4 +284,4 @@
       "stateMutability": "nonpayable",
       "type": "function"
     }
-]
+  ]
