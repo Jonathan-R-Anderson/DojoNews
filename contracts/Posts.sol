@@ -6,6 +6,10 @@ interface IBoard {
     function boardCount() external view returns (uint256);
 }
 
+interface IModeration {
+    function isBanned(address user) external view returns (bool);
+}
+
 contract Posts {
     struct Post {
         address author;
@@ -18,6 +22,7 @@ contract Posts {
 
     address public sysop;
     IBoard public boardContract;
+    IModeration public moderationContract;
     uint256 public postCount;
     mapping(uint256 => Post) public posts;
 
@@ -37,10 +42,12 @@ contract Posts {
         _;
     }
 
-    constructor(address boardAddress) {
+    constructor(address boardAddress, address moderationAddress) {
         require(boardAddress != address(0), "invalid board address");
+        require(moderationAddress != address(0), "invalid moderation address");
         sysop = msg.sender;
         boardContract = IBoard(boardAddress);
+        moderationContract = IModeration(moderationAddress);
     }
 
     function transferSysop(address newSysop) external onlySysop {
@@ -64,6 +71,7 @@ contract Posts {
         string calldata body
     ) external returns (uint256 id) {
         require(boardId < boardContract.boardCount(), "invalid board");
+        require(!moderationContract.isBanned(msg.sender), "banned");
         string memory name = bytes(username).length > 0 ? username : "Anonymous";
         id = postCount++;
         posts[id] = Post(msg.sender, name, email, subject, body, boardId);
