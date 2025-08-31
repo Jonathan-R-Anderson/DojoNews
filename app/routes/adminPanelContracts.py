@@ -5,7 +5,7 @@ This blueprint mirrors the generic contract interaction endpoints exposed under
 also keeps the previous ability for admins to update contract addresses.
 """
 
-from flask import Blueprint, jsonify, redirect, request, session
+from flask import Blueprint, jsonify, redirect, render_template, request, session
 from settings import Settings
 from utils.log import Log
 from web3 import Web3
@@ -22,7 +22,7 @@ def _is_admin() -> bool:
 
 @adminPanelContractsBlueprint.route("/admin/contracts", methods=["GET", "POST"])
 def list_or_update_contracts():
-    """List known contracts or allow admins to update contract addresses."""
+    """Render the contract control panel or handle address updates."""
     if not _is_admin():
         Log.error(
             f"{request.remote_addr} tried to reach contracts admin panel without being admin"
@@ -37,12 +37,21 @@ def list_or_update_contracts():
                 f"Admin: {session['walletAddress']} updated address for {name}"
             )
             Settings.BLOCKCHAIN_CONTRACTS[name]["address"] = address
+        return redirect("/admin/contracts")
 
     contracts = {
-        name: {"address": info.get("address", "")}
+        name: {
+            "address": info.get("address", ""),
+            "abi": info.get("abi", []),
+        }
         for name, info in Settings.BLOCKCHAIN_CONTRACTS.items()
     }
-    return jsonify(contracts)
+    return render_template(
+        "adminPanelContracts.html",
+        contracts=contracts,
+        rpc_url=Settings.BLOCKCHAIN_RPC_URL,
+        admin_check=True,
+    )
 
 
 @adminPanelContractsBlueprint.route(
