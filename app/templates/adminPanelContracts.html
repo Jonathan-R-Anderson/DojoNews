@@ -8,8 +8,9 @@
         {{ translations.get('adminPanelContracts', {}).get('title', 'Admin Panel - Contracts') }}
     </h1>
     {% for name, data in contracts.items() %}
-    <div class="my-4">
-        <p class="font-medium">{{ name }}: {{ data['address'] }}</p>
+    <details class="my-4 border rounded-md p-2">
+        <summary class="font-medium cursor-pointer">{{ name }}</summary>
+        <p class="mt-2">Address: {{ data['address'] }}</p>
         <form method="post" class="flex items-center justify-center mt-2">
             <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
             <input type="hidden" name="contractName" value="{{ name }}" />
@@ -27,8 +28,9 @@
                 <i class="ti ti-device-floppy mr-1 text-2xl"></i>
             </button>
         </form>
+        <div id="metrics-{{ name }}" class="mt-2 text-sm"></div>
         <div id="functions-{{ name }}" class="mt-4"></div>
-    </div>
+    </details>
     {% endfor %}
 </div>
 <a href="/admin" class="hidden md:block fixed bottom-0 left-1">
