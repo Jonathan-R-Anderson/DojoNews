@@ -187,3 +187,8 @@ class Settings:
             "abi": json.loads((ABI_PATH / "TipJar.json").read_text()),
         },
     }
+
+    # Words on the board that should be filtered in posts and comments
+    BOARD_WORD_FILTERS = {
+        "badword": "[censored]",
+    }

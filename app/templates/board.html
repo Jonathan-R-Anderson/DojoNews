@@ -1,14 +1,18 @@
 {% extends 'layout.html' %}
 {% block head %}
 <title>Board</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/postTiles.css') }}" />
 {% endblock head %}
 {% block body %}
-<div class="mx-auto w-10/12 mt-6">
-    <h1 class="text-xl font-semibold mb-4">Board</h1>
-    <div id="board-posts" class="space-y-4"></div>
-</div>
+<div id="posts-container" class="post-tiles-grid mx-auto w-11/12 md:w-11/12 lg:w-10/12 2xl:w-9/12 mt-6"></div>
 {% endblock body %}
 {% block scripts %}
   <script src="https://cdn.jsdelivr.net/npm/ethers@5.7.2/dist/ethers.umd.min.js"></script>
-  <script src="{{ url_for('static', filename='js/forum.js') }}"></script>
+  <script>
+    window.postContractAddress = "{{ post_contract_address }}";
+    window.postContractAbi = {{ post_contract_abi | tojson }};
+    window.rpcUrl = "{{ rpc_url }}";
+    window.boardWordFilters = {{ word_filters | tojson }};
+  </script>
+  <script src="{{ url_for('static', filename='js/loadPosts.js') }}"></script>
 {% endblock scripts %}
