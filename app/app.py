@@ -98,6 +98,7 @@ from routes.setTheme import (
 from routes.user import userBlueprint
 from routes.comments import commentsBlueprint
 from routes.api import apiBlueprint
+from routes.contracts import contractsBlueprint
 from settings import Settings
 from utils.afterRequest import (
     afterRequestLogger,
@@ -307,6 +308,7 @@ app.register_blueprint(boardBlueprint)
 app.register_blueprint(forumBlueprint)
 app.register_blueprint(commentsBlueprint)
 app.register_blueprint(apiBlueprint)
+app.register_blueprint(contractsBlueprint)
 
 
 if __name__ == "__main__":
