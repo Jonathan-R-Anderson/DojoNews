@@ -36,6 +36,7 @@ contract Comments {
     }
 
     constructor(address postsAddress) {
+        require(postsAddress != address(0), "invalid posts address");
         sysop = msg.sender;
         postsContract = IPosts(postsAddress);
     }
@@ -44,10 +45,6 @@ contract Comments {
         require(newSysop != address(0), "bad sysop");
         emit SysopTransferred(sysop, newSysop);
         sysop = newSysop;
-    }
-
-    function setPostsContract(address postsAddress) external onlySysop {
-        postsContract = IPosts(postsAddress);
     }
 
     /// @notice Add a comment to a post
