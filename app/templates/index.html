@@ -23,6 +23,7 @@
     name="twitter:image"
     content="https://raw.githubusercontent.com/DogukanUrker/flaskBlog/main/images/Icon180.ico"
 />
+<link rel="stylesheet" href="{{ url_for('static', filename='css/forumTiles.css') }}" />
 <link rel="stylesheet" href="{{ url_for('static', filename='css/postTiles.css') }}" />
 {% endblock head %} {% block body %}
 
@@ -51,7 +52,7 @@
     </a>
 </div>
 
-<div id="board-tiles" class="post-tiles-grid mx-auto w-11/12 md:w-10/12 lg:w-9/12 2xl:w-8/12 mt-6"></div>
+<div id="board-tiles" class="forum-tiles-grid mx-auto w-11/12 md:w-10/12 lg:w-9/12 2xl:w-8/12 mt-6"></div>
 
 <div
     class="flex justify-between mx-auto w-11/12 md:w-10/12 lg:w-9/12 2xl:w-8/12 mt-8"
