@@ -23,13 +23,27 @@
             m.calls++;
             const method = form.dataset.method;
             const action = form.dataset.action;
-            const params = Array.from(form.querySelectorAll('input')).map((inp) => inp.value);
+            const paramInputs = Array.from(form.querySelectorAll('input[name^="arg"]'));
+            const params = paramInputs.map((inp) => inp.value);
+            const txOptField = form.querySelector('[name="txOptions"]');
+            let txOptions = {};
+            if (txOptField && txOptField.value.trim()) {
+                try {
+                    txOptions = JSON.parse(txOptField.value);
+                } catch (err) {
+                    m.failures++;
+                    const resultDiv = form.nextElementSibling;
+                    resultDiv.textContent = `Error: invalid txOptions JSON`;
+                    updateMetrics();
+                    return;
+                }
+            }
             const resultDiv = form.nextElementSibling;
             try {
                 const res = await fetch(`/admin/contracts/${contract}/${method}`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ params, action }),
+                    body: JSON.stringify({ params, action, txOptions }),
                 });
                 const data = await res.json();
                 if (data.error) {
