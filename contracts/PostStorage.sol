@@ -3,9 +3,15 @@ pragma solidity ^0.8.20;
 
 /// @title PostStorage
 /// @notice Stores posts with associated media magnet URIs on-chain.
+interface IModeration {
+    function isBanned(address user) external view returns (bool);
+    function isModerator(address account) external view returns (bool);
+}
+
 contract PostStorage {
     address public sysop;
     event SysopTransferred(address indexed previousSysop, address indexed newSysop);
+    IModeration public moderationContract;
 
     struct Post {
         address author;
@@ -55,8 +61,14 @@ contract PostStorage {
         _;
     }
 
-    constructor() {
+    modifier onlyModerator() {
+        require(moderationContract.isModerator(msg.sender), "only moderator");
+        _;
+    }
+
+    constructor(address moderationAddress) {
         sysop = msg.sender;
+        moderationContract = IModeration(moderationAddress);
     }
 
     function transferSysop(address newSysop) external onlySysop {
@@ -73,6 +85,7 @@ contract PostStorage {
         uint256 bannerImageIndex,
         MediaInput[] calldata videos
     ) external returns (uint256 postId) {
+        require(!moderationContract.isBanned(msg.sender), "banned");
         require(images.length > 0, "no images");
         require(bannerImageIndex < images.length, "bad banner index");
         postId = nextPostId++;
@@ -135,6 +148,7 @@ contract PostStorage {
     }
 
     function deletePost(uint256 postId) external {
+        require(!moderationContract.isBanned(msg.sender), "banned");
         Post storage p = posts[postId];
         require(p.exists, "no post");
         require(msg.sender == p.author || msg.sender == sysop, "not authorized");
@@ -153,6 +167,7 @@ contract PostStorage {
         string calldata contentHash,
         string calldata magnetURI
     ) external {
+        require(!moderationContract.isBanned(msg.sender), "banned");
         Post storage p = posts[postId];
         require(p.exists, "no post");
         require(msg.sender == p.author || msg.sender == sysop, "not authorized");
@@ -161,7 +176,7 @@ contract PostStorage {
         emit PostUpdated(postId, contentHash, magnetURI);
     }
 
-    function setBlacklist(uint256 postId, bool isBlacklisted) external onlySysop {
+    function setBlacklist(uint256 postId, bool isBlacklisted) external onlyModerator {
         Post storage p = posts[postId];
         require(p.exists, "no post");
         p.blacklisted = isBlacklisted;
@@ -201,6 +216,7 @@ contract PostStorage {
     }
 
     function setBannerImage(uint256 postId, string calldata imageId) external {
+        require(!moderationContract.isBanned(msg.sender), "banned");
         Post storage p = posts[postId];
         require(p.exists, "no post");
         require(msg.sender == p.author || msg.sender == sysop, "not authorized");
@@ -219,6 +235,7 @@ contract PostStorage {
     event AuthorInfoUpdated(uint256 indexed postId, string authorInfo);
 
     function updateAuthorInfo(uint256 postId, string calldata authorInfo) external {
+        require(!moderationContract.isBanned(msg.sender), "banned");
         Post storage p = posts[postId];
         require(p.exists, "no post");
         require(msg.sender == p.author || msg.sender == sysop, "not authorized");

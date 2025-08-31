@@ -6,6 +6,11 @@ interface IPosts {
     function postCount() external view returns (uint256);
 }
 
+interface IModeration {
+    function isBanned(address user) external view returns (bool);
+    function isPostBlacklisted(uint256 postId) external view returns (bool);
+}
+
 contract Comments {
     struct Comment {
         address author;
@@ -17,6 +22,7 @@ contract Comments {
 
     address public sysop;
     IPosts public postsContract;
+    IModeration public moderationContract;
     uint256 public commentCount;
     mapping(uint256 => Comment) public comments;
 
@@ -35,10 +41,12 @@ contract Comments {
         _;
     }
 
-    constructor(address postsAddress) {
+    constructor(address postsAddress, address moderationAddress) {
         require(postsAddress != address(0), "invalid posts address");
+        require(moderationAddress != address(0), "invalid moderation address");
         sysop = msg.sender;
         postsContract = IPosts(postsAddress);
+        moderationContract = IModeration(moderationAddress);
     }
 
     function transferSysop(address newSysop) external onlySysop {
@@ -60,6 +68,8 @@ contract Comments {
         string calldata body
     ) external returns (uint256 id) {
         require(postId < postsContract.postCount(), "invalid post");
+        require(!moderationContract.isBanned(msg.sender), "banned");
+        require(!moderationContract.isPostBlacklisted(postId), "post blacklisted");
         string memory name = bytes(username).length > 0 ? username : "Anonymous";
         id = commentCount++;
         comments[id] = Comment(msg.sender, name, email, body, postId);
