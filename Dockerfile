@@ -23,10 +23,20 @@ import io
 import os
 import tarfile
 import urllib.request
+import urllib.error
+import time
 
 version = os.environ["NODE_VERSION"]
 url = f"https://nodejs.org/dist/v{version}/node-v{version}-linux-x64.tar.xz"
-data = urllib.request.urlopen(url).read()
+for attempt in range(5):
+    try:
+        with urllib.request.urlopen(url) as resp:
+            data = resp.read()
+        break
+    except urllib.error.URLError:
+        if attempt == 4:
+            raise
+        time.sleep(2 ** attempt)
 with tarfile.open(fileobj=io.BytesIO(data), mode="r:xz") as tar:
     tar.extractall("/usr/local")
 os.rename(f"/usr/local/node-v{version}-linux-x64", "/usr/local/node")
