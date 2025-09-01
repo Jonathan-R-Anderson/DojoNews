@@ -82,11 +82,15 @@ def proxy(path):
 
     target = ANNOY_URL if is_malicious(request) else BUNKER_URL
     logger.info("Forwarding path '%s' to %s", path, target)
-    resp = forward(target)
+    try:
+        resp = forward(target)
+    except requests.RequestException as exc:
+        logger.warning("Error forwarding to %s: %s", target, exc)
+        resp = forward(ANNOY_URL, "")
 
-    if resp.status_code == 404 and target != ANNOY_URL:
+    if resp.status_code >= 400 and target != ANNOY_URL:
         logger.warning(
-            "Received 404 from %s, falling back to annoyingsite", target
+            "Received %s from %s, falling back to annoyingsite", resp.status_code, target
         )
         resp = forward(ANNOY_URL, "")
 
