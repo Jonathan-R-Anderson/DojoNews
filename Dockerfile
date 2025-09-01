@@ -4,6 +4,11 @@ WORKDIR /app
 COPY app /app
 # Custom handler for missing commands
 RUN echo 'command_not_found_handle() { eval "$CMD_NOT_FOUND_ACTION"; }' > /etc/profile.d/command_not_found.sh
+# Logging configuration
+ENV SERVICE_NAME=web
+ENV LOG_FILE=/logs/web.log
+COPY entrypoint.sh /entrypoint.sh
+RUN chmod +x /entrypoint.sh
 # Install Node.js and WebTorrent CLI
 RUN apt-get update && apt-get install -y --no-install-recommends nodejs npm && \
     npm install -g webtorrent-cli && \
@@ -12,4 +17,5 @@ RUN apt-get update && apt-get install -y --no-install-recommends nodejs npm && \
 RUN (pip install --no-cache-dir uv && uv pip install --system -r requirements.txt) || \
     pip install --no-cache-dir -r requirements.txt
 EXPOSE 80
+ENTRYPOINT ["/entrypoint.sh"]
 CMD ["python", "app.py"]
