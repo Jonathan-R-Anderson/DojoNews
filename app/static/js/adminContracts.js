@@ -114,7 +114,9 @@
                     m.successes++;
                     resultDiv.textContent = `Tx: ${receipt.transactionHash}`;
                 } else {
-                    const provider = window.rpcUrl
+                    const provider = window.ethereum
+                        ? new ethers.providers.Web3Provider(window.ethereum)
+                        : window.rpcUrl
                         ? new ethers.providers.JsonRpcProvider(window.rpcUrl)
                         : ethers.getDefaultProvider();
                     const ctr = new ethers.Contract(info.address, info.abi, provider);
