@@ -30,7 +30,7 @@ services:
     ports:
       - "80:80"
     environment:
-      - SERVER_NAME=_
+      - SERVER_NAME=${DOMAIN:-localhost}
       - PROXY_PASS=http://sanitizer:8080
       - USE_DB=true
     volumes:

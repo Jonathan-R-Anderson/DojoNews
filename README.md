@@ -49,11 +49,14 @@ Visit `http://localhost:1283` in your browser.
 Run the full stack with Docker:
 
 ```bash
+cp .env.example .env
+# edit DOMAIN in .env if you want BunkerWeb to answer on a custom domain
 docker compose up --build
 ```
 
 BunkerWeb exposes the application on port `80`, and its management UI is
-available on port `8000`.
+available on port `8000`. The `DOMAIN` value defines which Host header
+BunkerWeb accepts.
 
 ### Blockchain
 
