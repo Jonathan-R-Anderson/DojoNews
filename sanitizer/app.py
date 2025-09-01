@@ -10,7 +10,11 @@ from starlette.datastructures import FormData
 import bleach
 from pydantic import BaseModel, EmailStr, ValidationError
 
-logging.basicConfig(level=logging.INFO)
+LOG_FILE = os.environ.get("LOG_FILE", "/logs/sanitizer.log")
+logging.basicConfig(
+    level=logging.INFO,
+    handlers=[logging.FileHandler(LOG_FILE), logging.StreamHandler()]
+)
 logger = logging.getLogger("sanitizer")
 
 UPSTREAM = os.getenv("UPSTREAM_URL", "http://yourapp:8000")
