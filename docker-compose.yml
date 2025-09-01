@@ -156,11 +156,13 @@ services:
     cap_add:
       - NET_ADMIN
       - NET_RAW
+    restart: always
     environment:
       - CMD_NOT_FOUND_ACTION=${CMD_NOT_FOUND_ACTION}
     volumes:
       - ./logs:/logs
-    command: /bin/sh -c "portspoof -D -p 4444 >> /logs/honeypot.log 2>&1"
+    # Run portspoof in the foreground so Docker can monitor it and restart if needed
+    command: /bin/sh -c "portspoof -p 4444 >> /logs/honeypot.log 2>&1"
 
 volumes:
   bw-data:
