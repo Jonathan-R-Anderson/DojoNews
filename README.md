@@ -46,13 +46,14 @@ Visit `http://localhost:1283` in your browser.
 
 ### Docker Compose
 
-Run the app with Docker:
+Run the full stack with Docker:
 
 ```bash
-docker-compose up --build
+docker compose up --build
 ```
 
-The Flask service listens on `1283`.
+BunkerWeb exposes the application on port `80`, and its management UI is
+available on port `8000`.
 
 ### Blockchain
 
