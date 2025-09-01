@@ -29,16 +29,23 @@ def is_malicious(req):
 @app.route('/', defaults={'path': ''})
 @app.route('/<path:path>', methods=['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'])
 def proxy(path):
+    def forward(target_url):
+        url = f"{target_url}/{path}"
+        return requests.request(
+            method=request.method,
+            url=url,
+            headers={k: v for k, v in request.headers if k.lower() != 'host'},
+            data=request.get_data(),
+            cookies=request.cookies,
+            allow_redirects=False,
+        )
+
     target = ANNOY_URL if is_malicious(request) else BUNKER_URL
-    url = f"{target}/{path}"
-    resp = requests.request(
-        method=request.method,
-        url=url,
-        headers={k: v for k, v in request.headers if k.lower() != 'host'},
-        data=request.get_data(),
-        cookies=request.cookies,
-        allow_redirects=False,
-    )
+    resp = forward(target)
+
+    if resp.status_code == 404 and target != ANNOY_URL:
+        resp = forward(ANNOY_URL)
+
     excluded = {'content-encoding', 'content-length', 'transfer-encoding', 'connection'}
     headers = [(name, value) for name, value in resp.raw.headers.items() if name.lower() not in excluded]
     return Response(resp.content, resp.status_code, headers)
