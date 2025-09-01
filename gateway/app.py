@@ -7,15 +7,18 @@ import requests
 LOG_FILE = os.environ.get("LOG_FILE", "/logs/gateway.log")
 logging.basicConfig(
     level=logging.INFO,
-    handlers=[logging.FileHandler(LOG_FILE), logging.StreamHandler()]
+    handlers=[logging.FileHandler(LOG_FILE), logging.StreamHandler()],
 )
 logger = logging.getLogger(__name__)
 
-STATIC_DIR = os.path.abspath(
-    os.path.join(os.path.dirname(__file__), "..", "app", "static")
-)
-
-app = Flask(__name__, static_folder=STATIC_DIR, static_url_path="/static")
+# The gateway acts purely as a proxy and should not attempt to serve static
+# files itself.  Previously ``Flask`` was initialised with a ``static_folder``
+# which caused requests to ``/static`` to be handled locally and never reach the
+# upstream services, leaving no trace in the logs.  By omitting the static
+# configuration all requests, including those for missing static assets, are
+# routed through the proxy logic below and therefore recorded in the logs of
+# every container in the chain.
+app = Flask(__name__)
 
 BUNKER_URL = os.environ.get("BUNKER_URL", "http://bunkerweb:8080")
 ANNOY_URL = os.environ.get("ANNOY_URL", "http://annoyingsite:4000")
@@ -97,6 +100,13 @@ def proxy(path):
         if name.lower() not in excluded
     ]
     return Response(resp.content, resp.status_code, headers)
+
+
+@app.after_request
+def log_response(response: Response) -> Response:
+    """Log the final response for every proxied request."""
+    logger.info("%s %s -> %s", request.method, request.path, response.status)
+    return response
 
 
 if __name__ == '__main__':
