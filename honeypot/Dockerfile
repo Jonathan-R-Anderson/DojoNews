@@ -23,4 +23,5 @@ ENV LOG_FILE=/logs/honeypot.log
 COPY entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
 ENTRYPOINT ["/entrypoint.sh"]
-CMD ["portspoof", "-D", "-p", "4444"]
+# Run portspoof in the foreground so the container stays alive
+CMD ["portspoof", "-p", "4444"]
