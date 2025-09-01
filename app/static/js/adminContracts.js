@@ -5,6 +5,24 @@
     const csrfTokenInput = document.querySelector('input[name="csrf_token"]');
     const csrfToken = csrfTokenInput ? csrfTokenInput.value : null;
 
+    const uploadFile = async (file) => {
+        const fd = new FormData();
+        fd.append('file', file);
+        if (csrfToken) {
+            fd.append('csrf_token', csrfToken);
+        }
+        const res = await fetch('/uploadmedia', {
+            method: 'POST',
+            headers: csrfToken ? { 'X-CSRFToken': csrfToken } : {},
+            body: fd,
+        });
+        const data = await res.json();
+        if (!data.magnet) {
+            throw new Error(data.error || 'upload failed');
+        }
+        return data.magnet;
+    };
+
     const metrics = {};
     document.querySelectorAll('.contract-form').forEach((form) => {
         const contract = form.dataset.contract;
@@ -20,79 +38,80 @@
         };
         updateMetrics();
 
+        const paramInputs = Array.from(form.querySelectorAll('input[name^="arg"]'));
+        paramInputs.forEach((inp) => {
+            const ph = (inp.getAttribute('placeholder') || '').toLowerCase();
+            if (ph.includes('magnet') || ph.includes('image') || ph.includes('banner')) {
+                const fileInput = document.createElement('input');
+                fileInput.type = 'file';
+                fileInput.className = 'file-input file-input-bordered mb-2';
+                inp.insertAdjacentElement('afterend', fileInput);
+                inp.dataset.fileInput = 'true';
+            }
+        });
+
         form.addEventListener('submit', async (e) => {
             e.preventDefault();
             const m = metrics[contract];
             m.calls++;
             const method = form.dataset.method;
             const action = form.dataset.action;
-            const paramInputs = Array.from(form.querySelectorAll('input[name^="arg"]'));
-            const params = paramInputs.map((inp) => {
-                const val = inp.value.trim();
-                try {
-                    return JSON.parse(val);
-                } catch {
-                    return val;
-                }
-            });
-            const txOptField = form.querySelector('[name="txOptions"]');
-            let txOptions = {};
-            if (txOptField && txOptField.value.trim()) {
-                try {
-                    txOptions = JSON.parse(txOptField.value);
-                } catch (err) {
-                    m.failures++;
-                    const resultDiv = form.nextElementSibling;
-                    resultDiv.textContent = `Error: invalid txOptions JSON`;
-                    updateMetrics();
-                    return;
-                }
-            }
-            if (action === 'transact') {
-                if (!txOptions.from) {
-                    if (window.userAddress) {
-                        txOptions.from = window.userAddress;
-                    } else if (window.ethereum) {
-                        try {
-                            const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
-                            txOptions.from = accounts[0];
-                            window.userAddress = accounts[0];
-                        } catch (err) {
-                            debug('Wallet request failed', err);
-                        }
-                    }
-                    if (!txOptions.from) {
-                        m.failures++;
-                        const resultDiv = form.nextElementSibling;
-                        resultDiv.textContent = 'Error: wallet not connected';
-                        updateMetrics();
-                        return;
-                    }
-                }
-            }
             const resultDiv = form.nextElementSibling;
             try {
-                const res = await fetch(`/admin/contracts/${contract}/${method}`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        ...(csrfToken ? { 'X-CSRFToken': csrfToken } : {}),
-                    },
-                    body: JSON.stringify({ params, action, txOptions }),
+                for (const inp of paramInputs) {
+                    if (inp.dataset.fileInput) {
+                        const fileInput = inp.nextElementSibling;
+                        if (fileInput && fileInput.files.length && !inp.value.trim()) {
+                            inp.value = await uploadFile(fileInput.files[0]);
+                        }
+                    }
+                }
+
+                const params = paramInputs.map((inp) => {
+                    const val = inp.value.trim();
+                    try {
+                        return JSON.parse(val);
+                    } catch {
+                        return val;
+                    }
                 });
-                const data = await res.json();
-                if (data.error) {
-                    m.failures++;
-                    resultDiv.textContent = `Error: ${data.error}`;
-                } else if (data.result !== undefined) {
+
+                const txOptField = form.querySelector('[name="txOptions"]');
+                let txOptions = {};
+                if (txOptField && txOptField.value.trim()) {
+                    try {
+                        txOptions = JSON.parse(txOptField.value);
+                    } catch {
+                        throw new Error('invalid txOptions JSON');
+                    }
+                }
+
+                const info = window.contractData ? window.contractData[contract] : null;
+                if (!info) {
+                    throw new Error('contract info not found');
+                }
+
+                if (action === 'transact') {
+                    if (!window.ethereum) {
+                        throw new Error('wallet not connected');
+                    }
+                    await window.ethereum.request({ method: 'eth_requestAccounts' });
+                    const provider = new ethers.providers.Web3Provider(window.ethereum);
+                    const signer = provider.getSigner();
+                    const ctr = new ethers.Contract(info.address, info.abi, signer);
+                    const tx = await ctr[method](...params, txOptions);
+                    const receipt = await tx.wait();
                     m.successes++;
-                    resultDiv.textContent = typeof data.result === 'string' ? data.result : JSON.stringify(data.result);
-                } else if (data.txHash) {
-                    m.successes++;
-                    resultDiv.textContent = `Tx: ${data.txHash}`;
+                    resultDiv.textContent = `Tx: ${receipt.transactionHash}`;
                 } else {
-                    m.failures++;
-                    resultDiv.textContent = 'No response received';
+                    const provider = window.rpcUrl
+                        ? new ethers.providers.JsonRpcProvider(window.rpcUrl)
+                        : ethers.getDefaultProvider();
+                    const ctr = new ethers.Contract(info.address, info.abi, provider);
+                    const res = await ctr[method](...params);
+                    const replacer = (_, v) => (v && v._isBigNumber ? v.toString() : v);
+                    m.successes++;
+                    resultDiv.textContent = typeof res === 'object' ? JSON.stringify(res, replacer) : res;
                 }
             } catch (err) {
                 m.failures++;
@@ -102,3 +121,4 @@
         });
     });
 })();
+
