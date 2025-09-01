@@ -9,6 +9,8 @@ ENV SERVICE_NAME=web
 ENV LOG_FILE=/logs/web.log
 COPY entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
+# Configure DNS servers for build-time operations
+RUN echo -e "nameserver 8.8.8.8\nnameserver 1.1.1.1" > /etc/resolv.conf
 # DNS servers are configured at runtime via docker-compose
 # Install Node.js and WebTorrent CLI
 # Use the official pre-built Node.js binaries instead of Debian packages to
