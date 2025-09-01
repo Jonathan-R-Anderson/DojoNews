@@ -28,27 +28,39 @@ services:
   bunkerweb:
     image: bunkerity/bunkerweb:latest
     ports:
-      - "80:80"
+      - "80:8080"
     environment:
-      - SERVER_NAME=${DOMAIN:-localhost}
-      - PROXY_PASS=http://sanitizer:8080
-      - USE_DB=true
+      - API_WHITELIST_IP=0.0.0.0/0
     volumes:
       - bw-data:/var/lib/bunkerweb
     command: >
       /bin/sh -c "chown -R 101:101 /var/lib/bunkerweb && /entrypoint.sh"
     depends_on:
       - sanitizer
+  bunkerweb-scheduler:
+    image: bunkerity/bunkerweb-scheduler:latest
+    environment:
+      - BUNKERWEB_INSTANCES=bunkerweb
+      - SERVER_NAME=${DOMAIN:-localhost}
+      - USE_REVERSE_PROXY=yes
+      - REVERSE_PROXY_URL=/
+      - REVERSE_PROXY_HOST=http://sanitizer:8080
+      - USE_DB=true
+      - API_WHITELIST_IP=0.0.0.0/0
+    volumes:
+      - bw-data:/data
+    depends_on:
+      - bunkerweb
   bunkerweb-ui:
     image: bunkerity/bunkerweb-ui:latest
     ports:
       - "8000:80"
     environment:
-      - BUNKERWEB_URL=http://bunkerweb:80
+      - BUNKERWEB_URL=http://bunkerweb:8080
     volumes:
       - bw-data:/var/lib/bunkerweb
     depends_on:
-      - bunkerweb
+      - bunkerweb-scheduler
 
 volumes:
   bw-data:
