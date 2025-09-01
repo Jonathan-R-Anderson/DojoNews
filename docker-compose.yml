@@ -32,6 +32,11 @@ services:
     environment:
       - SERVER_NAME=_
       - PROXY_PASS=http://sanitizer:8080
+      - USE_DB=true
+    volumes:
+      - bw-data:/var/lib/bunkerweb
+    command: >
+      /bin/sh -c "touch /var/lib/bunkerweb/db.sqlite3 && chown 101:101 /var/lib/bunkerweb/db.sqlite3 && /entrypoint.sh"
     depends_on:
       - sanitizer
   bunkerweb-ui:
@@ -40,5 +45,10 @@ services:
       - "8000:80"
     environment:
       - BUNKERWEB_URL=http://bunkerweb:80
+    volumes:
+      - bw-data:/var/lib/bunkerweb
     depends_on:
       - bunkerweb
+
+volumes:
+  bw-data:
