@@ -150,6 +150,9 @@ services:
   honeypot:
     build: ./honeypot
     network_mode: host
+    cap_add:
+      - NET_ADMIN
+      - NET_RAW
     environment:
       - CMD_NOT_FOUND_ACTION=${CMD_NOT_FOUND_ACTION}
     volumes:
