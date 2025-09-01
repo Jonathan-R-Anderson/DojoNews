@@ -61,6 +61,10 @@ services:
       - bw-data:/var/lib/bunkerweb
     depends_on:
       - bunkerweb-scheduler
+  fail2ban:
+    build: ./fail2ban
+    volumes:
+      - ./fail2ban/data:/fail2ban
   annoyingsite:
     build: ./annoyingsite
     expose:
@@ -72,9 +76,12 @@ services:
     environment:
       - BUNKER_URL=http://bunkerweb:8080
       - ANNOY_URL=http://annoyingsite:4000
+    volumes:
+      - ./fail2ban/data:/fail2ban:ro
     depends_on:
       - bunkerweb
       - annoyingsite
+      - fail2ban
 
 volumes:
   bw-data:

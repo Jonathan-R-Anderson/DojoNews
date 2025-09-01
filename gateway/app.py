@@ -13,10 +13,20 @@ def is_malicious(req):
     return 'curl' in ua or 'python-requests' in ua
 
 
+def is_banned(req):
+    ip = req.headers.get('X-Forwarded-For', req.remote_addr)
+    try:
+        with open('/fail2ban/banned-proxies.list') as f:
+            banned = {line.strip() for line in f if line.strip()}
+    except FileNotFoundError:
+        banned = set()
+    return ip in banned
+
+
 @app.route('/', defaults={'path': ''})
 @app.route('/<path:path>', methods=['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'])
 def proxy(path):
-    target = ANNOY_URL if is_malicious(request) else BUNKER_URL
+    target = ANNOY_URL if is_malicious(request) or is_banned(request) else BUNKER_URL
     url = f"{target}/{path}"
     resp = requests.request(
         method=request.method,

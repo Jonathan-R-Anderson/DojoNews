@@ -1,0 +1,8 @@
+[proxies]
+enabled = true
+port    = http,https
+filter  = proxies
+logpath = /var/log/proxy.log
+maxretry = 1
+bantime = 3600
+action  = annoyingsite[name=proxies,dest=/fail2ban/banned-proxies.list]
