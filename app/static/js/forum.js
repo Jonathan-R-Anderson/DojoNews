@@ -1,27 +1,38 @@
-// Front page forum tiles loader
-// Requires ethers.js and a deployed Forum contract
+// Front page board tiles loader
+// Loads boards from the on-chain Board contract using ethers.js.
 
 async function loadForumTiles() {
     const container = document.getElementById('board-tiles');
-    if (!container || !window.ethereum) return;
+    if (
+        !container ||
+        !window.ethereum ||
+        !window.boardContractAddress ||
+        !window.boardContractAbi
+    ) {
+        return;
+    }
 
-    const provider = new ethers.BrowserProvider(window.ethereum);
-    const abiResponse = await fetch('/abi/Forum.json');
-    const abiJson = await abiResponse.json();
-    const forumAddress = window.FORUM_ADDRESS || '0x0000000000000000000000000000000000000000';
-    const forum = new ethers.Contract(forumAddress, abiJson.abi, provider);
+    const provider = new ethers.providers.Web3Provider(window.ethereum);
+    const board = new ethers.Contract(
+        window.boardContractAddress,
+        window.boardContractAbi,
+        provider
+    );
 
-    const boards = await forum.getBoards();
-    boards.forEach((b, idx) => {
+    const count = Number(await board.boardCount());
+    for (let i = 0; i < count; i++) {
+        const info = await board.getBoard(i);
         const tile = document.createElement('div');
         tile.className = 'forum-tile';
-        tile.style.backgroundImage = `url(${b.latestImage})`;
-        tile.innerHTML = `<div class="forum-tile-overlay"><span class="forum-tile-title">${b.name}</span></div>`;
+        if (info.banner) {
+            tile.style.backgroundImage = `url(${info.banner})`;
+        }
+        tile.innerHTML = `<div class="forum-tile-overlay"><span class="forum-tile-title">${info.name}</span></div>`;
         tile.addEventListener('click', () => {
             window.location.href = `/board`;
         });
         container.appendChild(tile);
-    });
+    }
 }
 
 document.addEventListener('DOMContentLoaded', loadForumTiles);
