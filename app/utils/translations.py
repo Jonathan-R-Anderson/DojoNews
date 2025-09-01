@@ -1,5 +1,5 @@
 from json import load
-from os.path import exists
+from pathlib import Path
 
 from utils.log import Log
 
@@ -8,15 +8,17 @@ def loadTranslations(language):
     """
     Load the translations for the specified language.
 
-    Paremters:
+    Parameters:
         language (str): The language code for the translations to be loaded.
 
     Returns:
         dict: A dictionary containing the translations for the specified language.
     """
 
-    translationFile = f"./translations/{language}.json"
-    if exists(translationFile):
+    # Determine the path to the translations directory relative to this file
+    translations_dir = Path(__file__).resolve().parent.parent / "translations"
+    translationFile = translations_dir / f"{language}.json"
+    if translationFile.exists():
         with open(translationFile, "r", encoding="utf-8") as file:
             translations = load(file)
             Log.info(f"Loaded translations for language: {language}")
