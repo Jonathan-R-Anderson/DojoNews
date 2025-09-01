@@ -46,26 +46,27 @@ Visit `http://localhost:1283` in your browser.
 
 ### Docker Compose
 
-Run the full stack with Docker:
+The stack can now be launched automatically at boot. Install the supplied
+systemd service to build the images, start the containers and forward host
+ports to the honeypot container:
 
 ```bash
 # edit DOMAIN in .env if you want BunkerWeb to answer on a custom domain
-docker compose up --build
+sudo cp honeypot_boot.sh /usr/local/bin/
+sudo cp dojonews-honeypot.service /etc/systemd/system/
+sudo systemctl enable --now dojonews-honeypot.service
 ```
+
+The unit waits for the `dojonews-honeypot` container to come online before
+invoking `host_port_forward.sh`, forwarding every host TCP port except 22 and
+80 to the container. Once enabled, the honeypot starts automatically whenever
+the server boots.
 
 The `gateway` service now listens on port `80` and decides whether to send
 traffic to BunkerWeb or to an [annoying honeypot](https://github.com/feross/TheAnnoyingSite.com)
 based on a simple user‑agent check. BunkerWeb's management UI is still
-available on port `8000`. The `DOMAIN` value defines which Host header
-the stack accepts.
-
-If you need to expose a running container on all host ports (except SSH on
-port 22 and HTTP on port 80), use the `host_port_forward.sh` script on the
-host:
-
-```bash
-sudo ./host_port_forward.sh <container_name>
-```
+available on port `8000`. The `DOMAIN` value defines which Host header the
+stack accepts.
 
 
 ### Blockchain

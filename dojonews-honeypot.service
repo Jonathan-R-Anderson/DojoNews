@@ -1,0 +1,14 @@
+[Unit]
+Description=DojoNews Honeypot Stack
+After=docker.service
+Requires=docker.service
+
+[Service]
+Type=oneshot
+# Adjust the path below to the repository location
+WorkingDirectory=/workspace/DojoNews
+ExecStart=/bin/sh /workspace/DojoNews/honeypot_boot.sh
+RemainAfterExit=yes
+
+[Install]
+WantedBy=multi-user.target
