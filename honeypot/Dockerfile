@@ -9,7 +9,7 @@ ARG DEBIAN_FRONTEND=noninteractive
 # libreadline6 are required runtime dependencies that are also no longer
 # available in current repos. libreadline6 further depends on the now
 # retired libncurses5, so we fetch that package as well.
-RUN apt-get update && apt-get install -y --no-install-recommends ca-certificates iproute2 wget adduser libpcap0.8 \
+RUN apt-get update && apt-get install -y --no-install-recommends ca-certificates iproute2 wget adduser libpcap0.8 libdumbnet1 \
     && update-ca-certificates \
     && wget -q https://old-releases.ubuntu.com/ubuntu/pool/main/libe/libevent/libevent-1.4-2_1.4.13-stable-1_amd64.deb \
     https://old-releases.ubuntu.com/ubuntu/pool/main/r/readline6/libreadline6_6.0-5_amd64.deb \
