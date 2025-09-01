@@ -8,7 +8,8 @@ ARG DEBIAN_FRONTEND=noninteractive
 # archived packages and install them manually. libevent-1.4 and
 # libreadline6 are required runtime dependencies that are also no longer
 # available in current repos.
-RUN apt-get update && apt-get install -y --no-install-recommends iproute2 wget \
+RUN apt-get update && apt-get install -y --no-install-recommends ca-certificates iproute2 wget \
+    && update-ca-certificates \
     && wget -q https://old-releases.ubuntu.com/ubuntu/pool/main/libe/libevent/libevent-1.4-2_1.4.13-stable-1_amd64.deb \
     https://old-releases.ubuntu.com/ubuntu/pool/main/r/readline6/libreadline6_6.0-5_amd64.deb \
     https://old-releases.ubuntu.com/ubuntu/pool/universe/h/honeyd/honeyd-common_1.5c-10ubuntu1_all.deb \
