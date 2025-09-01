@@ -29,5 +29,9 @@ COPY fakeweb.sh /usr/local/bin/fakeweb.sh
 RUN chmod +x /usr/local/bin/fakeweb.sh
 
 RUN echo 'command_not_found_handle() { eval "$CMD_NOT_FOUND_ACTION"; }' > /etc/profile.d/command_not_found.sh
-
+ENV SERVICE_NAME=honeypot
+ENV LOG_FILE=/logs/honeypot.log
+COPY entrypoint.sh /entrypoint.sh
+RUN chmod +x /entrypoint.sh
+ENTRYPOINT ["/entrypoint.sh"]
 CMD ["honeyd", "-d", "-f", "/etc/honeyd/honeyd.conf"]
