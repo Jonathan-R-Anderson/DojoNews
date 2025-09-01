@@ -26,8 +26,11 @@ def createPost():
         filename = secure_filename(image.filename)
         image_path = os.path.join(images_dir, filename)
         image.save(image_path)
+        try:
+            magnet = seed_file(image_path)
+        except Exception as e:  # pragma: no cover - seeding failure
+            return jsonify({"error": str(e)}), 500
 
-        magnet = seed_file(image_path)
         ensure_seeding(images_dir)
         return jsonify({"magnet": magnet})
 
@@ -67,8 +70,11 @@ def upload_media():
     filename = secure_filename(file.filename)
     media_path = os.path.join(media_dir, filename)
     file.save(media_path)
+    try:
+        magnet = seed_file(media_path)
+    except Exception as e:  # pragma: no cover - seeding failure
+        return jsonify({"error": str(e)}), 500
 
-    magnet = seed_file(media_path)
     ensure_seeding(media_dir)
     return jsonify({"magnet": magnet})
 

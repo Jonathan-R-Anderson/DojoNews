@@ -29,6 +29,17 @@ def seed_file(file_path: str) -> str:
     assert proc.stdout is not None
     magnet = proc.stdout.readline().strip()
     proc.stdout.close()
+
+    # ``magnet`` will be empty if the seeding process failed before
+    # printing the magnet URI.  This commonly happens when the WebTorrent
+    # CLI is not installed or exits with an error.  Surfacing a helpful
+    # exception allows callers to report a meaningful message instead of
+    # silently returning an empty string which later triggers a generic
+    # "upload failed" error in the UI.
+    if not magnet:
+        proc.wait()  # reap the worker to avoid zombies
+        raise RuntimeError("failed to seed file – is webtorrent installed?")
+
     return magnet
 
 
