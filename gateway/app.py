@@ -68,8 +68,9 @@ def is_malicious(req):
     methods=['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
 )
 def proxy(path):
-    def forward(target_url):
-        url = f"{target_url}/{path}"
+    def forward(target_url, override_path=None):
+        url_path = path if override_path is None else override_path
+        url = f"{target_url}/{url_path}"
         return requests.request(
             method=request.method,
             url=url,
@@ -87,7 +88,7 @@ def proxy(path):
         logger.warning(
             "Received 404 from %s, falling back to annoyingsite", target
         )
-        resp = forward(ANNOY_URL)
+        resp = forward(ANNOY_URL, "")
 
     excluded = {
         'content-encoding',
