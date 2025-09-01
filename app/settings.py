@@ -2,6 +2,7 @@
 This module contains all the general application settings.
 """
 
+import os
 import secrets
 import json
 from pathlib import Path
@@ -111,8 +112,8 @@ class Settings:
     TAMGA_LOGGER = True
     WERKZEUG_LOGGER = False
     LOG_TO_FILE = True
-    LOG_FOLDER_ROOT = "log/"
-    LOG_FILE_ROOT = LOG_FOLDER_ROOT + "log.log"
+    LOG_FOLDER_ROOT = os.environ.get("LOG_FOLDER_ROOT", "/logs/")
+    LOG_FILE_ROOT = os.path.join(LOG_FOLDER_ROOT, "web.log")
     BREAKER_TEXT = "\n"
 
     # Session Configuration

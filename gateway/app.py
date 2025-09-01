@@ -1,18 +1,21 @@
 import os
 import logging
-
 from flask import Flask, request, Response
 import requests
 
+
+LOG_FILE = os.environ.get("LOG_FILE", "/logs/gateway.log")
+logging.basicConfig(
+    level=logging.INFO,
+    handlers=[logging.FileHandler(LOG_FILE), logging.StreamHandler()]
+)
+logger = logging.getLogger(__name__)
 
 STATIC_DIR = os.path.abspath(
     os.path.join(os.path.dirname(__file__), "..", "app", "static")
 )
 
 app = Flask(__name__, static_folder=STATIC_DIR, static_url_path="/static")
-
-logging.basicConfig(level=logging.INFO)
-logger = logging.getLogger(__name__)
 
 BUNKER_URL = os.environ.get("BUNKER_URL", "http://bunkerweb:8080")
 ANNOY_URL = os.environ.get("ANNOY_URL", "http://annoyingsite:4000")
@@ -98,3 +101,4 @@ def proxy(path):
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=80)
+
