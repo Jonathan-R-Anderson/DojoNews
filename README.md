@@ -54,9 +54,11 @@ cp .env.example .env
 docker compose up --build
 ```
 
-BunkerWeb exposes the application on port `80`, and its management UI is
+The `gateway` service now listens on port `80` and decides whether to send
+traffic to BunkerWeb or to an [annoying honeypot](https://github.com/feross/TheAnnoyingSite.com)
+based on a simple user‑agent check. BunkerWeb's management UI is still
 available on port `8000`. The `DOMAIN` value defines which Host header
-BunkerWeb accepts.
+the stack accepts.
 
 ### Blockchain
 

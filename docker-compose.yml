@@ -27,8 +27,8 @@ services:
       - web
   bunkerweb:
     image: bunkerity/bunkerweb:latest
-    ports:
-      - "80:8080"
+    expose:
+      - "8080"
     environment:
       - API_WHITELIST_IP=0.0.0.0/0
     volumes:
@@ -61,6 +61,20 @@ services:
       - bw-data:/var/lib/bunkerweb
     depends_on:
       - bunkerweb-scheduler
+  annoyingsite:
+    build: ./annoyingsite
+    expose:
+      - "4000"
+  gateway:
+    build: ./gateway
+    ports:
+      - "80:80"
+    environment:
+      - BUNKER_URL=http://bunkerweb:8080
+      - ANNOY_URL=http://annoyingsite:4000
+    depends_on:
+      - bunkerweb
+      - annoyingsite
 
 volumes:
   bw-data:
