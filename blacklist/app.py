@@ -1,6 +1,14 @@
 import os
 import sqlite3
+import logging
 from flask import Flask, request, jsonify
+
+LOG_FILE = os.environ.get("LOG_FILE", "/logs/blacklist.log")
+logging.basicConfig(
+    level=logging.INFO,
+    handlers=[logging.FileHandler(LOG_FILE), logging.StreamHandler()]
+)
+logger = logging.getLogger("blacklist")
 
 DB_PATH = os.environ.get("DB_PATH", "/db/blacklist.db")
 
@@ -17,6 +25,7 @@ def init_db():
     )"""
     )
     conn.close()
+    logger.info("Initialized blacklist database at %s", DB_PATH)
 
 
 def get_conn():
@@ -27,6 +36,7 @@ def get_conn():
 
 @app.route("/blacklist", methods=["GET"])
 def get_blacklist():
+    logger.info("Fetching blacklist entries")
     conn = get_conn()
     cur = conn.cursor()
     cur.execute("select type, contentID from blacklist")
@@ -49,9 +59,12 @@ def add_blacklist():
     )
     conn.commit()
     conn.close()
+    logger.info("Added entry type=%s contentID=%s", btype, cid)
     return jsonify({"status": "ok"}), 201
 
 
 if __name__ == "__main__":
     init_db()
+    logger.info("Starting blacklist service on 0.0.0.0:5001")
     app.run(host="0.0.0.0", port=5001)
+
