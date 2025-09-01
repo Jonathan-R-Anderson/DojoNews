@@ -1,8 +1,14 @@
 import os
+
 from flask import Flask, request, Response
 import requests
 
-app = Flask(__name__)
+
+STATIC_DIR = os.path.abspath(
+    os.path.join(os.path.dirname(__file__), "..", "app", "static")
+)
+
+app = Flask(__name__, static_folder=STATIC_DIR, static_url_path="/static")
 
 BUNKER_URL = os.environ.get("BUNKER_URL", "http://bunkerweb:8080")
 ANNOY_URL = os.environ.get("ANNOY_URL", "http://annoyingsite:4000")
