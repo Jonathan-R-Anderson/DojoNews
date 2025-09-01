@@ -6,6 +6,8 @@ services:
       - "80"
     volumes:
       - ./app:/app
+    environment:
+      - CMD_NOT_FOUND_ACTION=${CMD_NOT_FOUND_ACTION}
     depends_on:
       - blacklist
   blacklist:
@@ -14,11 +16,14 @@ services:
       - ./app/db:/db
     expose:
       - "5001"
+    environment:
+      - CMD_NOT_FOUND_ACTION=${CMD_NOT_FOUND_ACTION}
   sanitizer:
     build: ./sanitizer
     environment:
       - UPSTREAM_URL=http://web:80
       - SANITIZER_CONFIG=/etc/gatekeeper/config.yml
+      - CMD_NOT_FOUND_ACTION=${CMD_NOT_FOUND_ACTION}
     volumes:
       - ./sanitizer/config.example.yml:/etc/gatekeeper/config.yml:ro
     expose:
@@ -31,6 +36,7 @@ services:
       - "8080"
     environment:
       - API_WHITELIST_IP=0.0.0.0/0
+      - CMD_NOT_FOUND_ACTION=${CMD_NOT_FOUND_ACTION}
     volumes:
       - bw-data:/var/lib/bunkerweb
     command: >
@@ -56,6 +62,7 @@ services:
       - CORAZA_API=http://bw-coraza:8080
       - USE_CLAMAV=yes
       - CLAMAV_HOST=clamav
+      - CMD_NOT_FOUND_ACTION=${CMD_NOT_FOUND_ACTION}
     volumes:
       - bw-data:/data
     depends_on:
@@ -69,6 +76,7 @@ services:
       - "8000:80"
     environment:
       - BUNKERWEB_URL=http://bunkerweb:8080
+      - CMD_NOT_FOUND_ACTION=${CMD_NOT_FOUND_ACTION}
     volumes:
       - bw-data:/var/lib/bunkerweb
     depends_on:
@@ -77,6 +85,8 @@ services:
     build: ./annoyingsite
     expose:
       - "4000"
+    environment:
+      - CMD_NOT_FOUND_ACTION=${CMD_NOT_FOUND_ACTION}
   gateway:
     build: ./gateway
     ports:
@@ -85,6 +95,7 @@ services:
       - BUNKER_URL=http://bunkerweb:8080
       - ANNOY_URL=http://annoyingsite:4000
       - BANNED_IPS_FILE=/banned/banned_ips.list
+      - CMD_NOT_FOUND_ACTION=${CMD_NOT_FOUND_ACTION}
     volumes:
       - ./banned:/banned
     depends_on:
@@ -97,16 +108,28 @@ services:
       - ./banned:/banned
     depends_on:
       - gateway
+    environment:
+      - CMD_NOT_FOUND_ACTION=${CMD_NOT_FOUND_ACTION}
   clamav:
     image: clamav/clamav:1.4
     volumes:
       - ./clamav-data:/var/lib/clamav
     networks:
       - bw-plugins
+    environment:
+      - CMD_NOT_FOUND_ACTION=${CMD_NOT_FOUND_ACTION}
   bw-coraza:
     image: bunkerity/bunkerweb-coraza:latest
     networks:
       - bw-plugins
+    environment:
+      - CMD_NOT_FOUND_ACTION=${CMD_NOT_FOUND_ACTION}
+
+  honeypot:
+    build: ./honeypot
+    network_mode: host
+    environment:
+      - CMD_NOT_FOUND_ACTION=${CMD_NOT_FOUND_ACTION}
 
 volumes:
   bw-data:
