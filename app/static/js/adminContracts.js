@@ -47,6 +47,16 @@
                 fileInput.className = 'file-input file-input-bordered mb-2';
                 inp.insertAdjacentElement('afterend', fileInput);
                 inp.dataset.fileInput = 'true';
+
+                fileInput.addEventListener('change', async () => {
+                    if (!fileInput.files.length) return;
+                    try {
+                        const magnet = await uploadFile(fileInput.files[0]);
+                        inp.value = magnet;
+                    } catch (err) {
+                        console.error('upload failed', err);
+                    }
+                });
             }
         });
 
