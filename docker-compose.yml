@@ -6,18 +6,22 @@ services:
       - "80"
     volumes:
       - ./app:/app
+      - ./logs:/logs
     environment:
       - CMD_NOT_FOUND_ACTION=${CMD_NOT_FOUND_ACTION}
+    command: /bin/sh -c "python app.py >> /logs/web.log 2>&1"
     depends_on:
       - blacklist
   blacklist:
     build: ./blacklist
     volumes:
       - ./app/db:/db
+      - ./logs:/logs
     expose:
       - "5001"
     environment:
       - CMD_NOT_FOUND_ACTION=${CMD_NOT_FOUND_ACTION}
+    command: /bin/sh -c "python app.py >> /logs/blacklist.log 2>&1"
   sanitizer:
     build: ./sanitizer
     environment:
@@ -26,10 +30,12 @@ services:
       - CMD_NOT_FOUND_ACTION=${CMD_NOT_FOUND_ACTION}
     volumes:
       - ./sanitizer/config.example.yml:/etc/gatekeeper/config.yml:ro
+      - ./logs:/logs
     expose:
       - "8080"
     depends_on:
       - web
+    command: /bin/sh -c "uvicorn app:app --host 0.0.0.0 --port 8080 >> /logs/sanitizer.log 2>&1"
   bunkerweb:
     image: bunkerity/bunkerweb:latest
     expose:
@@ -39,8 +45,8 @@ services:
       - CMD_NOT_FOUND_ACTION=${CMD_NOT_FOUND_ACTION}
     volumes:
       - bw-data:/var/lib/bunkerweb
-    command: >
-      /bin/sh -c "chown -R 101:101 /var/lib/bunkerweb && /entrypoint.sh"
+      - ./logs:/logs
+    command: /bin/sh -c "chown -R 101:101 /var/lib/bunkerweb && /entrypoint.sh >> /logs/bunkerweb.log 2>&1"
     depends_on:
       - sanitizer
     networks:
@@ -65,11 +71,13 @@ services:
       - CMD_NOT_FOUND_ACTION=${CMD_NOT_FOUND_ACTION}
     volumes:
       - bw-data:/data
+      - ./logs:/logs
     depends_on:
       - bunkerweb
     networks:
       - default
       - bw-plugins
+    command: /bin/sh -c "/entrypoint.sh >> /logs/bunkerweb-scheduler.log 2>&1"
   bunkerweb-ui:
     image: bunkerity/bunkerweb-ui:latest
     ports:
@@ -79,14 +87,19 @@ services:
       - CMD_NOT_FOUND_ACTION=${CMD_NOT_FOUND_ACTION}
     volumes:
       - bw-data:/var/lib/bunkerweb
+      - ./logs:/logs
     depends_on:
       - bunkerweb-scheduler
+    command: /bin/sh -c "/entrypoint.sh >> /logs/bunkerweb-ui.log 2>&1"
   annoyingsite:
     build: ./annoyingsite
     expose:
       - "4000"
     environment:
       - CMD_NOT_FOUND_ACTION=${CMD_NOT_FOUND_ACTION}
+    volumes:
+      - ./logs:/logs
+    command: /bin/sh -c "npm start >> /logs/annoyingsite.log 2>&1"
   gateway:
     build: ./gateway
     ports:
@@ -98,38 +111,50 @@ services:
       - CMD_NOT_FOUND_ACTION=${CMD_NOT_FOUND_ACTION}
     volumes:
       - ./banned:/banned
+      - ./logs:/logs
     depends_on:
       - bunkerweb
       - annoyingsite
+    command: /bin/sh -c "gunicorn -b 0.0.0.0:80 app:app >> /logs/gateway.log 2>&1"
   fail2ban:
     image: crazymax/fail2ban:latest
     volumes:
       - ./fail2ban:/etc/fail2ban
       - ./banned:/banned
+      - ./logs:/logs
     depends_on:
       - gateway
     environment:
       - CMD_NOT_FOUND_ACTION=${CMD_NOT_FOUND_ACTION}
+    command: /bin/sh -c "fail2ban-server -xf start >> /logs/fail2ban.log 2>&1"
   clamav:
     image: clamav/clamav:1.4
     volumes:
       - ./clamav-data:/var/lib/clamav
+      - ./logs:/logs
     networks:
       - bw-plugins
     environment:
       - CMD_NOT_FOUND_ACTION=${CMD_NOT_FOUND_ACTION}
+    command: /bin/sh -c "freshclam && clamd >> /logs/clamav.log 2>&1"
   bw-coraza:
     image: bunkerity/bunkerweb-coraza:latest
     networks:
       - bw-plugins
     environment:
       - CMD_NOT_FOUND_ACTION=${CMD_NOT_FOUND_ACTION}
+    volumes:
+      - ./logs:/logs
+    command: /bin/sh -c "/entrypoint.sh >> /logs/bw-coraza.log 2>&1"
 
   honeypot:
     build: ./honeypot
     network_mode: host
     environment:
       - CMD_NOT_FOUND_ACTION=${CMD_NOT_FOUND_ACTION}
+    volumes:
+      - ./logs:/logs
+    command: /bin/sh -c "honeyd -d -f /etc/honeyd/honeyd.conf >> /logs/honeypot.log 2>&1"
 
 volumes:
   bw-data:
