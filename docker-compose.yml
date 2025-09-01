@@ -2,8 +2,8 @@ version: '3.8'
 services:
   web:
     build: .
-    ports:
-      - "80:80"
+    expose:
+      - "80"
     volumes:
       - ./app:/app
     depends_on:
@@ -14,3 +14,31 @@ services:
       - ./app/db:/db
     expose:
       - "5001"
+  sanitizer:
+    build: ./sanitizer
+    environment:
+      - UPSTREAM_URL=http://web:80
+      - SANITIZER_CONFIG=/etc/gatekeeper/config.yml
+    volumes:
+      - ./sanitizer/config.example.yml:/etc/gatekeeper/config.yml:ro
+    expose:
+      - "8080"
+    depends_on:
+      - web
+  bunkerweb:
+    image: bunkerity/bunkerweb:latest
+    ports:
+      - "80:80"
+    environment:
+      - SERVER_NAME=_
+      - PROXY_PASS=http://sanitizer:8080
+    depends_on:
+      - sanitizer
+  bunkerweb-ui:
+    image: bunkerity/bunkerweb-ui:latest
+    ports:
+      - "8000:80"
+    environment:
+      - BUNKERWEB_URL=http://bunkerweb:80
+    depends_on:
+      - bunkerweb

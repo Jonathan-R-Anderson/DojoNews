@@ -1,0 +1,24 @@
+# Global defaults if a field is not explicitly listed
+default:
+  allow_html: false
+  max_length: 5000
+  block_on_suspect: true        # reject payloads with obvious SQLi/XSS tokens
+  trim_whitespace: true
+  collapse_spaces: true
+
+# Field-specific rules (override defaults)
+fields:
+  subject:
+    allow_html: false
+    max_length: 200
+  body:
+    allow_html: true
+    max_length: 10000
+    allowed_tags: [p, br, b, i, strong, em, code, pre, a, ul, ol, li, blockquote]
+    allowed_attrs:
+      a: [href, title, rel, target]
+  email:
+    type: email
+    max_length: 254
+  username:
+    pattern: "^[A-Za-z0-9_\\-\\.]{1,32}$"
