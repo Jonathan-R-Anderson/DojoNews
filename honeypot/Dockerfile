@@ -1,4 +1,8 @@
+# Use a non-interactive frontend for all package installation to avoid
+# prompts during build which previously caused failures.
 FROM debian:stable-slim
+
+ARG DEBIAN_FRONTEND=noninteractive
 
 # honeyd was removed from modern Debian/Ubuntu repositories, so we grab
 # archived packages and install them manually. libevent-1.4 and
