@@ -31,7 +31,12 @@ def seed(file_path: str) -> None:
     assert proc.stdout is not None
     magnet_printed = False
     for line in proc.stdout:
-        if not magnet_printed and line.startswith("Magnet:"):
+        if magnet_printed:
+            continue
+        if "Magnet URI:" in line:
+            print(line.split("Magnet URI:")[1].strip(), flush=True)
+            magnet_printed = True
+        elif "Magnet:" in line:
             print(line.split("Magnet:")[1].strip(), flush=True)
             magnet_printed = True
 
