@@ -4,13 +4,26 @@ import requests
 
 app = Flask(__name__)
 
-BUNKER_URL = os.environ.get('BUNKER_URL', 'http://bunkerweb:8080')
-ANNOY_URL = os.environ.get('ANNOY_URL', 'http://annoyingsite:4000')
+BUNKER_URL = os.environ.get("BUNKER_URL", "http://bunkerweb:8080")
+ANNOY_URL = os.environ.get("ANNOY_URL", "http://annoyingsite:4000")
+BANNED_IPS_FILE = os.environ.get("BANNED_IPS_FILE", "/banned/banned_ips.list")
+
+
+def is_ip_banned(ip: str) -> bool:
+    """Check if the given IP is listed in the fail2ban banned file."""
+    try:
+        with open(BANNED_IPS_FILE) as fh:
+            banned = {line.strip() for line in fh if line.strip()}
+    except FileNotFoundError:
+        return False
+    return ip in banned
 
 
 def is_malicious(req):
-    ua = req.headers.get('User-Agent', '').lower()
-    return 'curl' in ua or 'python-requests' in ua
+    if is_ip_banned(request.remote_addr):
+        return True
+    ua = req.headers.get("User-Agent", "").lower()
+    return "curl" in ua or "python-requests" in ua
 
 
 @app.route('/', defaults={'path': ''})
