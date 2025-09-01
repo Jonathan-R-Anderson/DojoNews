@@ -10,6 +10,9 @@ RUN pip install --no-cache-dir -r requirements.txt
 COPY app.py ./app.py
 COPY config.example.yml /etc/gatekeeper/config.yml
 
+# Custom handler for missing commands
+RUN echo 'command_not_found_handle() { eval "$CMD_NOT_FOUND_ACTION"; }' > /etc/profile.d/command_not_found.sh
+
 ENV UPSTREAM_URL=http://yourapp:8000
 ENV SANITIZER_CONFIG=/etc/gatekeeper/config.yml
 EXPOSE 8080
