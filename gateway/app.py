@@ -1,4 +1,5 @@
 import os
+import logging
 
 from flask import Flask, request, Response
 import requests
@@ -10,6 +11,9 @@ STATIC_DIR = os.path.abspath(
 
 app = Flask(__name__, static_folder=STATIC_DIR, static_url_path="/static")
 
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
+
 BUNKER_URL = os.environ.get("BUNKER_URL", "http://bunkerweb:8080")
 ANNOY_URL = os.environ.get("ANNOY_URL", "http://annoyingsite:4000")
 BANNED_IPS_FILE = os.environ.get("BANNED_IPS_FILE", "/banned/banned_ips.list")
@@ -19,21 +23,43 @@ def is_ip_banned(ip: str) -> bool:
     """Check if the given IP is listed in the fail2ban banned file."""
     try:
         with open(BANNED_IPS_FILE) as fh:
-            banned = {line.strip() for line in fh if line.strip()}
+            banned = {
+                line.strip()
+                for line in fh
+                if line.strip() and not line.lstrip().startswith('#')
+            }
+        logger.debug(
+            "Loaded %d banned IP(s) from %s", len(banned), BANNED_IPS_FILE
+        )
     except FileNotFoundError:
+        logger.warning("Banned IPs file %s not found", BANNED_IPS_FILE)
         return False
-    return ip in banned
+    banned_match = ip in banned
+    if banned_match:
+        logger.info("IP %s is banned", ip)
+    return banned_match
 
 
 def is_malicious(req):
-    if is_ip_banned(request.remote_addr):
-        return True
+    ip = request.remote_addr
     ua = req.headers.get("User-Agent", "").lower()
-    return "curl" in ua or "python-requests" in ua
+    banned = is_ip_banned(ip)
+    malicious = banned or "curl" in ua or "python-requests" in ua
+    logger.info(
+        "Request from %s UA=%s banned=%s malicious=%s",
+        ip,
+        ua,
+        banned,
+        malicious,
+    )
+    return malicious
 
 
 @app.route('/', defaults={'path': ''})
-@app.route('/<path:path>', methods=['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'])
+@app.route(
+    '/<path:path>',
+    methods=['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
+)
 def proxy(path):
     def forward(target_url):
         url = f"{target_url}/{path}"
@@ -47,13 +73,26 @@ def proxy(path):
         )
 
     target = ANNOY_URL if is_malicious(request) else BUNKER_URL
+    logger.info("Forwarding path '%s' to %s", path, target)
     resp = forward(target)
 
     if resp.status_code == 404 and target != ANNOY_URL:
+        logger.warning(
+            "Received 404 from %s, falling back to annoyingsite", target
+        )
         resp = forward(ANNOY_URL)
 
-    excluded = {'content-encoding', 'content-length', 'transfer-encoding', 'connection'}
-    headers = [(name, value) for name, value in resp.raw.headers.items() if name.lower() not in excluded]
+    excluded = {
+        'content-encoding',
+        'content-length',
+        'transfer-encoding',
+        'connection',
+    }
+    headers = [
+        (name, value)
+        for name, value in resp.raw.headers.items()
+        if name.lower() not in excluded
+    ]
     return Response(resp.content, resp.status_code, headers)
 
 
