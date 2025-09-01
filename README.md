@@ -59,6 +59,15 @@ based on a simple user‑agent check. BunkerWeb's management UI is still
 available on port `8000`. The `DOMAIN` value defines which Host header
 the stack accepts.
 
+If you need to expose a running container on all host ports (except SSH on
+port 22 and HTTP on port 80), use the `host_port_forward.sh` script on the
+host:
+
+```bash
+sudo ./host_port_forward.sh <container_name>
+```
+
+
 ### Blockchain
 
 User accounts, posts, comments, tipping, sponsor slots and media magnets are now handled by dedicated contracts under [`contracts/`](contracts/). Each contract is owned by the sysop who deployed it, while public methods let authors create posts or comments and fans send tips. All smart-contract interactions are performed in the browser via `ethers.js`, keeping the Flask backend free of blockchain dependencies.
