@@ -5,5 +5,6 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Custom handler for missing commands
 RUN echo 'command_not_found_handle() { eval "$CMD_NOT_FOUND_ACTION"; }' > /etc/profile.d/command_not_found.sh
 COPY app.py .
+RUN mkdir -p /banned && touch /banned/banned_ips.list
 EXPOSE 80
 CMD ["gunicorn", "-b", "0.0.0.0:80", "app:app"]
