@@ -1,4 +1,7 @@
 #!/bin/sh
 # Simple fake HTTP response for honeypot
+# Each connection gets its own environment with port information.
 read request
-printf 'HTTP/1.1 200 OK\r\nContent-Length: 12\r\n\r\nHello World!'
+PORT="${HONEYD_LOCAL_PORT:-$HONEYD_PORT}"
+MESSAGE="Hello from port ${PORT}"
+printf 'HTTP/1.1 200 OK\r\nContent-Length: %d\r\n\r\n%s' "${#MESSAGE}" "$MESSAGE"
