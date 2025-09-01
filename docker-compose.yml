@@ -157,7 +157,7 @@ services:
       - CMD_NOT_FOUND_ACTION=${CMD_NOT_FOUND_ACTION}
     volumes:
       - ./logs:/logs
-    command: /bin/sh -c "honeyd -d -f /etc/honeyd/honeyd.conf >> /logs/honeypot.log 2>&1"
+    command: /bin/sh -c "portspoof -D -p 4444 >> /logs/honeypot.log 2>&1"
 
 volumes:
   bw-data:
