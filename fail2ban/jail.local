@@ -2,6 +2,6 @@
 enabled = true
 port = http,https
 filter = annoyingsite
-logpath = /var/log/gateway/access.log
+logpath = /logs/gateway.log
 maxretry = 1
 action = annoyingsite[file=/banned/banned_ips.list]
