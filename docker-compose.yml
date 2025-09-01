@@ -84,9 +84,19 @@ services:
     environment:
       - BUNKER_URL=http://bunkerweb:8080
       - ANNOY_URL=http://annoyingsite:4000
+      - BANNED_IPS_FILE=/banned/banned_ips.list
+    volumes:
+      - ./banned:/banned
     depends_on:
       - bunkerweb
       - annoyingsite
+  fail2ban:
+    image: crazymax/fail2ban:latest
+    volumes:
+      - ./fail2ban:/etc/fail2ban
+      - ./banned:/banned
+    depends_on:
+      - gateway
   clamav:
     image: clamav/clamav:1.4
     volumes:
