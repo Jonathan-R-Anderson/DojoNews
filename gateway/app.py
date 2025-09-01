@@ -95,6 +95,18 @@ def proxy(path):
             "Received %s from %s, falling back to annoyingsite", resp.status_code, target
         )
         resp = forward(ANNOY_URL)
+        # If the annoyingsite also responds with an error (for example when the
+        # requested path doesn't exist), attempt to serve its root document
+        # instead.  This allows the annoyingsite container to provide its own
+        # static assets while unknown paths still show the main page rather than
+        # a 404 from the primary server.
+        if resp.status_code >= 400:
+            logger.debug(
+                "Annoyingsite returned %s for path '%s', retrying with root",
+                resp.status_code,
+                path,
+            )
+            resp = forward(ANNOY_URL, override_path="")
 
     excluded = {
         'content-encoding',
