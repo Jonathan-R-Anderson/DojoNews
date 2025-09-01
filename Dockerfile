@@ -9,6 +9,8 @@ ENV SERVICE_NAME=web
 ENV LOG_FILE=/logs/web.log
 COPY entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
+# Configure DNS to ensure external resources resolve during build
+RUN printf 'nameserver 8.8.8.8\nnameserver 1.1.1.1\n' > /etc/resolv.conf
 # Install Node.js and WebTorrent CLI
 # Use the official pre-built Node.js binaries instead of Debian packages to
 # avoid hitting the Debian mirrors during build.  The image used in tests runs
