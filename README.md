@@ -49,7 +49,6 @@ Visit `http://localhost:1283` in your browser.
 Run the full stack with Docker:
 
 ```bash
-cp .env.example .env
 # edit DOMAIN in .env if you want BunkerWeb to answer on a custom domain
 docker compose up --build
 ```
