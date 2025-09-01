@@ -71,6 +71,8 @@ def proxy(path):
     def forward(target_url, override_path=None):
         url_path = path if override_path is None else override_path
         url = f"{target_url}/{url_path}"
+        if request.query_string:
+            url = f"{url}?{request.query_string.decode()}"
         return requests.request(
             method=request.method,
             url=url,
@@ -86,13 +88,13 @@ def proxy(path):
         resp = forward(target)
     except requests.RequestException as exc:
         logger.warning("Error forwarding to %s: %s", target, exc)
-        resp = forward(ANNOY_URL, "")
+        resp = forward(ANNOY_URL)
 
     if resp.status_code >= 400 and target != ANNOY_URL:
         logger.warning(
             "Received %s from %s, falling back to annoyingsite", resp.status_code, target
         )
-        resp = forward(ANNOY_URL, "")
+        resp = forward(ANNOY_URL)
 
     excluded = {
         'content-encoding',
