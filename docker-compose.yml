@@ -16,6 +16,7 @@ services:
       - ./logs:/logs
     environment:
       - CMD_NOT_FOUND_ACTION=${CMD_NOT_FOUND_ACTION}
+      - CLAMAV_HOST=clamav
     command: /bin/sh -c "python app.py >> /logs/web.log 2>&1"
     depends_on:
       - blacklist
