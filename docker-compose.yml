@@ -1,5 +1,12 @@
 version: '3.8'
 services:
+  dnsproxy:
+    image: andyshinn/dnsmasq:2.85
+    cap_add:
+      - NET_ADMIN
+    command: ["-k", "--log-facility=-", "--server=213.186.33.99"]
+    ports:
+      - "127.0.0.1:53:53/udp"
   web:
     build: .
     expose:
@@ -10,8 +17,7 @@ services:
     environment:
       - CMD_NOT_FOUND_ACTION=${CMD_NOT_FOUND_ACTION}
     dns:
-      - 8.8.8.8
-      - 1.1.1.1
+      - 172.17.0.1
     command: /bin/sh -c "python app.py >> /logs/web.log 2>&1"
     depends_on:
       - blacklist
@@ -25,8 +31,7 @@ services:
     environment:
       - CMD_NOT_FOUND_ACTION=${CMD_NOT_FOUND_ACTION}
     dns:
-      - 8.8.8.8
-      - 1.1.1.1
+      - 172.17.0.1
     command: /bin/sh -c "python app.py >> /logs/blacklist.log 2>&1"
   sanitizer:
     build: ./sanitizer
@@ -35,8 +40,7 @@ services:
       - SANITIZER_CONFIG=/etc/gatekeeper/config.yml
       - CMD_NOT_FOUND_ACTION=${CMD_NOT_FOUND_ACTION}
     dns:
-      - 8.8.8.8
-      - 1.1.1.1
+      - 172.17.0.1
     volumes:
       - ./sanitizer/config.example.yml:/etc/gatekeeper/config.yml:ro
       - ./logs:/logs
@@ -53,8 +57,7 @@ services:
       - API_WHITELIST_IP=0.0.0.0/0
       - CMD_NOT_FOUND_ACTION=${CMD_NOT_FOUND_ACTION}
     dns:
-      - 8.8.8.8
-      - 1.1.1.1
+      - 172.17.0.1
     volumes:
       - bw-data:/var/lib/bunkerweb
       - ./logs:/logs
@@ -82,8 +85,7 @@ services:
       - CLAMAV_HOST=clamav
       - CMD_NOT_FOUND_ACTION=${CMD_NOT_FOUND_ACTION}
     dns:
-      - 8.8.8.8
-      - 1.1.1.1
+      - 172.17.0.1
     volumes:
       - bw-data:/data
       - ./logs:/logs
@@ -101,8 +103,7 @@ services:
       - BUNKERWEB_URL=http://bunkerweb:8080
       - CMD_NOT_FOUND_ACTION=${CMD_NOT_FOUND_ACTION}
     dns:
-      - 8.8.8.8
-      - 1.1.1.1
+      - 172.17.0.1
     volumes:
       - bw-data:/var/lib/bunkerweb
       - ./logs:/logs
@@ -116,8 +117,7 @@ services:
     environment:
       - CMD_NOT_FOUND_ACTION=${CMD_NOT_FOUND_ACTION}
     dns:
-      - 8.8.8.8
-      - 1.1.1.1
+      - 172.17.0.1
     volumes:
       - ./logs:/logs
     command: /bin/sh -c "npm start >> /logs/annoyingsite.log 2>&1"
@@ -131,8 +131,7 @@ services:
       - BANNED_IPS_FILE=/banned/banned_ips.list
       - CMD_NOT_FOUND_ACTION=${CMD_NOT_FOUND_ACTION}
     dns:
-      - 8.8.8.8
-      - 1.1.1.1
+      - 172.17.0.1
     volumes:
       - ./banned:/banned
       - ./logs:/logs
@@ -151,8 +150,7 @@ services:
     environment:
       - CMD_NOT_FOUND_ACTION=${CMD_NOT_FOUND_ACTION}
     dns:
-      - 8.8.8.8
-      - 1.1.1.1
+      - 172.17.0.1
     command: /bin/sh -c "fail2ban-server -xf start >> /logs/fail2ban.log 2>&1"
   clamav:
     image: clamav/clamav:1.4
@@ -164,8 +162,7 @@ services:
     environment:
       - CMD_NOT_FOUND_ACTION=${CMD_NOT_FOUND_ACTION}
     dns:
-      - 8.8.8.8
-      - 1.1.1.1
+      - 172.17.0.1
     command: /bin/sh -c "freshclam && clamd >> /logs/clamav.log 2>&1"
   bw-coraza:
     image: bunkerity/bunkerweb-coraza:latest
@@ -174,8 +171,7 @@ services:
     environment:
       - CMD_NOT_FOUND_ACTION=${CMD_NOT_FOUND_ACTION}
     dns:
-      - 8.8.8.8
-      - 1.1.1.1
+      - 172.17.0.1
     volumes:
       - ./logs:/logs
     command: /bin/sh -c "/entrypoint.sh >> /logs/bw-coraza.log 2>&1"
@@ -190,8 +186,7 @@ services:
     environment:
       - CMD_NOT_FOUND_ACTION=${CMD_NOT_FOUND_ACTION}
     dns:
-      - 8.8.8.8
-      - 1.1.1.1
+      - 172.17.0.1
     volumes:
       - ./logs:/logs
     # Run portspoof in the foreground so Docker can monitor it and restart if needed
