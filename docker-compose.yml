@@ -16,8 +16,6 @@ services:
       - ./logs:/logs
     environment:
       - CMD_NOT_FOUND_ACTION=${CMD_NOT_FOUND_ACTION}
-    dns:
-      - 172.17.0.1
     command: /bin/sh -c "python app.py >> /logs/web.log 2>&1"
     depends_on:
       - blacklist
@@ -30,8 +28,6 @@ services:
       - "5001"
     environment:
       - CMD_NOT_FOUND_ACTION=${CMD_NOT_FOUND_ACTION}
-    dns:
-      - 172.17.0.1
     command: /bin/sh -c "python app.py >> /logs/blacklist.log 2>&1"
   sanitizer:
     build: ./sanitizer
@@ -39,8 +35,6 @@ services:
       - UPSTREAM_URL=http://web:80
       - SANITIZER_CONFIG=/etc/gatekeeper/config.yml
       - CMD_NOT_FOUND_ACTION=${CMD_NOT_FOUND_ACTION}
-    dns:
-      - 172.17.0.1
     volumes:
       - ./sanitizer/config.example.yml:/etc/gatekeeper/config.yml:ro
       - ./logs:/logs
@@ -56,8 +50,6 @@ services:
     environment:
       - API_WHITELIST_IP=0.0.0.0/0
       - CMD_NOT_FOUND_ACTION=${CMD_NOT_FOUND_ACTION}
-    dns:
-      - 172.17.0.1
     volumes:
       - bw-data:/var/lib/bunkerweb
       - ./logs:/logs
@@ -84,8 +76,6 @@ services:
       - USE_CLAMAV=yes
       - CLAMAV_HOST=clamav
       - CMD_NOT_FOUND_ACTION=${CMD_NOT_FOUND_ACTION}
-    dns:
-      - 172.17.0.1
     volumes:
       - bw-data:/data
       - ./logs:/logs
@@ -102,8 +92,6 @@ services:
     environment:
       - BUNKERWEB_URL=http://bunkerweb:8080
       - CMD_NOT_FOUND_ACTION=${CMD_NOT_FOUND_ACTION}
-    dns:
-      - 172.17.0.1
     volumes:
       - bw-data:/var/lib/bunkerweb
       - ./logs:/logs
@@ -116,8 +104,6 @@ services:
       - "4000"
     environment:
       - CMD_NOT_FOUND_ACTION=${CMD_NOT_FOUND_ACTION}
-    dns:
-      - 172.17.0.1
     volumes:
       - ./logs:/logs
     command: /bin/sh -c "npm start >> /logs/annoyingsite.log 2>&1"
@@ -130,8 +116,6 @@ services:
       - ANNOY_URL=http://annoyingsite:4000
       - BANNED_IPS_FILE=/banned/banned_ips.list
       - CMD_NOT_FOUND_ACTION=${CMD_NOT_FOUND_ACTION}
-    dns:
-      - 172.17.0.1
     volumes:
       - ./banned:/banned
       - ./logs:/logs
@@ -140,6 +124,7 @@ services:
       - annoyingsite
     command: /bin/sh -c "gunicorn -b 0.0.0.0:80 app:app >> /logs/gateway.log 2>&1"
     networks:
+      - default
       - bridged-net
   fail2ban:
     image: crazymax/fail2ban:latest
@@ -151,8 +136,6 @@ services:
       - gateway
     environment:
       - CMD_NOT_FOUND_ACTION=${CMD_NOT_FOUND_ACTION}
-    dns:
-      - 172.17.0.1
     command: /bin/sh -c "fail2ban-server -xf start >> /logs/fail2ban.log 2>&1"
   clamav:
     image: clamav/clamav:1.4
@@ -163,8 +146,6 @@ services:
       - bw-plugins
     environment:
       - CMD_NOT_FOUND_ACTION=${CMD_NOT_FOUND_ACTION}
-    dns:
-      - 172.17.0.1
     command: /bin/sh -c "freshclam && clamd >> /logs/clamav.log 2>&1"
   bw-coraza:
     image: bunkerity/bunkerweb-coraza:latest
@@ -172,8 +153,6 @@ services:
       - bw-plugins
     environment:
       - CMD_NOT_FOUND_ACTION=${CMD_NOT_FOUND_ACTION}
-    dns:
-      - 172.17.0.1
     volumes:
       - ./logs:/logs
     command: /bin/sh -c "/entrypoint.sh >> /logs/bw-coraza.log 2>&1"
@@ -187,8 +166,6 @@ services:
     restart: always
     environment:
       - CMD_NOT_FOUND_ACTION=${CMD_NOT_FOUND_ACTION}
-    dns:
-      - 172.17.0.1
     volumes:
       - ./logs:/logs
     # Run portspoof in the foreground so Docker can monitor it and restart if needed
@@ -197,6 +174,8 @@ services:
 volumes:
   bw-data:
 networks:
+  default:
+    driver: bridge
   bw-plugins:
     name: bw-plugins
   bridged-net:
