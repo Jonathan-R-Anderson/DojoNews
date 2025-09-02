@@ -43,6 +43,18 @@ cleanup_rules() {
     iptables -t "$table" -F "$CHAIN_POST" 2>/dev/null || true
     iptables -t "$table" -X "$CHAIN_POST" 2>/dev/null || true
   done
+
+  # Clean up legacy filter table rules that may disrupt other containers.
+  # Some earlier iterations created custom DOCKER-* chains in the filter
+  # table which persist even after forwarding was removed.  Those chains can
+  # prevent regular containers from reaching the host, so ensure they are
+  # deleted here.  We only touch the filter table and skip the Docker-managed
+  # nat chains so published ports keep working.
+  iptables -S FORWARD | grep -q "DOCKER-FORWARD" && iptables -D FORWARD -j DOCKER-FORWARD || true
+  for chain in DOCKER-FORWARD DOCKER-BRIDGE DOCKER-CT DOCKER; do
+    iptables -t filter -F "$chain" 2>/dev/null || true
+    iptables -t filter -X "$chain" 2>/dev/null || true
+  done
 }
 
 ensure_chains() {
