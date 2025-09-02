@@ -131,6 +131,8 @@ class Settings:
     DB_BLACKLIST_ROOT = str(_DB_PATH / "blacklist.db")
     BLACKLIST_API_HOST = "blacklist"
     BLACKLIST_API_PORT = 5001
+    CLAMAV_HOST = os.environ.get("CLAMAV_HOST", "clamav")
+    CLAMAV_PORT = int(os.environ.get("CLAMAV_PORT", "3310"))
 
     # SMTP Mail Configuration
     SMTP_SERVER = "smtp.gmail.com"
