@@ -1,4 +1,6 @@
 # Simple Flask app container
+# Note: Debian base is required because Node.js binaries needed below
+# depend on glibc, which is not available in Alpine.
 FROM python:3.10-slim
 WORKDIR /app
 COPY app /app
