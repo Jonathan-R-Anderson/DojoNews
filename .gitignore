@@ -172,3 +172,4 @@ cython_debug/
 
 # Local runtime blacklist database
 app/db/blacklist.db
+spamsites/annoyingsite/hts-cache/new.zip
