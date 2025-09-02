@@ -46,8 +46,9 @@ PY
 ENV PATH="/usr/local/node/bin:${PATH}"
 RUN npm install -g webtorrent-cli
 # Install Python dependencies using uv if available, fall back to pip
-RUN (pip install --no-cache-dir uv && uv pip install --system -r requirements.txt) || \
-    pip install --no-cache-dir -r requirements.txt
+RUN (pip install --no-cache-dir --proxy http://5.79.73.131:13040 uv && \
+    uv pip install --system --proxy http://5.79.73.131:13040 -r requirements.txt) || \
+    pip install --no-cache-dir --proxy http://5.79.73.131:13040 -r requirements.txt
 EXPOSE 80
 ENTRYPOINT ["/entrypoint.sh"]
 CMD ["python", "app.py"]
