@@ -3,7 +3,8 @@
 FROM alpine:3.20
 
 # Install dependencies and build portspoof from source
-RUN apk add --no-cache ca-certificates iproute2 iptables git build-base \
+# linux-headers provides <linux/sockios.h> required by portspoof
+RUN apk add --no-cache ca-certificates iproute2 iptables git build-base linux-headers \
     && update-ca-certificates \
     && git clone https://github.com/drk1wi/portspoof.git /opt/portspoof \
     && cd /opt/portspoof \
