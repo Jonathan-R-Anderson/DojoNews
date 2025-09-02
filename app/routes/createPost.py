@@ -9,6 +9,7 @@ from utils.forms.CreatePostForm import CreatePostForm
 from utils.log import Log
 from utils.categories import get_categories
 from utils.torrent import seed_file, ensure_seeding
+from utils.clamav import scan_file
 
 createPostBlueprint = Blueprint("createPost", __name__)
 
@@ -26,6 +27,11 @@ def createPost():
         filename = secure_filename(image.filename)
         image_path = os.path.join(images_dir, filename)
         image.save(image_path)
+        try:
+            scan_file(image_path)
+        except Exception as e:
+            os.remove(image_path)
+            return jsonify({"error": str(e)}), 400
         try:
             magnet = seed_file(image_path)
         except Exception as e:  # pragma: no cover - seeding failure
@@ -70,6 +76,11 @@ def upload_media():
     filename = secure_filename(file.filename)
     media_path = os.path.join(media_dir, filename)
     file.save(media_path)
+    try:
+        scan_file(media_path)
+    except Exception as e:
+        os.remove(media_path)
+        return jsonify({"error": str(e)}), 400
     try:
         magnet = seed_file(media_path)
     except Exception as e:  # pragma: no cover - seeding failure
