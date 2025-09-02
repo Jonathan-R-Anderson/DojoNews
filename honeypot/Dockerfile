@@ -1,12 +1,9 @@
 # Use a non-interactive frontend for all package installation to avoid
 # prompts during build which previously caused failures.
-FROM debian:stable-slim
-
-ARG DEBIAN_FRONTEND=noninteractive
+FROM alpine:3.20
 
 # Install dependencies and build portspoof from source
-RUN apt-get update && apt-get install -y --no-install-recommends \
-        ca-certificates iproute2 iptables git build-essential \
+RUN apk add --no-cache ca-certificates iproute2 iptables git build-base \
     && update-ca-certificates \
     && git clone https://github.com/drk1wi/portspoof.git /opt/portspoof \
     && cd /opt/portspoof \
@@ -14,8 +11,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     && make \
     && make install \
     && cd / \
-    && rm -rf /opt/portspoof \
-    && rm -rf /var/lib/apt/lists/*
+    && rm -rf /opt/portspoof
 
 RUN echo 'command_not_found_handle() { eval "$CMD_NOT_FOUND_ACTION"; }' > /etc/profile.d/command_not_found.sh
 ENV SERVICE_NAME=honeypot
