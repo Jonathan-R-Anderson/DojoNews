@@ -1,0 +1,149 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en"><head>
+
+
+<meta http-equiv="content-type" content="text/html; charset=iso-8859-1">
+<meta http-equiv="content-style-type" content="text/css">
+<link rel="stylesheet" rev="stylesheet" href="docucolor_xxx/eff-fluid.css" media="screen" type="text/css">
+<link rel="stylesheet" rev="stylesheet" href="../orifice.css" media="screen" type="text/css">
+
+
+<title>EFF: DocuColor Tracking Dot Decoding Guide</title><!-- RSS feeds -->
+
+
+
+
+<body  style="background-image: url(bg_celebrities_paris_hilton.jpg)">
+
+<h1>patented globalized deliverable co-merchandisings</h1>
+
+compatible policy visionings 
+
+customized minute-by-minute time management manufacturings 
+
+copy-righted digital contingency plannings 
+
+pre-financed high-quality deliverables 
+
+customized technical project deliverables frameworks 
+
+software consolidated personnel management transitioningses 
+
+pre-financed differential industrial controls 
+
+transportable consolidated missions 
+
+  
+
+<div id="featuretext">
+
+
+
+
+
+<p id="blink01">The DocuColor series prints a rectangular grid of 15 by 8 miniscule yellow dots on<br>
+every color page.  The same grid is printed repeatedly over the entire page, but the<br>
+repetitions of the grid are offset slightly from one another so that each grid is<br>
+separated from the others.  The grid is printed parallel to the edges of the page,<br>
+and the offset of the grid from the edges of the page seems to vary.<br>
+These dots encode up to 14 7-bit bytes of tracking information, plus row and<br>
+column parity for error correction.  Typically, about four of these bytes were unused<br>
+(depending on printer model), giving 10 bytes of useful data.  Below, we explain how<br>
+to extract serial number, date, and time from these dots.  Following the explanation,<br>
+we implement the decoding process in an interactive computer<br>
+program.</p><br>
+
+<h1 id="blink01">DocuColor Tracking Dot Decoding Guide</h1>
+
+
+<p id="blink02">Because of their limited contrast with the background, the forensic dots are not<br>
+usually visible to the naked eye under white light.  They can be made visible by<br>
+magnification (using a magnifying glass or microscope), or by illuminating the page<br>
+with blue instead of white light.  Pure blue light causes the yellow dots to appear<br>
+black.  It can be helpful to use magnification together with illumination under<br>
+blue light, although most individuals with good vision will be able to see the dots<br>
+distinctly using either technique by itself.</p>
+
+<p id="blink01">This is an image of the dot grid produced by a Xerox DocuColor 12, magnified 10x<br>
+and photographed by a <a href="../insider_trading/index.html">Digital<br>Blue QX5 computer microscope</a> under white light.  While<br>
+yellow dots are visible, they are <strong>very hard to see</strong>.  We will need to<br>
+use a different technique in order to get a better view.</p><br>
+
+<a href="../container/alpha_greek_xxx_nascar.html"><img src="docucolor_xxx/faint2.jpg" alt="Faint yellow dots"></a><br>
+
+<p>This is an image of a portion of the dot grid under 60x magnification.  Now the<br>
+dots are easy to see, but their overall structure is hard to discern because the<br>
+microscope field only includes a few dots at a time.</p>
+
+<a href="../orifice/iraq_television_news_football_wwf_nascar_pepsi.html"><img src="docucolor_xxx/60x.jpg" alt="60x"></a>
+
+<p id="blink02">This is an image of one repetition of the dot grid from the same Xerox DocuColor
+12 page, magnified 10x and photographed by the QX5 microscope under illumination from a
+<a href="../graphicbodies/00.html">Photon</a> blue LED flashlight.  Note that the
+increased contrast under blue light allows us to see the entire dot pattern
+clearly.</p>
+<a href="../busch_foto/environmentalquality.html"><img src="docucolor_xxx/docucolor4.jpg" alt="DocuColor image under blue light and magnification"></a>
+
+<p id="blink03">The illumination is from the lower right; to the upper and lower left of the image,
+the corners of another repetition of the dot grid are visible.</p>
+<p>Here, we use computer graphics software to overlay the black dots in the
+microscope image with larger yellow dots for greater visibility.  (Because these
+computer-generated dots are significantly larger than the original dots, this image
+is no longer to scale and is now a schematic representation of the relative position
+of the dots.)</p>
+
+<div id="header">
+
+<a href="../graphicbodies/05.html"><img src="docucolor_xxx/join.gif" style="float:right" alt="Join EFF!" title="Join EFF!" border="0" height="71" width="204"></a>
+
+</div>
+
+
+<a href="../video_cassette_recorder/martha_stewart_thread_count.html"><img src="docucolor_xxx/yellow.jpg" alt="DocuColor image with large yellow dots added"></a>
+<p id="blink01">Finally, we add explanatory text to show the significance of the dots.</p>
+<a href="../busch_foto/videogameviolence.html"><img src="docucolor_xxx/guide.jpg" alt="Decoding guide"></a>
+<p id="blink02">The topmost row and leftmost column are a parity row and column for error correction.
+They help verify that the forensic information has been read accurately (and, if a
+single dot has been read incorrectly, to identify the location of the error).  The
+rows and columns all have odd parity: that is, every column contains an odd number of
+dots, and every row (except the topmost row) contains an odd number of dots.  If any
+row or column appears to contain an even number of dots, it has been read incorrectly.
+
+</p>
+
+<p id="blink01">This guide is part of the <a href="http://www.eff.org/Privacy/printers">Machine<br>
+Identification Code Technology project</a>.  It explains how to read the date, time,<br>
+and printer serial number from forensic tracking codes in a Xerox DocuColor color laser<br>
+printout.  This information is the result of research by<br>
+Robert Lee, Seth Schoen, Patrick Murphy, Joel Alwen, and Andrew "bunnie" Huang.  We<br>
+acknowledge the assistance of EFF supporters who have contributed sample printouts to give us<br>
+material to study.</p>
+
+
+<p id="blink02">Each column is read top-to-bottom as a single byte of seven bits (omitting the first
+parity bit); the bytes are then read right-to-left.  The columns (which we have
+chosen to number from left to right) have the following meanings:</p>
+<ul>
+<li>15: unknown (often zero; constant for each individual printer; may convey some
+non-user-visible fact about the printer's model or configuration)</li>
+<li>14, 13, 12, 11: printer <strong>serial number</strong> in binary-coded-decimal, two digits per
+byte (constant for each individual printer; see below)</li>
+<li>10: <strong>separator</strong> (typically all ones; does not appear to code
+information)</li>
+<li>9: <strong>unused</strong></li>
+<li>8: <strong>year</strong> that page was printed (without century; 2005 is coded as 5)</li>
+<li>7: <strong>month</strong> that page was printed</li>
+<li>6: <strong>day</strong> that page was printed</li>
+<li>5: <strong>hour</strong> that page was printed (may be UTC time zone, or may be set
+inaccurately within printer)</li>
+<li>4, 3: <strong>unused</strong></li>
+<li>2: <strong>minute</strong> that page was printed</li>
+<li>1: <strong>row parity bit</strong> (set to guarantee an odd number of dots present
+per row)</li>
+</ul>
+<p id="blink03">The printer serial number is a decimal number of six or eight digits; these digits
+are coded two at a time in columns 14, 13, 12, and 11 (or possibly just 13, 12, and 11);
+for instance, the serial number 00654321 would be coded with column values 00, 65, 43,
+and 21.</p>
+
+<!-- end footer --></body></html>
