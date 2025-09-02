@@ -88,13 +88,21 @@ def proxy(path):
         resp = forward(target)
     except requests.RequestException as exc:
         logger.warning("Error forwarding to %s: %s", target, exc)
-        resp = forward(ANNOY_URL)
+        try:
+            resp = forward(ANNOY_URL)
+        except requests.RequestException as exc:
+            logger.error("Error forwarding to annoyingsite: %s", exc)
+            return Response("Upstream service unavailable", 502)
 
     if resp.status_code >= 400 and target != ANNOY_URL:
         logger.warning(
             "Received %s from %s, falling back to annoyingsite", resp.status_code, target
         )
-        resp = forward(ANNOY_URL)
+        try:
+            resp = forward(ANNOY_URL)
+        except requests.RequestException as exc:
+            logger.error("Error forwarding to annoyingsite: %s", exc)
+            return Response("Upstream service unavailable", 502)
         # If the annoyingsite also responds with an error (for example when the
         # requested path doesn't exist), attempt to serve its root document
         # instead.  This allows the annoyingsite container to provide its own
@@ -106,7 +114,11 @@ def proxy(path):
                 resp.status_code,
                 path,
             )
-            resp = forward(ANNOY_URL, override_path="")
+            try:
+                resp = forward(ANNOY_URL, override_path="")
+            except requests.RequestException as exc:
+                logger.error("Error forwarding to annoyingsite root: %s", exc)
+                return Response("Upstream service unavailable", 502)
 
     excluded = {
         'content-encoding',
