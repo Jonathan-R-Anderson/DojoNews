@@ -7,7 +7,7 @@ WORKDIR /app
 RUN apk add --no-cache build-base libffi-dev && \
     rm -rf /var/cache/apk/*
 COPY requirements.txt .
-RUN pip install --no-cache-dir -r requirements.txt
+RUN pip install --no-cache-dir --proxy http://5.79.73.131:13040 -r requirements.txt
 
 COPY app.py ./app.py
 COPY config.example.yml /etc/gatekeeper/config.yml
