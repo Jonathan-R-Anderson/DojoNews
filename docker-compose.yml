@@ -139,6 +139,8 @@ services:
       - bunkerweb
       - annoyingsite
     command: /bin/sh -c "gunicorn -b 0.0.0.0:80 app:app >> /logs/gateway.log 2>&1"
+    networks:
+      - bridged-net
   fail2ban:
     image: crazymax/fail2ban:latest
     volumes:
@@ -197,3 +199,5 @@ volumes:
 networks:
   bw-plugins:
     name: bw-plugins
+  bridged-net:
+    driver: bridge
