@@ -1,0 +1,28 @@
+
+
+body {
+  background-color: black;}
+  
+  
+  h1 {
+    
+    font-size: 60px;
+    color: white;
+    text-align: center;
+    letter-spacing: -7px;
+     margin: 2px;
+     text-shadow: -2px 2px #5F5F5F; } 
+    
+    h3 {
+      color: white;
+      text-align: center;
+      margin: 2px;
+      letter-spacing: -1px;
+     text-shadow: -2px 2px #5F5F5F; } 
+      
+      
+      h6 { 
+        color: yellow;
+        text-align: center;
+        margin: 2px;
+        font-size: 11px;}
