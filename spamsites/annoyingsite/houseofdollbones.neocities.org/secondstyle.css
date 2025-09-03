@@ -1,0 +1,288 @@
+ :root {
+                --header-image: url('images/backgrounds/Code.jpg');
+                --body-bg-image: url('images/backgrounds/purple%20wallpaper.jpg');
+
+                /* colors */
+                --content: #43256E;
+                /*#ba00ff */
+                /*#e06e89 */
+            }
+
+@font-face{
+    font-family: RetroComputer;
+    src: url(fonts/retro_computer_personal_use.ttf)
+}
+
+@font-face{
+    font-family: NeckRomancerRegular;
+    src: url(fonts/NECKROMANCERRegular.ttf)
+}
+
+@font-face{
+    font-family: CREATURE;
+    src:url(fonts/CREATURE.html)
+}
+
+* {
+                box-sizing: border-box;
+            }
+
+            body {
+                font-family: courier;
+                margin: 0;
+                background-color: black;
+                /* you can delete the line below if you'd prefer to not use an image */
+                background-size: 100%;
+                color: #fceaff;
+                background-image: url(images/backgrounds/purple%20wallpaper.jpg);
+                
+            }
+                
+.titlescontainer {
+    width: 100%;
+    height: 35%;
+    display:flex;
+    margin: 0 auto; 
+}
+
+.contentcontainer {
+    width:100%;
+    height:100%;
+    display: grid;
+    grid-template-columns: 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px;
+    grid-template-rows: 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px
+}
+
+.contentcontainer2 {
+    width:100%;
+    height:100%;
+    display: grid;
+    grid-template-columns: 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px;
+    grid-template-rows: 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px;
+}
+
+.contentcontainerWOF {
+    width:100%;
+    height:100%;
+    display: grid;
+    grid-template-columns: 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px;
+    grid-template-rows: 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px;
+}
+
+.textbox {
+  padding: 0.5em;
+  background-color: black;
+  font-weight: 700;
+  color: #f1f5f9;
+  border: 10px solid white;
+  scrollbar-color: #e06e89 black;
+}
+
+.sidenav {
+  display: grid;
+  grid-template-columns: 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px;
+  grid-template-rows: 21px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px;
+  height: 100%; /* Full-height: remove this if you want "auto" height */
+  width: 300px; /* Set the width of the sidebar */
+  position: fixed; /* Fixed Sidebar (stay in place on scroll) */
+  z-index: 1; /* Stay on top */
+  top: 0; /* Stay at the top */
+  left: 0;
+  background-color:#111;
+  overflow-x: hidden; /* Disable horizontal scroll */
+  padding-top: 20px;
+  border-right: 10px solid;
+  border-color: white;
+}
+
+.navicon{
+    background-color: transparent;
+}
+
+.navicon1 {
+    grid-row: 1/5;
+    grid-column: 1/10;
+    background:url()
+}
+
+.navicon2 {
+    grid-row: 9/13;
+    grid-column: 1/10;
+}
+
+.navicon3 {
+    grid-row: 5/9;
+    grid-column: 1/10;
+}
+
+.navicon4{
+    grid-row: 13/17;
+    grid-column: 1/10;
+}
+
+.navicon5{
+    grid-row:17/21;
+    grid-column:1/10;
+}
+
+.textbox2{
+    text-align:center;
+    border-color: #ba00ff; 
+    background-color: black;
+    border: 4px solid;
+    color: #ba00ff;
+    grid-row: 1/1;
+    grid-column: 1/1;
+}
+
+footer {
+  text-align: center;
+  padding: 3px;
+  height: 30px;
+  background-color: Black;
+  border-top: solid 5px white;
+  color: #e06e89;
+}
+
+
+/* The navigation menu links */
+.sidenav a {
+  padding: 6px 8px 6px 16px;
+  text-decoration: none;
+  font-size: 25px;
+  color: #818181;
+  display: block;
+}
+
+/* When you mouse over the navigation links, change their color */
+.sidenav a:hover {
+  color: #f1f1f1;
+}
+
+/* Style page content */
+.main {
+  margin-left: 160px; /* Same as the width of the sidebar */
+  padding: 0;
+}
+
+/* On smaller screens, where height is less than 450px, change the style of the sidebar (less padding and a smaller font size) */
+@media screen and (max-height: 450px) {
+  .sidenav {padding-top: 15px;}
+  .sidenav a {font-size: 18px;}
+}
+
+
+@font-face {
+font-family: 'music';
+src: url(https://cdn.glitch.me/9bbfdfb3-4bfa-4c39-8743-5621c8b9df21/LL_RECOR.TTF);
+}
+ 
+@font-face {
+font-family: Pixelated MS Sans Serif;
+src:url(ms_sans_serif.html) format("woff");
+src:url(ms_sans_serif-2.html) format("woff2");
+}
+ 
+/*-------MUSIC PLAYER BY GLENTHEMES-------*/
+#glenplayer02 {
+position:relative;
+display:flex;
+background:#ba00ff;
+width: 100%;
+padding: .2em;
+border: 3px solid purple;
+border-style: inset;
+margin: auto;
+margin-top: 0.5em;
+margin-bottom: 0.5em;
+}
+ 
+#glenplayer02 a {text-decoration:none;}
+ 
+#glenplayer02 > div {
+align-self:center;
+}
+ 
+.music-controls {
+user-select:none;
+-webkit-user-select:none;
+width:13px;
+font-size:18px;
+cursor:pointer;
+font-family: 'music';
+}
+ 
+.playy, .pausee {font-family: 'music'; font-size: 1.1em; color: #F38BC8; -webkit-text-stroke: 0.5px #000; margin-top: -0.2em; margin-bottom: 0.1em; } /* color of play & pause buttons */
+ 
+.pausee {display:none;}
+ 
+.sonata {
+margin-left:0.4em;
+font-family: Pixelated MS Sans Serif;
+font-size:0.75em;
+color:#000; /* color of music note symbol */
+}
+ 
+.labeltext {
+margin-left:0.5em;
+position: relative;
+bottom:0.1em;
+font-size:14px;/* color of song title */
+}
+    
+/* Dropdown Button */
+.dropbtn {
+  background-color: black;
+  color: purple;
+  padding: 10px;
+  font-size: 30px;
+  border: solid 5px purple;
+  font-family: NeckRomancerRegular;
+}
+
+/* The container <div> - needed to position the dropdown content */
+.dropdown1 {
+  position: relative;
+  display: inline-block;
+  height: fit-content;
+  margin: 5px;
+}
+
+/* Dropdown Content (Hidden by Default) */
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f1f1f1;
+  min-width: 200px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+/* Links inside the dropdown */
+.dropdown-content a {
+  color: black;
+  background-color: purple;
+  border-right: solid 5px;
+  border-bottom: solid 5px;
+  border-left: solid 5px;
+  border-color: darkred;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+  font-family: Franklin Gothic Medium;
+  font-size: larger;
+}
+
+/* Change color of dropdown links on hover */
+.dropdown1-content a:hover {
+    background-color: #ddd;}
+
+/* Show the dropdown menu on hover */
+.dropdown1:hover .dropdown-content {display: block;}
+
+/* Change the background color of the dropdown button when the dropdown content is shown */
+.dropdown1:hover .dropbtn {
+    background-color: purple;
+    border-color: darkred;
+    color: black; 
+}
