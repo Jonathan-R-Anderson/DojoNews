@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>ENTER... if you DARE!</title>
+  <style>
+    /* Shared styles */
+    body {
+      background-color: #000;
+      color: #ff0000;
+      font-family: "Times New Roman", Times, serif;
+      margin: 0;
+      overflow: hidden;
+    }
+
+    /* Splash page styles */
+    .splash-page {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      text-align: center;
+    }
+    .splash-container {
+      border: 5px double #ff0000;
+      padding: 20px;
+      background-color: #110000;
+    }
+    .splash-title {
+      font-size: 48px;
+      margin-bottom: 20px;
+      text-shadow: 2px 2px 4px #800000;
+      animation: pulse 2s infinite;
+    }
+    .enter-button {
+      display: inline-block;
+      padding: 10px 20px;
+      border: 2px solid #ff0000;
+      color: #ff0000;
+      text-decoration: none;
+      font-size: 24px;
+      margin-top: 20px;
+      background-color: #000;
+      animation: glow 1.5s infinite alternate;
+      cursor: pointer;
+    }
+    .warning-text {
+      font-size: 12px;
+      margin-top: 20px;
+      font-family: "Courier New", Courier, monospace;
+    }
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+      100% { transform: scale(1); }
+    }
+    @keyframes glow {
+      from { box-shadow: 0 0 5px #ff0000; }
+      to { box-shadow: 0 0 20px #ff0000; }
+    }
+    #loading-text {
+      margin-top: 10px;
+      font-family: "Courier New", Courier, monospace;
+    }
+
+    /* Main site styles */
+    .main-site {
+      display: none;
+      padding: 20px;
+      text-align: center;
+    }
+    .content-box {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 20px;
+      background-color: #111;
+      border: 3px solid #800000;
+    }
+    .menu {
+      display: flex;
+      justify-content: center;
+      margin: 20px 0;
+    }
+    .menu a {
+      color: #ff0000;
+      text-decoration: none;
+      margin: 0 15px;
+      font-size: 18px;
+      border: 1px solid #ff0000;
+      padding: 5px 10px;
+      background-color: #200000;
+    }
+    .webring {
+      border: 1px solid #ff0000;
+      padding: 10px;
+      margin: 20px 0;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Splash Page -->
+  <div id="splash" class="splash-page">
+    <div class="splash-container">
+      <h1 class="splash-title">DaRk ReAlM</h1>
+      
+      <img src="https://via.placeholder.com/300x200" alt="Scary Gateway">
+      
+      <div>
+        <p>You stand at the threshold of darkness...</p>
+        <p>Loading dark forces...</p>
+        <div id="loading-text">▓▓▓▓▓▓░░░░░ 60%</div>
+      </div>
+      
+      <button id="enter-button" class="enter-button">ENTER SITE</button>
+      
+      <div class="warning-text">
+        ⚠️ WARNING: This site contains supernatural elements ⚠️<br>
+        Best viewed in 800x600 resolution<br>
+        <small>© 2000 DaRk ReAlM - All Souls Reserved</small>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Site -->
+  <div id="main-site" class="main-site">
+    <div class="content-box">
+      <h1>🕯️ Welcome to DaRk ReAlM 🕯️</h1>
+      <marquee scrollamount="5">YOUR SOUL IS NOW BOUND TO THIS REALM...</marquee>
+      
+      <div class="menu">
+        <a href="#home">HOME</a>
+        <a href="#stories">SCARY STORIES</a>
+        <a href="#guestbook">GUESTBOOK</a>
+        <a href="#links">CREEPY LINKS</a>
+      </div>
+
+      <p>🦇 Latest Update - 10/31/2000 🦇</p>
+      <p>Greetings, mortal! You've successfully crossed the threshold. This site is best viewed in Netscape Navigator with a resolution of 800x600.</p>
+
+      <div class="webring">
+        <h3>🕸️ HORROR WEBRING 🕸️</h3>
+        [Previous] [Random] [Next]<br>
+        <small>Part of the Spooky Sites Webring</small>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // Simulate loading
+      let progress = 60;
+      const loadingInterval = setInterval(() => {
+        progress += 10;
+        document.getElementById('loading-text').innerText = 
+          `${'▓'.repeat(progress/10)}${'░'.repeat(10-progress/10)} ${progress}%`;
+        if (progress >= 100) {
+          clearInterval(loadingInterval);
+          document.getElementById('splash').style.display = 'none';
+          document.getElementById('main-site').style.display = 'block';
+        }
+      }, 1000);
+
+      // Enter button functionality
+      document.getElementById('enter-button').addEventListener('click', function() {
+        document.getElementById('splash').style.display = 'none';
+        document.getElementById('main-site').style.display = 'block';
+      });
+    });
+  </script>
+
+</body>
+</html>
