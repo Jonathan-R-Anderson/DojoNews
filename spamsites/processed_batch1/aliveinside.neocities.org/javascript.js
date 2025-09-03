@@ -32,17 +32,11 @@ const glowMilestones = [
 
 cookie.addEventListener('click', () => {
   clickCount++;
-
-  // Shake cookie
   cookie.classList.add('crack');
   setTimeout(() => cookie.classList.remove('crack'), 700);
-
-  // Show fortune
-  fortuneContainer.classList.remove('show'); // reset
-  void fortuneContainer.offsetWidth; // force reflow
+  fortuneContainer.classList.remove('show');
+  void fortuneContainer.offsetWidth;
   fortuneContainer.classList.add('show');
-
-  // Select fortune
   let fortune;
   if (clickCount >= 200) fortune = "u have a problem....";
   else if (clickCount >= 100) fortune = "how are u doing this????";
@@ -51,8 +45,6 @@ cookie.addEventListener('click', () => {
   else fortune = fortunes[Math.floor(Math.random() * fortunes.length)];
 
   fortuneText.textContent = fortune;
-
-  // Glow effect
   const parent = fortuneContainer.parentElement;
   parent.classList.remove('red-glow-10','red-glow-50','red-glow-100','red-glow-200');
   for (let i = glowMilestones.length-1; i>=0; i--) {

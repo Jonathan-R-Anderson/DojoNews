@@ -1,16 +1,16 @@
-/* Global body styles */
+
 body {
   font-family: 'Times New Roman', Times, serif;
   font-size: 0.875em;
   text-align: center;
 }
 
-/* Centering for <center> elements */
+
 center {
   text-align: center;
 }
 
-/* Main wrapper */
+
 .wrapper {
   width: 1150px;
   margin: -10px auto -10px auto;
@@ -18,12 +18,12 @@ center {
   border-right: 0 solid #12282f;
 }
 
-/* Contains main and sidebar */
+
 .wrapper-2 {
   position: relative;
 }
 
-/* Header and footer */
+
 .header, .footer {
   background-size: cover;
   overflow: hidden;
@@ -37,7 +37,7 @@ center {
   height: 50px;
 }
 
-/* Big title */
+
 .title {
   padding: 15px 10px 10px 20px;
   color: #fff;
@@ -62,13 +62,13 @@ center {
   }
 }
 
-/* Heading overrides */
+
 .title h1, .title h2, .title h3 {
   margin: 0;
   padding: 0;
 }
 
-/* Top links row */
+
 .links {
   padding: 3px 5px 5px 5px;
 }
@@ -97,7 +97,7 @@ center {
 
 
 
-/* Columns */
+
 .main, .sidebar-right {
   display: inline-block;
 }
@@ -121,7 +121,7 @@ center {
   margin-right: 10px;
 }
 
-/* Boxes */
+
 .box {
   padding: 5px 10px 0 10px;
   background-image: linear-gradient(#367668, #103334);
@@ -145,51 +145,51 @@ center {
 .sidebar-right .box:first-child .inner a::before {
   content: "";
   display: inline-block;
-  width: 16px;           /* desired width */
-  height: 16px;          /* desired height */
-  background-image: url("eyeball.gif");  /* your eyeball image */
-  background-size: contain;   /* keeps proportions */
+  width: 16px;           
+  height: 16px;          
+  background-image: url("eyeball.gif");  
+  background-size: contain;   
   background-repeat: no-repeat;
   margin-left: 25px;
 }
-/* Remove flex for all links in the second box */
+
 .sidebar-right .box:nth-child(2) a {
-  display: inline;  /* makes images inside <a> behave normally */
+  display: inline;  
 }
 
-/* Second box in right sidebar (images) */
+
 .sidebar-right .box:nth-child(2) .inner {
   display: grid;
-  grid-template-columns: repeat(3, 1fr); /* exactly 3 columns */
-  padding: 0; /* optional: remove padding to maximize space */
+  grid-template-columns: repeat(3, 1fr); 
+  padding: 0; 
   overflow: hidden;
   column-gap: 3px;
   justify-content: flex-start;
 }
 
-/* Images inside the second box */
+
 .sidebar-right .box:nth-child(2) .inner img {
-  width: 100%; /* fills the column */
+  width: 100%; 
   height: 23px; 
   object-fit: cover;
   display: block;
 }
 
 .button-divider {
-  grid-column: 1 / -1;    /* span all columns */
-  text-align: center;     /* center the text */
+  grid-column: 1 / -1;    
+  text-align: center;     
   font-size: 14px;
   margin-top: 8px;
   margin-bottom: 1px;
 }
 .checklist-box {
-  background-image: url("notebook.png"); /* your image */
+  background-image: url("notebook.png"); 
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  border: none; /* same border style as other boxes */
+  border: none; 
   padding: 10px;
-  color: #2cd6ca; /* text color to contrast */
+  color: #2cd6ca; 
 }
 
 .checklist {
@@ -206,28 +206,28 @@ center {
 }
 
 .checklist input[type="checkbox"] {
-  appearance: none;       /* removes default checkbox */
+  appearance: none;       
   -webkit-appearance: none;
   -moz-appearance: none;
   width: 13px;
   height: 13px;
-  border: 2px solid #103334;  /* red border */
+  border: 2px solid #103334;  
   margin-right: 8px;
   cursor: pointer;
   position: relative;
 }
 
-/* strike through when checked */
+
 .checklist input[type="checkbox"]:checked + label {
   text-decoration: line-through;
-  color: #0ff; /* optional: dim the text */
+  color: #0ff; 
 
 }
 .checklist input[type="checkbox"]:checked {
-  background-color: #0ff;   /* red fill */
+  background-color: #0ff;   
 }
 
-/* Optional: white checkmark when checked */
+
 .checklist input[type="checkbox"]:checked::after {
   content: "✓";
   position: absolute;
@@ -238,7 +238,7 @@ center {
 }
 
 
-/* Section 1 flicker */
+
 #section-1 {
   font-weight: 900;
   color: #0b4b3d;
@@ -256,7 +256,7 @@ center {
   }
 }
 
-/* Box images */
+
 .boximg {
   height: 400px;
   overflow-y: scroll;
@@ -272,7 +272,7 @@ center {
   scrollbar-color: #1f1f1f #367668;
 }
 
-/* Image floats */
+
 .left-img {
   float: left;
   margin-top: -10px;
@@ -291,7 +291,7 @@ center {
   text-align: initial;
 }
 
-/* Marquee images */
+
 marquee {
   overflow: hidden;
   white-space: nowrap;
@@ -321,7 +321,7 @@ marquee {
   animation-play-state: paused;
 }
 
-/* Marquee text */
+
 .marquee-text {
   width: 100%;
   overflow: hidden;
@@ -351,10 +351,10 @@ marquee {
   display: flex;
   gap: 15px;
   justify-content: center;
-  height: 62px; /* taller container */
+  height: 62px; 
 }
 
-/* Social links */
+
 .social-links {
   display: flex;
   gap: 15px;
@@ -409,43 +409,43 @@ marquee {
 }
 .arrow {
  margin-top: -10px;
-  margin-bottom: 10px; /* adjust this number for bigger/smaller gap */
-  vertical-align: middle; /* keeps it aligned with the button */
+  margin-bottom: 10px; 
+  vertical-align: middle; 
 }
 
 .lana-img {
-  position: absolute; /* allows overlap */
-  top: 1135px;          /* distance from the top of wrapper-2 */
-  left: 530px;  /* adjust this to sit over the gap */
-  z-index: 10;        /* make sure it’s on top */
+  position: absolute; 
+  top: 1135px;          
+  left: 530px;  
+  z-index: 10;        
 }
 
 .lana-img-right {
   position: absolute;
-  top: 970px;       /* adjust vertical position */
-  right:515px;    /* overlaps right sidebar & main content */
-  z-index: 10;     /* ensures it sits on top */
+  top: 970px;       
+  right:515px;    
+  z-index: 10;     
 }
 
 .lana-img:hover,
 .lana-img-right:hover {
-  opacity: 0.5; /* 0 = fully transparent, 1 = fully visible */
-  transition: opacity 0.3s ease; /* smooth fade */
+  opacity: 0.5; 
+  transition: opacity 0.3s ease; 
 }
 
 .no-margin {
-  margin: 0 0 3px 0; /* top right bottom left */
+  margin: 0 0 3px 0; 
   padding: 0;
 }
 #cookie {
   background: none;
   border: none;
   cursor: pointer;
-  position: relative; /* important: paper is relative to cookie */
+  position: relative; 
   display: inline-block;
 }
 
-/* Cookie shake */
+
 @keyframes crack {
   0% { transform: rotate(0); }
   20% { transform: rotate(15deg); }
@@ -459,12 +459,12 @@ marquee {
   animation: crack 0.7s ease;
 }
 
-/* Fortune paper container */
+
 #fortune-container {
   position: absolute;
-  top: 50%; /* center vertically on cookie */
-  left: 50%; /* center horizontally on cookie */
-  transform: translate(-50%, -50%) scale(0); /* hidden initially */
+  top: 50%; 
+  left: 50%; 
+  transform: translate(-50%, -50%) scale(0); 
   opacity: 0;
   text-align: center;
   pointer-events: none;
@@ -473,19 +473,19 @@ marquee {
   margin: 1;
 }
 
-/* Show fortune */
+
 #fortune-container.show {
   transform: translate(-50%, -50%) scale(1);
   opacity: 1;
 }
 
-/* Paper image */
+
 #fortune-paper {
   display: block;
   margin: 0 auto;
 }
 
-/* Fortune text */
+
 #fortune {
   position: absolute;
   top: 50%;
@@ -499,7 +499,7 @@ marquee {
   word-wrap: break-word;
 }
 
-/* Circular glow animations around the cookie */
+
 @keyframes cookie-glow-10 {
   0%, 100% { box-shadow: 0 0 5px 5px rgba(255,0,0,0.5); }
   50% { box-shadow: 0 0 20px 20px rgba(255,0,0,1); }
@@ -520,10 +520,10 @@ marquee {
   50% { box-shadow: 0 0 50px 50px rgba(255,0,0,1); }
 }
 
-/* Apply circular glow to cookie on milestone */
+
 #cookie.red-glow-10 {
   animation: cookie-glow-10 1s infinite;
-  border-radius: 50%; /* make the glow circular */
+  border-radius: 50%; 
 }
 
 #cookie.red-glow-50 {
@@ -544,7 +544,7 @@ marquee {
 
 
 
-/* Responsive adjustments */
+
 @media(max-width:1180px) {
   .wrapper { width: calc(440px + 50vw); }
   .main { width: 50vw; }
