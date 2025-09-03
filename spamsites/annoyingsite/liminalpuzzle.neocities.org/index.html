@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="lmpicon.jpg" sizes="32x32">
+  <title>LiminalPuzzle, ready to noclip?</title>
+  <style>
+    body {
+      font-family: "Courier New", monospace;
+      margin: 0;
+      padding: 0;
+      background-color: black;
+      color: white;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      box-sizing: border-box;
+      text-align: center;
+    }
+
+    #banner img {
+      display: block; 
+      margin: 0 auto;
+      width: 800px;
+      margin-bottom: 20px;
+      max-width: 500%;
+    }
+
+    #liminal {
+      width: 680px;
+      height: 360px;
+      background-color: black;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border-radius: 10px;
+      cursor: pointer;
+      margin-bottom: 20px;
+      overflow: hidden;
+    }
+
+    #liminal video {
+      width: 100%;
+      height: 100%;
+    }
+
+    #click-text {
+      font-size: 1.9rem;
+      margin-top: 20px;
+    }
+    
+    #discord-link {
+      margin-top: 20px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+      font-size: 1.5rem;
+      color: white;
+      border: 2px solid white;
+      padding: 10px 20px;
+      border-radius: 8px;
+      transition: background-color 0.3s, color 0.3s;
+    }
+
+    #discord-link img {
+      width: 30px;
+      height: 30px;
+    }
+
+    #discord-link:hover {
+      background-color: white;
+      color: black;
+    }
+
+    footer {
+      font-size: 0.8rem;
+      margin-top: 30px;
+    }
+  </style>
+</head>
+<body>
+  <div id="banner">
+    <img src="lmpbanner.jpg" alt="Banner">
+    <div id="text-container">
+      <p>Welcome to Liminal Puzzle, this WebPuzzle is currently in development!</p>
+      <p>This puzzle is inspired by Zedpuzzle and Kane Pixels, make sure to check both out!</p>
+    </div>
+  </div>
+
+  <div id="liminal" onclick="startPuzzle()">
+    <video autoplay loop>
+      <source src="homepage.mp4" type="video/mp4">
+    </video>
+  </div>
+
+  <div id="click-text">↟ Click to NoClip! ↟</div>
+
+  <a id="discord-link" href="https://discord.gg/NCsDpXHH" target="_blank">
+    <img src="discordlogo.jpg" alt="Discord Logo">
+    Join the LMP Discord when you're stumped!
+  </a>
+
+  <footer>
+    <h1>Created by Brizzle & Belle</h1>
+    <br>
+    <h2><u>This puzzle is optimized for PC users, some levels require browser access for audio!</u></h2>
+    <br>
+    <p>We highly recommend that you have some experience with Webpuzzles before playing LiminalPuzzle.</p>
+    <br>
+    <p>The stages will progressively get more difficult.</p>
+  </footer>
+
+  <script>
+    function startPuzzle() {
+      window.location.href = "enter/thelobby.html";
+    }
+  </script>
+</body>
+</html>
+<!--grief.htm-->
