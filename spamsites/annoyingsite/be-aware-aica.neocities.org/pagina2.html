@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Página 2</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-end;
+            height: 100vh;
+            background: url('p1.png') no-repeat center center fixed;
+            background-size: cover;
+            color: #fff;
+            font-family: Verdana, Geneva, Tahoma, sans-serif;
+            font-weight: 300;
+        }
+
+        h2 {
+            color: #ffffff;
+            font-size: 24px;
+            font-weight: 300;
+            font-style: italic;
+            margin-bottom: 150px; /* Ajuste para subir a frase */
+            opacity: 0.8; /* Deixa o texto mais suave */
+            text-shadow: 0px 0px 1px #fff; /* Efeito de delineado sutil */
+        }
+
+        .input-box {
+            position: relative;
+            display: inline-block;
+            border: 1px solid red;
+            padding: 15px;
+            width: 400px;
+            color: #fff;
+            text-align: center;
+            font-size: 16px;
+            font-weight: 300;
+            margin-bottom: 100px; /* Ajuste para posicionar mais para baixo */
+        }
+
+        .input-box input {
+            width: 100%;
+            background: transparent;
+            border: none;
+            outline: none;
+            color: #fff;
+            font-size: 16px;
+            text-align: center;
+            font-family: Verdana, Geneva, Tahoma, sans-serif;
+        }
+
+        .input-box input::placeholder {
+            color: #fff;
+            font-weight: 300;
+        }
+
+        .input-box input:focus::placeholder {
+            color: transparent;
+        }
+    </style>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const input = document.getElementById('senha');
+            input.addEventListener('keypress', function(event) {
+                if (event.key === 'Enter') {
+                    event.preventDefault();
+                    verificarSenha();
+                }
+            });
+        });
+
+        function verificarSenha() {
+            const senha = document.getElementById('senha').value;
+            if (senha === 'guerra') {
+                window.location.href = 'pagina3.html'; // Redireciona para pagina3.html
+            } else {
+                alert('Senha incorreta!');
+            }
+        }
+    </script>
+</head>
+<body>
+    <h2>Nunca existiu um meio termo</h2>
+    <div class="input-box">
+        <input type="text" id="senha" placeholder="Resposta" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Resposta'">
+    </div>
+</body>
+</html>
