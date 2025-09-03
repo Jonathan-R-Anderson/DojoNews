@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up</title>
+    <!-- The style.css file allows you to change the look of your web pages.
+         If you include the next line in all your web pages, they will all share the same look.
+         This makes it easier to make new pages for your site. -->
+    <link href="New.css" rel="stylesheet" type="text/css" media="all">
+  <style>
+  body {background-color:white}
+  h1 {background:None; color:white; background-color:grey}
+  aside {
+    width: 30%;
+    height: 400px;
+    padding-left: 100px;
+    margin-left: 0px;
+    float: right;
+    font-style: italic;
+    background-color: lightgray;
+  }
+  
+  shadow:hover {
+  box-shadow: 0 15px 0px 0 rgba(0,0,0,0), 0 0px 0px 0 rgba(0,0,0,0);
+}
+
+  </style>
+  </head>
+  <body>
+   <img src="HMLogo.png" width=32px height=32px style="float:left; margin-top:5px; margin-left:5px; padding: 2px;"><h1 style="text-shadow: 3px 3px black; box-shadow: 0px 3px 5px black;">PRICING</h1>
+  <nav style="box-shadow: 0px 5px 5px black">
+    <ul>
+      <li><a href="index.html">Our Services</a></li>
+      <li><a href="about.html">About Us</a></li>
+      <li><a href="pricing.html">Pricing</a></li>
+      <li><a href="signup.html">Sign Up</a></li>
+    </ul>
+  </nav>
+  <hr style="padding:0px; margin:0px; margin-top:20px; border: 10px solid lightgrey">
+  <form name="Form" id="Form" action="https://happymiracle.neocities.org/success.html" method="post" style="">
+  <label for="fname">First Name:</label>
+  <input type="text" value="" required=true name="fname" style="float:center"><br>
+  <br>
+  <label for="lname">Last Name:</label>
+  <input type="text" name="lname" required=true style="float:center"><br>
+  <br>
+  <label for="age">Age:</label>
+  <input type="number" required=true min="18" max="50" name="age" style="float:center"><br>
+  <br>
+  <label for="lname">Address:</label>
+  <input type="text" name="locate" required=true style="float:center"><br>
+  <br>
+  <input type="submit" value="Submit" style="">
+  <script src="Check.js"></script>
+    </form>
+  </body>
+</html>
