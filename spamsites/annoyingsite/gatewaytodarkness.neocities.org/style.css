@@ -1,0 +1,49 @@
+body {
+background:#000000;
+text-align:center;
+color: #cc0000 ;
+}
+
+h1 {
+color: #cfe2f3 ;
+}
+
+h2 {
+color: #cfe2f3 ;
+}
+
+p {
+font-size: 21px;
+}
+
+p1 {
+color: #404040;
+font-size: 15px;
+}
+
+a:link {color: #cc0000 ;
+  text-decoration: none;} 
+
+a:visited {color: #cc0000 ;
+  text-decoration: none;} 
+
+a:hover {color: #cfe2f3;
+text-decoration: none;} 
+
+
+
+
+
+p2 {
+color: #cc0000;
+font-size: 14px;
+}
+
+xmp {
+color: #cc0000;
+font-size: 13px;
+}
+
+
+
+
