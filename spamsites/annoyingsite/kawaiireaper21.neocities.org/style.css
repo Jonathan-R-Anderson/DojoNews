@@ -1,0 +1,139 @@
+/* CSS is how you can add style to your website, such as colors, fonts, and positioning of your
+   HTML content. To learn how to do something, just try searching Google for questions like
+   "how to change link color." */
+
+body {
+  background-color: white;
+  color: black;
+  font-family: Verdana;
+  <img src"https://i.pinimg.com/564x/74/af/07/74af07d0a5bf47bcb12973eaa5c2efde.jpg">
+}html, body { min-height: 100vh; display: grid; }
+html { background: black; }
+* { margin: 0; padding: 0; color: white; box-sizing: border-box; }
+
+@keyframes memory {
+  0% { --cell: initial }
+  1%, 100% { --cell: ; }
+}
+li {
+  animation: memory 1ms linear 1 forwards paused;
+  
+  --bg-if-cell-is-on: var(--cell) rgb(0 0 0 / 0.75);
+  background-color: var(--bg-if-cell-is-on, transparent);
+}
+
+li:hover {
+  animation-play-state: running;
+}
+
+.right-knob:active + .glow-area li {
+  animation: none;
+}
+
+.augmented-etch-a-sketch {
+  display: grid;
+  aspect-ratio: 4 / 3;
+  width: 90vmin;
+  margin: auto;
+  --aug-border: initial;
+  --aug-border-all: 0.75vmin;
+  --aug-border-bg: linear-gradient(
+    to top left,
+    maroon,
+    red
+  );
+  --aug-inlay: initial;
+  --aug-inlay-all: 0.5vmin;
+  --aug-inlay-bg: black;
+  --aug-tr-extend1: 50%;
+  --aug-tr-extend2: 70%;
+  --aug-br-extend2: 70%;
+  --aug-l-extend1: 50%;
+  --aug-tr: 2vmin;
+  --aug-br1: 4vmin;
+  --aug-br2: 2vmin;
+  --aug-bl: 5vmin;
+  --aug-tl: 5vmin;
+  --aug-l: 3vmin;
+  box-shadow: inset 0 0 25vmin rgb(255 0 0 / 0.25);
+}
+.augmented-etch-a-sketch::before {
+  box-shadow: inset 0 0 25vmin rgb(255 0 0 / 0.5);
+}
+
+h1 {
+  font-family: Brush Script MT, Brush Script Std, cursive;
+  text-align: center;
+  font-weight: normal;
+  font-size: 4.5vmin;
+  color: gold;
+  display: inline-block;
+  text-align: center;
+  position: relative;
+  top: 4.5vmin;
+  text-shadow: 0 0 1vmin black, 0 0 2vmin gold;
+  line-height: 3vmin;
+  opacity: 0.75;
+}
+
+.left-knob,
+.right-knob {
+  width: 10vmin;
+  height: 10vmin;
+  border-radius: 50%;
+  border: 0.5vmin solid white;
+  background: #777;
+  box-shadow: inset 0 0 3vmin white, 0 0 2vmin white;
+  position: absolute;
+  bottom: 5vmin;
+  left: 7vmin;
+  cursor: pointer;
+  text-align: center;
+  padding-top: 1.25vmin;
+  text-decoration: none;
+  font-size: 2.5vmin;
+  font-family: sans-serif;
+  z-index: 5;
+}
+.right-knob {
+  left: auto;
+  right: 7vmin;
+  padding: 1vmin;
+}
+
+body {
+  --f: drop-shadow(0 0 1.5vmin red);
+  filter: var(--f);
+}
+
+.glow-area {
+  --f: drop-shadow(0 0 1.5vmin skyblue);
+  filter: var(--f) var(--f);
+  position: absolute;
+  inset: 0;
+}
+
+.drawing-area {
+  --aug-border: initial;
+  --aug-border-all: 0.25vmin;
+  position: absolute;
+  inset: 10vmin;
+  --aug-bl: 4.5vmin;
+  --aug-br: 4.5vmin;
+  --aug-br-inset2: 2vmin;
+  --aug-bl-inset1: 2vmin;
+  --aug-clip-tl1: initial;
+  --aug-clip-tr1: initial;
+  --aug-tl1: 2vmin;
+  --aug-tr1: 2vmin;
+  background: rgba(222 222 255 / 0.125);
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(75, 1fr);
+  grid-template-rows: repeat(50, 1fr);
+}
+
+li {
+  aspect-ratio: 1 / 1;
+}
+

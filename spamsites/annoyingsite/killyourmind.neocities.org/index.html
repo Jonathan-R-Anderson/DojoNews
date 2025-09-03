@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>⚠️ SYSTEM FAILURE IMMINENT</title>
+    <style>
+        body { 
+            background: #000; 
+            color: #f00; 
+            font-family: 'Courier New', monospace;
+            text-align: center;
+            margin-top: 10%;
+            overflow: hidden;
+            font-size: 1.5rem;
+        }
+        .made-by {
+            color: #f00;
+            font-size: 12px;
+            margin-bottom: 30px;
+            text-shadow: 0 0 5px #ff0000;
+        }
+        #startBtn {
+            background: black;
+            color: #f00;
+            border: 1px solid #f00;
+            padding: 10px 25px;
+            cursor: pointer;
+            font-size: 18px;
+            transition: 0.3s;
+        }
+        #startBtn:hover {
+            background: #f00;
+            color: black;
+        }
+        #scanScreen, #mainContent, #winMessage {
+            display: none;
+        }
+        .scan-line {
+            height: 1px;
+            background: #f00;
+            position: absolute;
+            width: 100%;
+            animation: scan 4s linear infinite;
+        }
+        @keyframes scan {
+            0% { top: 0%; opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { top: 100%; opacity: 0; }
+        }
+        .death-message, .win-message {
+            color: #f00;
+            font-size: 24px;
+            text-shadow: 0 0 10px #ff0000;
+            animation: blink 0.5s infinite;
+            margin-top: 20px;
+        }
+        @keyframes blink {
+            0% { opacity: 1; }
+            50% { opacity: 0; }
+            100% { opacity: 1; }
+        }
+        input {
+            background: black;
+            color: #f00;
+            border: 1px solid #f00;
+            padding: 10px;
+            font-size: 18px;
+            margin: 10px;
+        }
+        button {
+            background: black;
+            color: #f00;
+            border: 1px solid #f00;
+            padding: 10px 25px;
+            cursor: pointer;
+            font-size: 18px;
+            transition: 0.3s;
+        }
+        button:hover {
+            background: #f00;
+            color: black;
+        }
+        #countdown {
+            font-size: 3rem;
+            margin: 20px 0;
+            text-shadow: 0 0 10px #ff0000;
+        }
+    </style>
+</head>
+<body>
+    <!-- Start Screen -->
+    <div id="startScreen">
+        <p class="made-by">made by @piksiew</p>
+        <button id="startBtn" onclick="startScan()">[ START ]</button>
+    </div>
+
+    <!-- Scan Screen -->
+    <div id="scanScreen">
+        <div class="scan-line"></div>
+        <h1>SYSTEM SCAN INITIATED</h1>
+        <p id="scanStatus">Checking for threats...</p>
+        <div id="scanProgress"></div>
+    </div>
+
+    <!-- Main Content -->
+    <div id="mainContent">
+        <h1>FINAL COUNTDOWN:</h1>
+        <h2 id="countdown">05:00</h2>
+        <p>ENTER PASSWORD TO ABORT:</p>
+        <input type="password" id="pass" placeholder="●●●●">
+        <button onclick="checkPass()">[SUBMIT]</button>
+        <div id="deathMessage" class="death-message" style="display: none;">YOU WILL DIE SOON.</div>
+    </div>
+    
+    <!-- Win Message -->
+    <div id="winMessage" class="win-message" style="display: none;">
+        I'll take your soul next time.<br>
+        Congratulations on your victory.
+    </div>
+
+    <!-- White Noise Audio -->
+    <audio id="whiteNoise" loop>
+        <source src="https://www.soundjay.com/mechanical/sounds/white-noise-01.mp3" type="audio/mpeg">
+    </audio>
+
+    <script>
+        // Timer
+        let timeLeft = 300;
+        let timerId;
+        const whiteNoise = document.getElementById("whiteNoise");
+
+        // Start scan
+        function startScan() {
+            document.getElementById("startScreen").style.display = "none";
+            document.getElementById("scanScreen").style.display = "block";
+            
+            // Play white noise (with user gesture)
+            whiteNoise.volume = 0.3; // Comfortable volume level
+            whiteNoise.play().catch(e => {
+                // If blocked by browser, change button to enable sound
+                document.getElementById("startBtn").textContent = "[ CLICK TO ENABLE SOUND ]";
+                document.getElementById("startBtn").onclick = function() {
+                    whiteNoise.play();
+                    startScan();
+                };
+            });
+            
+            // Simulate scan
+            simulateScan();
+        }
+
+        // Fake scan
+        function simulateScan() {
+            const statuses = [
+                "Analyzing memory sectors...",
+                "Checking neural interfaces...",
+                "Detecting malware... 3 THREATS FOUND",
+                "Isolating dangerous processes...",
+                "WARNING: SOULKILLER.EXE DETECTED",
+                "Finalizing scan... SYSTEM COMPROMISED"
+            ];
+            
+            let i = 0;
+            const scanInterval = setInterval(() => {
+                document.getElementById("scanStatus").textContent = statuses[i];
+                document.getElementById("scanProgress").innerHTML += "█";
+                i++;
+                
+                if (i >= statuses.length) {
+                    clearInterval(scanInterval);
+                    setTimeout(() => {
+                        document.getElementById("scanScreen").style.display = "none";
+                        document.getElementById("mainContent").style.display = "block";
+                        startTimer();
+                    }, 2000);
+                }
+            }, 1500);
+        }
+
+        // Start timer
+        function startTimer() {
+            timerId = setInterval(updateTimer, 1000);
+        }
+
+        // Update timer
+        function updateTimer() {
+            const minutes = Math.floor(timeLeft / 60);
+            let seconds = timeLeft % 60;
+            seconds = seconds < 10 ? '0' + seconds : seconds;
+            
+            document.getElementById("countdown").textContent = `${minutes}:${seconds}`;
+            
+            if (timeLeft <= 0) {
+                clearInterval(timerId);
+                document.getElementById("deathMessage").style.display = "block";
+            } else {
+                timeLeft--;
+            }
+        }
+
+        // Check password
+        function checkPass() {
+            if (document.getElementById("pass").value === "1508") {
+                clearInterval(timerId);
+                document.getElementById("mainContent").style.display = "none";
+                document.getElementById("winMessage").style.display = "block";
+                whiteNoise.pause();
+            } else {
+                timeLeft -= 30;
+                if (timeLeft < 0) timeLeft = 0;
+                document.getElementById("pass").value = "";
+                document.getElementById("pass").placeholder = "ACCESS DENIED";
+            }
+        }
+    </script>
+</body>
+</html>
