@@ -1,0 +1,189 @@
+body {
+    background-image: url(pics/mouthbackground.gif);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-attachment: fixed;
+    background-size: cover;
+    min-height: 100vh;
+    margin: 0;
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+}
+#gallery {
+    background-image: url(pics/HORRID.png);
+    background-repeat: round;
+    background-position: center;
+    background-attachment: scroll;
+    background-size: cover;
+    min-height: 100vh;
+    margin: 0;
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+}
+#holder {
+    min-height: 100%;
+    position: relative;
+}
+
+#content {
+    padding: 10px;
+    padding-bottom: 165px;
+}
+
+h1 {
+    font-size: 140px;
+    color: #b90000;
+    text-align: center;
+}
+
+#gumstop {
+    width: 100%;
+    height: 145px;
+}
+
+#giflogo {
+    position: relative;
+    margin-top: 5px;
+    margin-left: 15px;
+    z-index: 100;
+}
+
+#gumsbottom {
+    width: 100%;
+    height: 165px;
+    rotate: 180deg;
+    position: absolute;
+}
+
+#giflogo {
+    position: absolute;
+    z-index: 10;
+}
+.container {
+    justify-content: center;
+    column-gap: 2em;
+    row-gap: 2em;
+    height: 90vh;
+    width: 90vw;
+    display: flex;
+    flex-direction: column;
+}
+#container {
+    margin: auto;
+}
+#greeter {
+    background-color: black;
+    color: #b90000;
+    width: 7em;
+    height: 1.5em;
+    padding: 0;
+    border: none;
+    font-family: courier new;
+    white-space: nowrap;
+    font-size: 35px;
+    align-self: flex-start;
+}
+.box {
+    padding: 1em;
+    border: solid;
+    background-color: black;
+    border-width: 6px;
+    border-color: #b90000;
+}
+#box1 {
+    color: #ff0000;
+    width: 87.5vw;
+    height: 300px;
+}
+.topnavbar {
+    display: flex;
+    justify-content: space-evenly;
+    position: absolute;
+    width: 100%;
+}
+#gumstop_navbar {
+    z-index: 10;
+    margin-top: -27px;
+}
+#gallerybutton {
+    width: 118px;
+    height: 242px;
+    background-image: url(pics/1toothIN.png);
+}
+#gallerybutton:hover {
+    background-image: url(pics/1toothOUT.png);
+}
+#rantbutton {
+    width: 182px;
+    height: 263px;
+    background-image: url(pics/2toothIN.png)
+}
+#rantbutton:hover {
+    background-image: url(pics/2toothOUT.png)
+}
+#checkoutbutton{
+    width: 182px;
+    height: 263px;
+    background-image:url(pics/2toothIN.png);
+    transform: rotateY(180deg);
+}
+#checkoutbutton:hover{
+    background-image:url(pics/3toothOUT.png);
+    transform: rotateY(360deg);
+}
+#selfhelpbutton{
+    width: 118px;
+    height:233px;
+    background-image:url(pics/4toothIN.png)
+}
+#selfhelpbutton:hover{
+    background-image:url(pics/4toothOUT.png);
+}
+.bottomnavbar {
+    display: flex;
+    justify-content: space-evenly;
+    position: absolute;
+    width: 100%;
+}
+#gumsbottom_navbar {
+    z-index: 100;
+    margin-top: -130px;
+}
+.bottomnavbarbutton {
+    width: 100px;
+    height: 150px;
+    background-image: url(pics/squid.html);
+}
+.bottomnavbarbutton:hover {
+    background-image: url(pics/squin.html);
+}
+
+.imagebox {
+    display: inline-block;
+    border: 5px solid #b90000;
+    margin: 5px;
+    width: 20vw;
+    height: auto;
+    filter: brightness(0.6)
+        drop-shadow(6px 6px 4px);
+}
+
+.imagebox:hover {
+    border: 5px solid red;
+    filter: 
+        brightness(1) 
+        drop-shadow(4px 4px 4px #FF0000) 
+        drop-shadow(-4px 4px 4px #FF0000)
+        drop-shadow(4px -4px 4px #FF0000) 
+        drop-shadow(-4px -4px 4px #FF0000);
+}
+
+.desc {
+    padding: 10px;
+    text-align: center;
+    background-color: white;
+    font-family: monospace
+}
+.imagebox img {
+    width: 100%;
+}
