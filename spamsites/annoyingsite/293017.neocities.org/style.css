@@ -1,0 +1,26 @@
+body {
+    margin: 0;
+    padding: 0;
+    background-image: url('https://postimg.cc/dkk0mPVV');
+    font-family: 'DotGothic16', sans-serif;
+    cursor: url('https://postimg.cc/Vr9SsknZ'), auto;
+}
+.computer-screen {
+    width: 1000px;
+    height: 1000px;
+    background-image: url('https://postimg.cc/PvCGLYTL');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    border-radius: 20px;
+    margin: auto;
+    position: relative;
+    overflow: hidden;
+}
+.container{
+  text-align: center;
+  transform: translate(10px, 120px);
+}
+iframe{
+  text-align: center;
+}
