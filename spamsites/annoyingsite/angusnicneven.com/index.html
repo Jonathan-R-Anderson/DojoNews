@@ -1,0 +1,427 @@
+<html> lang="en">
+	<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<head>
+		<title>Terminal 00</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<meta name="Content-Language" content="english">
+		<meta name="description" content="A Terminal revived by Angus Nicneven, the first Arcent. Author of the novel, Stars Bleed." />
+		
+		<link rel="apple-touch-icon" sizes="57x57" href="apple-touch-icon-57x57.png">
+		<link rel="apple-touch-icon" sizes="60x60" href="apple-touch-icon-60x60.png">
+		<link rel="apple-touch-icon" sizes="72x72" href="apple-touch-icon-72x72.png">
+		<link rel="icon" type="image/png" href="favicon-32x32.png" sizes="32x32">
+		<link rel="icon" type="image/png" href="favicon-16x16.png" sizes="16x16">
+		<link rel="manifest" href="manifest.json">
+		<meta name="msapplication-TileColor" content="#603cba">
+		<meta name="theme-color" content="#000000">
+
+		<link href="terminal00.css" rel="stylesheet">
+		<link href="style.css" rel="stylesheet">
+		
+		<script src="main.js"></script>
+		
+		<script>
+			(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+			(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+			m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+			})(window,document,'script','../www.google-analytics.com/analytics.js','ga');
+
+			ga('create', 'UA-79198042-1', 'auto');
+			ga('send', 'pageview');
+		</script>
+		
+		<style>
+			body {
+				text-align: center;
+				overflow-x: hidden;
+			}
+			
+			ul {
+				color: #c1b492;
+				margin: 10px auto;
+				margin-top: 40px;
+			}
+			
+			@keyframes blink {
+				to {
+					visibility: hidden;
+				}
+			}
+			
+			.blink {
+				animation: blink 1400ms steps(2, start) infinite;
+			}
+			
+			.space {
+				display: block;
+				height: 100px;
+			}
+			
+			.warning {
+				position: absolute;
+				z-index: -1;
+			}
+			
+			.ayy {
+				box-shadow: 0px 5px 10px #000000;
+			}
+			h1.die {
+				font-size: 17px;
+				font-weight: normal;
+				font-style: normal;
+			}
+			.t {
+				position: absolute;
+				left: 50%;
+				top: 6000px;
+				transform: translateX(-50%) translateX(-150px);
+				z-index: 5;
+			}
+			.t2 {
+				position: absolute;
+				left: 50%;
+				top: 6000px;
+				transform: translateX(-50%) translateX(150px);
+				z-index: 5;
+			}
+			.l {
+				position: absolute;
+				left: 0px;
+				top: 6700px;
+				z-index: 5;
+			}
+			.l2{
+				position: absolute;
+				left: 0px;
+				top: 6700px;
+				z-index: -5;
+			}
+		
+			@keyframes info {
+				0% {
+					left: 800px;
+				}
+				100% {
+					left: -2080px;
+				}
+			}
+		
+			#info {
+				position: relative;
+				width: 771px;
+				height: 20px;
+				margin: 0 auto;
+				background-color: #000000;
+				padding: 16px;
+				border: 1px solid #d2738a;
+				overflow: hidden;
+			}
+			#info > span {
+				position: absolute;
+				color: #c1b492;
+				white-space: pre;
+				animation: 20s linear infinite info;
+			}
+			#info:hover > span {
+				-webkit-animation-play-state: paused;
+				-moz-animation-play-state: paused;
+				-o-animation-play-state: paused;
+				animation-play-state: paused;
+			}
+			
+			#un {
+				display: inline-block;
+				width: 350px;
+				height: 35px;
+				background: url(images/un.gif);
+			}
+			#un:hover {
+				background: url(images/unn4.gif);
+			}
+			
+			#rre {
+				display: inline-block;
+				width: 700px;
+				height: 200px;
+				background: url(images/rre2.gif);
+			}
+			#rre:hover {
+				background: url(images/vvv.gif);
+			}
+			
+	.reveal {
+    opacity: 0.6;
+    transition: opacity 1s ease-in-out;
+    -moz-transition: opacity 1s ease-in-out;
+    -webkit-transition: opacity 1s ease-in-out;
+}
+.reveal:hover {
+    opacity: 1.0;
+    transition: opacity .55s ease-in-out;
+    -moz-transition: opacity .55s ease-in-out;
+    -webkit-transition: opacity .55s ease-in-out;
+}
+			
+		</style>
+		
+		<audio id="autoplay" loop>
+			<source src="music/terminalwaves.mp3" type="audio/mp3">
+		</audio>
+	</head>
+	<body background="images/00havemercy.gif">
+		<div id="info">
+			<span>Ｔｅｒｍｉｎａｌ  ００  ｍａｙ  ｂｅ  ｔｒａｖｅｒｓｅｄ  ｂｙ  ｗａｙ  ｏｆ  ｐｒｏｂｅｓ．  Ｃｕｒｒｅｎｔ  ［ｐｒｏｂｅ］  ｃｌａｓｓｉｆｉｃａｔｉｏｎ：  ００．  Ｐｅｎｅｔｒａｔｅ  ｔｈｅ  ｄｅｐｔｈｓ  ｏｆ  ｏｕｒ  ｐａｉｎ  ｗｉｔｈ  ｔｈａｔ，  ｄｅａｒ  ｔｒａｖｅｌｅｒ．</span>
+		</div>
+		<img draggable="false" src="images/00warning.gif" class="warning" style="top:100px;right:270px;" alt="Without"/>
+		<img draggable="false" src="images/00warning.gif" class="warning" style="top:100px;left: 270px;" alt="eyes"/>
+		<img draggable="false" src="images/00warning.gif" class="warning" style="top:0px;  right:170px;" alt="you"/>
+		<img draggable="false" src="images/00warning.gif" class="warning" style="top:0px;  left: 170px;" alt="cannot"/>
+		<img draggable="false" src="images/00warning.gif" class="warning" style="top:200px;right:170px;" alt="hope"/>
+		<img draggable="false" src="images/00warning.gif" class="warning" style="top:200px;left: 170px;" alt="to"/>
+		<img draggable="false" src="images/00warning.gif" class="warning" style="top:100px;right:70px; " alt="see"/>
+		<img draggable="false" src="images/00warning.gif" class="warning" style="top:100px;left: 70px; " alt="the"/>
+
+		<img draggable="false" src="images/00warning.gif" class="warning" style="top:550px;right:270px;" alt="truth"/>
+		<img draggable="false" src="images/00warning.gif" class="warning" style="top:550px;left: 270px;" alt="which"/>
+		<img draggable="false" src="images/00warning.gif" class="warning" style="top:450px;right:170px;" alt="exists"/>
+		<img draggable="false" src="images/00warning.gif" class="warning" style="top:450px;left: 170px;" alt="and resides"/>
+		<img draggable="false" src="images/00warning.gif" class="warning" style="top:650px;right:170px;" alt="within"/>
+		<img draggable="false" src="images/00warning.gif" class="warning" style="top:650px;left: 170px;" alt="all"/>
+		<img draggable="false" src="images/00warning.gif" class="warning" style="top:550px;right:70px; " alt="things"/>
+		<img draggable="false" src="images/00warning.gif" class="warning" style="top:550px;left: 70px; " alt="although"/>
+
+		<img draggable="false" src="images/deadend.gif" class="t" alt="those"/>
+		<img draggable="false" src="images/deadend.gif" class="t2" alt="organs"/>
+
+
+		<img draggable="false" src="images/back1.gif" class="l" alt="you"/>
+		<img draggable="false" src="images/back2.gif" class="l2" alt="call"/>
+		
+		<ul>
+			<li>
+				<font color="#d2738a">
+					<img draggable="false" src="images/bbn.gif"  alt="eyes"/>
+					<a href="indexx.html"><div id="un" alt="are"></div></a>
+					<img draggable="false" src="images/bbn.gif" alt="nothing"/>
+					<span class="blink"><span style="padding-right:730px">┏</span></span><span class="blink">┓</span>
+					<br>
+					<a href="Sol_onset.html"><div id="rre" alt="when"></div></a>
+					<br>
+					<span class="blink"><span style="padding-right:730px">┗</span></span><span class="blink">┛</span>
+				</font>
+			</li>
+			<li>
+				<img draggable="false" src="images/zz.gif"  alt="compared"/>
+				<img draggable="false" src="images/zz3.png"  alt="to"/>
+				<img draggable="false" src="images/zz3.png"  alt="eyes"/>
+				<img draggable="false" src="images/zz2.gif"  alt="wrought"/>
+				<img draggable="false" src="images/zz3.png"  alt="of"/>
+				<img draggable="false" src="images/zz3.png"  alt="time"/>
+				<img draggable="false" src="images/zz4.gif" alt="can't"/>
+				<img draggable="false" src="images/zz3.png"  alt="you"/>
+				<img draggable="false" src="images/zz3.png"  alt="see"/>
+				<img draggable="false" src="images/zz2.gif"  alt="there"/>
+				<img draggable="false" src="images/zz3.png"  alt="are"/>
+				<img draggable="false" src="images/zz3.png" alt="so" />
+				<img draggable="false" src="images/zz.gif"  alt="many"/>
+				<br><br>
+				
+				︱ <a href="About_Angus.html" style="text-decoration: none;">﻿Ａｂｏｕｔ  Ａｎｇｕｓ</a>
+				︱ <a href="Books.html" style="text-decoration: none;">Ｂｏｏｋｓ</a>
+				︱ <a href="Thoughts.html" style="text-decoration: none;">Ｂｌｏｇ</a>
+				︱ <a href="Connect.html" style="text-decoration: none;">Ｃｏｎｎｅｃｔ</a>
+				︱ <a href="Assistance.html" style="text-decoration: none;">Ａｓｓｉｓｔａｎｃｅ？</a>
+				︱<br>
+				︱ <a href="Merch.html" style="text-decoration: none;">﻿Ｍｅｒｃｈ</a>
+				︱ <a href="Donate.html" STYLE="TEXT-DECORATION: NONE">Ｄｏｎａｔｅ</a> ︱
+				
+			<br><br>
+				<img draggable="false" src="images/zz.gif"  alt="threads"/>
+				<img draggable="false" src="images/zz3.png"  alt="but"/>
+				<img draggable="false" src="images/zz3.png"  alt="you"/>
+				<img draggable="false" src="images/zz2.gif"  alt="are"/>
+				<img draggable="false" src="images/zz3.png"  alt="blind"/>
+				<img draggable="false" src="images/zz3.png"  alt="to"/>
+				<img draggable="false" src="images/zz4.gif"  alt="this"/>
+				<img draggable="false" src="images/zz3.png"  alt="truth"/>
+				<img draggable="false" src="images/zz3.png"  alt="sol onset"/>
+				<img draggable="false" src="images/zz2.gif"  alt="or"/>
+				<img draggable="false" src="images/zz3.png"  alt="so"/>
+				<img draggable="false" src="images/zz3.png"  alt="they"/>
+				<img draggable="false" src="images/zz.gif"  alt="say"/>
+			</li>
+			<li>
+		</li>
+		</ul>
+	
+		<div class="space"></div>
+		<a href="quolle_cencuun_pellsen_en_somet_nac.html"><img draggable="false" class="ayy" src="images/With_Wilbells_will_why_waste_whit_worrying.gif"/></a>
+		<div class="space"></div>
+		<ul>
+			<li>
+				<font color="#c1b492">
+					<br>
+					Ｙｏｕ　ｈａｖｅ　ｎｏ　ｃｈａｎｃｅ　ｏｆ　ｓｕｒｖｉｖｉｎｇ　ｔｈｉｓ　ｐｌａｃｅ．
+					<br><br>
+					Ｔｕｒｎ　ｂａｃｋ　ｎｏｗ，　ｗｈｉｌｅ　ｔｈｅｒｅ　ｉｓ　ｓｔｉｌｌ　ｔｉｍｅ．
+					<br><br>
+				</font>
+			</li>
+			<li></li>
+			<li>
+				<a href="Irentae.html"><img draggable="false" src="images/Oneiromancy.png"  alt="To truly see"/></a>
+			</li>
+			<li></li>
+			<li>
+				<br>
+				Ｔｈｉｓ　ｐｌａｃｅ　ｓｅｅｋｓ　ｔｏ　ｃｏｎｓｕｍｅ　ｙｏｕ．
+				<br><br>
+				Ｔｕｒｎ　ｂａｃｋ．
+			</li>
+		</ul>
+		<div class="space"></div>
+		<div class="space"></div>
+		<div class="space"></div>
+		<div class="space"></div>
+		<div class="space"></div>
+		<div class="space"></div>
+		<div class="space"></div>
+		<ul>
+			<li>
+				Ｔｕｒｎ　ｂａｃｋ，　ｔｈｉｓ　ｉｓ 　ａ　［ＤＥＡＤ  ＥＮＤ］．
+			</li>
+		</ul>
+		<div class="space"></div>
+		<div class="space"></div>
+		<div class="space"></div>
+		<ul>
+			<li>
+				Ｔｕｒｎ　ｂａｃｋ，　ｔｈｉｓ　ｉｓ 　ａ　［ＤＥＡＤ  ＥＮＤ］．
+			</li>
+		</ul>
+		<div class="space"></div>
+		<div class="space"></div>
+		<div class="space"></div>
+		<ul>
+			<li>
+				Ｔｕｒｎ　ｂａｃｋ，　ｔｈｉｓ　ｉｓ 　ａ　［ＤＥＡＤ  ＥＮＤ］．
+			</li>
+		</ul>
+		<div class="space"></div>
+		<div class="space"></div>
+		<div class="space"></div>
+		<ul>
+			<li>
+				Ｔｕｒｎ　ｂａｃｋ，　ｔｈｉｓ　ｉｓ　ａ　［ｖ１ｖ３１０］．
+			</li>
+		</ul>
+		<div class="space"></div>
+		<div class="space"></div>
+		<div class="space"></div>
+		<div class="space"></div>
+		<div class="space"></div>
+		<div class="space"></div>
+		<div class="space"></div>
+		<div class="space"></div>
+		<div class="space"></div>
+		<div class="space"></div>
+		<div class="space"></div>
+		<div class="space"></div>
+		<div class="space"></div>
+		<div class="space"></div>
+		<div class="space"></div>
+		<div class="space"></div>
+		<ul>
+			<li class="withborder">
+				<font color="#c1b492">
+					［<span class="blink" style="color:#FF0000">Ｄ  Ｅ  Ａ  Ｄ	  Ｅ  Ｎ  Ｄ</span>］
+				</font>
+			</li>
+		</ul>
+		<ul>
+			<li class="withborder">
+				<font color="#c1b492">
+					［<span class="blink" style="color:#FF0000">Ｄ  Ｅ  Ａ  Ｄ	  Ｅ  Ｎ  Ｄ</span>］
+				</font>
+			</li>
+		</ul>
+		<ul>
+			<li class="withborder">
+				<font color="#c1b492">
+					［<span class="blink" style="color:#FF0000">Ｄ  Ｅ  Ａ  Ｄ	  Ｅ  Ｎ  Ｄ</span>］
+				</font>
+			</li>
+		</ul>
+		<ul>
+			<li class="withborder">
+				<font color="#c1b492">
+					［<span class="blink" style="color:#FF0000">Ｄ  Ｅ  Ａ  Ｄ	  Ｅ  Ｎ  Ｄ</span>］
+				</font>
+			</li>
+		</ul>
+		<div class="space"></div>
+		<div class="space"></div>
+		<div class="space"></div>
+		<div class="space"></div>
+		<div class="space"></div>
+		<div class="space"></div>
+		<div class="space"></div>
+		<div class="space"></div>
+		<div class="space"></div>
+		<div class="space"></div>
+		<div class="space"></div>
+		<div class="space"></div>
+		<ul>
+			<li class="withborder">
+				<font color="#c1b492">
+					Ｐｌｅａｓｅ  ｔｕｒｎ  Ｂ  Ａ  Ｃ  Ｋ
+				</font>
+			</li>
+			<li>
+				＜＼＼Ｔ＼＼Ｕ＼｜｜／Ｒ／／Ｎ／／＞
+			</li>
+			<li>
+				［Ａｔｔｅｍｐｔｉｎｇ．．．］
+			</li>
+			<li>
+				Ｋ  Ｃ  Ａ  Ｂ  ｎｒｕｔ  ｅｓａｅｌＰ
+			</li>
+			<li></li>
+		</ul>
+		<div class="space"></div>
+		<div class="space"></div>
+		<div class="space"></div>
+		<div class="space"></div>
+		<ul>
+			<li class="withborder">
+				<font color="#ff0000">
+					<img draggable="false" src="images/beyondthepointof.gif"  alt="and see beyond the Gate"/>
+				</font>
+			</li>
+		</ul>
+		<div class="space"></div>
+		<div class="space"></div>
+		<a href="00_Turn_Back.html"><img draggable="false" src="images/thisshouldnotexist.gif" class="ayy" alt="you must consume the truth"/></a>
+		<div class="space"></div>
+		<div class="space"></div>
+		<div class="space"></div>
+		<div class="reveal"><ul>
+			<li class="withborder">
+			<h1 class="die">	<font color="#c1b492">
+					Ｔｅｒｍｉｎａｌ　００
+					<br><br>
+					Ｒｅｖｉｖｅｄ　ｂｙ　ｔｈｅ　ｆｉｒｓｔ　<a href="Arcent.html" style="text-decoration: none;">Ａｒｃｅｎｔ</a>，
+					<br><br>
+					Ａｎｇｕｓ　Ｎｉｃｎｅｖｅｎ．
+					<br><br>
+					<sub>Ｓｏｌ　ｏｎｓｅｔ　ｓｅｃｔｏｌ．．．</sub>
+					<br><br>
+				</h1>
+				</font>
+			</li>
+		</ul></div>
+		<div class="space"></div>
+		<div class="space"></div>
+		<!-- You still don't understand, do you?! Keh, heh, heh...  You're staring creation in the face, and yet you misunderstand. You're still oh-so-wrong. Well, un illyass, and so it goes. Yes, perhaps later you'll notice the rip that's so suddenly turned into a tear...-->
+	</body>
+</html>
