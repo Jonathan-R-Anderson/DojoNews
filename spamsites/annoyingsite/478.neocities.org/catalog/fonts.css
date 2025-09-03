@@ -1,0 +1,105 @@
+/* Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Itim&amp;display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Norican&amp;display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cherry+Swash:wght@400;700&amp;display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Fredoka+One&amp;display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Chilanka&amp;display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Yomogi&amp;display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Gochi+Hand&amp;display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Newsreader:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;1,200;1,300;1,400;1,500;1,600;1,700;1,800&amp;display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Mali:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;1,200;1,300;1,400;1,500;1,600;1,700&amp;display=swap');
+@font-face {
+    font-family: "Riffic";
+    src: url("https://dl.dropbox.com/s/nz4zu030vn732mb/RifficFree-Bold.eot");
+    src: url("https://dl.dropbox.com/s/nz4zu030vn732mb/RifficFree-Bold.eot?#iefix") format("embedded-opentype"),
+        url("https://dl.dropbox.com/s/b05dv5fa1nil0mq/RifficFree-Bold.woff2") format("woff2"),
+        url("https://dl.dropbox.com/s/dckyo9jo7jw3x5w/RifficFree-Bold.woff") format("woff"),
+        url("https://dl.dropbox.com/s/gdl3ugeido8cg8p/RifficFree-Bold.ttf") format("truetype"),
+        url("https://dl.dropbox.com/s/eamcvsdemv0nksl/RifficFree-Bold.svg") format("svg");
+    font-style: normal;
+    font-display: swap;
+}
+@font-face {
+  font-family: 'NewYearNewDay';
+  src: url('https://dl.dropbox.com/s/wzh3pig5s6fpc7w/NewYearNewDay.eot');
+  src: url('https://dl.dropbox.com/s/wzh3pig5s6fpc7w/NewYearNewDay.eot?#iefix') format('embedded-opentype'),
+    url('https://dl.dropbox.com/s/ep5uiqz4w1pgx4s/NewYearNewDay.woff2') format('woff2'),
+    url('https://dl.dropbox.com/s/2y8ss0561bkg72c/NewYearNewDay.woff') format('woff'),
+    url('https://dl.dropbox.com/s/k7gzchbql8vcfry/NewYearNewDay.ttf') format('truetype'),
+    url('https://dl.dropbox.com/s/xhultfmyk8zw4t4/NewYearNewDay.svg') format('svg');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Aberana';
+  src: url('https://dl.dropbox.com/s/g1kgvfy81nlm16t/AberanaPersonalUse.eot');
+  src: url('https://dl.dropbox.com/s/g1kgvfy81nlm16t/AberanaPersonalUse.eot?#iefix') format('embedded-opentype'),
+    url('https://dl.dropbox.com/s/07hegnqaqva5uml/AberanaPersonalUse.woff2') format('woff2'),
+    url('https://dl.dropbox.com/s/dnd5fn2bbd6dnjv/AberanaPersonalUse.woff') format('woff'),
+    url('https://dl.dropbox.com/s/zqmxhtmfagdo8ob/AberanaPersonalUse.ttf') format('truetype'),
+    url('https://dl.dropbox.com/s/ggb8ayftyhdx383/AberanaPersonalUse.svg') format('svg');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+    font-family: 'Puritan';
+    src: url('https://dl.dropbox.com/s/nrt3h9rga36h06x/Puritan-Bold.eot');
+    src: url('https://dl.dropbox.com/s/nrt3h9rga36h06x/Puritan-Bold.eot?#iefix') format('embedded-opentype'),
+        url('https://dl.dropbox.com/s/z8mgvtbtezww689/Puritan-Bold.woff2') format('woff2'),
+        url('https://dl.dropbox.com/s/obcj0x12vexz6a6/Puritan-Bold.woff') format('woff'),
+        url('https://dl.dropbox.com/s/4394rzxyvuydqyu/Puritan-Bold.ttf') format('truetype'),
+        url('https://dl.dropbox.com/s/dlfg9ystcfo3ixd/Puritan-Bold.svg#Puritan-Bold') format('svg');
+    font-weight: bold;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Puritan Alternate';
+    src: url('https://dl.dropbox.com/s/d41k335v67tdmi8/PuritanAlternate-Bold.eot');
+    src: url('https://dl.dropbox.com/s/d41k335v67tdmi8/PuritanAlternate-Bold.eot#iefix') format('embedded-opentype'),
+        url('https://dl.dropbox.com/s/jo5y1n7l97suxxs/PuritanAlternate-Bold.woff2') format('woff2'),
+        url('https://dl.dropbox.com/s/fu6v8jsohho18ov/PuritanAlternate-Bold.woff') format('woff'),
+        url('https://dl.dropbox.com/s/gwrhluepjt4ozvl/PuritanAlternate-Bold.ttf') format('truetype'),
+        url('https://dl.dropbox.com/s/pgnnig6nrg0c44b/PuritanAlternate-Bold.svg#PuritanAlternate-Bold') format('svg');
+    font-weight: bold;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Puritan Swash';
+    src: url('https://dl.dropbox.com/s/6vlw2mywzysa2pf/PuritanSwash-Bold.eot');
+    src: url('https://dl.dropbox.com/s/6vlw2mywzysa2pf/PuritanSwash-Bold.eot?#iefix') format('embedded-opentype'),
+        url('https://dl.dropbox.com/s/pgz8liehivtju2w/PuritanSwash-Bold.woff2') format('woff2'),
+        url('https://dl.dropbox.com/s/6j0ap822mr2rqk6/PuritanSwash-Bold.woff') format('woff'),
+        url('https://dl.dropbox.com/s/l8h86kghw58ql3y/PuritanSwash-Bold.ttf') format('truetype'),
+        url('https://dl.dropbox.com/s/2yb4td0hszxvhd6/PuritanSwash-Bold.svg#PuritanSwash-Bold') format('svg');
+    font-weight: bold;
+    font-style: normal;
+    font-display: swap;
+}
+@font-face {
+    font-family: 'Strawberry Muffins';
+    src: url('https://dl.dropbox.com/s/4t9qz29ljy0cdnr/StrawberryMuffinsDemo.eot');
+    src: url('https://dl.dropbox.com/s/4t9qz29ljy0cdnr/StrawberryMuffinsDemo.eot?#iefix') format('embedded-opentype'),
+        url('https://dl.dropbox.com/s/sfcs20yxkk5363t/StrawberryMuffinsDemo.woff2') format('woff2'),
+        url('https://dl.dropbox.com/s/y4v98u1ddvbh3od/StrawberryMuffinsDemo.woff') format('woff'),
+        url('https://dl.dropbox.com/s/ydzy4cwq8xytgrk/StrawberryMuffinsDemo.ttf') format('truetype'),
+        url('https://dl.dropbox.com/s/qrhb4c7gdh96ovg/StrawberryMuffinsDemo.svg#StrawberryMuffinsDemo') format('svg');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+/* Not mine */
+@font-face {
+font-family: lovely script;
+src: url(https://dl.dropbox.com/s/ss5bqbogijw4zfj/Lovely Script.otf);
+}
+/* Not mine */
+@font-face {
+font-family: 'Magica';
+src: url(https://static.tumblr.com/p6yopnt/Qkiqnu0r5/theheart.ttf);
+}

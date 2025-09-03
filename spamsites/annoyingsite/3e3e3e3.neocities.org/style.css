@@ -1,0 +1,257 @@
+/* the stilefile */
+   
+   
+   /* colors
+#575761 davys grey
+#915a7c fuchia
+#f9a82f saffron yellow
+#0000FF blue
+*/
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Trebuchet MS", Helvetica, sans-serif;
+  font-size: medium;
+  padding: 10px;
+  background: #f1f1f1;
+}
+
+/* paragraph custom white text */
+.cust  {
+  text-align: center;
+  color: #575761;
+  font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+  font-weight: bold;
+  text-shadow: 2px 2px #c7ccb9;
+  
+}
+
+.kust  {
+  text-align: center;
+  color: #222a68;
+  font-family: "Times New Roman", Times, serif;
+  font-variant: small-caps;
+  font-weight: bold;
+  text-shadow: 2px 1px #e2adf2;
+  
+}
+
+.drop {
+  text-align: center;
+  padding: 20px;
+  font-style: italic;
+  box-shadow: 12px 12px 2px 1px #c5c5c5;
+  overflow: auto;
+  max-width:600px;
+}
+
+/* table*/
+
+table, th, td {
+  border: 2px solid #f2b5d4;
+  border-collapse: collapse;
+  background-color: #f7dce4;
+}
+
+th, td {
+  padding: 12px;
+  text-align: left;
+}
+
+th {
+  font-weight: bold;
+}
+
+/* table end, headline start*/
+
+h1 {
+  color: #212227;
+  font-size: 50px;
+}
+
+h2 {
+  color: #212227;
+}
+
+h3 {
+  color: #212227;
+  text-decoration: line-through;
+}
+
+h4 {
+  color: #212227;
+  text-decoration: line-through;
+}
+
+h5 {
+   color: #212227;
+   text-decoration: line-through;
+}
+
+/* button */
+.pushy {
+  background-color: #0000FF;
+  border: none;
+  color: white;
+  padding: 16px 16px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+}
+
+/* wide text */
+.qqq {
+  letter-spacing: 4px;
+}
+
+
+/* list with circle bullets */
+ ul {
+  list-style-type: circle;
+  line-height: 200%;
+}
+
+/* space text capsule */
+ .capsule
+ {
+ background-color: white; 
+ border-radius: 40px;
+ border: 2px solid #915a7c;
+ color: #575761;
+ font-family: Arial, Helvetica, sans-serif;
+ font-size: 18px;
+ cursor: crosshair;
+}
+
+.boxxx {
+  background-color: white;
+  padding: 20px;
+  margin-top: 20px;
+  border-radius: 30px;
+  border-style: dotted;
+  text-align: center;
+  cursor: cell;
+}
+
+.blackx {
+ background-color: black;
+ padding: 50px;
+ text-align: center;
+ border-radius: 25px;
+ border-style: inset;
+ cursor: w-resize;
+}
+
+div.flip {
+  width: 200px;
+  height: 200px;
+  padding: 15px;
+  border-radius: 25px;
+  background-image:url('num/divback.jpg');
+  -webkit-transition: width 2s, height 2s, -webkit-transform 2s; /* Safari */
+  -moz-transition: width 2s, height 2s, -webkit-transform 2s;
+  -o-transition: width 2s, height 2s, -webkit-transform 2s;
+  transition: width 2s, height 2s, transform 2s;
+}
+
+div.flip:hover {
+  width: 310px;
+  height: 310px;
+  -webkit-transform: rotate(180deg); /* Safari */
+  -moz-transform: rotate(180deg);
+  -o-transform: rotate(180deg);
+  -ms-transform: rotate(180deg);
+  transform: rotate(180deg);
+}
+
+div.move {
+  width: 150px;
+  height: 150px;
+  padding: 20px;
+  border-radius: 25px;
+  text-align: center;
+  background-image:url('num/waveback.jpg');
+  -webkit-transition: width 2s; /* For Safari 3.1 to 6.0 */
+  -moz-transition: width 2s;
+  -o-transition: width 2s;
+  transition: width 2s;
+}
+
+div.move:hover {
+  width: 300px;
+}
+
+/* buttons */
+.button {
+  background-color: #575761; /* all color */
+  border: none;
+  color: white;
+  padding: 16px 27px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  -webkit-transition-duration: 0.4s; /* Safari */
+  -moz-transition-duration: 0.4s;
+  -o-transition-duration: 0.4s;
+  transition-duration: 0.4s;
+  cursor: pointer;
+}
+
+.buttonz {
+  background-color: white; 
+  color: black; 
+  border: 2px solid #575761;
+}
+
+.buttonz:hover {
+  background-color: #575761;
+  color: white;
+}
+
+.disabled {
+  background-color: white; 
+  color: black; 
+  border: 2px solid #575761;
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* buttons */
+
+
+ /* unvisited link */
+a:link {
+  color: #0000FF;
+  text-decoration: none;
+}
+
+/* visited link */
+a:visited {
+  color: #915a7c;
+  text-transform: uppercase;
+}
+
+/* mouse over link */
+a:hover {
+  color: #d13530;
+  text-decoration: line-through;
+  font-weight: bolder;
+}
+
+/* selected link */
+a:active {
+  color: #ac2c28;
+} 
+
+
+li a:hover {
+  background-color: #111;
+}
