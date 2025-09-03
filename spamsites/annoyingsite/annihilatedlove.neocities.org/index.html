@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>welcome.</title>
+    <!-- The style.css file allows you to change the look of your web pages.
+         If you include the next line in all your web pages, they will all share the same look.
+         This makes it easier to make new pages for your site. -->
+    <link href="style.css" rel="stylesheet" type="text/css" media="all">
+  </head>
+  <body>
+    <h1 id="countdown"></h1>
+    
+    <script>
+      var countdownDate = new Date("May 13, 2023 19:00:00").getTime();
+      
+      var x = setInterval(function() {
+        var now = new Date().getTime();
+
+        var distance = countdownDate - now;
+       
+        var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+        var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+        document.getElementById("countdown").innerHTML = days + "d " + hours + "h " + minutes + "m " + seconds + "s";
+
+        if (distance < 0) {
+          clearInterval(x);
+          document.getElementById("countdown").innerHTML = "IT IS UPON US";
+        }
+      }, 1000);
+    </script>
+    
+    <img src="angel.jpg" alt="The Rapture Comes." width="345" height="345">
+    
+    
+    
+    <p id="mainText"></p>
+    
+    <script>
+      var i = 0;
+      var txt1 = "Welcome. Have a seat. We're going to be here for quite a while, so you might aswell introduce yourself to me. What is your name?"
+      var speed = 75;
+      
+      function typeWriter() {
+        if (i < txt1.length) {
+          document.getElementById("mainText").innerHTML += txt1.charAt(i);
+          i++;
+          setTimeout(typeWriter, speed);
+        }  
+      }
+      
+      document.onload = typeWriter();
+    </script>
+    
+    <form action>
+      <label for="input"></label>
+      <input type="text" id="input" name="input"><br><br>
+      
+    
+    
+  </body>
+</html>
