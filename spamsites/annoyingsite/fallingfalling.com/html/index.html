@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<meta name="viewport" content="width=device-width, maximum-scale=1, user-scalable=no" />
+	
+	<script>var createjs = window;//work around createjs namespace</script>
+	<script src="libs/easeljs-0.5.0.min.js"></script>
+	<script src="libs/buzz.js"></script>
+	<script src="js/Config.js"></script>
+	<script src="js/FallingMain.js"></script>
+	<script src="js/Collapse.js"></script>
+	<script src="js/IrregularPath.js"></script>
+	<script src="rf/media/SoundController.js"></script>
+	<script src="rf/easing/ClassicEase.js"></script>
+	<script src="rf/util/MathUtil.js"></script>
+	<script src="rf/util/RandomUtil.js"></script>
+	<script src="rf/util/ColorUtil.js"></script>
+	<script src="main.js"></script>
+
+	<style>
+		body { margin:0; overflow:hidden; }
+	</style>
+</head>
+<body onload="init();">
+	<canvas id="myCanvas" style="position:absolute;z-index:2;left:0;top:0;" resize="true" width="100" height="100"></canvas>
+	<div id="output" style="position:absolute;z-index:1;left:0;top:-30px;font-size:20px;"></div>
+</body>
+</html>
