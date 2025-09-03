@@ -1,4 +1,4 @@
-/* Google Fonts */
+
 @import url('https://fonts.googleapis.com/css2?family=Itim&amp;display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Norican&amp;display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Cherry+Swash:wght@400;700&amp;display=swap');
@@ -93,12 +93,12 @@
     font-style: normal;
     font-display: swap;
 }
-/* Not mine */
+
 @font-face {
 font-family: lovely script;
 src: url(https://dl.dropbox.com/s/ss5bqbogijw4zfj/Lovely Script.otf);
 }
-/* Not mine */
+
 @font-face {
 font-family: 'Magica';
 src: url(https://static.tumblr.com/p6yopnt/Qkiqnu0r5/theheart.ttf);
