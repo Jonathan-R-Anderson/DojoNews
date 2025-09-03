@@ -10,10 +10,10 @@
             function updateIframeSrc() {
                 const currentSrc = iframe.src;
                 if (!isValidPage(new URL(currentSrc, window.location.href).pathname)) {
-                    iframe.src = "not_found.html"; // Redireciona para uma página padrão se a URL não for permitida
+                    iframe.src = "not_found.html";
                 }
             }
 
             iframe.addEventListener("load", updateIframeSrc);
-            updateIframeSrc(); // Verifica a URL inicial do iframe
+            updateIframeSrc();
         });
