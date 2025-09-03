@@ -1,0 +1,13 @@
+body {
+  background-color: black;
+  color: gray;
+  font-family: 'font';
+}
+
+@font-face {
+  font-family: "font";
+  src: url("satanyc_demoniac_st-webfont.woff") format("woff");
+  font-weight: normal;
+  font-style: normal;
+}
+
