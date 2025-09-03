@@ -1,0 +1,42 @@
+/* CSS is how you can add style to your website, such as colors, fonts, and positioning of your
+   HTML content. To learn how to do something, just try searching Google for questions like
+   "how to change link color." */
+
+body {
+  background-color: rgb(130,130,30);
+  color: black;
+  font-family: courier;
+}
+#hm{
+  background-color:rgb(100,100,10);
+  font-size:45px;
+ text-align:center;
+  
+  
+  
+}
+#roof{
+ padding:0px 0px; 
+}
+hs{
+  line-height:0.05;
+  font-size:8px; 
+ font-weight:900;
+}
+
+s2{
+ font-size:11px; 
+ font-weight:bold;
+ line-height:0.8;
+}
+ht{
+  font-weight:500;
+}
+#mainhead{
+ border:0.1rem solid; 
+  text-align: center;
+  background-color:rgb(100,100,10);
+  font-size:45px;
+  padding: 5px 0px;
+  font-style:oblique;
+}
