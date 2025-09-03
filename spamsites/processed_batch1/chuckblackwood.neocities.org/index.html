@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>ENTER... if you DARE!</title>
   <style>
-    /* Shared styles */
+    
     body {
       background-color: #000;
       color: #ff0000;
@@ -15,7 +15,7 @@
       overflow: hidden;
     }
 
-    /* Splash page styles */
+    
     .splash-page {
       display: flex;
       justify-content: center;
@@ -65,7 +65,7 @@
       font-family: "Courier New", Courier, monospace;
     }
 
-    /* Main site styles */
+    
     .main-site {
       display: none;
       padding: 20px;
@@ -102,7 +102,7 @@
 </head>
 <body>
 
-  <!-- Splash Page -->
+  
   <div id="splash" class="splash-page">
     <div class="splash-container">
       <h1 class="splash-title">DaRk ReAlM</h1>
@@ -125,7 +125,7 @@
     </div>
   </div>
 
-  <!-- Main Site -->
+  
   <div id="main-site" class="main-site">
     <div class="content-box">
       <h1>🕯️ Welcome to DaRk ReAlM 🕯️</h1>
@@ -151,7 +151,7 @@
 
   <script>
     document.addEventListener('DOMContentLoaded', function() {
-      // Simulate loading
+      
       let progress = 60;
       const loadingInterval = setInterval(() => {
         progress += 10;
@@ -164,7 +164,7 @@
         }
       }, 1000);
 
-      // Enter button functionality
+      
       document.getElementById('enter-button').addEventListener('click', function() {
         document.getElementById('splash').style.display = 'none';
         document.getElementById('main-site').style.display = 'block';
