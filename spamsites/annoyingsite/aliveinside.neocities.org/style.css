@@ -1,0 +1,557 @@
+/* Global body styles */
+body {
+  font-family: 'Times New Roman', Times, serif;
+  font-size: 0.875em;
+  text-align: center;
+}
+
+/* Centering for <center> elements */
+center {
+  text-align: center;
+}
+
+/* Main wrapper */
+.wrapper {
+  width: 1150px;
+  margin: -10px auto -10px auto;
+  border-left: 0 solid #12282f;
+  border-right: 0 solid #12282f;
+}
+
+/* Contains main and sidebar */
+.wrapper-2 {
+  position: relative;
+}
+
+/* Header and footer */
+.header, .footer {
+  background-size: cover;
+  overflow: hidden;
+}
+
+.header {
+  height: 200px;
+}
+
+.footer {
+  height: 50px;
+}
+
+/* Big title */
+.title {
+  padding: 15px 10px 10px 20px;
+  color: #fff;
+  text-align: center;
+  font-size: 20px;
+  -webkit-text-stroke: 1px #103334;
+  -webkit-animation: glow 1s ease-in-out infinite alternate;
+  -moz-animation: glow 1s ease-in-out infinite alternate;
+  animation: glow 1s ease-in-out infinite alternate;
+}
+
+@-webkit-keyframes glow {
+  from {
+    text-shadow: 0 0 10px #00f4ff, 0 0 20px #00f4ff, 0 0 30px #8cd7ff,
+                 0 0 40px #0009ff, 0 0 50px #00f4ff, 0 0 60px #8cd7ff,
+                 0 0 70px #8cd7ff;
+  }
+  to {
+    text-shadow: 0 0 20px #fff, 0 0 30px #8cd7ff, 0 0 40px #00f4ff,
+                 0 0 50px #103334, 0 0 60px #00f4ff, 0 0 70px #00f4ff,
+                 0 0 80px #fff;
+  }
+}
+
+/* Heading overrides */
+.title h1, .title h2, .title h3 {
+  margin: 0;
+  padding: 0;
+}
+
+/* Top links row */
+.links {
+  padding: 3px 5px 5px 5px;
+}
+
+.link {
+  text-align: center;
+  display: inline-block;
+  list-style: none;
+  float: none;
+  font-weight: bold;
+  font-size: 1.16em;
+  padding: 5px;
+  margin: 0 10px;
+  border: 0 solid red;
+}
+
+.link a {
+  color: white;
+  text-decoration: none;
+}
+
+.link a:hover {
+  color: #d60000;
+  font-display: fallback;
+}
+
+
+
+/* Columns */
+.main, .sidebar-right {
+  display: inline-block;
+}
+
+.sidebar-left, .sidebar-right {
+  width: 200px;
+  position: absolute;
+  top: 0;
+}
+
+.sidebar-left {
+  margin-left: 10px;
+}
+
+.main {
+  width: 710px;
+}
+
+.sidebar-right {
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+/* Boxes */
+.box {
+  padding: 5px 10px 0 10px;
+  background-image: linear-gradient(#367668, #103334);
+  border: 5px solid #103334;
+  margin: 10px 0 15px 0;
+  color: #2cd6ca;
+}
+
+.box a {
+  display: flex;
+  gap: 5px;
+  margin-top: 10px;
+  color: #fff;
+  font-weight: bold;
+}
+
+.box a:hover {
+  color: #d60000;
+  font-display: fallback;
+}
+.sidebar-right .box:first-child .inner a::before {
+  content: "";
+  display: inline-block;
+  width: 16px;           /* desired width */
+  height: 16px;          /* desired height */
+  background-image: url("eyeball.gif");  /* your eyeball image */
+  background-size: contain;   /* keeps proportions */
+  background-repeat: no-repeat;
+  margin-left: 25px;
+}
+/* Remove flex for all links in the second box */
+.sidebar-right .box:nth-child(2) a {
+  display: inline;  /* makes images inside <a> behave normally */
+}
+
+/* Second box in right sidebar (images) */
+.sidebar-right .box:nth-child(2) .inner {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* exactly 3 columns */
+  padding: 0; /* optional: remove padding to maximize space */
+  overflow: hidden;
+  column-gap: 3px;
+  justify-content: flex-start;
+}
+
+/* Images inside the second box */
+.sidebar-right .box:nth-child(2) .inner img {
+  width: 100%; /* fills the column */
+  height: 23px; 
+  object-fit: cover;
+  display: block;
+}
+
+.button-divider {
+  grid-column: 1 / -1;    /* span all columns */
+  text-align: center;     /* center the text */
+  font-size: 14px;
+  margin-top: 8px;
+  margin-bottom: 1px;
+}
+.checklist-box {
+  background-image: url("notebook.png"); /* your image */
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  border: none; /* same border style as other boxes */
+  padding: 10px;
+  color: #2cd6ca; /* text color to contrast */
+}
+
+.checklist {
+  list-style: none;
+  padding: 0;
+  margin:0;
+}
+
+.checklist li {
+  display: flex;
+  align-items: flex-start;
+  margin-bottom: 6px;
+  color: #103334;
+}
+
+.checklist input[type="checkbox"] {
+  appearance: none;       /* removes default checkbox */
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  width: 13px;
+  height: 13px;
+  border: 2px solid #103334;  /* red border */
+  margin-right: 8px;
+  cursor: pointer;
+  position: relative;
+}
+
+/* strike through when checked */
+.checklist input[type="checkbox"]:checked + label {
+  text-decoration: line-through;
+  color: #0ff; /* optional: dim the text */
+
+}
+.checklist input[type="checkbox"]:checked {
+  background-color: #0ff;   /* red fill */
+}
+
+/* Optional: white checkmark when checked */
+.checklist input[type="checkbox"]:checked::after {
+  content: "✓";
+  position: absolute;
+  left: 1px;
+  top: -6px;
+  font-size: 14px;
+  color: #103334;
+}
+
+
+/* Section 1 flicker */
+#section-1 {
+  font-weight: 900;
+  color: #0b4b3d;
+  text-align: center;
+  text-shadow: 0 0 10px #0ff, 0 0 20px #0ff, 0 0 30px #0ff;
+  animation: flicker 3s infinite alternate;
+}
+
+@keyframes flicker {
+  0%,19%,21%,23%,25%,54%,56%,100% {
+    text-shadow: 0 0 10px #0ff, 0 0 20px #0ff, 0 0 30px #0ff;
+  }
+  20%,22%,24%,55% {
+    text-shadow: none;
+  }
+}
+
+/* Box images */
+.boximg {
+  height: 400px;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  padding: 1px 10px 0 10px;
+  background-image: url(treebranch.jpg);
+  background-color: #367668;
+  color: #009ca0;
+  border: 5px solid #103334;
+  margin: 10px 0 15px 0;
+  text-align: left;
+  -webkit-text-stroke: 1px #009ca0;
+  scrollbar-color: #1f1f1f #367668;
+}
+
+/* Image floats */
+.left-img {
+  float: left;
+  margin-top: -10px;
+  margin-right: -11px;
+  margin-left: 1px;
+  margin-bottom: 1px;
+  display: inline;
+  height: auto;
+}
+
+.right-img {
+  float: right;
+  margin-left: 15px;
+  margin-bottom: 10px;
+  display: inline;
+  text-align: initial;
+}
+
+/* Marquee images */
+marquee {
+  overflow: hidden;
+  white-space: nowrap;
+  box-sizing: border-box;
+  width: 100%;
+  height: 150px;
+}
+
+.marquee__content {
+  display: flex;
+  animation: scroll 60s linear infinite;
+}
+
+.marquee__content img {
+  height: 150px;
+  flex-shrink: 0;
+  margin-right: 10px;
+  object-fit: cover;
+}
+
+@keyframes scroll {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+.marquee__content:hover {
+  animation-play-state: paused;
+}
+
+/* Marquee text */
+.marquee-text {
+  width: 100%;
+  overflow: hidden;
+  color: #2cd6ca;
+  height: 40px;
+  display: flex;
+  align-items: center;
+}
+
+.marquee-text__content {
+  display: inline-block;
+  white-space: nowrap;
+  padding-left: 100%;
+  animation: marquee-text 12s linear infinite;
+}
+
+@keyframes marquee-text {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-100%); }
+}
+
+.marquee-text:hover .marquee-text__content {
+  animation-play-state: paused;
+}
+
+.box .inner .social-links {
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+  height: 62px; /* taller container */
+}
+
+/* Social links */
+.social-links {
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+}
+
+.social-links a {
+  color: #fff;
+  text-decoration: underline;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.social-links a:hover {
+  color: #d60000;
+}
+
+.poll-wrapper {
+  display: flex;
+  justify-content: center;
+}
+
+.poll-box {
+  background-color: #103334;
+  padding: 2px;
+  width: 175px;
+  font-family: "Times New Roman", serif;
+  font-size: medium;
+  color: #00F4FF;
+  box-shadow: 0px 0px 5px #888;
+  
+}
+
+.poll-question {
+  padding: 2px 0px 4px 2px;
+}
+
+.poll-box input[type="radio"] {
+  float: left;
+  margin-right: 5px;
+}
+
+.poll-box label {
+  float: left;
+  width: 150px;
+}
+
+.poll-buttons {
+  clear: both;
+  text-align: center;
+  padding: 3px;
+}
+.arrow {
+ margin-top: -10px;
+  margin-bottom: 10px; /* adjust this number for bigger/smaller gap */
+  vertical-align: middle; /* keeps it aligned with the button */
+}
+
+.lana-img {
+  position: absolute; /* allows overlap */
+  top: 1135px;          /* distance from the top of wrapper-2 */
+  left: 530px;  /* adjust this to sit over the gap */
+  z-index: 10;        /* make sure it’s on top */
+}
+
+.lana-img-right {
+  position: absolute;
+  top: 970px;       /* adjust vertical position */
+  right:515px;    /* overlaps right sidebar & main content */
+  z-index: 10;     /* ensures it sits on top */
+}
+
+.lana-img:hover,
+.lana-img-right:hover {
+  opacity: 0.5; /* 0 = fully transparent, 1 = fully visible */
+  transition: opacity 0.3s ease; /* smooth fade */
+}
+
+.no-margin {
+  margin: 0 0 3px 0; /* top right bottom left */
+  padding: 0;
+}
+#cookie {
+  background: none;
+  border: none;
+  cursor: pointer;
+  position: relative; /* important: paper is relative to cookie */
+  display: inline-block;
+}
+
+/* Cookie shake */
+@keyframes crack {
+  0% { transform: rotate(0); }
+  20% { transform: rotate(15deg); }
+  40% { transform: rotate(-15deg); }
+  60% { transform: rotate(10deg); }
+  80% { transform: rotate(-10deg); }
+  100% { transform: rotate(0); }
+}
+
+#cookie.crack {
+  animation: crack 0.7s ease;
+}
+
+/* Fortune paper container */
+#fortune-container {
+  position: absolute;
+  top: 50%; /* center vertically on cookie */
+  left: 50%; /* center horizontally on cookie */
+  transform: translate(-50%, -50%) scale(0); /* hidden initially */
+  opacity: 0;
+  text-align: center;
+  pointer-events: none;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+  display: inline-block;
+  margin: 1;
+}
+
+/* Show fortune */
+#fortune-container.show {
+  transform: translate(-50%, -50%) scale(1);
+  opacity: 1;
+}
+
+/* Paper image */
+#fortune-paper {
+  display: block;
+  margin: 0 auto;
+}
+
+/* Fortune text */
+#fortune {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-family: "Times New Roman", serif;
+  font-size: 12px;
+  width: 110px;
+  color: black;
+  text-align: center;
+  word-wrap: break-word;
+}
+
+/* Circular glow animations around the cookie */
+@keyframes cookie-glow-10 {
+  0%, 100% { box-shadow: 0 0 5px 5px rgba(255,0,0,0.5); }
+  50% { box-shadow: 0 0 20px 20px rgba(255,0,0,1); }
+}
+
+@keyframes cookie-glow-50 {
+  0%, 100% { box-shadow: 0 0 10px 10px rgba(255,0,0,0.5); }
+  50% { box-shadow: 0 0 30px 30px rgba(255,0,0,1); }
+}
+
+@keyframes cookie-glow-100 {
+  0%, 100% { box-shadow: 0 0 15px 15px rgba(255,0,0,0.5); }
+  50% { box-shadow: 0 0 40px 40px rgba(255,0,0,1); }
+}
+
+@keyframes cookie-glow-200 {
+  0%, 100% { box-shadow: 0 0 20px 20px rgba(255,0,0,0.5); }
+  50% { box-shadow: 0 0 50px 50px rgba(255,0,0,1); }
+}
+
+/* Apply circular glow to cookie on milestone */
+#cookie.red-glow-10 {
+  animation: cookie-glow-10 1s infinite;
+  border-radius: 50%; /* make the glow circular */
+}
+
+#cookie.red-glow-50 {
+  animation: cookie-glow-50 0.8s infinite;
+  border-radius: 50%;
+}
+
+#cookie.red-glow-100 {
+  animation: cookie-glow-100 0.6s infinite;
+  border-radius: 50%;
+}
+
+#cookie.red-glow-200 {
+  animation: cookie-glow-200 0.5s infinite;
+  border-radius: 50%;
+}
+
+
+
+
+/* Responsive adjustments */
+@media(max-width:1180px) {
+  .wrapper { width: calc(440px + 50vw); }
+  .main { width: 50vw; }
+}
+
+@media(max-width:910px) {
+  .wrapper { width: calc(360px + 52vw); }
+  .sidebar-left, .sidebar-right { width: 160px; }
+  .main { margin-left: 180px; width: 52vw; }
+}
