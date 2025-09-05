@@ -1,9 +1,1 @@
-function goTo(act, bool) {
-    let x = document.forms["Form"]["ID"].value;
-    if (bool == false) 
-      {document.forms["Form"].action = x + ".html";}
-    else {document.forms["Form"].action = act + ".html";
-          alert(y);
-          return false;}
-    }
-    
+function goTo(o,m){let t=document.forms.Form.ID.value;if(0!=m)return document.forms.Form.action=o+".html",alert(y),!1;document.forms.Form.action=t+".html"}
