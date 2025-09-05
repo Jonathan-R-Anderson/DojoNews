@@ -1,0 +1,59 @@
+/* CSS is how you can add style to your website, such as colors, fonts, and positioning of your
+   HTML content. To learn how to do something, just try searching Google for questions like
+   "how to change link color." */
+@font-face {
+  font-family: cakezombie;
+  src: url(cakezombie.otf);
+}
+body {
+  background-color: black;
+  color: white;
+  font-family: Verdana;
+}
+.container{
+    max-width: 1200px;
+    margin: 0 auto;
+}
+.hero{
+ text-align: center; 
+}
+h1{
+ font-family: "cakezombie";
+ font-size: 50px;
+}
+.center{
+  text-align: center; 
+}
+
+
+.scroll-left {
+    height: 56px;
+    overflow: hidden;
+    position: relative;
+    background: #f6db00;
+    color: black;
+    font-weight: bold;
+}
+.scroll-left p {
+ position: absolute;
+ width: 100%;
+ height: 100%;
+ margin: 0;
+ line-height: 50px;
+ text-align: center;
+ /* Starting position */
+ transform:translateX(100%);
+ /* Apply animation to this element */
+ animation: scroll-left 35s linear infinite;
+}
+/* Move it (define the animation) */
+@keyframes scroll-left {
+ 0%   {
+ transform: translateX(100%); 		
+ }
+ 100% {
+ transform: translateX(-100%); 
+ }
+}
+
+
