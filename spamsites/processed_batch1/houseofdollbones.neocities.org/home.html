@@ -1,72 +1,80 @@
 <!DOCTYPE html>
-
 <html lang="en">
-<head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>House of Doll Bones</title>
-<style>:root{--header-image:url('images/backgrounds/Code.jpg');--body-bg-image:url('images/backgrounds/purple%20wallpaper.jpg');--content:#43256e}@font-face{font-family:RetroComputer;src:url(fonts/retro_computer_personal_use.ttf)}@font-face{font-family:NeckRomancerRegular;src:url(fonts/NECKROMANCERRegular.ttf)}@font-face{font-family:CREATURE;src:url(fonts/CREATURE.html)}*{box-sizing:border-box}body{font-family:courier;margin:0;background-color:black;background-size:100%;color:#fceaff;background-image:url(images/backgrounds/purple%20wallpaper.jpg)}.titlescontainer{width:100%;height:35%;display:flex;margin:0 auto}.contentcontainer{width:100%;height:100%;display:grid;grid-template-columns:30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px;grid-template-rows:30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px}.contentcontainer2{width:100%;height:100%;display:grid;grid-template-columns:30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px;grid-template-rows:30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px}.contentcontainerWOF{width:100%;height:100%;display:grid;grid-template-columns:30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px;grid-template-rows:30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px}.textbox{padding:.5em;background-color:black;font-weight:700;color:#f1f5f9;border:10px solid white;scrollbar-color:#e06e89 black}.sidenav{display:grid;grid-template-columns:30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px;grid-template-rows:21px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px;height:100%;width:300px;position:fixed;z-index:1;top:0;left:0;background-color:#111;overflow-x:hidden;padding-top:20px;border-right:10px solid;border-color:white}.navicon{background-color:transparent}.navicon1{grid-row:1/5;grid-column:1/10;background:url()}.navicon2{grid-row:9/13;grid-column:1/10}.navicon3{grid-row:5/9;grid-column:1/10}.navicon4{grid-row:13/17;grid-column:1/10}.navicon5{grid-row:17/21;grid-column:1/10}.textbox2{text-align:center;border-color:#ba00ff;background-color:black;border:4px solid;color:#ba00ff;grid-row:1/1;grid-column:1/1}footer{text-align:center;padding:3px;height:30px;background-color:Black;border-top:solid 5px white;color:#e06e89}.sidenav a{padding:6px 8px 6px 16px;text-decoration:none;font-size:25px;color:#818181;display:block}.sidenav a:hover{color:#f1f1f1}.main{margin-left:160px;padding:0}@media screen and (max-height:450px){.sidenav{padding-top:15px}.sidenav a{font-size:18px}}@font-face{font-family:'music';src:url(https://cdn.glitch.me/9bbfdfb3-4bfa-4c39-8743-5621c8b9df21/LL_RECOR.TTF)}@font-face{font-family:Pixelated MS Sans Serif;src:url(ms_sans_serif.html) format("woff");src:url(ms_sans_serif-2.html) format("woff2")}#glenplayer02{position:relative;display:flex;background:#ba00ff;width:100%;padding:.2em;border:3px solid purple;border-style:inset;margin:auto;margin-top:.5em;margin-bottom:.5em}#glenplayer02 a{text-decoration:none}#glenplayer02>div{align-self:center}.music-controls{user-select:none;-webkit-user-select:none;width:13px;font-size:18px;cursor:pointer;font-family:'music'}.playy,.pausee{font-family:'music';font-size:1.1em;color:#f38bc8;-webkit-text-stroke:.5px #000;margin-top:-.2em;margin-bottom:.1em}.pausee{display:none}.sonata{margin-left:.4em;font-family:Pixelated MS Sans Serif;font-size:.75em;color:#000}.labeltext{margin-left:.5em;position:relative;bottom:.1em;font-size:14px}.dropbtn{background-color:black;color:purple;padding:10px;font-size:30px;border:solid 5px purple;font-family:NeckRomancerRegular}.dropdown1{position:relative;display:inline-block;height:fit-content;margin:5px}.dropdown-content{display:none;position:absolute;background-color:#f1f1f1;min-width:200px;box-shadow:0 8px 16px 0 rgba(0,0,0,0.2);z-index:1}.dropdown-content a{color:black;background-color:purple;border-right:solid 5px;border-bottom:solid 5px;border-left:solid 5px;border-color:darkred;padding:12px 16px;text-decoration:none;display:block;font-family:Franklin Gothic Medium;font-size:larger}.dropdown1-content a:hover{background-color:#ddd}.dropdown1:hover .dropdown-content{display:block}.dropdown1:hover .dropbtn{background-color:purple;border-color:darkred;color:black}</style>
-<link href="https://fonts.googleapis.com/" rel="preconnect"/>
-<link crossorigin="" href="https://fonts.gstatic.com/" rel="preconnect"/>
-<link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@400;500;800&amp;display=swap" rel="stylesheet"/>
-<script src="../ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.min.js"></script>
-<!-------MUSIC PLAYER BY GLENTHEMES------->
-<script src="../static.tumblr.com/gtjt4bo/QRmphdsdv/glenplayer02.js"></script>
-<script crossorigin="anonymous" src="../kit.fontawesome.com/8119dfca45.html"></script>
-</head>
-<body>
-<div class="titlescontainer">
-<div class="ignoreme1">
-</div>
-<div class="titlecard">
-<img src="images/Icons/websitelogo3.png"/>
-</div>
-</div>
-<div class="sidenav">
-<div class="navicon navicon1">
-<a href="home.html"><img src="images/Icons/NavIcon11.png"/></a>
-</div>
-<div class="navicon navicon3">
-<a href="projects.html"><img src="images/Icons/NavIcon13.png"/></a>
-</div>
-<div class="navicon navicon2">
-<a href="comingsoon.html"><img src="images/Icons/NavIcon12.png"/></a>
-</div>
-<div class="navicon navicon4">
-<a href="comingsoon.html"><img src="images/Icons/NavIcon14.png"/></a>
-</div>
-<div class="navicon navicon5">
-<a href="comingsoon.html"><img src="images/Icons/NavIcon15.png"/></a>
-<div class="textbox textbox2">
-<!-------MUSIC PLAYER BY GLENTHEMES------->
-<div id="glenplayer02">
-<div class="music-controls" onclick="songstart()">
-<div class="playy">d</div>
-<div class="pausee">k</div>
-</div>
-<div class="sonata">MP3 </div>
-<div class="labeltext"><img src="../64.media.tumblr.com/tumblr_ll7wpyHlj71qi6qow540.gif"/> <span style="font-family: 'music'; font-size: 1.1em; color: #F38BC8; -webkit-text-stroke: 0.5px #000; margin-top: -0.2em; margin-bottom: 0.1em; ">o</span></div>
-</div><!--end music player-->
-<audio id="tune" src="music/Ephemera.mp3"></audio>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>House of Doll Bones</title>
+    <link href="secondstyle.css" rel="stylesheet" type="text/css" media="all">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com/">
+    <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@400;500;800&amp;display=swap" rel="stylesheet">
+ 
+    <script></script>
+    <!-------MUSIC PLAYER BY GLENTHEMES------->
+    <script></script>
+ 
+    <script></script>
+  </head>
+  <body>
+      <div class="titlescontainer">
+           <div class ="ignoreme1">
+             </div>
+           <div class ="titlecard">
+             <img src="images/Icons/websitelogo3.png">
+           </div>
+        
+    </div>      
+    
+    <div class="sidenav">
+        <div class="navicon navicon1">
+              <a href="home.html"><img src="images/Icons/NavIcon11.png"></a>
+        </div>
+        <div class="navicon navicon3">
+        <a href="projects.html"><img src="images/Icons/NavIcon13.png"></a>
+        </div>
+        <div class="navicon navicon2">
+        <a href="comingsoon.html"><img src="images/Icons/NavIcon12.png"></a>
+        </div>
+        <div class="navicon navicon4">
+        <a href="comingsoon.html"><img src="images/Icons/NavIcon14.png"></a>
+        </div>
+        <div class="navicon navicon5">
+        <a href="comingsoon.html"><img src="images/Icons/NavIcon15.png"></a>
+          
+         <div class="textbox textbox2">
+            <!-------MUSIC PLAYER BY GLENTHEMES------->
+            <div id="glenplayer02">
+            <div class="music-controls" onclick="songstart()">
+              <div class="playy">d</div>
+              <div class="pausee">k</div>
+              </div>
+              <div class="sonata">MP3 </div>
+              <div class="labeltext"><img src="../64.media.tumblr.com/tumblr_ll7wpyHlj71qi6qow540.gif"> <span style="font-family: 'music'; font-size: 1.1em; color: #F38BC8; -webkit-text-stroke: 0.5px #000; margin-top: -0.2em; margin-bottom: 0.1em; ">o</span></div>
+        </div><!--end music player-->
+            <audio id="tune" src="music/Ephemera.mp3"></audio>
               Enjoy some lovely Dollhouse tunes~!
               <p><i>~Ephemera (Instrumental) - The House in Fata Morgana~</i></p>
-</div>
-</div>
-</div>
-<div class="contentcontainer">
-<div class="textbox textbox1">
-<h1>Welcome to The <span style="color:#e06e89"> Dollhouse!</span></h1>
+        </div>
+        </div>
+    </div>
+
+    
+    <div class="contentcontainer">
+      
+        <div class="textbox textbox1">
+          <h1>Welcome to The <span style="color:#e06e89"> Dollhouse!</span></h1>
             My name is <span style="color:#ba00ff">Doll Bones</span>. Welcome! This is my personal website. A home for all my projects, content, and personal stuff. I'm glad you've come around. So allow me to give you a little tour. The side bar to the left of this box is where the main navigation panel for this website lies.
             <h2><span style="color:#e06e89">Projects</span></h2>
             This tab is a branch of sorts. Hosting links to the various pages that each of my projects can be found on. My current projects that can be found here are: 
             <ul>
-<li> <p><span style="color:lawngreen">DEGENERATIVE</span></p></li>
+              <li> <p><span style="color:lawngreen">DEGENERATIVE</span></p></li>
                 ...An old and forgotten video game. DEGENERATIVE for the Doll OS..... An old school RPG about an office worker, a spirit medium, and a detective. Three unlikely souls, living in a world dominated by technology. A world where nature is drowned out. These three strangers are all that will stand between salvation, or total corruption.
               
               <li> <p><span style="color:purple">WORLD OF FEAR</span></p></li>
                 A sprawling connected universe of horror stories. Retellings of famous creepypasta stories, brand new stories from my own twisted mind, A world of monsters, horrors, and fear. A world where Slenderman, Jeff the Killer, and many others all exist at the same time.
           </ul>
-<h2><span style="color:#e06e89">Creepypasta Reviews <span style="color:red">(COMING SOON)</span></span></h2>
+                    <h2><span style="color:#e06e89">Creepypasta Reviews <span style="color:red">(COMING SOON)</span></span></h2>
           This page is home to my series known as "The Dollhouse View" from YouTube. In this series I review various creepypastas from around the internet. Going over what I like and dislike about them, and rating them on a scale of 25 points. 
           <h2><span style="color:#e06e89">Horror Archives <span style="color:red">(COMING SOON)</span></span></h2>
           This is a massive project of mine. Internet horror becomes lost media each and everyday. Creepypastas and creepy videos are deleted and vanish off the face of the earth. Never to be seen again. I despise when this happens. And will do my part to avoid it. The Dollhouse Archives are a large collection of creepypastas that I've personally saved from all across the web. I won't stop until I've saved as many as I possibly can. 
@@ -74,215 +82,229 @@
           <h2><span style="color:#e06e89">Misc <span style="color:red">(COMING SOON)</span></span></h2>
           This section will branch out into any number of webpages that I can't find a place for elsewhere. Random thoughts and blogs and the like. Its a catch all! 
       </div>
-<div class="textbox labelcard1">
-<img src="images/Icons/label1.png"/>
-</div>
-<div class="textbox contentbox2">
-<span style="color:black">What's New?</span>
-<center><span style="color:#f47920"><u>07/22/2025</u></span></center>
+      
+      <div class="textbox labelcard1">
+          <img src="images/Icons/label1.png">
+      </div>
+    
+
+      <div class="textbox contentbox2">
+        <span style="color:black">What's New?</span>
+        <center><span style="color:#f47920"><u>07/22/2025</u></span></center>
         -"TANGLE" FULL STORY is now online! 
         <center><span style="color:#f47920"><u>07/06/2025</u></span></center>
         -"Jeff the Killer: Dark Fury" is officially finished! 
         <center><span style="color:#f47920"><u>07/06/2025</u></span></center>
-<p>-Added new chapter to Jeff the Killer: Dark Fury</p>
-<center><span style="color:#f47920"><u>07/01/2025</u></span></center>
-<p>-Added new chapter to Jeff the Killer: Dark Fury!</p>
-<center><span style="color:#f47920"><u>06/22/2025</u></span></center>
-<p>-Updated <span style="color: #ba00ff"><i>Projects</i></span> tab.</p>
-<center><span style="color:#f47920"><u>06/18/2025</u></span></center>
+        <p>-Added new chapter to Jeff the Killer: Dark Fury</p>
+        <center><span style="color:#f47920"><u>07/01/2025</u></span></center>
+        <p>-Added new chapter to Jeff the Killer: Dark Fury!</p>
+        <center><span style="color:#f47920"><u>06/22/2025</u></span></center>
+          <p>-Updated <span style="color: #ba00ff"><i>Projects</i></span> tab.</p>
+        <center><span style="color:#f47920"><u>06/18/2025</u></span></center>
           -Added <span style="color: #ba00ff">"Favorite Video Games"</span> article to main page
         <center><span style="color:#f47920"><u>06/17/2025</u></span></center>
-<p>-"Ghostring" coming soon.... Hopefully. Link is inactive rn.</p>
-<p>-<span style="color: #ba00ff"><i>Projects</i></span> tab goes live!</p>
-<p>-<span style="color: #e06e89"><i>House of Doll Bones</i></span> officially goes live!</p>
-</div>
-<div class="textbox labelcard2">
-<img height="35" src="images/Icons/whatsnewicon.png"/>
-</div>
-<div class="textbox linkbox">
-<h3><i>Find me elsewhere!</i></h3>
-<p><a href="https://www.youtube.com/@DeadDollBones">YouTube</a> | <a href="../bsky.app/profile/deaddollbones.bsky.html">Bluesky</a> | <a href="https://www.reddit.com/user/DeadDollBones/">Reddit</a> | <a href="https://www.deviantart.com/deaddollbones">DeviantArt</a></p>
-<div id="ghostring">
-<a href="https://ghostring.neocities.org/DOLLBONES/previous">←</a>
-<a href="https://ghostring.neocities.org/">Ghostring</a>
-<a href="https://ghostring.neocities.org/DOLLBONES/next">→</a>
-</div>
-</div>
-<div class="textbox textbox4">
-<img src="images/Other/witch.gif"/> <img src="images/Other/aliens.gif"/><img src="images/Other/coffin.gif"/><img src="images/Other/dollcollector.gif"/><img src="images/Other/theRake.gif"/><img src="images/Other/otherwordly.gif"/>
-</div>
-<div class="textbox textbox3">
-<center><u><b><span style="color:#ba00ff">Things I like!</span></b></u></center>
-<p><img src="images/Other/pumpkinsmall.gif"/>Creepypastas!</p>
-<p><img src="images/Other/ghostfacesmall.gif"/> Horror</p>
-<p><img src="images/Other/n64small.gif"/> Nintendo</p>
-<p><img src="images/Other/onepiecesmall.gif"/> One Piece</p>
-<p><img src="images/Other/redstarsmall.gif"/> JJBA</p>
-<p><img src="images/Other/dicesmall.gif"/> DnD</p>
-<p><img src="images/Other/batsmall.gif"/> <a href="https://myuu.bandcamp.com/">Myuu</a></p>
-<p><img src="images/Other/ben10small.png"/> Ben 10</p>
-<p><img src="images/Other/dresssmall.gif"/> Fashion</p>
-<p><img src="images/Other/scpsmall.png"/> SCP Foundation</p>
-<p><img src="images/Other/websmall.gif"/> The Backrooms</p>
-<p><img src="images/Other/orangeflowersmall.gif"/> Scooby Doo</p>
-<p><img src="images/Other/eyesmall.gif"/> Magnus Archives </p>
-<p><img src="images/Other/aliensmall.gif"/> X-Files</p>
-<p><img src="images/Other/yellowbirdsmall.gif"/> Cryptozoology</p>
-<p><img src="images/Other/aliensmall.gif"/> Urban Legends</p>
-<p><img src="images/Other/shipsmall.gif"/> Pirates</p>
-</div>
-<div class="textbox boothbox1">
-<img src="images/Other/Ads/Boothworldadsmall.gif"/>
-</div>
-<div class="textbox content2">
-<h1><center><span style="color: red">NINTENDO</span>, I LOVE YOU!</center></h1>
-<p>The only thing I love as much as horror is my <span style="color:dodgerblue">girlfriend</span>. Though she's a bit scary, so maybe they count as the same thing.</p>
-<p>Anyways, the only OTHER thing I love as much as horror is.... <span style="color:red">NINTENDO!</span> And video games as a whole, I suppose. But largely its <span style="color:red">Nintendo</span> I adore the most.</p>
-<p>I wanted to make a little list of my all time favorite video games. Not all of them are from <span style="color:red">Nintendo</span>, but I've <i>played</i> almost all of them on <span style="color:red">Nintendo</span> consoles.</p>
-<p>This list is in alphabetical order. Not ranked in any sort of favoritism. Just my favorite games all in an easy to see list!</p>
-<p><center><i>This list is ongoing! I'm always adding new games, and remembering old favorites!</i></center></p>
-<h2><span style="color: #e06e89"><u>My Favorite Video Games</u></span></h2>
-<ol>
-<li>999: 9 Persons, 9 Hours, 9 Doors</li>
-<li>Advance Wars</li>
-<li>Alan Wake</li>
-<li>Among Us</li>
-<li>Assassin's Creed IV: Black Flag</li>
-<li>Astral Chain</li>
-<li>Balloon Fighter</li>
-<li>Bejeweled</li>
-<li>Ben 10: Omniverse 2</li>
-<li>Ben 10: Vilgax Attacls</li>
-<li>Bloodstained: Ritual of The Night</li>
-<li>Carrion</li>
-<li>Castlevania: Bloodlines</li>
-<li>Castlevania: Harmony of Dissonance</li>
-<li>Castlevania: Portrait of Ruin</li>
-<li>Cate West: The Vanishing Files</li>
-<li>Chrono Trigger</li>
-<li>Clock Tower</li>
-<li>Clubhouse Games: 51 Worldwide Classics</li>
-<li>Codename S.T.E.A.M.</li>
-<li>Columns III</li>
-<li>Command &amp; Conquer: Red Alert II</li>
-<li>Corpse Factory</li>
-<li>Cruis'n Blast</li>
-<li>Dragon Quest 11</li>
-<li>Dragon Quest Builders 2</li>
-<li>Duke Nukem 3D</li>
-<li>Elder Scrolls V: Skyrim</li>
-<li>Emio - The Smiling Man: Famicom Detective Club</li>
-<li>Final Fantasy I</li>
-<li>Final Fantasy IX</li>
-<li>Final Fantasy VI</li>
-<li>Final Fantasy X</li>
-<li>Fire Emblem: Fates (Birthright)</li>
-<li>Home Safety Hotline</li>
-<li>Homicipher</li>
-<li>Hyrule Warriors Definitive Edition</li>
-<li>I Have No Mouth, And I Must Scream</li>
-<li>iSpy Universe</li>
-<li>iSpy: Spooky Mansion Deluxe</li>
-<li>iSpy: Treasure Hunt</li>
-<li>JoJo's All Star Battle R</li>
-<li>Kid Dracula</li>
-<li>KinitoPET</li>
-<li>Left 4 Dead 2</li>
-<li>Legend of Zelda: Link's Awakening (Remake)</li>
-<li>Legend of Zelda: Majora's Mask (3DS)</li>
-<li>Legend of Zelda: Tears of The Kingdom</li>
-<li>Lego Harry Potter Years 5-8</li>
-<li>Lego Indiana Jones: The Adventure Continues</li>
-<li>Lego Lord of The Rings</li>
-<li>Lego Star Wars: The Complete Saga</li>
-<li>Little Goody Two Shoes</li>
-<li>Little Nightmares</li>
-<li>Little Nightmares 2</li>
-<li>Live A Live (Remake)</li>
-<li>Luigi's Mansion: Dark Moon</li>
-<li>Luigi's Mansion 3</li>
-<li>Machine Knight</li>
-<li>Mappy</li>
-<li>Mario Vs. Donkey Kong</li>
-<li>Marvel Ultimate Alliance 3</li>
-<li>Meteos</li>
-<li>Metroid Dread</li>
-<li>Minecraft</li>
-<li>Necromerger</li>
-<li>NEO The World Ends With You</li>
-<li>Neon White</li>
-<li>New Super Mario Bros Wii</li>
-<li>New Super Mario Bros U Deluxe</li>
-<li>Ninja Gaiden Sigma</li>
-<li>Ninja Gaiden Sigma 2</li>
-<li>No More Heroes</li>
-<li>No More Heroes 2: Desperate Struggle</li>
-<li>No More Heroes III</li>
-<li>Papers, Please</li>
-<li>Paranormosight: The Seven Mysteries of Honjo</li>
-<li>People Playground</li>
-<li>Persona 5: Royal</li>
-<li>Pikmin 3</li>
-<li>Pikmin 4</li>
-<li>Pirate 101</li>
-<li>Pokemon White 2</li>
-<li>Pokemon HeartGold</li>
-<li>Pokemon Legends: Arceus</li>
-<li>Pokemon Shield</li>
-<li>Portal</li>
-<li>Portal 2</li>
-<li>Prince of Persia: The Lost Crown</li>
-<li>Prototype</li>
-<li>Resident Evil</li>
-<li>Resident Evil 4</li>
-<li>Resident Evil 5</li>
-<li>Roblox</li>
-<li>SCP Containment Breach</li>
-<li>Scribblenauts Unlimited</li>
-<li>Sea of Thieves</li>
-<li>Shin Megami Tensei V: Vengeance</li>
-<li>Shining Force</li>
-<li>Shining Force 2</li>
-<li>Shining Force: The Sword of Hadja</li>
-<li>Sid Meier's Pirates!</li>
-<li>Skylanders Giants</li>
-<li>Star Wars: The Force Unleashed</li>
-<li>Steamworld Dig</li>
-<li>Stories Untold</li>
-<li>Style Savvy: Trendsetters</li>
-<li>Super Mario Bros Wonder</li>
-<li>Super Mario Galaxy</li>
-<li>Super Smash Bros Brawl</li>
-<li>Super Smash Bros Ultimate</li>
-<li>Superhot</li>
-<li>The House in Fata Morgana</li>
-<li>Theatrhythm Final Bar Line</li>
-<li>Tomodachi Life</li>
-<li>Triangle Strategy</li>
-<li>Tsugunohi</li>
-<li>Ultimate Custom Night</li>
-<li>Unicorn Overlord</li>
-<li>Vampire Survivors</li>
-<li>Virture's Last Reward</li>
-<li>Voice of Cards: The Forsaken Maiden</li>
-<li>Voice of Cards: The Isle Dragon Roars</li>
-<li>Wild Guns</li>
-<li>World of Horror</li>
-<li>Yo-Kai Watch 2: Bony Spirits</li>
-</ol>
-</div>
-<div class="textbox labelcard3"> <img src="images/Icons/videogameslabel.png"/></div>
-<div class="textbox stampbox1">
-<img src="images/Other/gameboy.gif"/>
-<img src="images/Other/wii.gif"/>
-<img src="images/Other/wiiu.gif"/>
-<img src="images/Other/ds.gif"/>
-<img src="images/Other/atari.gif"/>
-<img src="images/Other/controllers.png"/>
-<img src="images/Other/dslove.png"/>
-<img src="images/Other/wiilove.png"/>
-</div>
-</div>
-</body>
+          <p>-"Ghostring" coming soon.... Hopefully. Link is inactive rn.</p>
+          <p>-<span style="color: #ba00ff"><i>Projects</i></span> tab goes live!</p>
+          <p>-<span style="color: #e06e89"><i>House of Doll Bones</i></span> officially goes live!</p>
+      </div>
+      
+      <div class="textbox labelcard2">
+      <img src="images/Icons/whatsnewicon.png" height="35">
+      </div>
+      
+        <div class="textbox linkbox">
+          <h3><i>Find me elsewhere!</i></h3>
+          <p><a href="https://www.youtube.com/@DeadDollBones">YouTube</a> | <a href="../bsky.app/profile/deaddollbones.bsky.html">Bluesky</a> | <a href="https://www.reddit.com/user/DeadDollBones/">Reddit</a> | <a href="https://www.deviantart.com/deaddollbones">DeviantArt</a></p>
+            <div id="ghostring">
+              <a href="https://ghostring.neocities.org/DOLLBONES/previous">←</a>
+              <a href="https://ghostring.neocities.org/">Ghostring</a>
+              <a href="https://ghostring.neocities.org/DOLLBONES/next">→</a>
+            </div>
+      </div>
+      
+      <div class="textbox textbox4">
+          <img src="images/Other/witch.gif"> <img src="images/Other/aliens.gif"><img src="images/Other/coffin.gif"><img src="images/Other/dollcollector.gif"><img src="images/Other/theRake.gif"><img src="images/Other/otherwordly.gif">
+      </div>
+      
+      <div class="textbox textbox3">
+        <center><u><b><span style="color:#ba00ff">Things I like!</span></b></u></center>
+        <p><img src="images/Other/pumpkinsmall.gif">Creepypastas!</p>
+        <p><img src="images/Other/ghostfacesmall.gif"> Horror</p>
+        <p><img src="images/Other/n64small.gif"> Nintendo</p>
+        <p><img src="images/Other/onepiecesmall.gif"> One Piece</p>
+        <p><img src="images/Other/redstarsmall.gif"> JJBA</p>
+        <p><img src="images/Other/dicesmall.gif"> DnD</p>
+        <p><img src="images/Other/batsmall.gif"> <a href="https://myuu.bandcamp.com/">Myuu</a></p>
+        <p><img src="images/Other/ben10small.png"> Ben 10</p>
+        <p><img src="images/Other/dresssmall.gif"> Fashion</p>
+        <p><img src="images/Other/scpsmall.png"> SCP Foundation</p>
+        <p><img src="images/Other/websmall.gif"> The Backrooms</p>
+        <p><img src="images/Other/orangeflowersmall.gif"> Scooby Doo</p>
+        <p><img src="images/Other/eyesmall.gif"> Magnus Archives </p>
+        <p><img src="images/Other/aliensmall.gif"> X-Files</p>
+        <p><img src="images/Other/yellowbirdsmall.gif"> Cryptozoology</p>
+        <p><img src="images/Other/aliensmall.gif"> Urban Legends</p>
+        <p><img src="images/Other/shipsmall.gif"> Pirates</p>
+      </div>
+      
+      <div class="textbox boothbox1">
+      <img src="images/Other/Ads/Boothworldadsmall.gif">
+      </div>
+      
+      <div class="textbox content2">
+      <h1><center><span style="color: red">NINTENDO</span>, I LOVE YOU!</center></h1>
+        <p>The only thing I love as much as horror is my <span style="color:dodgerblue">girlfriend</span>. Though she's a bit scary, so maybe they count as the same thing.</p>
+        <p>Anyways, the only OTHER thing I love as much as horror is.... <span style="color:red">NINTENDO!</span> And video games as a whole, I suppose. But largely its <span style="color:red">Nintendo</span> I adore the most.</p>
+        <p>I wanted to make a little list of my all time favorite video games. Not all of them are from <span style="color:red">Nintendo</span>, but I've <i>played</i> almost all of them on <span style="color:red">Nintendo</span> consoles.</p>
+        <p>This list is in alphabetical order. Not ranked in any sort of favoritism. Just my favorite games all in an easy to see list!</p>
+        <p><center><i>This list is ongoing! I'm always adding new games, and remembering old favorites!</i></center></p>
+        
+        <h2><span style="color: #e06e89"><u>My Favorite Video Games</u></span></h2>
+        <ol>
+          <li>999: 9 Persons, 9 Hours, 9 Doors</li>
+          <li>Advance Wars</li>
+          <li>Alan Wake</li>
+          <li>Among Us</li>
+          <li>Assassin's Creed IV: Black Flag</li>
+          <li>Astral Chain</li>
+          <li>Balloon Fighter</li>
+          <li>Bejeweled</li>
+          <li>Ben 10: Omniverse 2</li>
+          <li>Ben 10: Vilgax Attacls</li>
+          <li>Bloodstained: Ritual of The Night</li>
+          <li>Carrion</li>
+          <li>Castlevania: Bloodlines</li>
+          <li>Castlevania: Harmony of Dissonance</li>
+          <li>Castlevania: Portrait of Ruin</li>
+          <li>Cate West: The Vanishing Files</li>
+          <li>Chrono Trigger</li>
+          <li>Clock Tower</li>
+          <li>Clubhouse Games: 51 Worldwide Classics</li>
+          <li>Codename S.T.E.A.M.</li>
+          <li>Columns III</li>
+          <li>Command & Conquer: Red Alert II</li>
+          <li>Corpse Factory</li>
+          <li>Cruis'n Blast</li>
+          <li>Dragon Quest 11</li>
+          <li>Dragon Quest Builders 2</li>
+          <li>Duke Nukem 3D</li>
+          <li>Elder Scrolls V: Skyrim</li>
+          <li>Emio - The Smiling Man: Famicom Detective Club</li>
+          <li>Final Fantasy I</li>
+          <li>Final Fantasy IX</li>
+          <li>Final Fantasy VI</li>
+          <li>Final Fantasy X</li>
+          <li>Fire Emblem: Fates (Birthright)</li>
+          <li>Home Safety Hotline</li>
+          <li>Homicipher</li>
+          <li>Hyrule Warriors Definitive Edition</li>
+          <li>I Have No Mouth, And I Must Scream</li>
+          <li>iSpy Universe</li>
+          <li>iSpy: Spooky Mansion Deluxe</li>
+          <li>iSpy: Treasure Hunt</li>
+          <li>JoJo's All Star Battle R</li>
+          <li>Kid Dracula</li>
+          <li>KinitoPET</li>
+          <li>Left 4 Dead 2</li>
+          <li>Legend of Zelda: Link's Awakening (Remake)</li>
+          <li>Legend of Zelda: Majora's Mask (3DS)</li>
+          <li>Legend of Zelda: Tears of The Kingdom</li>
+          <li>Lego Harry Potter Years 5-8</li>
+          <li>Lego Indiana Jones: The Adventure Continues</li>
+          <li>Lego Lord of The Rings</li>
+          <li>Lego Star Wars: The Complete Saga</li>
+          <li>Little Goody Two Shoes</li>
+          <li>Little Nightmares</li>
+          <li>Little Nightmares 2</li>
+          <li>Live A Live (Remake)</li>
+          <li>Luigi's Mansion: Dark Moon</li>
+          <li>Luigi's Mansion 3</li>
+          <li>Machine Knight</li>
+          <li>Mappy</li>
+          <li>Mario Vs. Donkey Kong</li>
+          <li>Marvel Ultimate Alliance 3</li>
+          <li>Meteos</li>
+          <li>Metroid Dread</li>
+          <li>Minecraft</li>
+          <li>Necromerger</li>
+          <li>NEO The World Ends With You</li>
+          <li>Neon White</li>
+          <li>New Super Mario Bros Wii</li>
+          <li>New Super Mario Bros U Deluxe</li>
+          <li>Ninja Gaiden Sigma</li>
+          <li>Ninja Gaiden Sigma 2</li>
+          <li>No More Heroes</li>
+          <li>No More Heroes 2: Desperate Struggle</li>
+          <li>No More Heroes III</li>
+          <li>Papers, Please</li>
+          <li>Paranormosight: The Seven Mysteries of Honjo</li>
+          <li>People Playground</li>
+          <li>Persona 5: Royal</li>
+          <li>Pikmin 3</li>
+          <li>Pikmin 4</li>
+          <li>Pirate 101</li>
+          <li>Pokemon White 2</li>
+          <li>Pokemon HeartGold</li>
+          <li>Pokemon Legends: Arceus</li>
+          <li>Pokemon Shield</li>
+          <li>Portal</li>
+          <li>Portal 2</li>
+          <li>Prince of Persia: The Lost Crown</li>
+          <li>Prototype</li>
+          <li>Resident Evil</li>
+          <li>Resident Evil 4</li>
+          <li>Resident Evil 5</li>
+          <li>Roblox</li>
+          <li>SCP Containment Breach</li>
+          <li>Scribblenauts Unlimited</li>
+          <li>Sea of Thieves</li>
+          <li>Shin Megami Tensei V: Vengeance</li>
+          <li>Shining Force</li>
+          <li>Shining Force 2</li>
+          <li>Shining Force: The Sword of Hadja</li>
+          <li>Sid Meier's Pirates!</li>
+          <li>Skylanders Giants</li>
+          <li>Star Wars: The Force Unleashed</li>
+          <li>Steamworld Dig</li>
+          <li>Stories Untold</li>
+          <li>Style Savvy: Trendsetters</li>
+          <li>Super Mario Bros Wonder</li>
+          <li>Super Mario Galaxy</li>
+          <li>Super Smash Bros Brawl</li>
+          <li>Super Smash Bros Ultimate</li>
+          <li>Superhot</li>
+          <li>The House in Fata Morgana</li>
+          <li>Theatrhythm Final Bar Line</li>
+          <li>Tomodachi Life</li>
+          <li>Triangle Strategy</li>
+          <li>Tsugunohi</li>
+          <li>Ultimate Custom Night</li>
+          <li>Unicorn Overlord</li>
+          <li>Vampire Survivors</li>
+          <li>Virture's Last Reward</li>
+          <li>Voice of Cards: The Forsaken Maiden</li>
+          <li>Voice of Cards: The Isle Dragon Roars</li>
+          <li>Wild Guns</li>
+          <li>World of Horror</li>
+          <li>Yo-Kai Watch 2: Bony Spirits</li>
+        </ol>
+      </div>
+      
+      <div class="textbox labelcard3">  <img src="images/Icons/videogameslabel.png"></div>
+      <div class="textbox stampbox1"> 
+        <img src="images/Other/gameboy.gif">  
+        <img src="images/Other/wii.gif">
+        <img src="images/Other/wiiu.gif">
+        <img src="images/Other/ds.gif">
+        <img src="images/Other/atari.gif">
+        <img src="images/Other/controllers.png">
+        <img src="images/Other/dslove.png">
+        <img src="images/Other/wiilove.png">
+      </div>
+      
+    </div> 
+  </body>
+  
 </html>
-<style>.titlecard{width:2050px;height:350px;justify-content:center;align-items:center;background-image:url(images/backgrounds/woodgrainbackground.jpg);text-align:center;border-bottom:10px solid;border-color:white;border-radius:10px;flex-grow:1}.ignoreme1{width:350px;height:300px;background-color:transparent;padding:1em;text-align:center}.textbox1{overflow-y:auto;grid-row:9/ 32;grid-column:12/32}.textbox3{overflow-y:scroll;grid-column:43/51;grid-row:16/30}.textbox4{border:0 transparent;text-align:left;background-color:transparent;grid-row:5/5;grid-column:15/50}.linkbox a{color:#ba00ff}.linkbox{text-align:center;background-image:url(images/backgrounds/woodgrainbackground.jpg);line-height:.6;grid-row:1/5;grid-column:18/42}.labelcard1{border-color:#ba00ff;grid-column:12/21;grid-row:8/10}.boothbox1{justify-content:center;background-color:transparent;border-color:transparent;grid-column:35/43;grid-row:16/22}.contentbox2{grid-column:34/50;grid-row:8/15;border-color:#c2c83b;overflow-y:scroll;scrollbar-color:#f47920 #1bbbaf}.labelcard2{grid-column:34/42;grid-row:7/9;background-color:#1bbbaf;border-color:#c2c83b}#ghostring a{color:darkorange}.content2{overflow-y:auto;grid-row:34/52;grid-column:12/32}.labelcard3{border-color:#ba00ff;grid-column:12/24;grid-row:33/35}.stampbox1{grid-column:32/37;grid-row:34/52;text-align:center}</style>
+
+<style>.titlecard{width:2050px;height:350px;justify-content:center;align-items:center;background-image:url(images/backgrounds/woodgrainbackground.jpg);text-align:center;border-bottom:10px solid;border-color:white;border-radius:10px;flex-grow:1;}.ignoreme1{width:350px;height:300px;background-color:transparent;padding:1em;text-align:center;}.textbox1{overflow-y:auto;grid-row:9/ 32;grid-column:12/32}.textbox3{overflow-y:scroll;grid-column:43/51;grid-row:16/30}.textbox4{border:0px transparent;text-align:left;background-color:transparent;grid-row:5/5;grid-column:15/50;}.linkbox a{color:#ba00ff;}.linkbox{text-align:center;background-image:url(images/backgrounds/woodgrainbackground.jpg);line-height:0.6;grid-row:1/5;grid-column:18/42}.labelcard1{border-color:#ba00ff;grid-column:12/21;grid-row:8/10;}.boothbox1{justify-content:center;background-color:transparent;border-color:transparent;grid-column:35/43;grid-row:16/22}.contentbox2{grid-column:34/50;grid-row:8/15;border-color:#c2c83b;overflow-y:scroll;scrollbar-color:#f47920 #1bbbaf;}.labelcard2{grid-column:34/42;grid-row:7/9;background-color:#1bbbaf;border-color:#c2c83b;}#ghostring a{color:darkorange;}.content2{overflow-y:auto;grid-row:34/52;grid-column:12/32}.labelcard3{border-color:#ba00ff;grid-column:12/24;grid-row:33/35;}.stampbox1{grid-column:32/37;grid-row:34/52;text-align:center;}</style>
