@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+<channel>
+  <title>RSS Feed for Zany Hovel: Bholenath Valsan's Personal Website</title>
+  <description>I update the content of this website every weekend.</description>
+  <link>https://bholenath.neocities.org</link>
+ 
+  <lastBuildDate>
+    Thu, 14 Apr 2022 04:52:14 +0000
+  </lastBuildDate>
+  <ttl>20000</ttl>
+
+ <atom:link href="https://bholenath.neocities.org/feed.xml" rel="self" type="application/rss+xml" />
+ 
+ <!-- manifesto -->
+ 
+ <item>
+  <title>Manifesto | Valsan's Zany Hovel</title>
+  <description>
+    This is a non-political manifesto about using the web. I like the concept of the indy web, but I don't subscribe to its assertive and combative stance.
+  </description>
+  <link>https://bholenath.neocities.org/manifesto.html</link>
+  <pubDate>
+    Tue, 10 Jul 2018 09:58 +0100
+  </pubDate>
+  <guid isPermaLink="true">https://bholenath.neocities.org/manifesto.html</guid>
+</item>
+
+<!-- Go to https://timestampgenerator.com/ to generate the timestap -->
+
+<!-- After updating this file, go to https://validator.w3.org/feed/check.cgi and check it has not errors -->
+
+<!-- About -->
+
+<item>
+  <title>About Zany Hovel | Valsan's Zany Hovel</title>
+  <description>
+    Story of Zany Hovel and technical specs. In this page you will find a detailed account of how this website came into being.
+  </description>
+  <link>https://bholenath.neocities.org/about.html</link>
+  <pubDate>
+  Thu, 14 Apr 2022 04:52:14 +0000
+  </pubDate>
+   <guid isPermaLink="true">https://bholenath.neocities.org/about.html</guid>
+</item>
+
+<!-- Picks and Links -->
+
+<item>
+  <title>Bholenath's Picks and Links | Valsan's Zany Hovel</title>
+  <description>
+    On this page, you will find links to odd places on the interwebs that I consider worthy of sharing with others. All links open in a new browser tab.
+  </description>
+  <link>https://bholenath.neocities.org/bholenaths-picks-and-links.html</link>
+  <pubDate>
+Sat, 16 Apr 2022 18:27:30 +0000
+  </pubDate>
+   <guid isPermaLink="true">https://bholenath.neocities.org/bholenaths-picks-and-links.html</guid>
+</item>
+
+<!-- Guestbook -->
+
+<item>
+  <title>Zany Hovel's Guestbook | Valsan's Zany Hovel</title>
+  <description>
+    In the best tradition of personal static websites, here is a guestbook where you can express your feelings and thoughts...
+  </description>
+  <link>https://bholenath.neocities.org/guestbook.html</link>
+  <pubDate>
+Sun, 17 Apr 2022 20:27:32 +0000
+  </pubDate>
+   <guid isPermaLink="true">https://bholenath.neocities.org/guestbook.html</guid>
+</item>
+
+<!-- Social Media -->
+
+<item>
+  <title>Bholenath's Social Media Profiles | Valsan's Zany Hovel</title>
+  <description>
+    On this page I have listed all the social media websites in which I have profiles. Please add me as a friend, I don't bite.
+  </description>
+  <link>https://bholenath.neocities.org/bholenaths-social-profiles.html</link>
+  <pubDate>
+Sun, 17 Apr 2022 20:27:32 +0000
+  </pubDate>
+   <guid isPermaLink="true">https://bholenath.neocities.org/bholenaths-social-profiles.html</guid>
+</item>
+
+<!-- Bholenath's Work -->
+
+<item>
+  <title>Bholenath's Work | Valsan's Zany Hovel</title>
+  <description>
+    My work ethic is this: do what I like, but never be satisfied, in both work conditions and compensation, thus always improve. 
+  </description>
+  <link>https://bholenath.neocities.org/bholenaths-work.html</link>
+  <pubDate>
+Sun, 17 Apr 2022 20:27:32 +0000
+  </pubDate>
+   <guid isPermaLink="true">https://bholenath.neocities.org/bholenaths-work.html</guid>
+</item>
+
+<!-- Bholenath's Art -->
+
+<item>
+  <title>Bholenath's Art | Valsan's Zany Hovel</title>
+  <description>
+    Art is important to me, and I have always been producing something artistic since my late teens. Someday I will be a multimedia artist. 
+  </description>
+  <link>https://bholenath.neocities.org/bholenaths-art.html</link>
+  <pubDate>
+Sun, 17 Apr 2022 20:27:32 +0000
+  </pubDate>
+   <guid isPermaLink="true">https://bholenath.neocities.org/bholenaths-art.html</guid>
+</item>
+
+</channel>
+</rss>
