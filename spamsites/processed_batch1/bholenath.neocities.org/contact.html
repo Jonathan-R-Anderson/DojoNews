@@ -4,7 +4,7 @@
 <head>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <meta content="text/html; charset=utf-8" http-equiv="Content-Type"/>
-<link href="style.css" rel="stylesheet"/>
+<style>@font-face{font-family:'green_fuzregular';src:url('assets/fonts/green_fuz-webfont.woff2') format('woff2'),url('assets/fonts/green_fuz-webfont.woff') format('woff');font-weight:normal;font-style:normal;} @font-face{font-family:'helmetregular';src:url('assets/fonts/helmet-regular-webfont.woff2') format('woff2'),url('assets/fonts/helmet-regular-webfont.woff') format('woff');font-weight:normal;font-style:normal;} body{background-image:url('images/valsan-bg.gif');background-repeat:tile;} h1{font-family:"green_fuzregular",Times,serif;text-indent:1in;color:#8ed031;font-size:32px;font-style:bold;letter-spacing:.2rem;} h2{font-family:"green_fuzregular",Times,serif;text-indent:1in;color:#8ed031!important;font-size:26px;font-style:italic;letter-spacing:.2rem;} h3{font-family:"green_fuzregular",Times,serif;text-indent:1in;color:#8ed031;font-size:24px;font-style:bold;letter-spacing:.2rem;} h4{font-family:"green_fuzregular",Times,serif;text-indent:1in;color:#8ed031;font-size:22px;font-style:italic;letter-spacing:.2rem;} h5{font-family:"green_fuzregular",Times,serif;text-indent:1in;color:#8ed031;font-size:20px;font-style:bold;letter-spacing:.2rem;} h6{font-family:"green_fuzregular",Times,serif;text-indent:1in;color:#8ed031;font-size:18px;font-style:italic;letter-spacing:.2rem;} p{font-family:helmetregular,sans-serif!important;color:#6fd0f4!important;font-size:16px;line-height:120%;margin-left:2px;} a:link{color:#fe6050;text-decoration:none;} a:visited{color:#318fac;text-decoration:none;} a:hover{color:#fd7136;text-decoration:underline;} a:active{color:#5fef60;text-decoration:underline;} a:focus{color:#5fef60;text-decoration:underline;} .margins{margin-left:3em;margin-right:3em;margin-top:3px;margin-bottom:3px} .footer{} .center{display:block;margin-left:auto;margin-right:auto;width:100%;} li::marker{color:#318fac ;content:"o ";} li{font-family:helmetregular,sans-serif;color:#6fd0f4;font-size:16px;line-height:120%;margin-left:2px;} list-style:square;list-style:url('img/shape.html');list-style:inside;list-style:georgian inside;list-style:lower-roman url('img/shape.html') outside;list-style:none;list-style:inherit;list-style:initial;list-style:revert;list-style:revert-layer;list-style:unset;p.rss-title{display:none;} li.rss-item{list-style-type:none;margin-bottom:20px;} li.rss-item a{font-weight:normal;font-family:"green_fuzregular";color:#8ed031;letter-spacing:.2rem;font-size:24px;text-decoration:none;} .rss-date{display:inline-block;padding-top:10px;font-family:helmetregular,sans-serif;color:#6fd0f4;font-size:16px;line-height:120%;margin-left:2px;padding-bottom:10px;font-style:italic;} a.rss-item:last-child{display:none;} *{font-family:helmetregular,sans-serif;} } .pcejs{padding-right:0;margin-left:auto;margin-right:auto;display:block;text-align:center;} div.pcejs-border{border:none;} .pcejs-canvas{border:0px none;} .pcejs-container{margin-top:32px;text-align:center;} .pcejs-container canvas{cursor:none;}</style>
 <link href="comments-skin.css" rel="stylesheet"/>
 <!-- Start Opengraph -->
 <meta content="Zany Hovel's Contact | Valsan's Zany Hovel" property="og:title"/>
@@ -59,32 +59,14 @@
 <meta content="/ms-icon-144x144.png" name="msapplication-TileImage"/>
 <meta content="#ffffff" name="theme-color"/>
 <!-- end generated icons--><!-- Start Scroll To Top -->
-<script>function dd_scrolltotop(duration){duration=duration||500
-var rootel=(document.compatMode=="BackCompat")?document.body:document.documentElement
-if(rootel.scrollTop==0)
-rootel=document.body
-var curscrolltop=rootel.scrollTop,scrolltimer,elapsedtime,starttime=new Date().getTime(),animatedegree=0
-var totaldis=curscrolltop
-clearTimeout(scrolltimer)
-function jumptop(){elapsedtime=new Date().getTime()-starttime
-if(elapsedtime<duration){rootel.scrollTop=totaldis-(totaldis*(1-Math.cos((elapsedtime/duration)*Math.PI))/2)
-scrolltimer=setTimeout(function(){jumptop()},10)}}
-jumptop()}</script><!-- End Scroll To Top --><!-- Start Mouse Pointer -->
+<script>function dd_scrolltotop(duration){duration=duration||500 var rootel=(document.compatMode=="BackCompat")?document.body:document.documentElement if(rootel.scrollTop==0) rootel=document.body var curscrolltop=rootel.scrollTop,scrolltimer,elapsedtime,starttime=new Date().getTime(),animatedegree=0 var totaldis=curscrolltop clearTimeout(scrolltimer) function jumptop(){elapsedtime=new Date().getTime()-starttime if(elapsedtime<duration){rootel.scrollTop=totaldis-(totaldis*(1-Math.cos((elapsedtime/duration)*Math.PI))/2) scrolltimer=setTimeout(function(){jumptop()},10)}} jumptop()}</script><!-- End Scroll To Top --><!-- Start Mouse Pointer -->
 <style>BODY{cursor:url("assets/mouse-pointer.ico"),default}</style><!-- End Mouse Pointer -->
 <title>Zany Hovel's Contact | Valsan's Zany Hovel</title>
 <meta content="Contact Bholenath | Valsan's Zany Hovel" name="title"/>
 <meta content="In the best tradition of personal static websites, here is a contact form, where you can express your feelings and thoughts." name="description"/>
 <meta content="contact,bholenath,valsan,personal,website" name="keywords"/>
-<script language="JavaScript">function MM_swapImgRestore(){var i,x,a=document.MM_sr;for(i=0;a&&i<a.length&&(x=a[i])&&x.oSrc;i++)x.src=x.oSrc;}
-function MM_preloadImages(){var d=document;if(d.images){if(!d.MM_p)d.MM_p=new Array();var i,j=d.MM_p.length,a=MM_preloadImages.arguments;for(i=0;i<a.length;i++)
-if(a[i].indexOf("#")!=0){d.MM_p[j]=new Image;d.MM_p[j++].src=a[i];}}}
-function MM_findObj(n,d){var p,i,x;if(!d)d=document;if((p=n.indexOf("?"))>0&&parent.frames.length){d=parent.frames[n.substring(p+1)].document;n=n.substring(0,p);}
-if(!(x=d[n])&&d.all)x=d.all[n];for(i=0;!x&&i<d.forms.length;i++)x=d.forms[i][n];for(i=0;!x&&d.layers&&i<d.layers.length;i++)x=MM_findObj(n,d.layers[i].document);if(!x&&document.getElementById)x=document.getElementById(n);return x;}
-function MM_swapImage(){var i,j=0,x,a=MM_swapImage.arguments;document.MM_sr=new Array;for(i=0;i<(a.length-2);i+=3)
-if((x=MM_findObj(a[i]))!=null){document.MM_sr[j++]=x;if(!x.oSrc)x.oSrc=x.src;x.src=a[i+2];}}</script>
-<script language="JavaScript">function MM_reloadPage(init){if(init==true)with(navigator){if((appName=="Netscape")&&(parseInt(appVersion)==4)){document.MM_pgW=innerWidth;document.MM_pgH=innerHeight;onresize=MM_reloadPage;}}
-else if(innerWidth!=document.MM_pgW||innerHeight!=document.MM_pgH)location.reload();}
-MM_reloadPage(true);</script>
+<script language="JavaScript">function MM_swapImgRestore(){var i,x,a=document.MM_sr;for(i=0;a&&i<a.length&&(x=a[i])&&x.oSrc;i++)x.src=x.oSrc;} function MM_preloadImages(){var d=document;if(d.images){if(!d.MM_p)d.MM_p=new Array();var i,j=d.MM_p.length,a=MM_preloadImages.arguments;for(i=0;i<a.length;i++) if(a[i].indexOf("#")!=0){d.MM_p[j]=new Image;d.MM_p[j++].src=a[i];}}} function MM_findObj(n,d){var p,i,x;if(!d)d=document;if((p=n.indexOf("?"))>0&&parent.frames.length){d=parent.frames[n.substring(p+1)].document;n=n.substring(0,p);} if(!(x=d[n])&&d.all)x=d.all[n];for(i=0;!x&&i<d.forms.length;i++)x=d.forms[i][n];for(i=0;!x&&d.layers&&i<d.layers.length;i++)x=MM_findObj(n,d.layers[i].document);if(!x&&document.getElementById)x=document.getElementById(n);return x;} function MM_swapImage(){var i,j=0,x,a=MM_swapImage.arguments;document.MM_sr=new Array;for(i=0;i<(a.length-2);i+=3) if((x=MM_findObj(a[i]))!=null){document.MM_sr[j++]=x;if(!x.oSrc)x.oSrc=x.src;x.src=a[i+2];}}</script>
+<script language="JavaScript">function MM_reloadPage(init){if(init==true)with(navigator){if((appName=="Netscape")&&(parseInt(appVersion)==4)){document.MM_pgW=innerWidth;document.MM_pgH=innerHeight;onresize=MM_reloadPage;}} else if(innerWidth!=document.MM_pgW||innerHeight!=document.MM_pgH)location.reload();} MM_reloadPage(true);</script>
 </head>
 <body alink="#5fef60" bgcolor="#040404" link="#fe6050" text="#6fd0f4" vlink="#441e15">
 <div align="center"><a href="index.html"><img border="0" src="images/logos/core/logo-contact.gif" style="max-width: 100%;height:auto;"/> </a>
