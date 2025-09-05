@@ -8,34 +8,10 @@
          If you include the next line in all your web pages, they will all share the same look.
          This makes it easier to make new pages for your site. -->
     <link href="New.css" rel="stylesheet" type="text/css" media="all">
-   <style>
-  body {background-color:white}
-  h1 {background:None; color:white; background-color:grey}
-  aside {
-    width: 30%;
-    height: 400px;
-    padding-left: 100px;
-    margin-left: 0px;
-    float: right;
-    font-style: italic;
-    background-color: lightgray;
-  }
-  
-  shadow:hover {
-  box-shadow: 0 15px 0px 0 rgba(0,0,0,0), 0 0px 0px 0 rgba(0,0,0,0);
-}
-
-input {width:20%;}
-</style>
+   <style>body{background-color:#fff}h1{background:none;color:#fff;background-color:grey}aside{width:30%;height:400px;padding-left:100px;margin-left:0;float:right;font-style:italic;background-color:lightgray}shadow:hover{box-shadow:0 15px 0 0 rgba(0,0,0,0),0 0 0 0 rgba(0,0,0,0)}input{width:20%}</style>
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-SRJM28CE1H"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-SRJM28CE1H');
-</script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','G-SRJM28CE1H');</script>
   </head>
   <body>
    <img src="HMLogo.png" width=32px height=32px style="float:left; margin-top:5px; margin-left:5px; padding: 2px;"><h1 style="text-shadow: 3px 3px black; box-shadow: 0px 3px 5px black;">PLAYCARE SERVICES</h1>
@@ -75,28 +51,7 @@ input {width:20%;}
   </button>
 </form>
 
-<script>
-  document.getElementById('lookupForm').addEventListener('submit', function (event) {
-    event.preventDefault(); // Stop default form submission
-
-    const firstName = document.getElementById('firstName').value.trim().toLowerCase();
-    const lastName = document.getElementById('lastName').value.trim().toLowerCase();
-    const age = document.getElementById('age').value.trim();
-    const code = document.getElementById('securityCode').value.trim();
-
-    // Replace this with your real match logic and destination
-    if (
-      firstName === "julia" &&
-      lastName === "tanner" &&
-      age === "8" &&
-      code === "3564"
-    ) {
-      window.location.href = "light.html"; // ✅ Replace with your actual target page
-    } else {
-      alert("No match found. Please check your input.");
-    }
-  });
-</script>
+<script>document.getElementById('lookupForm').addEventListener('submit',function(e){e.preventDefault();const t=document.getElementById('firstName').value.trim().toLowerCase(),n=document.getElementById('lastName').value.trim().toLowerCase(),a=document.getElementById('age').value.trim(),c=document.getElementById('securityCode').value.trim();t==='julia'&&n==='tanner'&&a==='8'&&c==='3564'?window.location.href='light.html':alert('No match found. Please check your input.')});</script>
 
 
 
