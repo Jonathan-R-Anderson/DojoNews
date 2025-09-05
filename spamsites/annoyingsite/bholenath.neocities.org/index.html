@@ -27,34 +27,7 @@
   <meta name="twitter:app:id:googleplay" content="">
   <meta name="twitter:app:country" content="">
 <!-- End Twitter Card --><!-- Begin Rich Snippet -->
-  <script type="application/ld+json">
-  {
-  "@context": "https://schema.org",
-  "@type": "Article",
-  "mainEntityOfPage": {
-    "@type": "WebPage",
-    "@id": "https://bholenath.neocities.org/"
-  },
-  "headline": "Valsan's Zany Hovel",
-  "description": "Welcome to my personal website. I'm a digital communicator who specializes in the horror genre. On this website you can learn more about me.",
-  "image": "https://bholenath.neocities.org/images/zany-hovel-logo.gif",  
-  "author": {
-    "@type": "Person",
-    "name": "Bholenath Valsan",
-    "url": "https://bholenath.neocities.org/"
-  },  
-  "publisher": {
-    "@type": "Organization",
-    "name": "Bholenath Valsan",
-    "logo": {
-      "@type": "ImageObject",
-      "url": "https://bholenath.neocities.org/images/zany-hovel-logo.gif"
-    }
-  },
-  "datePublished": "2022-04-10",
-  "dateModified": "2022-04-10"
-  }
-  </script><!-- End Rich Snippet --><!--  start generated icons -->
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","mainEntityOfPage":{"@type":"WebPage","@id":"https://bholenath.neocities.org/"},"headline":"Valsan's Zany Hovel","description":"Welcome to my personal website. I'm a digital communicator who specializes in the horror genre. On this website you can learn more about me.","image":"https://bholenath.neocities.org/images/zany-hovel-logo.gif","author":{"@type":"Person","name":"Bholenath Valsan","url":"https://bholenath.neocities.org/"},"publisher":{"@type":"Organization","name":"Bholenath Valsan","logo":{"@type":"ImageObject","url":"https://bholenath.neocities.org/images/zany-hovel-logo.gif"}},"datePublished":"2022-04-10","dateModified":"2022-04-10"}</script><!-- End Rich Snippet --><!--  start generated icons -->
   <link rel="apple-touch-icon icon"
  href="assets/icons/icon-192x192.png">
   <link sizes="180x180" href="assets/icons/apple-touch-icon.png"
@@ -109,81 +82,16 @@
   <meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
   <meta name="theme-color" content="#ffffff">
 <!-- end generated icons--><!-- Start Scroll To Top -->
-  <script>
-
-  /***********************************************
-  * Scroll to Top link- By Dynamic Drive (www.dynamicdrive.com)
-  * Visit http://www.dynamicdrive.com/ for this script and 100s more.
-  ***********************************************/
-
-  function dd_scrolltotop(duration){
-        duration = duration || 500
-        var rootel = (document.compatMode =="BackCompat")? document.body : document.documentElement
-        if (rootel.scrollTop == 0) // in some browsers such as Chrome, use document.body instead of document.documentElement
-                rootel = document.body
-        var curscrolltop = rootel.scrollTop, scrolltimer, elapsedtime, starttime = new Date().getTime(), animatedegree = 0
-        var totaldis = curscrolltop
-        clearTimeout(scrolltimer)
-        function jumptop(){
-                elapsedtime = new Date().getTime() - starttime
-                if (elapsedtime < duration){
-                        rootel.scrollTop = totaldis - (totaldis * (1-Math.cos((elapsedtime/duration)*Math.PI)) / 2)
-                        scrolltimer = setTimeout(function(){jumptop()}, 10)
-                }
-        }
-        jumptop()
-  }
-
-  </script><!-- End Scroll To Top --><!-- Start Mouse Pointer -->
-  <style>
-
-  BODY{
-  cursor:url("assets/mouse-pointer.ico"), default;
-  }
-
-  </style><!-- End Mouse Pointer -->
+  <script>function dd_scrolltotop(o){o=o||500;var t="BackCompat"==document.compatMode?document.body:document.documentElement;0==t.scrollTop&&(t=document.body);var e,c,n=t.scrollTop,m=(new Date).getTime(),a=n;clearTimeout(e),function n(){(c=(new Date).getTime()-m)<o&&(t.scrollTop=a-a*(1-Math.cos(c/o*Math.PI))/2,e=setTimeout(function(){n()},10))}()}</script><!-- End Scroll To Top --><!-- Start Mouse Pointer -->
+  <style>body{cursor:url("assets/mouse-pointer.ico"),default}</style><!-- End Mouse Pointer -->
   <title>Homepage | Valsan's Zany Hovel</title>
   <meta name="title" content="Welcome to the Zany Hovel | Valsans Zany Hovel">
   <meta name="description"
  content="Welcome to Bholenath Valsan's site. Here you'll find info about my work, leisure, art, social profiles, favorite sites and other personal info.">
   <meta name="keywords" content="bholenath,valsan,personal,website">
   <link href="feed.html" rel="alternate" type="application/rss+xml" title="What's new on Valsan's Zany Hovel" />
-  <script language="JavaScript">
-
-  function MM_swapImgRestore() { 
-  var i,x,a=document.MM_sr; for(i=0;a&&i<a.length&&(x=a[i])&&x.oSrc;i++) x.src=x.oSrc;
-  }
-
-  function MM_preloadImages() { 
-  var d=document; if(d.images){ if(!d.MM_p) d.MM_p=new Array();
-    var i,j=d.MM_p.length,a=MM_preloadImages.arguments; for(i=0; i<a.length; i++)
-    if (a[i].indexOf("#")!=0){ d.MM_p[j]=new Image; d.MM_p[j++].src=a[i];}}
-  }
-
-  function MM_findObj(n, d) { //v4.0
-  var p,i,x;  if(!d) d=document; if((p=n.indexOf("?"))>0&&parent.frames.length) {
-    d=parent.frames[n.substring(p+1)].document; n=n.substring(0,p);}
-  if(!(x=d[n])&&d.all) x=d.all[n]; for (i=0;!x&&i<d.forms.length;i++) x=d.forms[i][n];
-  for(i=0;!x&&d.layers&&i<d.layers.length;i++) x=MM_findObj(n,d.layers[i].document);
-  if(!x && document.getElementById) x=document.getElementById(n); return x;
-  }
-
-  function MM_swapImage() { 
-  var i,j=0,x,a=MM_swapImage.arguments; document.MM_sr=new Array; for(i=0;i<(a.length-2);i+=3)
-   if ((x=MM_findObj(a[i]))!=null){document.MM_sr[j++]=x; if(!x.oSrc) x.oSrc=x.src; x.src=a[i+2];}
-  }
-
-  </script>
-  <script language="JavaScript">
-
-  function MM_reloadPage(init) {  //reloads the window if Nav4 resized
-  if (init==true) with (navigator) {if ((appName=="Netscape")&&(parseInt(appVersion)==4)) {
-    document.MM_pgW=innerWidth; document.MM_pgH=innerHeight; onresize=MM_reloadPage; }}
-  else if (innerWidth!=document.MM_pgW || innerHeight!=document.MM_pgH) location.reload();
-  }
-  MM_reloadPage(true);
-
-  </script>
+  <script language="JavaScript">function MM_swapImgRestore(){var e,r,n=document.MM_sr;for(e=0;n&&e<n.length&&(r=n[e])&&r.oSrc;e++)r.src=r.oSrc}function MM_preloadImages(){var e=document;if(e.images){e.MM_p||(e.MM_p=new Array);var r,n=e.MM_p.length,t=MM_preloadImages.arguments;for(r=0;r<t.length;r++)0!=t[r].indexOf("#")&&(e.MM_p[n]=new Image,e.MM_p[n++].src=t[r])}}function MM_findObj(e,r){var n,t,M;for(r||(r=document),(n=e.indexOf("?"))>0&&parent.frames.length&&(r=parent.frames[e.substring(n+1)].document,e=e.substring(0,n)),!(M=r[e])&&r.all&&(M=r.all[e]),t=0;!M&&t<r.forms.length;t++)M=r.forms[t][e];for(t=0;!M&&r.layers&&t<r.layers.length;t++)M=MM_findObj(e,r.layers[t].document);return!M&&document.getElementById&&(M=document.getElementById(e)),M}function MM_swapImage(){var e,r,n=0,t=MM_swapImage.arguments;for(document.MM_sr=new Array,e=0;e<t.length-2;e+=3)null!=(r=MM_findObj(t[e]))&&(document.MM_sr[n++]=r,r.oSrc||(r.oSrc=r.src),r.src=t[e+2])}</script>
+  <script language="JavaScript">function MM_reloadPage(init){if(1==init)with(navigator)"Netscape"==appName&&4==parseInt(appVersion)&&(document.MM_pgW=innerWidth,document.MM_pgH=innerHeight,onresize=MM_reloadPage);else innerWidth==document.MM_pgW&&innerHeight==document.MM_pgH||location.reload()}MM_reloadPage(!0);</script>
 <link rel="canonical" href="index.html" />
 </head>
 <body
@@ -359,119 +267,7 @@ Baby Sticker</a>) / Mel Possehl (<a rel="nofollow"
     </tr>
   </tbody>
 </table>
-<script language="JavaScript1.2">
-
-
-  <!--
-  /*
-  Flying Bats- By Dynamic Drive, based on script by Kurt (kurt.grigg@virgin.net)
-  For full source, usage terms, and 100's more DHTML scripts
-  Visit http://www.dynamicdrive.com
-  */ -->
-
-  Cupid=new Image();
-  Cupid.src="images/bat.gif";  //specify path to bat image
-  amount=8;  //Number of cupids, minimum must be 3.
-  Xpos=600;  //cupids x coordinates, in pixel
-  Ypos=400;  //cupids y coordinates, in pixel
-  step=0.3; //Animation speed (smaller is slower)
-  dismissafter=9;  //seconds after which Cupids should disappear, in seconds
-
-  var ns6=document.getElementById&&!document.all
-  bats=new Array(3)
-  if (document.layers){
-  for (i=0; i < amount; i++) 
-  {document.write("<LAYER NAME=n"+i+" LEFT=0 TOP=-50><a href='http://www.dynamicdrive.com'><IMG SRC='"+Cupid.src+"' NAME='nsi' width=69 height=60 border=0><\/a><\/LAYER>")}
-  }
-  else if (document.all||ns6){
-  document.write('<div id="out" style="position:absolute;top:0;left:0;z-index:1000"><div id="in" style="position:relative">');
-  for (i=0; i < amount; i++){
-  if (document.all)
-  document.write('<a href="http://www.dynamicdrive.com/"><img src="'+Cupid.src+'" id="msieBats" style="position:absolute;top:-50;left:0" border=0><\/a>')
-  else
-  document.write('<a href="http://www.dynamicdrive.com/"><img src="'+Cupid.src+'" id="ns6Bats'+i+'" width=69 height=60 style="position:absolute;top:-50;left:0" border=0><\/a>')
-  }
-  document.write('<\/div><\/div>');
-  }
-
-  yBase=xBase=currStep=a_count=0;
-  b_count=1;
-  c_count=2;
-  d_count=3;
-  move=1;
-  if (document.layers||ns6){
-  yBase=window.innerHeight/3;
-  xBase=window.innerWidth/6;
-  if (document.layers)
-  window.captureEvents(Event.MOUSEMOVE);
-
-  }
-  if (document.all){
-  yBase = window.document.body.offsetHeight/3;
-  xBase = window.document.body.offsetWidth/6;
-  }
-
-  function dismisscupid(){
-  clearInterval(flycupid)
-  if (document.layers){
-  for (i2=0; i2 < amount; i2++){
-  document.layers['n'+i2].visibility="hide"
-  }
-  }
-  else if (document.all)
-  document.all.out.style.visibility="hidden"
-  else if (ns6)
-  document.getElementById("out").style.visibility="hidden"
-  }
-
-  if (document.layers){
-  for (i=0; i < amount; i++)
-  document.layers['n'+i].document.images['nsi'].src=Cupid.src
-  }
-  else if (document.all){
-  for (i=0; i < amount; i++)
-  document.all.msieBats[i].src=Cupid.src
-  }
-  else if (ns6){
-  for (i=0; i < amount; i++)
-  document.getElementById("ns6Bats"+i).src=Cupid.src
-  }
-
-  function Animate(){
-  a_count+=move;
-  b_count+=move;
-  c_count+=move;
-  currStep+=step;
-  if (a_count >= bats.length) a_count=0;
-  if (b_count >= bats.length) b_count=0;
-  if (c_count >= bats.length) c_count=0;
-  if (document.layers){
-  for (i=0; i < amount; i++) {
-  var NewL="n"+i
-  document.layers[NewL].top = Ypos+yBase*Math.sin(((currStep)+i*3.7)/4)*Math.cos((currStep+i*35)/10)
-  document.layers[NewL].left =Xpos+xBase*Math.cos(((currStep)+i*3.7)/4)*Math.cos((currStep+i*35)/62)
-  }
-  }
-
-  if (document.all){
-  for (i=0; i < amount; i++){
-  document.all.msieBats[i].style.pixelTop = Ypos+yBase*Math.sin(((currStep)+i*3.7)/4)*Math.cos((currStep+i*35)/10)
-  document.all.msieBats[i].style.pixelLeft =Xpos+xBase*Math.cos(((currStep)+i*3.7)/4)*Math.cos((currStep+i*35)/62)
-  }
-  }
-
-  if (ns6){
-  for (i=0; i < amount; i++){
-  document.getElementById("ns6Bats"+i).style.top = Ypos+yBase*Math.sin(((currStep)+i*3.7)/4)*Math.cos((currStep+i*35)/10)
-  document.getElementById("ns6Bats"+i).style.left =Xpos+xBase*Math.cos(((currStep)+i*3.7)/4)*Math.cos((currStep+i*35)/62)
-  }
-  }
-
-  }
-  flycupid=setInterval('Animate()',30);
-  setTimeout("dismisscupid()",dismissafter*1000)
-  //-->
-  </script>
+<script language="JavaScript1.2">Cupid=new Image,Cupid.src="images/bat.gif",amount=8,Xpos=600,Ypos=400,step=.3,dismissafter=9;var ns6=document.getElementById&&!document.all;if(bats=new Array(3),document.layers)for(i=0;i<amount;i++)document.write("<LAYER NAME=n"+i+" LEFT=0 TOP=-50><a href='http://www.dynamicdrive.com'><IMG SRC='"+Cupid.src+"' NAME='nsi' width=69 height=60 border=0></a></LAYER>");else if(document.all||ns6){for(document.write('<div id="out" style="position:absolute;top:0;left:0;z-index:1000"><div id="in" style="position:relative">'),i=0;i<amount;i++)document.all?document.write('<a href="http://www.dynamicdrive.com/"><img src="'+Cupid.src+'" id="msieBats" style="position:absolute;top:-50;left:0" border=0></a>'):document.write('<a href="http://www.dynamicdrive.com/"><img src="'+Cupid.src+'" id="ns6Bats'+i+'" width=69 height=60 style="position:absolute;top:-50;left:0" border=0></a>');document.write("</div></div>")}function dismisscupid(){if(clearInterval(flycupid),document.layers)for(i2=0;i2<amount;i2++)document.layers["n"+i2].visibility="hide";else document.all?document.all.out.style.visibility="hidden":ns6&&(document.getElementById("out").style.visibility="hidden")}if(yBase=xBase=currStep=a_count=0,b_count=1,c_count=2,d_count=3,move=1,(document.layers||ns6)&&(yBase=window.innerHeight/3,xBase=window.innerWidth/6,document.layers&&window.captureEvents(Event.MOUSEMOVE)),document.all&&(yBase=window.document.body.offsetHeight/3,xBase=window.document.body.offsetWidth/6),document.layers)for(i=0;i<amount;i++)document.layers["n"+i].document.images.nsi.src=Cupid.src;else if(document.all)for(i=0;i<amount;i++)document.all.msieBats[i].src=Cupid.src;else if(ns6)for(i=0;i<amount;i++)document.getElementById("ns6Bats"+i).src=Cupid.src;function Animate(){if(a_count+=move,b_count+=move,c_count+=move,currStep+=step,a_count>=bats.length&&(a_count=0),b_count>=bats.length&&(b_count=0),c_count>=bats.length&&(c_count=0),document.layers)for(i=0;i<amount;i++){var t="n"+i;document.layers[t].top=Ypos+yBase*Math.sin((currStep+3.7*i)/4)*Math.cos((currStep+35*i)/10),document.layers[t].left=Xpos+xBase*Math.cos((currStep+3.7*i)/4)*Math.cos((currStep+35*i)/62)}if(document.all)for(i=0;i<amount;i++)document.all.msieBats[i].style.pixelTop=Ypos+yBase*Math.sin((currStep+3.7*i)/4)*Math.cos((currStep+35*i)/10),document.all.msieBats[i].style.pixelLeft=Xpos+xBase*Math.cos((currStep+3.7*i)/4)*Math.cos((currStep+35*i)/62);if(ns6)for(i=0;i<amount;i++)document.getElementById("ns6Bats"+i).style.top=Ypos+yBase*Math.sin((currStep+3.7*i)/4)*Math.cos((currStep+35*i)/10),document.getElementById("ns6Bats"+i).style.left=Xpos+xBase*Math.cos((currStep+3.7*i)/4)*Math.cos((currStep+35*i)/62)}flycupid=setInterval("Animate()",30),setTimeout("dismisscupid()",1e3*dismissafter);</script>
 <!-- Begin autoplay bats audio -->
   <iframe src="audio/batsInwild.html" type="audio/mp3" allow="autoplay" id="audio" style="display: none;"></iframe> 
   <audio autoplay=""><source src="https://shock-depot.com/wp-content/uploads/2022/04/batsInwild.mp3" type="audio/mp3"></source></audio>
@@ -480,11 +276,7 @@ Baby Sticker</a>) / Mel Possehl (<a rel="nofollow"
 <!--end autoplay bats audio -->
  <!-- Default Statcounter code for Zany Hovel
 https://bholenath.neocities.org -->
-<script type="text/javascript">
-var sc_project=12743343; 
-var sc_invisible=1; 
-var sc_security="63455a3b"; 
-</script>
+  <script type="text/javascript">var sc_project=12743343,sc_invisible=1,sc_security="63455a3b";</script>
 <script type="text/javascript"
 src="../www.statcounter.com/counter/counter.js"
 async></script>
