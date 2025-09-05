@@ -1,0 +1,52 @@
+body {cursor:url(../../ast/cursor.gif),auto; margin:0px; background-color:black; font-family:arial; color:red; line-height:80%;
+     scrollbar-width: auto; scrollbar-color: red #1a000a;}
+a    {cursor:url(../../ast/cursorin.gif),auto; }
+p  {font-size:15px;}
+h2 {font-size: 20px;}
+div.top {border-width:4px; border-style: groove; border-bottom-color:blue; border-top-color:red; border-right-color:yellow; border-left-color:greenyellow; background-color: black;margin-top: 10px; margin-left:200px;margin-right:200px ;}
+
+div.click {border-width:4px; border-style: groove; border-bottom-color:blue; border-top-color:red; border-right-color:yellow; border-left-color:greenyellow; background-color: black;margin-bottom:10px; margin-left:450px;margin-right:450px ;overflow: hidden;}
+
+#click{ position: fixed; bottom:10px; border-width:4px; border-style: groove; border-bottom-color:blue; border-top-color:red; border-right-color:yellow; border-left-color:greenyellow;
+background-color: black; left:300px; right:300px;}
+
+#thanksalot {position:fixed; bottom:10px; right:10px;}
+
+@font-face { font-family: "Smilety"; 
+src: url('../../ast/fl/Smilety-Regular.woff2') format('woff2'),
+     url('../../ast/fl/Smilety-Regular.woff') format('woff'),
+     url('../../ast/fl/Smilety-Regular.ttf') format("truetype"),
+     url('../../ast/fl/Smilety-Regular.svg'),
+     url('../../ast/fl/Smilety-Regular.eot') format('embedded-opentype');}
+
+ @font-face { font-family: "Clipblock"; 
+src: url('../../ast/fl/Clipblock-Regular.woff2') format('woff2'),
+     url('../../ast/fl/Clipblock-Regular.woff') format('woff'),
+     url('../../ast/fl/Clipblock-Regular.ttf') format('truetype'),
+     url('../../ast/fl/Clipblock-Regular.svg'),
+     url('../../ast/fl/Clipblock-Regular.eot') format('embedded-opentype');}
+     
+/* width */
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: darkred; 
+  border-radius:2px;}
+  
+  /* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: red; 
+}
+/* Track */
+::-webkit-scrollbar-track {background-color: #1a000a; border: 1px #dcd384;border-radius:2px;
+}
+ 
+iframe::-webkit-scrollbar-track {background-color: #1a000a; border: 1px #dcd384;border-radius:2px;
+}
+
+scrollbar-color: darkred #1a000a;
+scrollbar-width: thin;
