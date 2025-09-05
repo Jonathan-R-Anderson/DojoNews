@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>⚠️ SYSTEM FAILURE IMMINENT</title>
+    <style>body{background:#000;color:#f00;font-family:'Courier New',monospace;text-align:center;margin-top:10%;overflow:hidden;font-size:1.5rem}.made-by{color:#f00;font-size:12px;margin-bottom:30px;text-shadow:0 0 5px #ff0000}#startBtn{background:black;color:#f00;border:1px solid #f00;padding:10px 25px;cursor:pointer;font-size:18px;transition:.3s}#startBtn:hover{background:#f00;color:black}#scanScreen,#mainContent,#winMessage{display:none}.scan-line{height:1px;background:#f00;position:absolute;width:100%;animation:scan 4s linear infinite}@keyframes scan{0%{top:0;opacity:0}10%{opacity:1}90%{opacity:1}100%{top:100%;opacity:0}}.death-message,.win-message{color:#f00;font-size:24px;text-shadow:0 0 10px #ff0000;animation:blink .5s infinite;margin-top:20px}@keyframes blink{0%{opacity:1}50%{opacity:0}100%{opacity:1}}input{background:black;color:#f00;border:1px solid #f00;padding:10px;font-size:18px;margin:10px}button{background:black;color:#f00;border:1px solid #f00;padding:10px 25px;cursor:pointer;font-size:18px;transition:.3s}button:hover{background:#f00;color:black}#countdown{font-size:3rem;margin:20px 0;text-shadow:0 0 10px #ff0000}</style>
+</head>
+<body>
+        <div id="startScreen">
+        <p class="made-by">transmission intercepted from @piksiew</p>
+        <button id="startBtn" onclick="startScan()">[ START ]</button>
+    </div>
+
+        <div id="scanScreen">
+        <div class="scan-line"></div>
+        <h1>SYSTEM SCAN INITIATED</h1>
+        <p id="scanStatus">Checking for threats...</p>
+        <div id="scanProgress"></div>
+    </div>
+
+        <div id="mainContent">
+        <h1>FINAL COUNTDOWN:</h1>
+        <h2 id="countdown">05:00</h2>
+        <p>ENTER PASSWORD TO ABORT:</p>
+        <input type="password" id="pass" placeholder="●●●●">
+        <button onclick="checkPass()">[SUBMIT]</button>
+        <div id="deathMessage" class="death-message" style="display: none;">YOU WILL DIE SOON.</div>
+    </div>
+    
+        <div id="winMessage" class="win-message" style="display: none;">
+        I'll take your soul next time.<br>
+        Congratulations on your victory.
+    </div>
+
+        <audio id="whiteNoise" loop>
+        <source src="https://www.soundjay.com/mechanical/sounds/white-noise-01.mp3" type="audio/mpeg">
+    </audio>
+
+    <script>let timeLeft=300,timerId;const whiteNoise=document.getElementById('whiteNoise');function startScan(){document.getElementById('startScreen').style.display='none';document.getElementById('scanScreen').style.display='block';whiteNoise.volume=.3;whiteNoise.play().catch(e=>{document.getElementById('startBtn').textContent='[ CLICK TO ENABLE SOUND ]';document.getElementById('startBtn').onclick=function(){whiteNoise.play();startScan()}});simulateScan()}function simulateScan(){const statuses=['Analyzing memory sectors...','Checking neural interfaces...','Detecting malware... 3 THREATS FOUND','Isolating dangerous processes...','WARNING: SOULKILLER.EXE DETECTED','Finalizing scan... SYSTEM COMPROMISED'];let i=0;const scanInterval=setInterval(()=>{document.getElementById('scanStatus').textContent=statuses[i];if(++i===statuses.length){clearInterval(scanInterval);document.getElementById('scanScreen').style.display='none';document.getElementById('mainContent').style.display='block';startCountdown()}},2000)}function startCountdown(){timerId=setInterval(()=>{timeLeft--;const minutes=Math.floor(timeLeft/60).toString().padStart(2,'0'),seconds=(timeLeft%60).toString().padStart(2,'0');document.getElementById('countdown').textContent=`${minutes}:${seconds}`;if(timeLeft<=0){clearInterval(timerId);document.getElementById('deathMessage').style.display='block';document.getElementById('mainContent').style.display='none'}},1000)}function checkPass(){const pass=document.getElementById('pass').value;pass==='WORM'?(clearInterval(timerId),document.getElementById('mainContent').style.display='none',document.getElementById('winMessage').style.display='block'):(document.getElementById('deathMessage').style.display='block',setTimeout(()=>{document.getElementById('deathMessage').style.display='none'},2000))}</script>
+</body>
+</html>
