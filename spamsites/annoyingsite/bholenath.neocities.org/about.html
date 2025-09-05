@@ -24,34 +24,7 @@
   <!-- End Twitter Card -->
   <!-- Begin Rich Snippet -->
 
-  <script type="application/ld+json">
-  {
-  "@context": "https://schema.org",
-  "@type": "Article",
-  "mainEntityOfPage": {
-    "@type": "WebPage",
-    "@id": "https://bholenath.neocities.org/"
-  },
-  "headline": "Valsan's Zany Hovel",
-  "description": "Welcome to my personal website. I'm a digital communicator who specializes in the horror genre. On this website you can learn more about me.",
-  "image": "https://bholenath.neocities.org/images/zany-hovel-logo.gif",  
-  "author": {
-    "@type": "Person",
-    "name": "Bholenath Valsan",
-    "url": "https://bholenath.neocities.org/"
-  },  
-  "publisher": {
-    "@type": "Organization",
-    "name": "Bholenath Valsan",
-    "logo": {
-      "@type": "ImageObject",
-      "url": "https://bholenath.neocities.org/images/zany-hovel-logo.gif"
-    }
-  },
-  "datePublished": "2022-04-10",
-  "dateModified": "2022-04-10"
-  }
-  </script><!-- End Rich Snippet -->
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","mainEntityOfPage":{"@type":"WebPage","@id":"https://bholenath.neocities.org/"},"headline":"Valsan's Zany Hovel","description":"Welcome to my personal website. I'm a digital communicator who specializes in the horror genre. On this website you can learn more about me.","image":"https://bholenath.neocities.org/images/zany-hovel-logo.gif","author":{"@type":"Person","name":"Bholenath Valsan","url":"https://bholenath.neocities.org/"},"publisher":{"@type":"Organization","name":"Bholenath Valsan","logo":{"@type":"ImageObject","url":"https://bholenath.neocities.org/images/zany-hovel-logo.gif"}},"datePublished":"2022-04-10","dateModified":"2022-04-10"}</script><!-- End Rich Snippet -->
   <!--  start generated icons -->
   <link rel="apple-touch-icon icon" href="assets/icons/icon-192x192.png">
   <link sizes="180x180" href="assets/icons/apple-touch-icon.png" rel="icon">
@@ -86,68 +59,16 @@
   <meta name="theme-color" content="#ffffff"><!-- end generated icons-->
   <!-- Start Scroll To Top -->
 
-  <script>
-  /***********************************************
-  * Scroll to Top link- By Dynamic Drive (www.dynamicdrive.com)
-  * Visit http://www.dynamicdrive.com/ for this script and 100s more.
-  ***********************************************/
-  function dd_scrolltotop(duration){
-        duration = duration || 500
-        var rootel = (document.compatMode =="BackCompat")? document.body : document.documentElement
-        if (rootel.scrollTop == 0) // in some browsers such as Chrome, use document.body instead of document.documentElement
-                rootel = document.body
-        var curscrolltop = rootel.scrollTop, scrolltimer, elapsedtime, starttime = new Date().getTime(), animatedegree = 0
-        var totaldis = curscrolltop
-        clearTimeout(scrolltimer)
-        function jumptop(){
-                elapsedtime = new Date().getTime() - starttime
-                if (elapsedtime < duration){
-                        rootel.scrollTop = totaldis - (totaldis * (1-Math.cos((elapsedtime/duration)*Math.PI)) / 2)
-                        scrolltimer = setTimeout(function(){jumptop()}, 10)
-                }
-        }
-        jumptop()
-  }
-  </script><!-- End Scroll To Top -->
+  <script>function dd_scrolltotop(duration){duration=duration||500;var rootel=document.compatMode=="BackCompat"?document.body:document.documentElement;if(rootel.scrollTop==0)rootel=document.body;var curscrolltop=rootel.scrollTop,scrolltimer,elapsedtime,starttime=(new Date).getTime(),animatedegree=0,totaldis=curscrolltop;clearTimeout(scrolltimer);function jumptop(){elapsedtime=(new Date).getTime()-starttime;if(elapsedtime<duration){rootel.scrollTop=totaldis-(totaldis*(1-Math.cos(elapsedtime/duration*Math.PI))/2);scrolltimer=setTimeout(function(){jumptop()},10);}}jumptop();}</script><!-- End Scroll To Top -->
   <!-- Start Mouse Pointer -->
 
-  <style>
-  BODY{
-  cursor:url("assets/mouse-pointer.ico"), default;}
-  </style><!-- End Mouse Pointer -->
+  <style>BODY{cursor:url("assets/mouse-pointer.ico"),default;}</style><!-- End Mouse Pointer -->
   <title>About Zany Hovel | Valsan's Zany Hovel</title>
 <meta name="title" content="About Valsan's Zany Hovel">
 <meta name="description" content="Story of Zany Hovel and technical specs. In this page you will find a detailed account of how this website came into being.">
 <meta name="keywords" content="About,Zany,Hovel,bholenath,valsan,personal,website">
-  <script language="JavaScript">
-  function MM_swapImgRestore() { 
-  var i,x,a=document.MM_sr; for(i=0;a&&i<a.length&&(x=a[i])&&x.oSrc;i++) x.src=x.oSrc;
-  }
-  function MM_preloadImages() { 
-  var d=document; if(d.images){ if(!d.MM_p) d.MM_p=new Array();
-    var i,j=d.MM_p.length,a=MM_preloadImages.arguments; for(i=0; i<a.length; i++)
-    if (a[i].indexOf("#")!=0){ d.MM_p[j]=new Image; d.MM_p[j++].src=a[i];}}
-  }
-  function MM_findObj(n, d) { //v4.0
-  var p,i,x;  if(!d) d=document; if((p=n.indexOf("?"))>0&&parent.frames.length) {
-    d=parent.frames[n.substring(p+1)].document; n=n.substring(0,p);}
-  if(!(x=d[n])&&d.all) x=d.all[n]; for (i=0;!x&&i<d.forms.length;i++) x=d.forms[i][n];
-  for(i=0;!x&&d.layers&&i<d.layers.length;i++) x=MM_findObj(n,d.layers[i].document);
-  if(!x && document.getElementById) x=document.getElementById(n); return x;
-  }
-  function MM_swapImage() { 
-  var i,j=0,x,a=MM_swapImage.arguments; document.MM_sr=new Array; for(i=0;i<(a.length-2);i+=3)
-   if ((x=MM_findObj(a[i]))!=null){document.MM_sr[j++]=x; if(!x.oSrc) x.oSrc=x.src; x.src=a[i+2];}
-  }
-  </script>
-  <script language="JavaScript">
-  function MM_reloadPage(init) {  //reloads the window if Nav4 resized
-  if (init==true) with (navigator) {if ((appName=="Netscape")&&(parseInt(appVersion)==4)) {
-    document.MM_pgW=innerWidth; document.MM_pgH=innerHeight; onresize=MM_reloadPage; }}
-  else if (innerWidth!=document.MM_pgW || innerHeight!=document.MM_pgH) location.reload();
-  }
-  MM_reloadPage(true);
-  </script>
+  <script language="JavaScript">function MM_swapImgRestore(){var i,x,a=document.MM_sr;for(i=0;a&&i<a.length&&(x=a[i])&&x.oSrc;i++)x.src=x.oSrc}function MM_preloadImages(){var d=document;if(d.images){if(!d.MM_p)d.MM_p=new Array;var i,j=d.MM_p.length,a=MM_preloadImages.arguments;for(i=0;i<a.length;i++)if(a[i].indexOf("#")!=0){d.MM_p[j]=new Image;d.MM_p[j++].src=a[i];}}}function MM_findObj(n,d){var p,i,x;if(!d)d=document;if((p=n.indexOf("?"))>0&&parent.frames.length){d=parent.frames[n.substring(p+1)].document;n=n.substring(0,p);}if(!(x=d[n])&&d.all)x=d.all[n];for(i=0;!x&&i<d.forms.length;i++)x=d.forms[i][n];for(i=0;!x&&d.layers&&i<d.layers.length;i++)x=MM_findObj(n,d.layers[i].document);if(!x&&document.getElementById)x=document.getElementById(n);return x}function MM_swapImage(){var i,j=0,x,a=MM_swapImage.arguments;document.MM_sr=new Array;for(i=0;i<(a.length-2);i+=3)if((x=MM_findObj(a[i]))!=null){document.MM_sr[j++]=x;if(!x.oSrc)x.oSrc=x.src;x.src=a[i+2];}}</script>
+  <script language="JavaScript">function MM_reloadPage(init){if(init==true)with(navigator){if(appName=="Netscape"&&parseInt(appVersion)==4){document.MM_pgW=innerWidth;document.MM_pgH=innerHeight;onresize=MM_reloadPage;}}else if(innerWidth!=document.MM_pgW||innerHeight!=document.MM_pgH)location.reload();}MM_reloadPage(true);</script>
 </head>
 <body alink="#5FEF60" bgcolor="#040404" link="#FE6050" text="#6FD0F4" vlink="#441E15">
   <div align="center">
