@@ -1,38 +1,13 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <style>
-    body {
-      overflow: hidden;
-      margin: 0;
-    }
-    
-    .background {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      animation: backgroundAnimation 10s linear infinite;
-      background-image: url('your-image.html');
-      background-size: cover;
-    }
-    
-    @keyframes backgroundAnimation {
-      0% {
-        background-position: 0 0;
-      }
-      100% {
-        background-position: -200% -200%;
-      }
-    }
-  </style>
+  <style>body{overflow:hidden;margin:0}.background{position:fixed;top:0;left:0;width:100%;height:100%;animation:backgroundAnimation 10s linear infinite;background-size:cover}@keyframes backgroundAnimation{0%{background-position:0 0}100%{background-position:-200% -200%}}</style>
 </head>
 <body>
   <div class="background"></div>
   <div>
     <div>
-      <img src="fallen.png" onmouseover="this.src='img/button/abth.html';document.getElementById('clicky').play();" onmouseout="this.src='img/button/abt.html'" style="">
+      <img src="fallen.png" onmouseover="clicky.play()">
     </div>
   </div>
 
