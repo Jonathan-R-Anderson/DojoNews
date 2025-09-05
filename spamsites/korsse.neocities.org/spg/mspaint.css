@@ -1,0 +1,122 @@
+body 
+{cursor:url(../ast/cursor.gif),auto;
+scrollbar-width: auto; scrollbar-color: red #1a000a;
+text-align: center; overflow-y: scroll; overflow-x: auto; word-wrap: normal;
+}
+p {font-family:Helvetica;}
+a {cursor:url(../ast/cursorin.gif),auto;color:#e81123; }
+h1 {font-family: "Arial Black";font-size:37px ;}
+h2 {font-family: "Arial Black";font-size:30px ;}
+h3 {font-family: "Times New Roman"; font-size:25px ;}
+
+/* The Modal (background) */
+.modal {
+  display: none; 
+  position: fixed; 
+  z-index: 1; 
+  padding-top: 10px;
+  left: 0;
+  top: 0;
+  width: 100%; 
+  height: 100%; 
+  overflow: auto; 
+  color: #262626;
+  font-family:Arial ;
+}
+
+.modal-content { color: #262626;
+  background-color:#ababab;
+  margin: auto;
+  padding: 0px;
+  border: 1px solid #262626;;
+  width: 80%; height: 650px; 
+   box-shadow:-0px 0px 15px 2px rgba(0, 0, 0, 0.5);
+}
+
+.close {vertical-align: top;
+border-style:none;
+color: #262626;;
+font-size: 24px; 
+height:28px ;  
+padding-left:5px;padding-right:5px;
+font-family:"Times New Roman"; 
+border-style:none;
+    background-color:white;
+}
+.close:hover,
+.close:focus {
+background-color:#e81123;
+  color: white;
+  text-decoration: none;
+  cursor: pointer; height:28px ;
+}
+.decor1 {vertical-align: top;
+  color:#262626;
+  font-size: 18px;
+  font-family:"Times New Roman";
+  height:28px; 
+    padding-left:10px;padding-right:10px;
+  border-style:none;
+    background-color:white;
+}
+
+.decor1:hover,
+.decor1:focus {
+background-color:#e5e5e5;
+  text-decoration: none;
+  cursor: pointer; height:28px;
+}
+.decor2 {vertical-align: top;
+  color:#262626;
+  font-size: 20px;
+  font-family:"Times New Roman";
+  height:28px; padding-left:9px;padding-right:9px;
+  border-style:none; background-color:white;
+}
+
+.decor2:hover,
+.decor2:focus {
+background-color:#e5e5e5;
+  text-decoration: none;
+  cursor: pointer; height:28px;
+}
+
+#myBtn{border-width: 0px; background-image:url("../ast/s/mspaint/ANOBTN.png"); width: 1300px; height:438px ;}
+#myBtn:hover{box-shadow:-0px 0px 15px 2px rgba(0, 0, 0, 0.5) inset;}
+
+.fixed {
+    width: 80%;
+    position: fixed;
+    z-index: 1051; 
+}
+.modal-header { background-color:#ffffff; width:100%; height:28px;text-align:left;}
+.modal-spacer{ background-color:#ffffff; width:100%; height:20px; border-width: 0px 0px 2px 0px;border-style:  solid; border-color:  white #262626 #646464 #262626;}
+.modal-spacer2{background-color:#f0f0f0; width:100%; height:45px; border-width: 2px 0px 2px 0px;border-style:  solid; border-color:  white #262626 #646464 #262626;}
+.modal-body {overflow-x:hidden; overflow-y:auto; background-color:#ababab; width:100%; top margin:20px ; margin: auto; height:620px;border-width: 1px 0px 0px 0px; border-style:solid;border-color:#868686;}
+.modal-buttons {float:right; height:28px;}
+.modal-text{float:left; height:23px; padding-top:6px;padding-left: 16px; font-size:12px;}
+
+.text-body{margin-left: 50px;margin-right: 50px;}
+/* width */
+
+::-webkit-scrollbar {
+  width: 18px;
+}
+
+/* handle */
+::-webkit-scrollbar-thumb {
+  background: #cdcdcd; width:19px;
+  border-radius:0px;}
+  
+  /* handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background:#a6a6a6; 
+}
+/* track */
+::-webkit-scrollbar-track {background-color: #f0f0f0; border: 1px, #b2b2b2;border-radius:0px;width: 22px;
+}
+ 
+iframe::-webkit-scrollbar-track {background-color: #f0f0f0; border: 1px, #b2b2b2;border-radius:0px;width: 22px;
+}
+
+scrollbar-color: #a6a6a6 #f0f0f0;

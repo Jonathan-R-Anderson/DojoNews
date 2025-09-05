@@ -1,0 +1,150 @@
+<html>
+<head>
+<link rel="shortcut icon" href="../favicon.ico"/> <meta charset="UTF-8"> <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Korsse|MS Paint guide</title> <link href="mspaint.css" rel="stylesheet" type="text/css" media="all">
+<style>body{background-color:blue;color:white}.return{width:710px;margin-left:28%;margin-right:}a:link{color:slateblue}a:visited{color:darkslategray}a:hover{color:slategray;text-decoration:underline}a:active{color:darkslateblue;text-decoration:underline}</style>
+</head>
+<body>
+    <h1>MS Paint Guide</h1>
+<div class="text-body">
+    <p>A humble guide for ways to approach drawing in MS Paint:
+Don't let the lack of layers intimidate you; MS Paint allows you to erase any pixel of a specific color<br> <small>(as in, the exact same rgb/hex value. So it doesn't work with brushes that use anti 
+        aliasing, it works well with the pencil tool and spray-can brush though)</small><br> without disturbing other pixels of other colors. You do this by right-click erasing <small>(as opposed to left-clicking while erasing)</small> with the desired color to erase as color 1,<br> and the background color of your canvas as color 2. <small>(Meaning you can also use this method to color in any aliased black lineart by choosing black as color 1 and the desired lineart color as color 2)</small><br> By using this method, you can sort of "emulate" layers and transparency.<br>
+        <small>(Color 2 will be treated like a transparent 1bit alpha channel by the program, for example, when using the selection tool or copying and pasting if you have transparent selection enabled.)</small>
+ </p></div><br><br>
+
+<button id="myBtn"></button>
+<br><br><br><br>
+<h2>For sketch-lineart-color-shading pipeline-minded people: </h2>
+<div class="text-body">    
+<br>    
+    <p>Let's just jump right in. 
+If you draw your sketch in, say, the default red with
+the pencil tool on white canvas, and you draw your lineart in black pencil tool on top of that red sketch,</p>    
+ <img src="../ast/s/mspaint/guide/1%20sketch.png"height="400px">    <img src="../ast/s/mspaint/guide/2%20lineart.png"height="400px">  <br><br>     
+    <p>You can easily erase the sketch and be left with only the black lineart. </p>
+<img src="../ast/s/mspaint/guide/3%20sketcherase.gif"height="400px">    <img src="../ast/s/mspaint/guide/4%20lineartclean.png"height="400px">   <br><br> 
+    <p>You can then copy and paste a duplicate of the lineart next to the original on the same canvas, pick a color you don't intend to use in the drawing,<br> and use the shape tool to draw a box around the dupe in that color. Fill it in so you are left with something that looks like this:
+</p>
+    <img src="../ast/s/mspaint/guide/5%20dupe.png"height="400px">  <br><br>
+    <p>You can now fill in your lineart with flat colors. If you fill the canvas and anything you want to stay white with a different color<br> (as long as it's not the same as the frame around the dupe of course),
+</p>
+    <img src="../ast/s/mspaint/guide/6%20flats.png"height="400px">  <br><br>
+    <P>you can use the eraser method to color in any white pixels you may have missed in gaps or the corners of your lineart. 
+</P>
+    <p>Select color one to be white (or whatever the color of the canvas you drew your lineart on top of was if you've used a different background color),<br> and select color two to match either the lineart or the fill color you used where the white pixels are, whichever you prefer.<br> Now left-click erase over the lineart, this should get rid of them and leave you with a nice, clean, flat colored drawing.
+</p>
+<img src="../ast/s/mspaint/guide/7%20straycleanup.gif"> <br><br>
+<p>You can stop here if you want of course! Just fill your whites back in and crop how you please, voilà!
+</p>    
+<img src="../ast/s/mspaint/guide/8%20flatsdone.png"height="400px">       
+<br><br><br>   <br><br>
+    
+<h3>or you can shade it!. </h3><br>
+<p>There are two main ways you can go about shading. you could go for cel-shading, or do it in a more painterly way. you're going to have to pick your shadow colors manually. <br>Don't worry if you are used to relying on clipping masks and layer modes for shading, this will be good for you. If you want to, please hand-pick from the color wheel!<br> But on-canvas color mixing is my preferred method of making new colors personally. 
+</p>
+<p>If you'd like to give it a try:
+Pick some dark colors from the base colors in the swatch menu (or choose a custom one). Take the colors you've already used in <br>the drawing and make a swatch row on the canvas. Once you have done this, you're going to want to pick the marker from the brush menu. Yes. The marker. This brush is<br> semi-transparent and untextured, it will be your best 
+friend in color mixing; theoretically, you can use other brushes for this too, but the marker is easiest and more predictable, imo. 
+</p><br>
+<p>Change color 1 to one of the dark colors you picked. Draw one single stroke over one of the swatches, color pick it, ctrl Z. Draw one single stroke <br> over the same swatch, color pick it, ctrl Z. Do this as many times as you feel you need until 
+you get a suitable shadow color. Once you do, save that to your color palette or make <br>a swatch on canvas you can eyedrop from later if it's full. Do this for all the colors you want to shade. 
+</p><br>
+<img src="../ast/s/mspaint/guide/9%20colormix1.gif"height="400px">  <br><br>  
+<p>you can also darken colors by laying light over dark
+</p>
+<img src="../ast/s/mspaint/guide/10%20colormix2.gif"height="400px">    <br><br>
+<br><br><br>
+    
+<p>Now, if you're gonna cel-shade, a classic way to do it is to draw the outlines of all your shadows on top of the lineart and flats and then fill them with the bucket tool.
+</p>
+ <img src="../ast/s/mspaint/guide/11%20cellshade.png"height="400px">  
+<p>Because I've been making both shading guides simultaneously, I fucked up and forgot to fill my shading at this stage, but I recommend you do it before moving on to the next step. <br>
+(The difference between filling now and filling later is that if you fill now, you can prevent more stray color pixels in tight spots around your lineart.)
+</p>
+<br><br>
+<p>
+If you want to use the antialiasing brushes, you just paint directly over the picture with your brush. It's ok if you go on top of the lineart and beyond the silhouette,<br> but try to stay
+inside (or on top of, but not beyond) the lines within the silhouette, lest you have to do clean-up afterwards. 
+</p>
+ <img src="../ast/s/mspaint/guide/12%20paintshade.png"height="400px">  <br><br>
+<p>When you've done this you might think, "Ok wtf, now my lineart is fucked up." That's where the dupe comes in.<br> Copy the dupe (make sure transparent selection is turned on) and paste it on top.
+</p>
+<img src="../ast/s/mspaint/guide/13%20cell%20line%20align.gif"height="400px"><br><br>   <img src="../ast/s/mspaint/guide/14%20paint%20line%20align.gif"height="400px"> 
+
+<p>(The painted shading can be a little hard to align.  If you're having a hard time, try to find a relatively exposed point of the lineart<br> to focus on and wiggle the lineart around with the arrow keys to make sure they are perfectly aligned.)<br><br><br>
+This is where I realized I fucked up the cell shading example:</p>    
+<img src="../ast/s/mspaint/guide/15%20cellshadeclean.png"height="400px"> <br><br>
+<p>But it was an easy fix, just filled them in and cleaned up the few places the shading lines had overlapped in an unpleasant way. 
+</p>
+<img src="../ast/s/mspaint/guide/16%20cellshadefill.png"height="400px"> <br><br>
+
+<p>As for the painted shading...</p>
+<img src="../ast/s/mspaint/guide/17%20paintshadeclean.png"height="400px"> <br><br>
+<p>Now it's clean! Unless it's not, in that case just erase and refill parts where things got messy from the shading process and
+repaste the lineart a second time. 
+</p>
+    <br><br>
+<p>This would be a good place to consider it finished, fill the masking color around the lineart with white. And crop as you please.
+Or...</p>
+<img src="../ast/s/mspaint/guide/18%20lineartcoloring.gif"height="400px"> 
+<p>If you wanted to, you could color the lineart with the same technique as we used to erase the sketch and fill in stray pixels, just choose a small eraser size and take your time.
+</p>
+    <br><br>
+<p>Let's have a look at the results, shall we!</p>
+<img src="../ast/s/mspaint/guide/19%20celldone.png"height="400px"> <img src="../ast/s/mspaint/guide/20%20paintshadone.png"height="400px"> <br><br>
+<p>wow! That wasn't so hard! Turned out pretty alright I think, especially considering I don't use these methods myself very often since I'm not that enthusiastic about<br> the whole sketch-lineart-color-shade pipeline regardless of what program I'm using.
+It's been a very long time since I attempted the painted type of shading. If you wanted <br> to spend the time fully rendering it, you absolutely could. 
+If you're still gonna use lineart and paint on top of it,  perhaps it'd be a good idea to color the lineart right after<br> you've laid down your flats. I've never done it that way myself, so don't take my word for it though.
+</p>
+<br><br><br>
+    
+
+<h3>NOW, NOW, YOU CAN GET GREAT RESULTS WITH THESE METHODS...<br> BUT LET'S NOT FORGET IT'S CALLED MICROSOFT PAINT AND NOT MICROSOFT DRAW.</h3>
+<p>I have gone over a way to approach drawing in MS Paint that will likely feel somewhat familiar and safe to your average digital artist.<br> Maybe it's not too different from how they already make their art, sans fancy layer modes and custom brushes. My goal was to make it unintimidating.<br>
+If you always draw in a flat, graphic style, perhaps you won't have any use for what is to come, perhaps what you can already find above is more than plenty*.<br> On the other hand, if you paint or render your art... the painted shading method described above may be adequate, but it is not ideal. Eventually, I would like to <br>show and tell you about MS Paint as a |painting| tool, working /with/ it, instead of trying to bend it into an entirely different program against its will.<br>
+    Y'know, like some kind of <a href="https://en.wiktionary.org/wiki/pervert#Noun" title="definition number 1. " style="color:skyblue">pervert</a> <a href="https://talonzane.itch.io/mspaintcompanion" style="color:skyblue">(Unless you're into that kind of thing, sicko.)</a>
+With much sorrow and a heavy heart, I regret to inform you that it will not be this time.<br> Good work takes time, and I'm passionate about making my propaganda work**. But here's a process gif of an MS Paint Rin to tide you over while I write my manifesto:
+</p> 
+<br>
+    <img src="../ast/s/mspaint/rinprocesscompressed.gif">   <br><br>
+<small>*But if you want more variation in your lines while still being able to use the fill tool, I would like to remind that the spraybox brush is also aliased, or "binary", <br>and nothing is stopping you from just switching the places of black and white and using the eraser as a square brush either. 
+<br>
+    **Even if I am bad at it and do not succeed, I am passionate about trying. For MS Paint &lt;3. </small></p>
+    <br>
+<img src="../ast/Construction.gif">   
+<p>
+    <div class="return">
+    <a href="../misc.html"><img src="../ast/s/mspaint/thunderback.png" height="400px"></a>
+    </div><br>
+  </div>  
+<div id="myModal" class="modal">
+<div class="modal-content">
+   <div class="fixed">
+<div class="modal-header"> <div class="modal-text">Anatomy guide - Paint</div>
+<div class="modal-buttons"><button class="decor1">&nbsp;&nbsp;&ndash;&nbsp;&nbsp;</button><button class="decor2">&nbsp;&nbsp;&#9633;&nbsp;&nbsp;</button><button class="close">&nbsp;&nbsp;&times;&nbsp;&nbsp;</button></div>
+    </div>
+<div class="fixed">
+<div class="modal-spacer"></div>
+       </div></div>
+<div class="modal-body">
+    <br><br><br>
+<img src="../ast/s/mspaint/anatomy/1.png" width="90%"> <br><br>
+<img src="../ast/s/mspaint/anatomy/2.png"width="90%"> <br><br>
+<img src="../ast/s/mspaint/anatomy/3.png"width="90%"> <br><br>
+<img src="../ast/s/mspaint/anatomy/4.png"height="300px"> 
+    <img src="../ast/s/mspaint/anatomy/5.png"height="300px"> <br><br>
+    <img src="../ast/s/mspaint/anatomy/6.png"height="470px">
+    <img src="../ast/s/mspaint/anatomy/7.png"height="470px"><br><br>
+    <img src="../ast/s/mspaint/anatomy/8.png"height="436px">
+    <img src="../ast/s/mspaint/anatomy/9.png"height="436px"><br><br>
+    <img src="../ast/s/mspaint/anatomy/10.png"height="405px">
+    <img src="../ast/s/mspaint/anatomy/11.png"height="405px"><br><br>
+    <img src="../ast/s/mspaint/anatomy/12.png"><br><br>
+<h3 style="color:blue;"><a href="../ast/s/mspaint/anatomy/anatomy%20of%20miss%20paint.png">Full cheat sheet.</h3>
+   
+</div><div class="modal-spacer2"></div>
+</div>
+</div>    
+    
+</body><script>var modal=document.getElementById("myModal"),btn=document.getElementById("myBtn"),button=document.getElementsByClassName("decor")[0];button=document.getElementsByClassName("close")[0];btn.onclick=function(){modal.style.display="block"};button.onclick=function(){modal.style.display="none"};button.onclick=function(){modal.style.display="none"};</script></html>
