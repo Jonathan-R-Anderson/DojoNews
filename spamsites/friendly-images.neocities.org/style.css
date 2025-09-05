@@ -1,0 +1,10 @@
+body {
+  background-color: gray;
+  color: black;
+  font-family: din1451alt;
+}
+
+@font-face {
+  font-family: din1451alt;
+  src: url('din1451alt.ttf');
+} 
