@@ -5,51 +5,14 @@
 <TITLE>Terminal 00</TITLE>
 <head>
 <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<script type="text/javascript">
-<!--
-var b_timer = null; // blink timer
-var b_on = true; // blink state
-var blnkrs = null; // array of spans
-
-function blink() {
-var tmp = document.getElementsByTagName("span");
-if (tmp) {
-blnkrs = new Array();
-var b_count = 0;
-for (var i = 0; i < tmp.length; ++i) {
-if (tmp[i].className == "blink") {
-blnkrs[b_count] = tmp[i];
-++b_count;
-}
-}
-// time in m.secs between blinks
-// 500 = 1/2 second
-blinkTimer(300);
-}
-}
-
-function blinkTimer(ival) {
-if (b_timer) {
-window.clearTimeout(b_timer);
-b_timer = null;
-}
-blinkIt();
-b_timer = window.setTimeout('blinkTimer(' + ival + ')', ival);
-}
-
-function blinkIt() {
-for (var i = 0; i < blnkrs.length; ++i) {
-if (b_on == true) {
-blnkrs[i].style.visibility = "hidden";
-}
-else {
-blnkrs[i].style.visibility = "visible";
-}
-}
-b_on =!b_on;
-}
-//-->
-</script>
+<script type="text/javascript"><!--
+var b_timer=null;var b_on=true;var blnkrs=null;function blink(){var tmp=document.getElementsByTagName("span");if(tmp){blnkrs=new Array();var b_count=0;for(var i=0;i<tmp.length;++i){if(tmp[i].className=="blink"){blnkrs[b_count]=tmp[i];++b_count;}}
+blinkTimer(300);}}
+function blinkTimer(ival){if(b_timer){window.clearTimeout(b_timer);b_timer=null;}
+blinkIt();b_timer=window.setTimeout('blinkTimer('+ival+')',ival);}
+function blinkIt(){for(var i=0;i<blnkrs.length;++i){if(b_on==true){blnkrs[i].style.visibility="hidden";}
+else{blnkrs[i].style.visibility="visible";}}
+b_on=!b_on;}</script>
 
 <link rel="apple-touch-icon" sizes="57x57" href="apple-touch-icon-57x57.png">
 <link rel="apple-touch-icon" sizes="60x60" href="apple-touch-icon-60x60.png">
@@ -65,242 +28,71 @@ b_on =!b_on;
 <script src="main.js"></script><link href="terminal00x.css" rel="stylesheet">
 
 
-<style>
-
-.a44 {
-  position: absolute;
-    left: 1400px;
-    top: 100px;
-    z-index: 6;
-}
-
-.a2 {
-  position: absolute;
-    left: 300px;
-    top: 100px;
-    z-index: -5;
-}
+<style>.a44{position:absolute;left:1400px;top:100px;z-index:6}.a2{position:absolute;left:300px;top:100px;z-index:-5}.a3{position:absolute;left:1500px;top:00px;z-index:6}.a4{position:absolute;left:200px;top:00px;z-index:-5}.a5{position:absolute;left:1500px;top:200px;z-index:6}.a6{position:absolute;left:200px;top:200px;z-index:-5}.a7{position:absolute;left:1600px;top:100px;z-index:6}.a8{position:absolute;left:100px;top:100px;z-index:-5}.b{position:absolute;left:1400px;top:550px;z-index:6}.b2{position:absolute;left:300px;top:550px;z-index:-5}.b3{position:absolute;left:1500px;top:450px;z-index:6}.b4{position:absolute;left:200px;top:450px;z-index:-5}.b5{position:absolute;left:1500px;top:650px;z-index:6}.b6{position:absolute;left:200px;top:650px;z-index:-5}.b7{position:absolute;left:1600px;top:550px;z-index:6}.b8{position:absolute;left:100px;top:550px;z-index:-5}</style>
 
 
-.a3 {
-  position: absolute;
-    left: 1500px;
-    top: 00px;
-    z-index: 6;
-}
-
-.a4 {
-  position: absolute;
-    left: 200px;
-    top: 00px;
-    z-index: -5;
-}
-
-.a5 {
-  position: absolute;
-    left: 1500px;
-    top: 200px;
-    z-index: 6;
-}
-
-.a6 {
-  position: absolute;
-    left: 200px;
-    top: 200px;
-    z-index: -5;
-}
-
-.a7 {
-  position: absolute;
-    left: 1600px;
-    top: 100px;
-    z-index: 6;
-}
-
-.a8 {
-  position: absolute;
-    left: 100px;
-    top: 100px;
-    z-index: -5;
-}
-
-.b {
-  position: absolute;
-    left: 1400px;
-    top: 550px;
-    z-index: 6;
-}
-
-.b2 {
-  position: absolute;
-    left: 300px;
-    top: 550px;
-    z-index: -5;
-}
-
-
-.b3 {
-  position: absolute;
-    left: 1500px;
-    top: 450px;
-    z-index: 6;
-}
-
-.b4 {
-  position: absolute;
-    left: 200px;
-    top: 450px;
-    z-index: -5;
-}
-
-.b5 {
-  position: absolute;
-    left: 1500px;
-    top: 650px;
-    z-index: 6;
-}
-
-.b6 {
-  position: absolute;
-    left: 200px;
-    top: 650px;
-    z-index: -5;
-}
-
-.b7 {
-  position: absolute;
-    left: 1600px;
-    top: 550px;
-    z-index: 6;
-}
-
-.b8 {
-  position: absolute;
-    left: 100px;
-    top: 550px;
-    z-index: -5;
-}
-
-</style>
-
-
-<script type="text/javascript">
-
-/***********************************************
-* Memory Scroller script- (c) Dynamic Drive DHTML code library (www.dynamicdrive.com)
-* Please keep this notice intact
-* Visit Dynamic Drive at http://www.dynamicdrive.com/ for full source code
-***********************************************/
-
-var memorywidth="765px" //scroller width
-var memoryheight="20px" //scroller height
-var memorybgcolor="#000000" //scroller background
-var memorypadding="16px" //padding applied to the scroller. 0 for non.
-var borderCSS="border: 1px solid black;" //Border CSS, applied to scroller to give border.
-
-var memoryspeed=8 //Scroller speed (larger is faster 1-10)
-var pauseit=0 //Pause scroller onMousever (0=no. 1=yes)?
-
-var persistlastviewedmsg=1 //should scroller's position persist after users navigate away (1=yes, 0=no)?
-var persistmsgbehavior="onload" //set to "onload" or "onclick".
-
-//Specify the scroller's content (don't delete <nobr> tag)
-//Keep all content on ONE line, and backslash any single quotations (ie: that\'s great):
-
+<script type="text/javascript">var memorywidth="765px"
+var memoryheight="20px"
+var memorybgcolor="#000000"
+var memorypadding="16px"
+var borderCSS="border: 1px solid black;"
+var memoryspeed=8
+var pauseit=0
+var persistlastviewedmsg=1
+var persistmsgbehavior="onload"
 var memorycontent='<nobr>﻿<span style="color:#ff0000">﻿ＯＰＥＮ  ＴＨＥ  ＧＡＴＥ  ＯＰＥＮ  ＴＨＥ  ＧＡＴＥ  ＯＰＥＮ  ＴＨＥ  ＧＡＴＥ  ＯＰＥＮ  ＴＨＥ  ＧＡＴＥ  ＯＰＥＮ  ＴＨＥ  ＧＡＴＥ  ＯＰＥＮ  ＴＨＥ  ＧＡＴＥ  ＯＰＥＮ  ＴＨＥ  ＧＡＴＥ  ＯＰＥＮ  ＴＨＥ  ＧＡＴＥ  ＯＰＥＮ  ＴＨＥ  ＧＡＴＥ  ＯＰＥＮ  ＴＨＥ  ＧＡＴＥ  ＯＰＥＮ  ＴＨＥ  ＧＡＴＥ  ＯＰＥＮ  ＴＨＥ  ＧＡＴＥ  ＯＰＥＮ  ＴＨＥ  ＧＡＴＥ  ＯＰＥＮ  ＴＨＥ  ＧＡＴＥ  ＯＰＥＮ  ＴＨＥ  ＧＡＴＥ  ＯＰＥＮ  ＴＨＥ  ＧＡＴＥ  ＯＰＥＮ  ＴＨＥ  ＧＡＴＥ  ＯＰＥＮ  ＴＨＥ  ＧＡＴＥ  ＯＰＥＮ  ＴＨＥ  ＧＡＴＥ  ＯＰＥＮ  ＴＨＥ  ＧＡＴＥ  </span></nobr>'
-
-
-////NO NEED TO EDIT BELOW THIS LINE////////////
 var combinedcssTable="width:"+(parseInt(memorywidth)+6)+"px;background-color:"+memorybgcolor+";padding:"+memorypadding+";"+borderCSS+";"
 var combinedcss="width:"+memorywidth+";height:"+memoryheight+";"
-
-var divonclick=(persistlastviewedmsg && persistmsgbehavior=="onclick")? 'onClick="savelastmsg()" ' : ''
-memoryspeed=(document.all)? memoryspeed : Math.max(1, memoryspeed-1) //slow speed down by 1 for NS
+var divonclick=(persistlastviewedmsg&&persistmsgbehavior=="onclick")?'onClick="savelastmsg()" ':''
+memoryspeed=(document.all)?memoryspeed:Math.max(1,memoryspeed-1)
 var copyspeed=memoryspeed
-var pausespeed=(pauseit==0)? copyspeed: 0
+var pausespeed=(pauseit==0)?copyspeed:0
 var iedom=document.all||document.getElementById
-if (iedom)
+if(iedom)
 document.write('<span id="temp" style="visibility:hidden;position:absolute;top:-100px;left:-10000px">'+memorycontent+'</span>')
 var actualwidth=''
 var memoryscroller
-
-if (window.addEventListener)
-window.addEventListener("load", populatescroller, false)
-else if (window.attachEvent)
-window.attachEvent("onload", populatescroller)
-else if (document.all || document.getElementById)
+if(window.addEventListener)
+window.addEventListener("load",populatescroller,false)
+else if(window.attachEvent)
+window.attachEvent("onload",populatescroller)
+else if(document.all||document.getElementById)
 window.onload=populatescroller
-
-function populatescroller(){
-memoryscroller=document.getElementById? document.getElementById("memoryscroller") : document.all.memoryscroller
+function populatescroller(){memoryscroller=document.getElementById?document.getElementById("memoryscroller"):document.all.memoryscroller
 memoryscroller.style.left=parseInt(memorywidth)+8+"px"
-if (persistlastviewedmsg && get_cookie("lastscrollerpos")!="")
+if(persistlastviewedmsg&&get_cookie("lastscrollerpos")!="")
 revivelastmsg()
 memoryscroller.innerHTML=memorycontent
-actualwidth=document.all? temp.offsetWidth : document.getElementById("temp").offsetWidth
-lefttime=setInterval("scrollmarquee()",20)
-}
-
-function get_cookie(Name) {
-var search = Name + "="
-var returnvalue = ""
-if (document.cookie.length > 0) {
-offset = document.cookie.indexOf(search)
-if (offset != -1) {
-offset += search.length
-end = document.cookie.indexOf(";", offset)
-if (end == -1)
-end = document.cookie.length;
-returnvalue=unescape(document.cookie.substring(offset, end))
-}
-}
-return returnvalue;
-}
-
-function savelastmsg(){
-document.cookie="lastscrollerpos="+memoryscroller.style.left
-}
-
-function revivelastmsg(){
-lastscrollerpos=parseInt(get_cookie("lastscrollerpos"))
-memoryscroller.style.left=parseInt(lastscrollerpos)+"px"
-}
-
-if (persistlastviewedmsg && persistmsgbehavior=="onload")
+actualwidth=document.all?temp.offsetWidth:document.getElementById("temp").offsetWidth
+lefttime=setInterval("scrollmarquee()",20)}
+function get_cookie(Name){var search=Name+"="
+var returnvalue=""
+if(document.cookie.length>0){offset=document.cookie.indexOf(search)
+if(offset!=-1){offset+=search.length
+end=document.cookie.indexOf(";",offset)
+if(end==-1)
+end=document.cookie.length;returnvalue=unescape(document.cookie.substring(offset,end))}}
+return returnvalue;}
+function savelastmsg(){document.cookie="lastscrollerpos="+memoryscroller.style.left}
+function revivelastmsg(){lastscrollerpos=parseInt(get_cookie("lastscrollerpos"))
+memoryscroller.style.left=parseInt(lastscrollerpos)+"px"}
+if(persistlastviewedmsg&&persistmsgbehavior=="onload")
 window.onunload=savelastmsg
-
-function scrollmarquee(){
-if (parseInt(memoryscroller.style.left)>(actualwidth*(-1)+8))
+function scrollmarquee(){if(parseInt(memoryscroller.style.left)>(actualwidth*(-1)+8))
 memoryscroller.style.left=parseInt(memoryscroller.style.left)-copyspeed+"px"
 else
-memoryscroller.style.left=parseInt(memorywidth)+8+"px"
-}
-
-if (iedom){
-with (document){
-document.write('<table border="0" cellspacing="0" cellpadding="0" style="'+combinedcssTable+'"><td>')
+memoryscroller.style.left=parseInt(memorywidth)+8+"px"}
+if(iedom){with(document){document.write('<table border="0" cellspacing="0" cellpadding="0" style="'+combinedcssTable+'"><td>')
 write('<div style="position:relative;overflow:hidden;'+combinedcss+'" onMouseover="copyspeed=pausespeed" onMouseout="copyspeed=memoryspeed">')
 write('<div id="memoryscroller" style="position:absolute;left:0px;top:0px;" '+divonclick+'></div>')
 write('</div>')
-document.write('</td></table>')
-}
-}
-</script>
+document.write('</td></table>')}}</script>
 
 <script type="text/javascript" src="imagerollover.js"></script>
 
 
   
-  <script>
-  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-  })(window,document,'script','../www.google-analytics.com/analytics.js','ga');
-
-  ga('create', 'UA-79198042-1', 'auto');
-  ga('send', 'pageview');
-
-</script>
+  <script>(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,'script','../www.google-analytics.com/analytics.js','ga');ga('create','UA-79198042-1','auto');ga('send','pageview');</script>
 </head>
 
 
@@ -453,10 +245,7 @@ document.write('</td></table>')
 
 
       
-     <script type="text/javascript">
-//Following function should be called at the end of the page:
-imagerollover()
-</script>
+     <script type="text/javascript">imagerollover()</script>
 
 </body>
 </html>
