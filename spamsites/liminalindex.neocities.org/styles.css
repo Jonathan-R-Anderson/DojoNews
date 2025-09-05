@@ -1,0 +1,53 @@
+@font-face {
+    font-family: georgia;
+    src: url(georgia.ttf);
+}
+
+body{
+    background-image: url("images/paper.webp");
+    font-size: 17px;
+    font-family: "timesnew";
+}
+
+#sidepannle{
+    background-color: rgba(105, 111, 136, 0.755);
+    width: 200px;
+    height: 800px;
+    border: 4px solid rgb(0, 0, 0);
+}
+
+#header{
+    padding-left: 240px;
+    font-size: 33px !important; 
+}
+
+#links{
+    text-align: center;
+}
+
+#about{
+    padding-left: 60px;
+    padding-right: 40px;
+}
+
+#downloadvid{
+    padding-left: 6px;
+}
+
+#video{
+    width: 190px;
+}
+
+#emailgif{
+    position:fixed;
+    bottom: 50px;
+    left: 64px;
+}
+
+/* Create two equal columns that sits next to each other */
+.gallery {
+    display: grid;
+    grid-template-columns: repeat(10, 5fr);
+    grid-template-rows: repeat(13, 15vw);
+    grid-gap: 10px;
+}
