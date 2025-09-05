@@ -3778,75 +3778,8 @@ Subscribe to:
 <div class='widget-content'>
 <!-- This Is A CopyRight Code.It Is Free To Use But With HTML Design Code.
 If AnyOne Found To Be Changing This Code Should Be Under Legal Action. -->
-<style type="text/css">
-}
-.exetestitext{
-width: 150px;
-height: 200px;
-border: 0px solid black;
-background-color: #FFFFFF;
-padding: 3px;
-display:block;
-}
-#exetestiauthor{
-width:150px;
-font-weight: Bold;
-border: 0px solid black;
-background-color: #FFFFFF;
-font-size: 12px;
-font-style: oblique;
-padding: 3px;
-}
-.exetestipic {
-float:left;
-margin:0 5px 0 0;
-border-radius: 100px !important;
-}
-</style>
-<script type="text/javascript">
-/***********************************************
-* ProHTML Ticker script- &#169; Dynamic Drive (www.dynamicdrive.com)
-* This notice must stay intact for use
-* Visit http://www.dynamicdrive.com/ for full source code.
-* UpDated By- &#169; EXEIdeas International (www.exeideas.com)
-* Visit http://www.exeideas.com/ for full info.
-***********************************************/
-var tickspeed=6000 //ticker speed in miliseconds (2000=2 seconds)
-var enableexeauthor=1 //enable scroller exeauthor? Set to 0 to hide
-if (document.getElementById){
-document.write('<style type="text/css">')
-document.write('.exetestitext{display:none;}')
-document.write('</style>')
-}
-var selectedDiv=0
-var totalDivs=0
-function contractall(){
-var inc=0
-while (document.getElementById("exetestidiv"+inc)){
-document.getElementById("exetestidiv"+inc).style.display="none"
-inc++
-}
-}
-function expandone(){
-var selectedDivObj=document.getElementById("exetestidiv"+selectedDiv)
-contractall()
-document.getElementById("exetestiauthor").innerHTML=selectedDivObj.getAttribute("exeauthor")
-selectedDivObj.style.display="block"
-selectedDiv=(selectedDiv<totalDivs-1)? selectedDiv+1 : 0
-setTimeout("expandone()",tickspeed)
-}
-function startscroller(){
-while (document.getElementById("exetestidiv"+totalDivs)!=null)
-totalDivs++
-expandone()
-if (!enableexeauthor)
-document.getElementById("exetestiauthor").style.display="none"
-}
-if (window.addEventListener)
-window.addEventListener("load", startscroller, false)
-else if (window.attachEvent)
-window.attachEvent("onload", startscroller)
-</script>
+<style type="text/css">}.exetestitext{width:150px;height:200px;border:0;background-color:#fff;padding:3px;display:block}#exetestiauthor{width:150px;font-weight:bold;border:0;background-color:#fff;font-size:12px;font-style:oblique;padding:3px}.exetestipic{float:left;margin:0 5px 0 0;border-radius:100px!important}</style>
+<script type="text/javascript">var tickspeed=6000,enableexeauthor=1;if(document.getElementById){document.write('<style type="text/css">');document.write('.exetestitext{display:none;}');document.write('</style>')}var selectedDiv=0,totalDivs=0;function contractall(){var inc=0;while(document.getElementById("exetestidiv"+inc)){document.getElementById("exetestidiv"+inc).style.display="none";inc++}}function expandone(){var selectedDivObj=document.getElementById("exetestidiv"+selectedDiv);contractall();document.getElementById("exetestiauthor").innerHTML=selectedDivObj.getAttribute("exeauthor");selectedDivObj.style.display="block";selectedDiv=(selectedDiv<totalDivs-1)?selectedDiv+1:0;setTimeout("expandone()",tickspeed)}function startscroller(){while(document.getElementById("exetestidiv"+totalDivs)!=null)totalDivs++;expandone();if(!enableexeauthor)document.getElementById("exetestiauthor").style.display="none"}if(window.addEventListener)window.addEventListener("load",startscroller,false);else if(window.attachEvent)window.attachEvent("onload",startscroller);</script>
 <div id="exetestiauthor"></div>
 <div id="exetestidiv0" class="exetestitext" exeauthor="BBC Archive:">
 "Scarfolk is real."<p align="right"><a></a></p>
