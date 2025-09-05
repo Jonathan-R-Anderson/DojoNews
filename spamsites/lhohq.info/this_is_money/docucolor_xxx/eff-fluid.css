@@ -1,0 +1,1409 @@
+/* 666 */
+
+P
+{
+float:left;
+}
+
+a:visited {
+  color: #660000;
+  text-decoration: none;
+}
+
+a:link
+{
+  color: #990000;
+  text-decoration: none;
+}
+a:active
+
+{
+  color: #CC0000;
+  text-decoration: none;
+}
+a:hover
+{
+  color: #FF0000;
+  text-decoration: none;
+}
+
+
+body
+{
+  margin: 0px;
+  padding: 0px;
+  font-family: arial, verdana, sans-serif;
+  font-size: 16px;
+  color: #000000;
+  background-color: #FFFFFF;
+}
+
+
+/* global text and appearance elements */
+
+
+
+.form_field
+{
+  font-size: 13px;
+  font-family: arial, verdana, sans-serif;
+  font-weight: normal;
+}
+
+h1 
+{ 
+  font-size: 20px;
+  font-weight: bold;
+  float:left;
+}
+h2 
+{ 
+  font-size: 18px;
+  font-weight: bold;
+}
+h3 
+{ 
+  font-size: 14px;
+  font-weight: bold;
+}
+textarea
+{
+  font-size: 12px;
+  font-family: courier new, courier, monospace;
+}
+
+pre {
+  font-family: arial, verdana, sans-serif;
+  font-size: 14px;
+}
+
+/* page structure and global nav elements */
+
+#bigdiv {
+  margin: 0 3px 0 3px;
+}
+
+
+#contentcontainer
+{
+ width: 100%;
+}
+
+
+#header
+{
+  color: white;
+  background-color: #CC0000;
+  height: 71px;
+  border: 0px;
+  margin: 0px;
+  padding: 0px;
+	float:left;
+}
+
+#helpoutimg
+{
+  position: absolute;
+  left: 555px;
+  top: 0px;
+}
+
+
+.sidebar {
+  font-size: 11px;
+  width: 180px;
+  color: black;
+  padding-bottom: 20px;
+  margin-top: -16px;
+}
+
+.sidebar p {
+  line-height: 130%;
+  margin: 0;
+}
+
+.sidebar h1 {
+	color: #000000;
+	font-size: 13px;
+	margin: -8px -8px 8px -8px;
+	padding: 3px;
+	background: #CCCCCC;
+}
+
+.contentsidebarheader {
+	border-top: 1px dotted #404040;	      
+	color: #000000;
+	font-size: 13px;
+	font-weight: bold;
+	margin: 1px 0px 0px 0px;
+	padding: 2px 2px 2px 10px;
+	background: #CCCCCC;
+}
+
+.contentsidebar {
+  background: #DDDDDD;
+  margin-top: 0px;
+  padding: 8px;
+}
+
+
+.contentsidebarlast {
+  margin: 0px;
+  padding: 8px 8px 100px 8px;
+}
+
+
+.submit {
+  font-size: 11px;
+  color: #FFFFFF;
+  padding: 2px 4px 2px 4px;
+  background-color: #A31414;
+  border-top: 2px solid #BF4545;
+  border-left: 2px solid #BF4545;
+  border-right: 2px solid #690909;
+  border-bottom: 2px solid #690909;
+  margin: 5px 0 0 0;
+  width: auto;
+}
+
+
+.buttons h3 {
+    display: inline;
+    background-color: #A31414;
+    margin: 0;
+    color: #ffffff;
+    font-family: arial, helvetica, sans-serif;
+    font-size: 12px;
+    text-align: right;
+    float: right;
+}
+
+.buttons h3 a {
+     display: block;
+     color: #FFFFFF;
+     text-decoration: none;
+     padding: 4px 6px 4px 6px;
+     border-top: 1px solid #BF4545;
+     border-left: 1px solid #BF4545;
+     border-right: 1px solid #690909;
+     border-bottom: 1px solid #690909;
+
+}
+
+.buttons h3 a:hover {
+	background-color: #CB0E0E;	
+}
+
+
+
+#content-main 
+{
+  padding-top: 10px;
+}
+
+ 
+#featuretext
+{
+padding: 0 35px 0 15px;
+}
+
+
+
+#footer
+{
+  background: #cc0000;
+  font-size: 10px;
+  font-weight: bold;
+  margin: 10px 0 0 0;
+  padding: 4px;
+  text-align: center;
+  border-top: 1px dotted #000000;
+}
+
+#footer a {
+  color: #ffffff;
+}
+
+
+/* what is this for? */
+
+
+.imgheader 
+{ 
+  padding: 0px 0px 5px 0px;
+}
+
+#logoimg
+{
+  position: absolute;
+  left: 0px;
+  top: 0px;
+}
+
+
+.related 
+
+{ 
+  font-size: 11px; 
+}
+#search input
+{
+  font-size: 14px;
+}
+#topics
+{
+  white-space: nowrap;
+  font-size: 11px;
+}
+#topicslist
+{
+}
+#whatsnew
+{
+  margin-top: 10px;
+  padding-top: 15px;
+  padding-bottom: 10px;
+/*  border-top: 1px solid gray; */
+}
+#blogs
+{
+  margin-top: 10px;
+  padding-top: 15px;
+  padding-bottom: 10px;
+  border-top: 1px solid gray;
+}
+
+/* main page news box */
+
+.news {
+    margin: 10px;
+}
+
+.news p {
+    text-align: justify;
+}
+
+.news h2 {
+      font-size:14px; 
+      background: #d7d7d7; 
+      border-top: 1px dotted #666666; 
+      padding: 3px 0 3px 5px;
+}
+
+
+/* front page callout styles */
+
+.calloutnoborder {
+     width: 148px;
+     margin: 0 auto 15px auto;
+}
+
+.callout {
+	border: 1px solid #000000;
+	width: 148px;      	
+	margin: 0 auto 15px auto;
+}
+
+.rfidcallout {
+	width:148px;
+	border: 1px solid #DCAC4F;;
+	margin: 0 auto 15px auto;
+	background-repeat: no-repeat;
+	background-position: top center;
+
+}
+
+.rfidcallout a {
+	display: block;
+	text-align: right;
+}
+.rfidcallout .link {
+	display: block;
+	margin: 50px 0 0 0;
+	padding: 3px;
+	font-size: 12px;
+	font-weight: bold;
+	background: #DCAC4F;
+	vertical-align: middle;
+}
+
+.callout h3 {
+	background-color: #333333;
+	margin: 0;
+	padding: 3px 4px 3px 4px;
+	color: #ffffff;
+	font-family: arial, helvetica, sans-serif;
+	font-size: 11px;
+
+}
+
+.callout h3 a {
+	color: #FFFFFF;
+	text-decoration: none;
+}
+
+.callout h3 a:hover {
+	color: #CC0000;
+}
+
+
+.thanks {
+  border: 1px solid #AAAAAA; 
+  padding: 0px 5px 0px 5px; 
+  margin: 5px 0px 5px 0px; 
+  background-repeat: no-repeat; 
+  background-position: top right;
+}
+
+.frontpageimg {
+  text-align: center;
+}
+
+.frontpageimg img {
+  margin: 10px auto 5px auto;
+}
+
+/* frontpage styles for sonymusic box */
+
+.sony {
+   background-repeat: repeat-x;
+   background-position: bottom;
+   margin: 0 10px 0 10px;
+   padding: 0 10px 0 0;
+}
+
+.sony img {
+   float: left;
+   margin-right: 15px;
+}
+
+.sony a.big {
+  font-weight: bold;
+  font-size: 16px;
+  color: #cc0000;
+  background-color: #FFFFFF;
+  border-top: 1px solid #d7d7d7;
+  border-left: 1px solid #d7d7d7;
+  border-right: 1px solid #cccccc;
+  border-bottom: 1px solid #cccccc;
+  margin: 5px auto 0 auto;
+  padding: 7px 10px 7px 10px;
+}   
+
+.sony a.big a:hover {
+  background: #e7e7e7;
+}
+
+.sony h1 {
+  color: #A31414;
+  font-size: 18px;
+  padding-top: 10px;
+}
+
+/* deeplinks styles */
+
+
+
+.entry {
+	margin: 20px;
+}
+
+
+.postedby {
+    font-size: 10px;
+    color: #cccccc;
+    border-bottom: 1px dotted #dddddd;
+    margin-bottom: 20px;
+    display: block;
+    padding: 0 0 8px 0;
+}
+
+.date {
+
+}
+
+/* main page news box */
+
+.news {
+    margin: 15px 10px 15px 10px;
+}
+
+.news p {
+    text-align: justify;
+}
+
+.news h1 {
+	background: #d7d7d7;
+	border-top: 1px solid #999999;
+	padding: 5px;
+	font-size: 16px;
+}
+
+/* all purpose content box */
+
+.contentcallout {
+    background: #dddddd;
+    border: 1px dotted #666666;
+    padding: 0 10px;
+    width: 30%;
+    margin: 0 0 20px 20px;
+}
+
+.contentcallout h1 {
+    background: #cccccc;
+    font-size: 14px;
+    padding: 3px 5px 5px 3px;
+    margin: 0 -10px 0 -10px;
+}
+
+/* voting news feed callout */
+
+
+.votingcontentcallout {
+    float: right;
+    background: #dddddd;
+    border: 1px dotted #666666;
+    padding: 0 10px;
+    width: 40%;
+    font-size: 12px;
+    margin: 0 0 20px 20px;
+}
+
+.votingcontentcallout h1 {
+    background: #cccccc;
+    font-size: 14px;
+    padding: 3px 5px 5px 3px;
+    margin: 0 -10px 0 -10px;
+}
+
+.votingcontentcallout i {
+    font-size: 10px;
+}
+
+
+/* frontpage newsupdate box */
+
+.gcallout {
+    background: #dddddd;
+    border-bottom: 1px dotted #666666;
+    border-right: 1px dotted #666666;
+    border-left: 1px dotted #666666;
+    padding: 0 10px;
+    width: 2000px;
+    font-size: 11px;
+    margin: 0 0 15px 15px;
+    float: right;
+}
+
+.gcallout h1 {
+    color: #FFFFFF;
+    background: #990000;
+    font-size: 14px;
+    padding: 3px 5px 5px 3px;
+    margin: 0 -10px 0 -10px;
+}
+
+
+/* clearing div, useful in lots of places */
+
+.clr {
+    clear: both;
+    height: 0px;
+    line-height: 0;
+    margin: 0;
+    padding: 0;
+}
+
+* html .clr {
+font-size: 0;
+}
+
+/* staff bio page styles */
+
+.bio
+{
+  margin-bottom: 15px;
+}
+
+.bio_header
+{
+  background-color: #EEEEEE; 
+  padding: 5px;
+}
+
+.bio_content
+{
+}
+
+.bio_section_header
+{
+  font-size: 18px;
+  font-weight: bold;
+  color: black;
+  border-top: 1px solid black;
+  border-bottom: 1px solid black;
+  padding: 5px;
+  margin-bottom: 5px;
+}
+
+.bio_photo
+{
+  text-align: left;
+  border: 5px solid #EEEEEE;
+  margin-right: 10px; 
+  margin-bottom: 5px;
+  float: left;
+}
+
+.bio_email
+{
+  position: relative;   /* ie bug workaround */
+  float: right;
+  text-align: right;
+}
+
+.bio_selector
+{
+  font-family: arial, verdana, sans-serif;
+  font-size: 12px; 
+}
+
+
+/* pioneer awards page styles */
+
+.pioneermast {
+  background-repeat: no-repeat;
+  background-position: top left;
+  padding: 0 0 0 11px;
+  width: 85%;
+}
+
+.pioneermastinner {
+  border-top: 1px solid #000000;
+  border-bottom: 1px solid #000000;
+  border-right: 1px solid #000000;
+}
+
+.pioneercolumn {
+  float: right;
+  width: 204px;
+}
+	       
+.pioneerbox {
+  float: right; 
+  background-color: #cccccc;	
+  background-repeat: no-repeat;
+  background-position: bottom; 
+  width: 204px;
+  margin: 0 0 20px 0;
+}
+
+.pioneerboxinner {
+  margin: 0 0 11px 0; 
+  padding: 10px; 
+  font-size: 12px; 
+  border-left: 1px solid #666666; 
+  border-right: 1px solid #666666; 
+  line-height: 120%
+}
+
+.pioneerboxinner a {
+  font-weight: bold;
+  line-height: 150%;
+  padding: 10px 10px 0px 0px;
+}
+
+/* these styles are used on eff.org/bloggers/legal_guide */
+
+.blogheader {
+   margin: 0 0 0 -10px;
+   border-top: 1px dotted #433A25;
+   background: #E9E1CF;
+   color: #222222;
+   padding: 3px;
+   font-size: 16px;
+}
+
+.blogheader a:hover {
+   color: #990000;
+}
+
+/* these styles are used on eff.org/deeplinks */
+
+.deeplink {
+
+}
+
+.minilink {
+   margin: 0 20px 0 20px;
+   border: 1px dotted #333333;
+   background-color: #e7e7e7;
+}
+
+
+/* consumer rights page styles */
+
+.crights {
+}
+
+.crights h2 {
+   font-size: 14px;
+   color: #000000;
+   border-top: 1px solid #666666;
+   background: #F6EA88;
+   margin: 0 5px 5px 0;
+   padding: .1em .1em .1em .5em;
+}
+
+/* digital video page styles */
+
+.digitalvideo {
+}
+
+.digitalvideo h2 {
+   font-size: 14px;
+   color: #000000;
+   border-top: 1px solid #666666;
+   background: #F6EA88;
+   margin: 0 5px 5px 0;
+   padding: .1em .1em .1em .5em;
+}
+
+.digitalvideo h1 {
+  font-size: 18px;
+  border-top: 1px dotted #666666;
+  background: #e7e7e7;
+  padding: 3px 0 3px 5px;
+}
+
+/* boxes for landing pages */
+
+.boxleft {
+  width: 48%;
+  float: left;
+  margin-left: -1px;
+  border-left: 1px dotted #cccccc;
+}
+
+
+.boxleft p, .boxright p, .blogfeed p {
+   margin: 1em;
+}
+
+.boxright {
+          width: 48%;
+          float: right;
+          margin-left: -1px;
+	  border-left: 1px dotted #cccccc;
+	  
+
+}
+
+.boxleft ul, .boxright ul {
+         margin: 1em;
+         padding: 0;
+}
+
+.boxleft li, .boxright li {
+    list-style: none;
+    background-image: url(../../IP/img/arrow.html);
+    background-repeat: no-repeat;
+    background-position: 0px .8em;
+    padding: 5px 0 0 .7em;
+    margin: 2px 0px 2px 10px;
+ }
+
+.blogfeed {
+    background: #e7e7e7;
+    padding: 0 0 5px 0;
+    font-size: 12px;
+    margin: 0 0 5px 10px;
+}
+
+.blogfeed h1 {
+          margin: 0;
+}
+
+.archivelink {
+        background: #e7e7e7;
+        margin: 0 0 8px 10px;
+        padding: 5px;
+        border-top: 1px dotted #666666;
+}
+
+.archivelink a {
+        display: block;
+        font-size: 16px;
+        font-weight: bold;
+}
+
+/* ip landing styles */
+
+.ip {
+
+}
+
+.ip h1 {
+   font-size: 14px;
+   color: #000000;
+   border-top: 1px solid #666666;
+   background: #8EA8E2;
+   margin: 0 5px 5px 0;
+   padding: .1em .1em .1em .5em;
+}
+
+/* Privacy landing styles */
+
+.privacy {
+}
+
+.privacy h1, .patriot h2 {
+   font-size: 14px;
+   color: #ffffff;
+   border-top: 1px solid #000000;
+   background: #333333;
+   margin: 0 5px 5px 0;
+   padding: .1em .1em .1em .5em;
+}
+
+/* Censorship/freespeech landing styles */
+
+.freespeech {
+}
+
+.freespeech h1, .freespeech h2 {
+   font-size: 14px;
+   color: #000000;
+   border-top: 1px solid #000000;
+   background: #FFCB2D;
+   margin: 0 5px 5px 0;
+   padding: .1em .1em .1em .5em;
+}
+
+/* Privacy frontpage roundbox styles */
+
+.privfpbox {
+    width: 490px;
+    margin: 10px auto 10px auto;
+    background-color: #8DB4B4;
+    background-repeat: no-repeat;
+    background-position: bottom left;
+    font-size: 18px;
+    line-height: 120%;
+}
+    
+.privfpinside {
+    background-repeat: no-repeat;
+    background-position: bottom right;
+    height: 15px;
+}
+
+.privfpheader {
+    background-color: #989898;
+    background-repeat: no-repeat;
+    background-position: top left;
+    border-bottom: 1px solid #ffffff;    
+}
+
+.privfpheader2 {
+    padding: 3px;
+    margin: 0;
+    background-repeat: no-repeat;
+    background-position: top right;
+    font-weight: bold;
+    font-size: 16px;
+    text-align: center;
+}
+
+.privfpbox p {
+    padding: 0 5px 0 5px;
+    margin: 0;
+}
+
+.privfpbox h1 {
+    display: block;
+    font-size: 22px;
+    padding: 5px;
+    text-align: center;
+}
+
+.privfpbox a {
+    padding: 5px;
+}
+
+
+/* /IP/DRM landing styles */
+
+.drm {
+}
+
+.drm h1, .drm h2 {
+   font-size: 14px;
+   color: #000000;
+   border-top: 1px solid #000000;
+   background: #9ACD32;
+   margin: 0 5px 5px 0;
+   padding: .1em .1em .1em .5em;
+}
+
+
+/* E-voting header styles */
+
+.evoting .blogfeed h2 {
+   font-size: 14px;
+   color: #000000;
+   border-top: 1px solid #000000;
+   background: #8BB4C8;
+   margin: 0 0 5px 0;
+   padding: 3px;
+}
+
+/* E-voting front page box styles */
+
+.evotingfp {
+  width: 540px;
+  height: 200px;
+  margin: 0 auto 0 auto;
+  line-height: 150%;
+}
+
+.evotingfpfl {
+  width: 500px;
+  height: 210px;
+  background-repeat: no-repeat;
+  margin: 0 auto 0 auto;
+  line-height: 150%;
+}
+
+
+
+.evotingfp a:link, .evotingfp a:visited {
+  color: #87C9E5;
+}
+
+.evotingtext {
+  margin: 0 180px 0 0;
+}
+
+.evotinglink {
+  display: block;
+  float: right;
+  width: 180px;
+  height: 200px;
+  text-decoration: none;
+}
+
+
+.evotingfp h1, .evotingfpfl h1 {
+  font-size: 18px;
+  padding: 30px 10px 5px 10px;
+  text-align: center;
+}
+
+.evotingfp h2 , .evotingfpfl h2 {
+  text-align: center;
+  font-size: 14px;
+}
+
+/*Deeplinks header styles */
+
+.deeplinks .blogfeed h2 {
+  background: #cccccc;
+  border-top: 1px dotted #404040;
+  font-size: 14px;
+  margin: 0 0 5px 0;
+  padding: .1em .1em .1em .5em;
+
+}
+
+/* WIPO landing page */
+
+.wipo h1, .wipo h2 {
+   font-size: 14px;
+   color: #000000;
+   border-top: 1px solid #000000;
+   background: #BDB76B;
+   margin: 0 5px 5px 0;
+   padding: .1em .1em .1em .5em;
+}
+
+/* these styles are used on bloggers/eff15 and /share/ */
+
+.eff15 {
+    font-family: courier, lucinda grande, monospace;
+    font-weight: bold;
+    font-size:14px;
+}
+
+.right {
+    width: 35%;
+    float: right;
+}
+
+.roundbox {
+    background-color: #e7e7e7;
+    background-repeat: no-repeat;
+    background-position: bottom left;
+    margin: 0 0 15px 15px;
+    padding: 0 0px 5px 0;
+    font-size: 12px;
+    line-height: 120%;
+}
+    
+.roundboxinside {
+    background-image: url(../../bloggers/eff15/corner_bottom_right.html);
+    background-repeat: no-repeat;
+    background-position: bottom right;
+    height: 15px;
+}
+
+.roundboxheader {
+    background-color: #cc0000;
+    background-image: url(../../bloggers/eff15/corner_red_top_left.html);
+    background-repeat: no-repeat;
+    background-position: top left;    
+}
+
+.roundboxheader2 {
+    background-color: #cc00000;
+    background-image: url(../../bloggers/eff15/corner_red_top_right.html);
+    background-repeat: no-repeat;
+    background-position: top right;
+    border-bottom: 1px solid #ffffff;
+}
+
+.roundboxheader h1 {
+    font-size: 14px;
+    color: #e7e7e7;
+    padding: 5px 5px 3px 10px;
+    margin: 0;
+}
+
+.roundbox p {
+    padding-left: 5px;
+    padding-right: 5px;
+    
+}
+
+.roundbox h2 {
+    font-size: 12px;
+    margin: 0;
+    padding: 3px 8px 3px 8px;
+}
+
+.roundbox blockquote { 
+    padding: 8px;
+    margin: 0;
+}
+
+.roundbox ul { 
+    padding: 0;
+    margin: 0;
+} 
+
+.roundbox li {
+    list-style: none;
+    background-image: url(../../IP/img/arrow.html);
+    background-repeat: no-repeat;
+    background-position: 0px .8em;
+    padding: 5px 0 0 .7em;
+    margin: 2px 0px 2px 8px;
+}
+
+.eff15 blockquote { 
+    padding: 8px 10px 10px 15px;
+    margin: 0;
+}
+
+.code {
+   display: block;
+   border: 1px solid #cccccc;
+   background: #ffffff;
+   margin: 0;
+   padding: 0;
+   font-family: courier, fixed-width, monospace;
+   width: ;
+   height: 95px;
+}
+
+
+/* these styles are used on IP/DRM/guide/ */
+
+.drmguide {
+}
+
+.drmguide img {
+	  border: 1px solid #666666;
+	  margin-bottom: 2px;
+}
+
+.drmguide i {
+	  font-size: 11px;
+}
+
+.drmguide h2 {
+	  border-top: 1px dotted #666666;
+	  background: #d7d7d7;
+	  padding: 5px 2px 2px 2px;
+	  margin-top: 20px;
+}
+
+.drmsidebar {
+     width: 30%;
+     background-color: #e7e7e7;
+     float: right;
+}
+	  
+.drmcell {
+     background-color: #e7e7e7;
+     padding: 5px;
+     margin: 15px;
+}
+
+.drmcell ul {
+     margin: .5em 0 0 1.5em;
+     padding: 2px;
+}
+
+.drmcell li {
+     padding-top: 5px;
+}
+
+.drmcell b {
+     text-decoration: underline;
+}
+
+/* this style is used on eff.org/Privacy/printers */
+
+.printerpics {
+  float: right;
+  width: 250px;
+  font-size: 11px;
+  margin-left: 20px;
+}
+
+.printerpics p {
+  display: block;
+  margin: 2px 0 15px 0;
+}
+
+.printerpics i {
+  color: #666666;
+}
+
+/* for whenever we need a classy looking ul */
+
+ul.classy {
+	margin: 1em;
+	padding: 0;
+}
+
+.classy li {
+    list-style: none;
+    background-image: url(../../IP/img/arrow.html);
+    background-repeat: no-repeat;
+    background-position: 0px .8em;
+    padding: 5px 0 0 .7em;
+    margin: 2px 0px 2px 10px;
+ }
+
+
+/* when we need a classy lookin' table */
+
+.greytable {
+    background-color: #d7d7d7;
+}
+
+.greytable td {
+    background: #ffffff;
+}
+
+.greytable th {
+    background: #666666;
+    color: #ffffff;
+    font-weight: bold;
+    text-align: left;
+    font-size: 14px;
+ }
+
+
+/* this is used on our google search page */
+
+#searchdiv {
+  margin: 0 20px 0 65px;
+}
+
+/* this is used on /legal/cases/att/ */
+
+
+
+.attnews a {
+   font-style: italic;
+}
+
+/* /sony/ */
+
+.sonysettle {
+	    border: 1px solid #666666;
+	    margin: 10px auto 0 auto;
+	    width: 550px;
+}
+
+.fpsonysettle {
+	    border: 1px solid #666666;
+	    margin: 10px auto 0 auto;
+            width: 480px;
+}
+
+.sonysettle h2 {
+            text-align: center;
+            padding: 0 5px;
+}
+
+.sonysettle p {
+	    text-align: center;
+	    padding: 0 5px;
+}
+
+.sonysettle h1 {
+	    background: url(../../sony2/diag_bg.html);
+	    background-repeat: repeat-x;
+	    background-position: top;
+	    height: 60px;
+	    margin: 0;
+	    padding: 0; 
+	    text-align: center;
+	   
+} 
+
+.fpsonysettle h1 {
+	    background: url(../../sony2/diag_bg.html);
+	    background-repeat: repeat-x;
+	    background-position: top;
+	    height: 60px;
+	    margin: 0;
+	    padding: 0; 
+	    text-align: center;
+	   
+} 
+
+.sonysettle h1 img {
+	     margin: 12px auto 10px auto;
+} 
+
+.fpsonysettle h1 img {
+	    margin: 12px auto 10px auto;
+}
+
+.yellow {
+	background: #FFDD22;
+	height: 4px;
+}
+
+
+
+/* /legal/victories/ */
+
+.victories {
+}
+
+.victories img {
+	   float: left;
+	   margin-bottom: 5px;
+}
+
+.victories h1 {
+	  font-size: 22px;
+	  padding: 5px;
+	  margin-left: -5px;
+
+}
+
+.victories h2 {
+	 padding: 3px;
+	 margin: 0 0 5px 0;
+	 background: #f7f7f7;
+}	 
+
+
+/* front page patent busting box styles */
+
+.wantedfp {
+  margin: 10px auto 0 auto;
+  width: 395px;
+  border: 1px solid #e7e7e7;
+  text-align: center;
+  padding: 5px 0 8px 0;
+}
+
+.wantedfp img {
+  margin: 0 auto 0 auto;
+}
+
+.wanted fp table {
+  margin: 0 auto 0 auto;
+  padding: 0;
+}
+
+.wantedfp td {
+  font-size: 12px;
+  text-align: left;
+}
+
+.wantedfp b {
+  font-size: 14px;
+}
+
+ .wantedfp .mug {
+  margin: 5px;
+} 
+
+/* RFID fp styles */
+
+.rfid {
+      width: 470px;
+      border: 1px solid #666666;
+      color: #333333;
+      margin: 10px auto 10px auto;
+}
+
+.rfid img {
+      float: left;
+}
+
+.rfid h1 {
+      font-size: 18px;
+      margin: 0 0 10px 167px;
+      background-color: #666666;
+      padding: 2px 0 2px 10px;
+      color: #e7e7e7;
+}
+
+.rfid h1 a {
+      color: #ffffff;
+}
+
+.rfid h1 a:visited {
+      color: #ffffff;
+}
+
+.rfid p {
+      display: block;
+      margin: 0 0 0 170px;
+      padding: 10px;
+      border: 1px solid #ffffff;
+}
+
+/* ATT box fp styles */
+
+.att {
+     width: 500px;
+     margin: 10px auto 10px auto;
+}
+
+.attmiddle {
+	   background: #000000;
+	   color: #ffffff;
+	   font-family: helvetica, arial;
+	   line-height: 120%;
+	   font-weight: bold;
+	   padding: 15px 10px 5px 30px;
+}
+
+.attmiddle a, .attmiddle a:visited {
+	   color: #3CB5E2;
+}
+
+.attmiddle h1 {
+	   font-size: 18px;
+	   line-height: 110%;
+}
+
+.attmiddle blockquote {
+	   margin: 0;
+	   padding: 0 0 0 20px;
+}
+
+.attbottom {
+	   background: url(bottom.html);
+	   background-repeat: no-repeat;
+	   background-position: 0px 0px;
+	   height: 61px;
+	   width: 500px;
+}
+
+/* AOL fp box styles */
+
+.aol {
+  width: 375px;
+  border: 1px solid #E67300;
+  background-image: url(../../Privacy/AOL/img/aolfrontbg.html);
+  background-repeat: repeat-x;
+  backgroundposition: bottom;
+  text-align: center;
+  padding: 10px 0 0 0;
+  margin: 10px auto 10px auto;
+}
+
+.aolfrontlink {
+	      color: #000000;
+	      display: block;
+	      background-color: #E67300;
+	      font-weight: bold;
+	      padding: 3px;
+	      margin: 15px 0 0 0;
+	      font-size: 14px;
+}
+
+.aolfrontlink a:visited {
+	      color: #999999;
+}
+
+.aolfrontlink a:hover {
+	      color: #e7e7e7;
+}
+
+/* barney fp box styles */
+
+.barneyfront {
+  background-image: url(../../../www.eff.org/legal/cases/barney/barney_front.html);
+  background-position: top left;
+  background-repeat: no-repeat;
+  width: 500px;
+  margin: 10px auto 10px auto;
+  height: 200px;
+}
+
+
+.barneyfront .sekritlink {
+  display: block;
+  width: 160px;
+  text-decoration: none;
+  height: 200px;
+  float: right;
+}
+
+.barneyfrontinner {
+  text-align: center;
+  padding: 20px 180px 0px 33px;
+}
+
+.barneyfrontinner a {
+  color: #ff6600;
+  font-weight: bold;
+}
+
+.barneyfront h1 {
+  font-size: 22px;
+    padding: 0px 10px 0px 15px;
+}
+
+.barneyfront h2 {
+  font-size: 18px;
+    padding: 0px 10px 10px 15px;
+}
+
+.barneyfront blockquote {
+
+  margin: 0;
+}
