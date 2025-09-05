@@ -1,0 +1,83 @@
+/* /// Página de categorías de la galería /// */
+/* v1.0.19 */
+.category-container {
+    /* Flex Box */
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-evenly;
+    align-items: center;
+    align-content: center;
+    padding: 2rem 0;
+}
+
+.category-item {
+    flex: 0 0 33%;
+    min-width: 232px;
+    z-index: 100;
+    /* Flex Box */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+    padding: 2rem 0;
+}
+
+.category-link {
+    /* Size and Spacing */
+    flex: 0 0 200px;
+    /* Flex Box */
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: space-between;
+    align-items: center;
+    align-content: center;
+    /* Decoration */
+    text-decoration: none;
+}
+
+.category-thumbnail {
+    width: 100%;
+    aspect-ratio: 1/1;
+    border: 6px solid white;
+    /* Animación v1.0.3 */
+    transition: all 800ms ease;
+    position: relative;
+    transform-style: preserve-3d;
+    transform-origin: center center;
+    transform: rotateY(0deg);
+}
+/* v1.0.3 */
+.category-link:hover .category-thumbnail {
+    transform: rotateY(180deg);
+}
+
+/* v1.0.5 */
+.category-thumbnail img {
+    width: 100%;
+    position: absolute;
+    top: 0;
+}
+.thumb-image1 {
+    transform: translateZ(0.1px);
+}
+.thumb-image2 {
+    transform: rotateY(180deg);
+}
+
+.category-name {
+    /* Size and Spacing */
+    width: 100%;
+    margin-top: .6rem;
+    /* Decoration */
+    color: white;
+    /* Font */
+    font-family: "GameBoy";
+    font-size: 1.2rem;
+}
+
+@media(max-width: 700px){
+    /* v1.0.17 */
+    body {
+        overflow: auto;
+    }
+}
