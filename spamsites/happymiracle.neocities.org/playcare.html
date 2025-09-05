@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Playcare</title>
+<!-- The style.css file allows you to change the look of your web pages.
+         If you include the next line in all your web pages, they will all share the same look.
+         This makes it easier to make new pages for your site. -->
+<style>body,h1,h2,li,p,ul{margin:0;padding:0}body{background-color:#fff;font-family:Arial,sans-serif}header{background-color:#3498db;color:#fff;padding:20px;text-align:center}nav{background-color:#333;color:#fff;text-align:center;padding:10px}nav ul{list-style:none}nav li{display:inline;margin-right:20px;background-color:#333}nav a{text-decoration:none;color:#fff;font-weight:700;background-color:#333}main{padding:20px}h1{font-size:36px;margin-bottom:20px}p{text-align:center;background:#fff;padding:10px}a{color:#000;text-decoration:none}a:hover{text-decoration:none}footer{background-color:#333;color:#fff;text-align:center;padding:10px}footer p{color:#000;padding:0;display:inline}footer a{display:inline}form{display:grid}form label{text-align:center}h1{text-align:center}section p{padding:0;border:2px solid #000;margin:0}div p{padding:0;margin:0}ul{text-align:center}li{background:#000;color:#fff}@font-face{font-family:Kid;src:url(MoreOfUs.ttf)}@font-face{font-family:Analog;src:url(vcr.ttf);font-size:50px}@font-face{font-family:Redacted;src:url(Redacted.ttf);font-size:50px}@font-face{font-family:Sayori;src:url(Hashtag.ttf);font-size:50px}@font-face{font-family:Pigpen;src:url(pigpen.html);font-size:50px}@media(max-width:768px){header{font-size:24px}nav{font-size:14px}main{padding:10px}h1{font-size:28px}p{font-size:14px}}</style>
+<style>body{background-color:#fff}h1{background:0;color:#fff;background-color:grey}aside{width:30%;height:400px;padding-left:100px;margin-left:0;float:right;font-style:italic;background-color:lightgray}shadow:hover{box-shadow:0 15px 0 0 rgba(0,0,0,0),0 0 0 0 rgba(0,0,0,0)}input{width:20%}</style>
+<!-- Google tag (gtag.js) -->
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-SRJM28CE1H"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','G-SRJM28CE1H');</script>
+</head>
+<body>
+<img height="32px" src="HMLogo.png" style="float:left; margin-top:5px; margin-left:5px; padding: 2px;" width="32px"/><h1 style="text-shadow: 3px 3px black; box-shadow: 0px 3px 5px black;">PLAYCARE SERVICES</h1>
+<nav style="box-shadow: 0px 5px 5px black">
+<ul>
+<li><a href="index.html">Our Services</a></li>
+<li><a href="about.html">About Us</a></li>
+<li><a href="pricing.html">Pricing</a></li>
+<li><a href="signup.html">Sign Up</a></li>
+</ul>
+</nav>
+<hr style="padding:0px; margin:0px; margin-top:20px; border: 10px solid lightgrey"/>
+<img height="60%" src="Playcare1.jpg" style="float:left; margin-left:120px; margin-top:20px" width="40%"/>
+<aside> <p style="margin:10px margin-right:50px; text-align:right; display:inline-block; width:90%">At Playcare, we underŞtand the importance öf a well-balanced diet, which is wħy we offer a full meal plan, including breakfast, lunch, and dinner. Our experienced culinary team prepares nutritious and delicious meals to ensure your child stays energized and heǎlthy throughout the day. With a spacious qlayground, children's library filled with caqtivating books, and a team of loving and attentive staff members, we encourage active learning and creative exploration. Your child's safetŷ is paramount to us, and that's why we maintain rigorous security measures to give you peace of mind while your little ones embark on their educational journey at Playcare.
+    </p></aside>
+<br/>
+<br/>
+<hr style="padding:0px; margin:0px; margin-top:420px; border: 30px solid lightgrey"/>
+<h2 style="margin:30px; font-family:Arial, sans-serif;">Child Lookup</h2>
+<p> Due to technical difficulties, please do not capitalize your children's names, this will result in an error. We are trying to fix this as soon as possible</p>
+<form id="lookupForm" style="margin:30px; font-family:Arial, sans-serif;">
+<label for="firstName" style="display:block; margin-bottom:5px;">First Name</label>
+<input id="firstName" required="" style="width:100%; padding:8px; margin-bottom:15px;" type="text"/><br/>
+<label for="lastName" style="display:block; margin-bottom:5px;">Last Name</label>
+<input id="lastName" required="" style="width:100%; padding:8px; margin-bottom:15px;" type="text"/><br/>
+<label for="age" style="display:block; margin-bottom:5px;">Child's Age</label>
+<input id="age" required="" style="width:100%; padding:8px; margin-bottom:15px;" type="number"/><br/>
+<label for="securityCode" style="display:block; margin-bottom:5px;">Parent Security Code</label>
+<input id="securityCode" required="" style="width:100%; padding:8px; margin-bottom:20px;" type="password"/><br/>
+<button style="width:20%; padding:10px; background-color:#4CAF50; color:white; border:none; border-radius:4px; cursor:pointer;" type="submit">
+    Search
+  </button>
+</form>
+<script>document.getElementById('lookupForm').addEventListener('submit',function(e){e.preventDefault();const t=document.getElementById('firstName').value.trim().toLowerCase(),n=document.getElementById('lastName').value.trim().toLowerCase(),a=document.getElementById('age').value.trim(),c=document.getElementById('securityCode').value.trim();t==='julia'&&n==='tanner'&&a==='8'&&c==='3564'?window.location.href='light.html':alert('No match found. Please check your input.')});</script>
+</body>
+</html>
