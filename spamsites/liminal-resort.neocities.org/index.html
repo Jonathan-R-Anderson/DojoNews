@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <style>* { box-sizing: border-box; } body { background-image: linear-gradient( 0deg, rgb(0, 0, 0) 23.8%, rgb(66, 66, 66) 92% ); height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; font-family: 'Lato',sans-serif; margin: 0; } h1{ color: #ffffff; font-family: "Bauhaus 93"; font-size: 70px; } .music-container { background-color: #424242; border-radius: 15px; display: flex; padding: 0px 30px; position: relative; margin: 100px 0; z-index: 10; } .music-container.play { animation-play-state: running; } .navigation { display: flex; align-items: center; justify-content: center; z-index: 1; } .action-btn { background: none; border: none; color: #ffffff; font-size: 20px; cursor: pointer; padding: 10px; margin: 0 20px; } .action-btn.action-btn-big { color: #cdc2d0; font-size: 30px; } .action-btn:focus { outline: 0; } .music-info { background-color: rgba(255, 255, 255, 0.5); border-radius: 15px 15px 0 0; position: absolute; top: 0; left: 20px; width: calc(100% - 40px); padding: 10px 10px 10px 10px; opacity: 0; transform: translateY(0%); transition: transform 0.3s ease-in, opacity 0.3s ease-in; z-index: 0; } .music-container.play .music-info { opacity: 1; transform: translateY(-100%); } .music-info h4 { margin: 0; } .progress-container { background: #fff; border-radius: 5px; cursor: pointer; margin: 10px 0; height: 4px; width: 100%; } .progress { background-color: #ff0000; border-radius: 5px; height: 100%; width: 0%; transition: width 0.1s linear; } .slideshow-container { width: 500px; position: relative; margin: auto; display: flex; flex-wrap: nowrap; justify-content: center; align-items: center; } .slides { display: none; } .previmg, .nextimg { cursor: pointer; width: auto; height: 50px; color: #404040; font-weight: bold; font-size: 18px; transition: 0.6s ease; border-radius: 5px 5px 5px 5px; border: none; user-select: none; } .previmg:hover, .nextimg:hover { background-color: rgba(0,0,0,0.8); } .caption { color: #f2f2f2; font-size: 15px; padding: 8px 12px; bottom: 8px; width: 100%; text-align: end; } .numbertext { color: #f2f2f2; font-size: 12px; padding: 8px 12px; position: absolute; top: 0; } #auto{ background-color: #ffffff; cursor: pointer; border-radius: 5px; } #label{ color: #f2f2f2; } #timing{ color: #f2f2f2; } #show-time { margin-top: 10px; } .fade { animation-name: fade; animation-duration: 1.5s; } @keyframes fade { from {opacity: .4} to {opacity: 1} } </style>
+    <title>THEY ARE WATCHING</title>
+</head>
+<body>
+<h1>LIMINAL RESORT HIDES THE PORTALS</h1>
+
+<div class="slideshow-container">
+
+    <button class="previmg" onclick="plusSlides(-1)">&#10094;</button>
+
+    <div class="slides fade">
+        <div class="numbertext">1 / 11</div>
+        <img src="1.png">
+        <div class="caption">THE CABAL RUNS THIS RESORT</div>
+        <div class="caption">(снова?)</div>
+    </div>
+
+    <div class="slides fade">
+        <div class="numbertext">2 / 11</div>
+        <img src="2.png">
+        <div class="caption">Вы сворачиваете в длинный коридор.</div>
+    </div>
+
+    <div class="slides fade">
+        <div class="numbertext">3 / 11</div>
+        <img src="3.png">
+        <div class="caption">Вы поднимаетесь по длинной лестнице.</div>
+    </div>
+
+    <div class="slides fade">
+        <div class="numbertext">4 / 11</div>
+        <img src="4.png">
+        <div class="caption">Ещё один коридор. Снова безлюдный.</div>
+    </div>
+
+    <div class="slides fade">
+        <div class="numbertext">5 / 11</div>
+        <img src="5.png">
+        <div class="caption">Детский уголок. Где все дети?</div>
+    </div>
+
+    <div class="slides fade">
+        <div class="numbertext">6 / 11</div>
+        <img src="6.png">
+        <div class="caption">Тут тоже никого.</div>
+    </div>
+
+    <div class="slides fade">
+        <div class="numbertext">7 / 11</div>
+        <img src="7.png">
+        <div class="caption">Тут тоже</div>
+    </div>
+
+    <div class="slides fade">
+        <div class="numbertext">8 / 11</div>
+        <img src="8.png">
+        <div class="caption">никого</div>
+    </div>
+
+    <div class="slides fade">
+        <div class="numbertext">9 / 11</div>
+        <img src="9.png">
+        <div class="caption"></div>
+    </div>
+
+    <div class="slides fade">
+        <div class="numbertext">10 / 11</div>
+        <img src="10.png">
+        <div class="caption">нет.</div>
+    </div>
+
+    <div class="slides fade">
+        <div class="numbertext">11 / 11</div>
+        <img src="11.png">
+        <div class="caption">Вы наконец находите выход.</div>
+        <div class="caption">Но стоит ли ему доверять?</div>
+    </div>
+
+    <button class="nextimg" onclick="plusSlides(1)">&#10095;</button>
+</div>
+<br>
+
+<button id = "auto" onclick="autoBut()">Auto</button>
+<br>
+
+<input id = "show-time" type="range" min = "1" max = "10" step = "1">
+<label for = "show-time" id = "label"> Auto timing :</label>
+<output id = "timing"></output>
+
+<div class="music-container" id="music-container">
+    <div class="music-info">
+        <h4 id="title"></h4>
+        <div class="progress-container" id="progress-container">
+            <div class="progress" id="progress"></div>
+        </div>
+    </div>
+
+    <audio src="tape.mp3" id="audio"></audio>
+
+    <div class="navigation">
+        <button id="prev" class="action-btn">
+            <span class="fas fa-backward">	&#10094;</span>
+        </button>
+        <button id="play" class="action-btn action-btn-big">
+            <i class="fas fa-play">&#9658;</i>
+        </button>
+        <button id="next" class="action-btn">
+            <span class="fas fa-forward">	&#10095;</span>
+        </button>
+    </div>
+</div>
+
+<script>const musicContainer = document.getElementById('music-container'); const playBtn = document.getElementById('play'); const prevBtn = document.getElementById('prev'); const nextBtn = document.getElementById('next'); const audio = document.getElementById('audio'); const progress = document.getElementById('progress'); const progressContainer = document.getElementById('progress-container'); const title = document.getElementById('title'); const cover = document.getElementById('cover'); const currTime = document.querySelector('#currTime'); const durTime = document.querySelector('#durTime'); let slideIndex = 1; const slides = document.getElementsByClassName("slides"); let buttonAuto = document.getElementById("auto"); let timeout; const timing = document.querySelector("#timing"); const showTime = document.querySelector("#show-time") showSlides(slideIndex); function plusSlides(n) { showSlides(slideIndex += n); } function hideSlides(){ for (i = 0; i < slides.length; i++) { slides[i].style.display = "none"; } } function currentSlide(n) { showSlides(slideIndex = n); } function showSlides(n) { let i; if (n > slides.length) {slideIndex = 1} if (n < 1) {slideIndex = slides.length} hideSlides(); slides[slideIndex-1].style.display = "block"; } function autoBut(){ if (buttonAuto.style.backgroundColor == "red"){ buttonAuto.style.backgroundColor = "white"; stopShow(); }else{ buttonAuto.style.backgroundColor = "red"; autoShow(); } } function autoShow(){ plusSlides(1); let time = 3000; if (timing.textContent){time = timing.textContent + "000";} timeout = setTimeout(autoShow, time); } function stopShow(){ clearTimeout(timeout); } showTime.addEventListener("input", (event) => { timing.textContent = event.target.value; }); const songs = ['tape']; let songIndex = 0; loadSong(songs[songIndex]); function loadSong(song) { title.innerText = song; audio.src = `${song}.mp3`; } function playSong() { musicContainer.classList.add('play'); playBtn.querySelector('i.fas').classList.remove('fa-play'); playBtn.querySelector('i.fas').classList.add('fa-pause'); audio.play(); } function pauseSong() { musicContainer.classList.remove('play'); playBtn.querySelector('i.fas').classList.add('fa-play'); playBtn.querySelector('i.fas').classList.remove('fa-pause'); audio.pause(); } function prevSong() { songIndex--; if (songIndex < 0) { songIndex = songs.length - 1; } loadSong(songs[songIndex]); playSong(); } function nextSong() { songIndex++; if (songIndex > songs.length - 1) { songIndex = 0; } loadSong(songs[songIndex]); playSong(); } function updateProgress(e) { const { duration, currentTime } = e.srcElement; const progressPercent = (currentTime / duration) * 100; progress.style.width = `${progressPercent}%`; } function setProgress(e) { const width = this.clientWidth; const clickX = e.offsetX; const duration = audio.duration; audio.currentTime = (clickX / width) * duration; } function DurTime (e) { const {duration,currentTime} = e.srcElement; var sec; var sec_d; let min = (currentTime==null)? 0: Math.floor(currentTime/60); min = min <10 ? '0'+min:min; function get_sec (x) { if(Math.floor(x) >= 60){ for (var i = 1; i<=60; i++){ if(Math.floor(x)>=(60*i) && Math.floor(x)<(60*(i+1))) { sec = Math.floor(x) - (60*i); sec = sec <10 ? '0'+sec:sec; } } }else{ sec = Math.floor(x); sec = sec <10 ? '0'+sec:sec; } } get_sec (currentTime,sec); currTime.innerHTML = min +':'+ sec; let min_d = (isNaN(duration) === true)? '0': Math.floor(duration/60); min_d = min_d <10 ? '0'+min_d:min_d; function get_sec_d (x) { if(Math.floor(x) >= 60){ for (var i = 1; i<=60; i++){ if(Math.floor(x)>=(60*i) && Math.floor(x)<(60*(i+1))) { sec_d = Math.floor(x) - (60*i); sec_d = sec_d <10 ? '0'+sec_d:sec_d; } } }else{ sec_d = (isNaN(duration) === true)? '0': Math.floor(x); sec_d = sec_d <10 ? '0'+sec_d:sec_d; } } get_sec_d (duration); durTime.innerHTML = min_d +':'+ sec_d; }; playBtn.addEventListener('click', () => { const isPlaying = musicContainer.classList.contains('play'); if (isPlaying) { pauseSong(); } else { playSong(); } }); prevBtn.addEventListener('click', prevSong); nextBtn.addEventListener('click', nextSong); audio.addEventListener('timeupdate', updateProgress); progressContainer.addEventListener('click', setProgress); audio.addEventListener('ended', nextSong); audio.addEventListener('timeupdate',DurTime); </script>
+</body>
+</html>
